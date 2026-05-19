@@ -9,6 +9,9 @@ from app.bot.keyboards.subscription import (
 
 
 class SubscriptionProgressService:
+    def __init__(self, session):
+        self.session = session
+
     async def update_discount_progress_message(
         self,
         bot: Bot,
@@ -24,21 +27,21 @@ class SubscriptionProgressService:
         referral_link = f"https://t.me/{settings.BOT_USERNAME}?start={referrer_user.referral_code}"
         count = referrer_user.discount_referral_count
 
-        text = build_subscription_discount_progress_text(
-            lang,
-            referral_link,
-            count,
-            discount_eligible=referrer_user.discount_eligible,
-            discount_used=referrer_user.discount_used,
-            payment_method=referrer_user.payment_method,
-        )
-        keyboard = (
-            subscription_discount_ready_keyboard(lang)
-            if referrer_user.discount_eligible and not referrer_user.discount_used
-            else subscription_discount_progress_keyboard(lang)
-        )
-
         try:
+            text = await build_subscription_discount_progress_text(
+                self.session,
+                lang,
+                referral_link,
+                count,
+                discount_eligible=referrer_user.discount_eligible,
+                discount_used=referrer_user.discount_used,
+                payment_method=referrer_user.payment_method,
+            )
+            keyboard = (
+                subscription_discount_ready_keyboard(lang)
+                if referrer_user.discount_eligible and not referrer_user.discount_used
+                else subscription_discount_progress_keyboard(lang)
+            )
             await bot.edit_message_text(
                 chat_id=referrer_user.discount_progress_chat_id,
                 message_id=referrer_user.discount_progress_message_id,

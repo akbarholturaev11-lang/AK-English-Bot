@@ -14,7 +14,7 @@ class ReferralService:
         self.user_repo = UserRepository(session)
         self.referral_repo = ReferralRepository(session)
         self.referral_notify_service = ReferralNotifyService()
-        self.subscription_progress_service = SubscriptionProgressService()
+        self.subscription_progress_service = SubscriptionProgressService(session)
 
     async def attach_referral_if_needed(
         self,
