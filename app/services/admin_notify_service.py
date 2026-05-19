@@ -5,6 +5,7 @@ from aiogram import Bot
 
 from app.config import settings
 from app.bot.keyboards.admin_review import admin_payment_review_keyboard
+from app.bot.keyboards.feedback import admin_bot_feedback_keyboard
 from app.bot.utils.i18n import t
 
 
@@ -182,20 +183,42 @@ class AdminNotifyService:
             return "1 kundan kam"
         return f"{days} kun"
 
+    def _feedback_level_label(self, user) -> str:
+        level = str(getattr(user, "level", None) or "-")
+        return {
+            "beginner": "0 dan",
+            "hsk1": "HSK1",
+            "hsk2": "HSK2",
+            "hsk3": "HSK3",
+            "hsk4": "HSK4",
+        }.get(level, level)
+
+    def _feedback_mode_label(self, user) -> str:
+        mode = str(getattr(user, "learning_mode", None) or "-")
+        return {
+            "qa": "Savol-javob",
+            "course": "Kurs",
+        }.get(mode, mode)
+
     def build_bot_feedback_text(self, feedback, user) -> str:
         liked = escape(str(getattr(feedback, "liked_text", None) or "-"))
         disliked = escape(str(getattr(feedback, "disliked_text", None) or "-"))
         full_name = escape(str(getattr(user, "full_name", None) or "-"))
         language = escape(str(getattr(user, "language", None) or "-"))
+        level = escape(self._feedback_level_label(user))
+        mode = escape(self._feedback_mode_label(user))
         reward = "berildi" if getattr(feedback, "reward_granted_at", None) else "berilmadi"
 
         return "\n".join(
             [
                 "📝 <b>Yangi bot otzivi</b>",
                 "",
+                f"🧾 Otziv ID: <b>#{feedback.id}</b>",
                 f"👤 User: <b>{full_name}</b>",
                 f"🆔 Telegram ID: <code>{user.telegram_id}</code>",
                 f"🌐 Til: <b>{language}</b>",
+                f"📚 Urven: <b>{level}</b>",
+                f"🎛 Rejim: <b>{mode}</b>",
                 f"⏱ Botda: <b>{self._feedback_user_age(user)}</b>",
                 "",
                 f"👍 <b>Yoqdi:</b>\n{liked}",
@@ -216,8 +239,43 @@ class AdminNotifyService:
             return
 
         text = self.build_bot_feedback_text(feedback, user)
+        keyboard = admin_bot_feedback_keyboard(feedback.id)
+        attachment_file_id = getattr(feedback, "disliked_attachment_file_id", None)
+        attachment_type = getattr(feedback, "disliked_attachment_type", None)
+
         for admin_id in self.admin_ids:
             try:
-                await bot.send_message(chat_id=admin_id, text=text, parse_mode="HTML")
+                if attachment_file_id and attachment_type == "photo" and len(text) <= 1000:
+                    await bot.send_photo(
+                        chat_id=admin_id,
+                        photo=attachment_file_id,
+                        caption=text,
+                        reply_markup=keyboard,
+                        parse_mode="HTML",
+                    )
+                    continue
+
+                if attachment_file_id and attachment_type == "document" and len(text) <= 1000:
+                    await bot.send_document(
+                        chat_id=admin_id,
+                        document=attachment_file_id,
+                        caption=text,
+                        reply_markup=keyboard,
+                        parse_mode="HTML",
+                    )
+                    continue
+
+                if attachment_file_id:
+                    if attachment_type == "photo":
+                        await bot.send_photo(chat_id=admin_id, photo=attachment_file_id)
+                    elif attachment_type == "document":
+                        await bot.send_document(chat_id=admin_id, document=attachment_file_id)
+
+                await bot.send_message(
+                    chat_id=admin_id,
+                    text=text,
+                    reply_markup=keyboard,
+                    parse_mode="HTML",
+                )
             except Exception:
                 pass

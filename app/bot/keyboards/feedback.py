@@ -67,3 +67,29 @@ def feedback_price_offer_keyboard(feedback_id: int, lang: str) -> InlineKeyboard
             ]
         ]
     )
+
+
+def admin_bot_feedback_keyboard(feedback_id: int) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text="↩️ Javob yozish",
+                    callback_data=f"admin_feedback:reply:{feedback_id}",
+                )
+            ]
+        ]
+    )
+
+
+def admin_feedback_reply_cancel_keyboard(feedback_id: int) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text="❌ Bekor qilish",
+                    callback_data=f"admin_feedback:cancel:{feedback_id}",
+                )
+            ]
+        ]
+    )

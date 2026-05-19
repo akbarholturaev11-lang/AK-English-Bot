@@ -932,6 +932,16 @@ FEEDBACK_I18N = {
         "feedback_already_completed": "Шумо аллакай одзив фиристодед ✅",
         "feedback_other_empty": "Матн холӣ аст. Лутфан фикратонро нависед.",
         "feedback_other_text_only": "Лутфан ҷавобро матнӣ фиристед.",
+        "feedback_dislike_detail_prompt": (
+            "<b>Аниқтараш кадом ҷояш?</b>\n\n"
+            "<blockquote>Лутфан матн нависед ё скриншот фиристед. Ин қисми ҷавоб ҳатмист.</blockquote>"
+        ),
+        "feedback_dislike_detail_required": "Матн ё скриншот фиристед. Ин ҳатмист.",
+        "feedback_dislike_detail_screenshot_note": "Скриншот фиристода шуд.",
+        "feedback_admin_reply_user_message": (
+            "<b>Мо одзиви шуморо гирифтем 🙏</b>\n\n"
+            "<blockquote>{text}</blockquote>"
+        ),
         "feedback_thanks": (
             "<b>Раҳмат барои одзив ✅</b>\n\n"
             "<blockquote>Мо албатта камбудиҳоро ислоҳ мекунем.\n"
@@ -953,7 +963,7 @@ FEEDBACK_I18N = {
         "feedback_like_other": "✍️ Дигар",
         "feedback_dislike_price": "💳 Нархи обуна баланд аст",
         "feedback_dislike_limits": "📊 Лимитҳо каманд",
-        "feedback_dislike_unclear": "🧠 Баъзе ҷавобҳо нофаҳмоанд",
+        "feedback_dislike_unclear": "🧠 Ҷавобҳо якхела ё нофаҳмоанд",
         "feedback_dislike_pace": "📚 Тартиб ё суръати курс ноқулай аст",
         "feedback_dislike_other": "✍️ Дигар",
     },
@@ -974,6 +984,16 @@ FEEDBACK_I18N = {
         "feedback_already_completed": "Вы уже отправили отзыв ✅",
         "feedback_other_empty": "Текст пустой. Напишите ваше мнение.",
         "feedback_other_text_only": "Пожалуйста, отправьте ответ текстом.",
+        "feedback_dislike_detail_prompt": (
+            "<b>Что именно было не так?</b>\n\n"
+            "<blockquote>Напишите текстом или отправьте скриншот. Эта часть обязательна.</blockquote>"
+        ),
+        "feedback_dislike_detail_required": "Отправьте текст или скриншот. Это обязательно.",
+        "feedback_dislike_detail_screenshot_note": "Скриншот отправлен.",
+        "feedback_admin_reply_user_message": (
+            "<b>Мы получили ваш отзыв 🙏</b>\n\n"
+            "<blockquote>{text}</blockquote>"
+        ),
         "feedback_thanks": (
             "<b>Спасибо за отзыв ✅</b>\n\n"
             "<blockquote>Мы обязательно постараемся убрать недочёты.\n"
@@ -995,7 +1015,7 @@ FEEDBACK_I18N = {
         "feedback_like_other": "✍️ Другое",
         "feedback_dislike_price": "💳 Цена подписки высокая",
         "feedback_dislike_limits": "📊 Слишком мало лимитов",
-        "feedback_dislike_unclear": "🧠 Некоторые ответы непонятные",
+        "feedback_dislike_unclear": "🧠 Ответы однотипные или непонятные",
         "feedback_dislike_pace": "📚 Темп или порядок курса неудобен",
         "feedback_dislike_other": "✍️ Другое",
     },
@@ -1016,6 +1036,16 @@ FEEDBACK_I18N = {
         "feedback_already_completed": "Siz allaqachon otziv yuborgansiz ✅",
         "feedback_other_empty": "Matn bo'sh. Iltimos, fikringizni yozing.",
         "feedback_other_text_only": "Iltimos, javobni matn ko'rinishida yuboring.",
+        "feedback_dislike_detail_prompt": (
+            "<b>Aynan qaysi joyi?</b>\n\n"
+            "<blockquote>Iltimos, matn qilib yozing yoki screenshot yuboring. Bu qism majburiy.</blockquote>"
+        ),
+        "feedback_dislike_detail_required": "Matn yoki screenshot yuboring. Bu majburiy.",
+        "feedback_dislike_detail_screenshot_note": "Screenshot yuborildi.",
+        "feedback_admin_reply_user_message": (
+            "<b>Biz sizning otzivingizni oldik 🙏</b>\n\n"
+            "<blockquote>{text}</blockquote>"
+        ),
         "feedback_thanks": (
             "<b>Otziv uchun rahmat ✅</b>\n\n"
             "<blockquote>Biz albatta kamchiliklarni yo'qotishga harakat qilamiz.\n"
@@ -1037,7 +1067,7 @@ FEEDBACK_I18N = {
         "feedback_like_other": "✍️ Boshqa",
         "feedback_dislike_price": "💳 Obuna narxi baland",
         "feedback_dislike_limits": "📊 Limitlar kam",
-        "feedback_dislike_unclear": "🧠 Ba'zi javoblar tushunarsiz",
+        "feedback_dislike_unclear": "🧠 Javoblar bir xil yoki tushunarsiz",
         "feedback_dislike_pace": "📚 Kurs tempi yoki tartibi noqulay",
         "feedback_dislike_other": "✍️ Boshqa",
     },

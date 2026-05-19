@@ -79,9 +79,13 @@ class BotFeedbackRepository:
         feedback: BotFeedback,
         code: str,
         text: str,
+        attachment_file_id: Optional[str] = None,
+        attachment_type: Optional[str] = None,
     ) -> None:
         feedback.disliked_code = code
         feedback.disliked_text = text
+        feedback.disliked_attachment_file_id = attachment_file_id
+        feedback.disliked_attachment_type = attachment_type
         feedback.updated_at = datetime.now(timezone.utc)
         await self.session.flush()
 
@@ -162,5 +166,19 @@ class BotFeedbackRepository:
             return
         now = datetime.now(timezone.utc)
         feedback.price_offer_used_at = now
+        feedback.updated_at = now
+        await self.session.flush()
+
+    async def mark_admin_reply(
+        self,
+        feedback: BotFeedback,
+        *,
+        admin_telegram_id: int,
+        reply_text: str,
+    ) -> None:
+        now = datetime.now(timezone.utc)
+        feedback.admin_reply_text = reply_text
+        feedback.admin_replied_by = admin_telegram_id
+        feedback.admin_replied_at = now
         feedback.updated_at = now
         await self.session.flush()

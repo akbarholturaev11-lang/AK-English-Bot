@@ -50,6 +50,11 @@ _BOOTSTRAP_COLUMNS: dict[str, dict[str, str]] = {
         "price_offer_due_at": "TIMESTAMP WITH TIME ZONE",
         "price_offer_sent_at": "TIMESTAMP WITH TIME ZONE",
         "price_offer_used_at": "TIMESTAMP WITH TIME ZONE",
+        "disliked_attachment_file_id": "VARCHAR(256)",
+        "disliked_attachment_type": "VARCHAR(16)",
+        "admin_reply_text": "TEXT",
+        "admin_replied_by": "BIGINT",
+        "admin_replied_at": "TIMESTAMP WITH TIME ZONE",
     },
     "ai_usage_budgets": {
         "payment_id": "INTEGER",

@@ -20,6 +20,11 @@ class BotFeedback(Base):
     liked_text: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     disliked_code: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
     disliked_text: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    disliked_attachment_file_id: Mapped[Optional[str]] = mapped_column(String(256), nullable=True)
+    disliked_attachment_type: Mapped[Optional[str]] = mapped_column(String(16), nullable=True)
+    admin_reply_text: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    admin_replied_by: Mapped[Optional[int]] = mapped_column(BigInteger, nullable=True)
+    admin_replied_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
 
     prompt_message_id: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     prompted_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
