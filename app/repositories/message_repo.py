@@ -62,6 +62,14 @@ class MessageRepository:
         )
         return int(result.scalar() or 0)
 
+    async def count_user_messages(self, user_id: int) -> int:
+        result = await self.session.execute(
+            select(func.count(Message.id))
+            .where(Message.user_id == user_id)
+            .where(Message.role == "user")
+        )
+        return int(result.scalar() or 0)
+
     async def get_latest_image_context_by_user(
         self,
         user_id: int,
