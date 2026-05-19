@@ -46,7 +46,7 @@ class RequiredChannelMiddleware(BaseMiddleware):
                 return await handler(event, data)
 
             lang = user.language if user and user.language else "ru"
-            text = t("force_sub_required_text", lang)
+            text = service.build_required_text(missing, lang)
             keyboard = service.build_required_keyboard(missing, lang)
 
             if isinstance(event, CallbackQuery):

@@ -19,7 +19,7 @@ async def force_sub_check(callback: CallbackQuery, session):
         await callback.answer(t("force_sub_still_missing", lang), show_alert=True)
         if callback.message:
             await callback.message.edit_text(
-                t("force_sub_required_text", lang),
+                service.build_required_text(missing, lang),
                 reply_markup=service.build_required_keyboard(missing, lang),
                 parse_mode="HTML",
                 disable_web_page_preview=True,

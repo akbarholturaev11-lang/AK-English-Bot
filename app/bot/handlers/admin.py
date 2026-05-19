@@ -19,8 +19,14 @@ from app.db.models.course_progress import CourseProgress
 from app.db.models.referral import Referral
 from app.services.ai_usage_budget_service import USD_TO_SOMONI, USD_TO_YUAN
 from app.services.portfolio_service import PortfolioService
-from app.services.required_channel_service import RequiredChannelService
+from app.services.required_channel_service import (
+    MAIN_CHANNEL_USERNAME,
+    RequiredChannelService,
+    is_main_channel,
+    normalize_channel_username,
+)
 from app.services.subscription_price_service import PAYMENT_METHODS, PLANS, SubscriptionPriceService
+from app.bot.handlers.admin_broadcast import open_broadcast_panel_for_callback
 
 router = Router()
 
@@ -268,9 +274,9 @@ async def _channel_panel_text(session) -> tuple[str, InlineKeyboardMarkup]:
         f"Rejim: <b>{'ON' if enabled else 'OFF'}</b>",
         f"Aktiv kanallar: <b>{active_count}</b>",
         "",
-        "Kanal qo'shish formati:",
-        "<code>@channel Kanal nomi</code>",
-        "<code>-1001234567890 https://t.me/+invite Kanal nomi</code>",
+        "Kanal qo'shish oson:",
+        "1) Kanaldan bitta postni forward qiling",
+        "2) yoki <code>@channel</code> / <code>t.me/channel</code> yuboring",
     ]
     if channels:
         lines.extend(["", "<b>Kanallar:</b>"])
@@ -282,21 +288,89 @@ async def _channel_panel_text(session) -> tuple[str, InlineKeyboardMarkup]:
     return "\n".join(lines), channel_panel_keyboard(enabled, channels)
 
 
+def _username_from_tme_link(value: str) -> str | None:
+    value = (value or "").strip()
+    prefixes = ("https://t.me/", "http://t.me/", "t.me/")
+    for prefix in prefixes:
+        if value.startswith(prefix):
+            tail = value[len(prefix):].strip("/")
+            if tail and not tail.startswith("+"):
+                username = tail.split("/")[0]
+                return username if username else None
+    return None
+
+
 def _parse_channel_input(text: str) -> tuple[str, str | None, str] | None:
     parts = (text or "").strip().split()
-    if len(parts) < 2:
+    if not parts:
         return None
-    chat_id = parts[0]
+
+    first = parts[0]
     invite_link = None
     title_parts = parts[1:]
-    if len(parts) >= 3 and parts[1].startswith(("http://", "https://")):
-        invite_link = parts[1]
-        title_parts = parts[2:]
-    if not title_parts:
+    username = _username_from_tme_link(first)
+
+    if username:
+        chat_id = f"@{username}"
+        invite_link = f"https://t.me/{username}"
+        title = " ".join(title_parts) if title_parts else username
+        return chat_id, invite_link, title[:180]
+
+    if first.startswith("@"):
+        chat_id = first
+        invite_link = f"https://t.me/{first.lstrip('@')}"
+        title = " ".join(title_parts) if title_parts else first.lstrip("@")
+        return chat_id, invite_link, title[:180]
+
+    if first.startswith("-100"):
+        chat_id = first
+        if title_parts and title_parts[0].startswith(("http://", "https://")):
+            invite_link = title_parts[0]
+            title_parts = title_parts[1:]
+        title = " ".join(title_parts) if title_parts else first
+        return chat_id, invite_link, title[:180]
+
+    return None
+
+
+async def _extract_channel_input(message: Message) -> tuple[str, str | None, str] | None:
+    origin = getattr(message, "forward_origin", None)
+    chat = getattr(origin, "chat", None) if origin else None
+    if not chat:
+        chat = getattr(message, "forward_from_chat", None)
+
+    if chat:
+        username = getattr(chat, "username", None)
+        chat_id = f"@{username}" if username else str(chat.id)
+        invite_link = f"https://t.me/{username}" if username else None
+        title = getattr(chat, "title", None) or username or str(chat.id)
+        return chat_id, invite_link, title[:180]
+
+    return _parse_channel_input(message.text or "")
+
+
+async def _fill_channel_invite_link(message: Message, chat_id: str, invite_link: str | None) -> str | None:
+    if invite_link:
+        return invite_link
+    try:
+        link = await message.bot.create_chat_invite_link(chat_id=chat_id, name="HSK AI required subscription")
+        return link.invite_link
+    except Exception:
         return None
-    if not (chat_id.startswith("@") or chat_id.startswith("-100")):
-        return None
-    return chat_id, invite_link, " ".join(title_parts)[:180]
+
+
+async def _resolve_channel_title(message: Message, chat_id: str, fallback_title: str) -> str:
+    try:
+        chat = await message.bot.get_chat(chat_id)
+        title = getattr(chat, "title", None) or getattr(chat, "username", None)
+        if title:
+            return str(title)[:180]
+    except Exception:
+        pass
+    if is_main_channel(chat_id):
+        return MAIN_CHANNEL_USERNAME
+    username = normalize_channel_username(chat_id)
+    return (fallback_title or username or chat_id)[:180]
 
 
 def _fmt_dt(value) -> str:
@@ -738,9 +812,11 @@ async def admin_channel_add_callback(callback: CallbackQuery, state: FSMContext,
     await _edit_callback_message(
         callback,
         "➕ <b>Kanal qo'shish</b>\n\n"
-        "Public kanal:\n<code>@channel Kanal nomi</code>\n\n"
-        "Private kanal:\n<code>-1001234567890 https://t.me/+invite Kanal nomi</code>\n\n"
-        "Bot kanal ichida admin/member bo'lishi kerak, aks holda obunani tekshira olmaydi.",
+        "Eng oson yo'l: kanaldan bitta postni shu yerga forward qiling.\n\n"
+        "Yoki public kanal uchun shunchaki yuboring:\n"
+        "<code>@channel</code>\n"
+        "<code>https://t.me/channel</code>\n\n"
+        "Private kanal bo'lsa, botni kanalga admin qilib qo'ying va post forward qiling.",
         reply_markup=admin_back_keyboard(),
         parse_mode="HTML",
     )
@@ -750,15 +826,17 @@ async def admin_channel_add_callback(callback: CallbackQuery, state: FSMContext,
 async def admin_channel_add_message(message: Message, state: FSMContext, session):
     if not _is_admin(message.from_user.id):
         return
-    parsed = _parse_channel_input(message.text or "")
+    parsed = await _extract_channel_input(message)
     if not parsed:
         await message.answer(
-            "❌ Format noto'g'ri.\n\n"
-            "Misol: <code>@channel Kanal nomi</code>",
+            "❌ Kanalni aniqlay olmadim.\n\n"
+            "Kanaldan post forward qiling yoki <code>@channel</code> / <code>t.me/channel</code> yuboring.",
             parse_mode="HTML",
         )
         return
     chat_id, invite_link, title = parsed
+    title = await _resolve_channel_title(message, chat_id, title)
+    invite_link = await _fill_channel_invite_link(message, chat_id, invite_link)
     await RequiredChannelService(session).add_channel(
         chat_id=chat_id,
         invite_link=invite_link,
@@ -1199,21 +1277,12 @@ async def admin_deleteuser_handler(message: Message, session):
 
 
 @router.callback_query(F.data == "adm:broadcast_info")
-async def admin_broadcast_info(callback: CallbackQuery, session):
+async def admin_broadcast_info(callback: CallbackQuery, state: FSMContext, session):
     if not _is_admin(callback.from_user.id):
         await callback.answer()
         return
     await callback.answer()
-    await _edit_callback_message(
-        callback,
-        "📢 <b>Broadcast xabar yuborish</b>\n\n"
-        "Panelni ochish: <code>/broadcast</code>\n\n"
-        "Panelda segmentni tanlab, matn/foto/video + caption yuboring.\n\n"
-        "Bitta userga yuborish uchun panelda <b>🎯 Bitta userga xabar</b> tugmasi bor.\n\n"
-        "⚠️ Filtrsiz hammaga yuborish kerak bo'lsa: <code>/broadcast_all Xabar matni</code>",
-        reply_markup=admin_back_keyboard(),
-        parse_mode="HTML",
-    )
+    await open_broadcast_panel_for_callback(callback, state)
 
 
 @router.message(Command("broadcast_all"))

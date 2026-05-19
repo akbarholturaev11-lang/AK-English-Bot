@@ -75,6 +75,46 @@ def _panel_text(
     )
 
 
+def _initial_broadcast_state() -> dict:
+    return {
+        "lang_filter": None,
+        "status_filter": None,
+        "level_filter": None,
+        "mode_filter": None,
+        "payment_status_filter": None,
+        "payment_method_filter": None,
+        "plan_filter": None,
+        "discount_filter": None,
+        "course_promo_filter": None,
+        "activity_filter": None,
+        "target_user_id": None,
+        "target_label": None,
+        "bc_section": "main",
+    }
+
+
+async def open_broadcast_panel_for_message(message: Message, state: FSMContext) -> None:
+    await state.clear()
+    await state.update_data(**_initial_broadcast_state())
+    sent = await message.answer(
+        _panel_text(None, None, None),
+        reply_markup=broadcast_panel_keyboard(None, None, None, section="main"),
+        parse_mode="HTML",
+    )
+    await state.update_data(panel_msg_id=sent.message_id, panel_chat_id=sent.chat.id)
+
+
+async def open_broadcast_panel_for_callback(callback: CallbackQuery, state: FSMContext) -> None:
+    await state.clear()
+    await state.update_data(**_initial_broadcast_state())
+    sent = await callback.message.edit_text(
+        _panel_text(None, None, None),
+        reply_markup=broadcast_panel_keyboard(None, None, None, section="main"),
+        parse_mode="HTML",
+    )
+    await state.update_data(panel_msg_id=sent.message_id, panel_chat_id=sent.chat.id)
+
+
 async def _redraw_panel(callback: CallbackQuery, data: dict) -> None:
     lang_filter = data.get("lang_filter")
     status_filter = data.get("status_filter")
@@ -127,29 +167,7 @@ async def broadcast_command(message: Message, state: FSMContext):
     if not _is_admin(message.from_user.id):
         return
 
-    await state.clear()
-    await state.update_data(
-        lang_filter=None,
-        status_filter=None,
-        level_filter=None,
-        mode_filter=None,
-        payment_status_filter=None,
-        payment_method_filter=None,
-        plan_filter=None,
-        discount_filter=None,
-        course_promo_filter=None,
-        activity_filter=None,
-        target_user_id=None,
-        target_label=None,
-        bc_section="main",
-    )
-
-    sent = await message.answer(
-        _panel_text(None, None, None),
-        reply_markup=broadcast_panel_keyboard(None, None, None, section="main"),
-        parse_mode="HTML",
-    )
-    await state.update_data(panel_msg_id=sent.message_id, panel_chat_id=sent.chat.id)
+    await open_broadcast_panel_for_message(message, state)
 
 
 # ── Filter toggles ───────────────────────────────────────────────────────────

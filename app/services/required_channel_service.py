@@ -9,6 +9,25 @@ from app.repositories.required_channel_repo import RequiredChannelRepository
 
 FORCE_CHANNEL_SETTING_KEY = "force_channel_subscription_enabled"
 MEMBER_STATUSES = {"creator", "administrator", "member"}
+MAIN_CHANNEL_USERNAME = "aibotsakbar"
+
+
+def normalize_channel_username(value: str | None) -> str:
+    value = (value or "").strip()
+    if value.startswith("@"):
+        value = value[1:]
+    for prefix in ("https://t.me/", "http://t.me/", "t.me/"):
+        if value.startswith(prefix):
+            value = value[len(prefix):]
+            break
+    return value.strip("/").split("/")[0].lower()
+
+
+def is_main_channel(chat_id: str | None, invite_link: str | None = None) -> bool:
+    return (
+        normalize_channel_username(chat_id) == MAIN_CHANNEL_USERNAME
+        or normalize_channel_username(invite_link) == MAIN_CHANNEL_USERNAME
+    )
 
 
 class RequiredChannelService:
@@ -83,6 +102,11 @@ class RequiredChannelService:
             )
         ])
         return InlineKeyboardMarkup(inline_keyboard=rows)
+
+    def build_required_text(self, channels, lang: str) -> str:
+        if len(channels) == 1 and is_main_channel(channels[0].chat_id, channels[0].invite_link):
+            return t("force_sub_main_channel_text", lang)
+        return t("force_sub_required_text", lang)
 
 
 def is_admin_user(user_id: int) -> bool:
