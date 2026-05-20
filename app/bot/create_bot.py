@@ -23,6 +23,7 @@ from app.bot.handlers.messages import router as messages_router
 from app.bot.handlers.course import router as course_router
 from app.bot.handlers.admin import router as admin_router
 from app.bot.handlers.admin_audio import router as admin_audio_router
+from app.config import COURSE_MODE_ENABLED
 
 
 def create_bot(settings):
@@ -50,7 +51,8 @@ def create_bot(settings):
     dp.include_router(menu_router)
     dp.include_router(payments_router)
     dp.include_router(admin_payments_router)
-    dp.include_router(course_router)
+    if COURSE_MODE_ENABLED:
+        dp.include_router(course_router)
     dp.include_router(admin_router)
     dp.include_router(messages_router)
 

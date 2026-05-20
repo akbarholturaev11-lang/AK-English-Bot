@@ -74,7 +74,10 @@ def _profile_text(user, lang: str) -> str:
     language = escape(str(getattr(user, "language", "—") or "—"))
     level = escape(str(getattr(user, "level", "—") or "—"))
     status_raw = str(getattr(user, "status", "—") or "—")
-    learning_mode = escape(str(getattr(user, "learning_mode", "—") or "—"))
+    learning_mode_raw = str(getattr(user, "learning_mode", "—") or "—")
+    if learning_mode_raw == "course":
+        learning_mode_raw = "qa"
+    learning_mode = escape(learning_mode_raw)
 
     started = (
         getattr(user, "start_date", None)
@@ -220,21 +223,18 @@ def profile_menu_keyboard(lang: str) -> InlineKeyboardMarkup:
             "subscription": "💎 Обуна",
             "language": "🌐 Забон",
             "level": "📊 Дараҷа",
-            "course": "📚 Курс",
             "qa": "💬 Саволу ҷавоб",
         },
         "uz": {
             "subscription": "💎 Obuna",
             "language": "🌐 Til",
             "level": "📊 Daraja",
-            "course": "📚 Kurs",
             "qa": "💬 Savol-javob",
         },
         "ru": {
             "subscription": "💎 Подписка",
             "language": "🌐 Язык",
             "level": "📊 Уровень",
-            "course": "📚 Курс",
             "qa": "💬 Вопрос-ответ",
         },
     }
@@ -247,9 +247,6 @@ def profile_menu_keyboard(lang: str) -> InlineKeyboardMarkup:
             ],
             [
                 InlineKeyboardButton(text=l["level"], callback_data="profile_menu:level"),
-                InlineKeyboardButton(text=l["course"], callback_data="profile_menu:course"),
-            ],
-            [
                 InlineKeyboardButton(text=l["qa"], callback_data="profile_menu:qa"),
             ],
         ]
@@ -382,7 +379,17 @@ async def command_level_callback_handler(callback: CallbackQuery, session):
     except Exception:
         pass
 
-    level_label = level.upper() if level.startswith("hsk") else level
+    level_label = {
+        "beginner": "0",
+        "a1": "A1",
+        "a2": "A2",
+        "b1": "B1",
+        "b2": "B2",
+        "hsk1": "A1",
+        "hsk2": "A2",
+        "hsk3": "B1",
+        "hsk4": "B2",
+    }.get(level, level)
 
     if lang == "tj":
         msg = f"✅ Дараҷа нав шуд: {level_label}"
@@ -456,6 +463,31 @@ async def help_command_handler(message: Message, state: FSMContext, session):
         parse_mode="HTML",
         disable_web_page_preview=True,
     )
+
+
+@router.message(Command("course"))
+async def disabled_course_command_handler(message: Message, state: FSMContext, session):
+    user = await UserRepository(session).get_by_telegram_id(message.from_user.id)
+    lang = getattr(user, "language", None) or "ru"
+    await _clear_voice_mode(user, session, state)
+    if user and getattr(user, "learning_mode", "qa") == "course":
+        user.learning_mode = "qa"
+        user.voice_mode = "none"
+        await session.commit()
+    await message.answer(t("course_disabled", lang), parse_mode="HTML")
+
+
+@router.callback_query(F.data == "mode:course")
+async def disabled_course_mode_callback(callback: CallbackQuery, state: FSMContext, session):
+    user = await UserRepository(session).get_by_telegram_id(callback.from_user.id)
+    lang = getattr(user, "language", None) or "ru"
+    await state.update_data(pending_voice_transcript=None, pending_voice_message_id=None)
+    if user and getattr(user, "learning_mode", "qa") == "course":
+        user.learning_mode = "qa"
+        user.voice_mode = "none"
+        await session.commit()
+    await callback.answer()
+    await callback.message.answer(t("course_disabled", lang), parse_mode="HTML")
 
 
 @router.message(Command("admin_stats"))
@@ -565,14 +597,11 @@ async def profile_menu_level(callback: CallbackQuery, state: FSMContext, session
 
 @router.callback_query(F.data == "profile_menu:course")
 async def profile_menu_course(callback: CallbackQuery, state: FSMContext, session):
-    from app.bot.handlers.course import run_course_entry_flow
+    user = await UserRepository(session).get_by_telegram_id(callback.from_user.id)
+    lang = user.language if user and user.language else "ru"
     await state.update_data(pending_voice_transcript=None, pending_voice_message_id=None)
     await callback.answer()
-    await run_course_entry_flow(
-        session=session,
-        telegram_id=callback.from_user.id,
-        respond=callback.message.answer,
-    )
+    await callback.message.answer(t("course_disabled", lang))
 
 @router.callback_query(F.data == "profile_menu:qa")
 async def profile_menu_qa(callback: CallbackQuery, state: FSMContext, session):

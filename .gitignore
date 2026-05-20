@@ -10,3 +10,10 @@ venv_311/
 !.env.example
 graphify-out/
 memory/
+
+.env
+.claude/
+__pycache__/
+*.pyc
+graphify-out/
+MEMORY.md

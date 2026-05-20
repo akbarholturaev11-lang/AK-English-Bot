@@ -2,7 +2,7 @@ from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
-from app.config import settings
+from app.config import settings, COURSE_MODE_ENABLED
 from app.repositories.user_repo import UserRepository
 from app.services.course_engine_service import CourseEngineService
 from app.bot.keyboards.subscription import payment_method_keyboard
@@ -138,6 +138,9 @@ async def handle_reminder_time_button(message: Message, state: FSMContext, sessi
 
     lang = user.language if user.language else "ru"
     await _clear_voice_mode(user, session, state)
+    if not COURSE_MODE_ENABLED:
+        await message.answer(t("course_disabled", lang))
+        return
     engine = CourseEngineService(session)
     _, progress, error_key = await engine.get_or_create_progress(message.from_user.id)
     if error_key or not progress:
@@ -160,19 +163,13 @@ async def handle_reminder_time_button(message: Message, state: FSMContext, sessi
 ]))
 async def handle_course_mode_button(message: Message, state: FSMContext, session):
     from app.bot.handlers.course import run_course_entry_flow
-    from app.config import COURSE_MODE_ENABLED
     user_repo = UserRepository(session)
     user = await user_repo.get_by_telegram_id(message.from_user.id)
     lang = user.language if user and user.language else "ru"
     await _clear_voice_mode(user, session, state)
 
     if not COURSE_MODE_ENABLED:
-        msg_map = {
-            "uz": "🚧 Kurs rejimi hozircha ishlab chiqilmoqda.",
-            "ru": "🚧 Режим курса сейчас в разработке.",
-            "tj": "🚧 Реҷаи курс ҳоло дар навсози аст.",
-        }
-        await message.answer(msg_map.get(lang, msg_map["ru"]))
+        await message.answer(t("course_disabled", lang))
         return
 
     await run_course_entry_flow(

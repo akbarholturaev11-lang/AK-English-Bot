@@ -25,11 +25,5 @@ def mode_keyboard(lang: str) -> InlineKeyboardMarkup:
                     callback_data="mode:qa",
                 )
             ],
-            [
-                InlineKeyboardButton(
-                    text=t("course_mode_title", lang),
-                    callback_data="mode:course",
-                )
-            ],
         ]
     )

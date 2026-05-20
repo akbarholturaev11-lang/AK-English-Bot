@@ -10,10 +10,6 @@ def main_menu_keyboard(lang: str) -> ReplyKeyboardMarkup:
                 KeyboardButton(text=t("menu_subscription", lang)),
             ],
             [
-                KeyboardButton(text=t("menu_course_mode", lang)),
-                KeyboardButton(text=t("course_reminder_set_button", lang)),
-            ],
-            [
                 KeyboardButton(text=t("menu_invite", lang)),
                 KeyboardButton(text=t("menu_help", lang)),
             ],

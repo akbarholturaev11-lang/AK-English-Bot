@@ -187,10 +187,14 @@ class AdminNotifyService:
         level = str(getattr(user, "level", None) or "-")
         return {
             "beginner": "0 dan",
-            "hsk1": "HSK1",
-            "hsk2": "HSK2",
-            "hsk3": "HSK3",
-            "hsk4": "HSK4",
+            "a1": "A1",
+            "a2": "A2",
+            "b1": "B1",
+            "b2": "B2",
+            "hsk1": "A1",
+            "hsk2": "A2",
+            "hsk3": "B1",
+            "hsk4": "B2",
         }.get(level, level)
 
     def _feedback_mode_label(self, user) -> str:

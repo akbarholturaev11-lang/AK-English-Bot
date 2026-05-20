@@ -7,7 +7,7 @@ from datetime import datetime, timedelta, timezone
 from aiogram import Bot
 from fastapi import FastAPI
 
-from app.config import settings
+from app.config import settings, COURSE_MODE_ENABLED
 from app.bot.create_bot import create_bot
 from app.db.session import async_session_maker, init_db
 from app.services.course_seed_service import CourseSeedService
@@ -26,6 +26,9 @@ _last_feedback_check_at = None
 
 async def _seed_lessons() -> None:
     """Run all lesson seed scripts in the background after startup."""
+    if not COURSE_MODE_ENABLED:
+        logger.info("=== COURSE MODE OFF: lesson seeding skipped ===")
+        return
     logger.info("=== SEEDING START: loading all lesson scripts ===")
     try:
         async with async_session_maker() as session:
@@ -47,10 +50,11 @@ async def _background_scheduler(bot: Bot) -> None:
                 await DailyResetService(session).send_daily_reset_notifications(bot)
             async with async_session_maker() as session:
                 await ExpiryReminderService(session).send_expiry_reminders(bot)
-            async with async_session_maker() as session:
-                await CourseReminderService(session).send_due_reminders(bot)
-            async with async_session_maker() as session:
-                await CourseReminderService(session).send_weekly_progress_reports(bot)
+            if COURSE_MODE_ENABLED:
+                async with async_session_maker() as session:
+                    await CourseReminderService(session).send_due_reminders(bot)
+                async with async_session_maker() as session:
+                    await CourseReminderService(session).send_weekly_progress_reports(bot)
             async with async_session_maker() as session:
                 await BotFeedbackService(session).send_due_price_discount_offers(bot)
             async with async_session_maker() as session:

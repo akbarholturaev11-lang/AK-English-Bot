@@ -57,6 +57,7 @@ from app.services.image_input_service import ImageInputService
 from app.services.image_qa_service import ImageQAService
 from app.services.qa_service import QAService
 from app.bot.utils.i18n import t
+from app.config import COURSE_MODE_ENABLED
 
 
 router = Router()
@@ -577,6 +578,12 @@ async def handle_voice_message(message: Message, state: FSMContext, session):
         await message.answer(t("voice_too_long", user_lang, seconds=MAX_VOICE_DURATION_SECONDS))
         return
 
+    if user.learning_mode == "course" and not COURSE_MODE_ENABLED:
+        user.learning_mode = "qa"
+        user.voice_mode = VOICE_MODE_NONE
+        await state.update_data(pending_voice_transcript=None, pending_voice_message_id=None)
+        await session.commit()
+
     transcript, transcript_result, effect = await _transcribe_voice_message(message, user, user_lang)
     if not transcript or not transcript_result or not effect:
         return
@@ -589,7 +596,7 @@ async def handle_voice_message(message: Message, state: FSMContext, session):
     )
     await session.commit()
 
-    if user.learning_mode == "course":
+    if user.learning_mode == "course" and COURSE_MODE_ENABLED:
         await _process_course_voice_transcript(
             message=message,
             state=state,
@@ -746,7 +753,19 @@ async def handle_text_message(message: Message, state: FSMContext, session):
         if is_cancel:
             return
 
-    if user:
+    if user and user.learning_mode == "course" and not COURSE_MODE_ENABLED:
+        user.learning_mode = "qa"
+        user.voice_mode = "none"
+        await state.update_data(pending_voice_transcript=None, pending_voice_message_id=None)
+        await session.commit()
+        await message.answer(
+            t("course_disabled", user_lang),
+            reply_markup=main_menu_keyboard(user_lang),
+            parse_mode="HTML",
+        )
+        return
+
+    if user and COURSE_MODE_ENABLED:
         reminder_engine = CourseEngineService(session)
         reminder_progress = await reminder_engine.progress_repo.get_by_user_id(user.id)
         if reminder_progress and reminder_progress.waiting_for == "reminder_setup":
@@ -783,7 +802,7 @@ async def handle_text_message(message: Message, state: FSMContext, session):
             )
             return
 
-    if user and user.learning_mode == "course":
+    if user and user.learning_mode == "course" and COURSE_MODE_ENABLED:
         engine = CourseEngineService(session)
 
         msg_text = (message.text or "").strip()
@@ -1116,10 +1135,11 @@ async def handle_text_message(message: Message, state: FSMContext, session):
     await message.answer(reply)
     await _send_budget_notice(message.answer, qa_service.last_budget_record, user_lang)
 
-    # Show course promo after 3rd QA message (once per user)
+    # Course mode is disabled, so promo is gated behind COURSE_MODE_ENABLED.
     refreshed_user = await user_repo.get_by_telegram_id(message.from_user.id)
     if (
-        refreshed_user
+        COURSE_MODE_ENABLED
+        and refreshed_user
         and not refreshed_user.course_promo_sent
         and refreshed_user.questions_used >= 3
         and refreshed_user.learning_mode == "qa"
@@ -1145,6 +1165,12 @@ async def handle_text_message(message: Message, state: FSMContext, session):
 @router.callback_query(F.data == "course_promo:start")
 async def handle_course_promo_start(callback: CallbackQuery, state: FSMContext, session):
     await state.update_data(pending_voice_transcript=None, pending_voice_message_id=None)
+    if not COURSE_MODE_ENABLED:
+        user = await UserRepository(session).get_by_telegram_id(callback.from_user.id)
+        lang = user.language if user and user.language else "ru"
+        await callback.answer()
+        await callback.message.answer(t("course_disabled", lang))
+        return
     await callback.answer()
     await run_course_entry_flow(
         session=session,

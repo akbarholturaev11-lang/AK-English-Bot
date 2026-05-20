@@ -358,7 +358,7 @@ async def _fill_channel_invite_link(message: Message, chat_id: str, invite_link:
     if invite_link:
         return invite_link
     try:
-        link = await message.bot.create_chat_invite_link(chat_id=chat_id, name="HSK AI required subscription")
+        link = await message.bot.create_chat_invite_link(chat_id=chat_id, name="English AI required subscription")
         return link.invite_link
     except Exception:
         return None
@@ -1198,7 +1198,7 @@ async def admin_stats_callback(callback: CallbackQuery, session):
     engagement  = round(qa_users / total * 100, 1) if total > 0 else 0
     avg_lessons = round(course_lessons_sum / course_with_lessons, 1) if course_with_lessons > 0 else 0
 
-    level_order = ["beginner", "hsk1", "hsk2", "hsk3", "hsk4"]
+    level_order = ["beginner", "a1", "a2", "b1", "b2"]
     level_str   = "  " + "   ".join(
         f"{l.upper()}: {level_counts.get(l, 0)}" for l in level_order
     )

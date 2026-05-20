@@ -3,7 +3,7 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from app.bot.utils.i18n import t
 
 
-LIKED_OPTIONS = ("course", "answers", "photo", "practice", "other")
+LIKED_OPTIONS = ("answers", "photo", "practice", "other")
 DISLIKED_OPTIONS = ("price", "limits", "unclear", "pace", "other")
 
 

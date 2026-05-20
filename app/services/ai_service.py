@@ -22,11 +22,21 @@ class AIService:
         self.client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
         self.prompt_path = Path("app/prompts/qa_system.txt")
 
+    def _normalize_english_level(self, user_level: str) -> str:
+        normalized = (user_level or "beginner").strip().lower()
+        legacy_map = {
+            "hsk1": "a1",
+            "hsk2": "a2",
+            "hsk3": "b1",
+            "hsk4": "b2",
+        }
+        return legacy_map.get(normalized, normalized)
+
     def _build_system_prompt(self, user_language: str, user_level: str) -> str:
         template = self.prompt_path.read_text(encoding="utf-8")
         return template.format(
             user_language=user_language,
-            user_level=user_level,
+            user_level=self._normalize_english_level(user_level),
         )
 
     def _usage_value(self, usage, *names: str) -> int:
@@ -189,11 +199,12 @@ class AIService:
             "ru": "Russian",
         }
         primary_lang = lang_labels.get(user_language, "Russian")
+        english_level = self._normalize_english_level(user_level)
         prompt = (
             "Transcribe this Telegram voice message. Do not translate it. "
-            f"The user's interface language is {primary_lang}, and their Chinese level is {user_level}. "
-            "The audio is likely in the user's interface language or Chinese. "
-            "Preserve Chinese characters, pinyin, names, numbers, and short mixed-language phrases carefully. "
+            f"The user's interface language is {primary_lang}, and their English level is {english_level}. "
+            "The audio is likely in the user's interface language or English. "
+            "Preserve English words, names, numbers, and short mixed-language phrases carefully. "
             "If speech is unclear, transcribe only what you can hear."
         )
 
@@ -242,20 +253,15 @@ class AIService:
         }
         target_lang = lang_labels.get(user_language, "Russian")
         model = "gpt-4o-mini"
-        has_chinese = any("\u4e00" <= char <= "\u9fff" for char in transcript)
-        direction = (
-            f"The latest transcript contains Chinese. Translate only the latest transcript into {target_lang}."
-            if has_chinese
-            else "The latest transcript is not Chinese. Interpret only the latest transcript into natural Simplified Chinese."
-        )
 
         messages = [
             {
                 "role": "system",
                 "content": (
-                    "You are a context-aware Chinese conversation interpreter for real-life dialogue. "
+                    "You are a context-aware English conversation interpreter for real-life dialogue. "
                     f"The user's interface language is {target_lang}. "
-                    f"{direction} "
+                    "If the latest transcript is English, translate only the latest transcript into the user's interface language. "
+                    "If the latest transcript is not English, translate only the latest transcript into natural English. "
                     "Use recent context only to resolve pronouns, tone, missing objects, and situation. "
                     "Never answer the speaker's question, never continue the chat, and never translate older messages. "
                     "Return only the translation text. Do not add labels, markdown, alternatives, explanations, or quotes. "
