@@ -7,11 +7,16 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.models.course_progress import CourseProgress
 from app.db.models.user import User
+from app.config import COURSE_MODE_ENABLED
+from app.bot.keyboards.main_menu import main_menu_keyboard
 from app.bot.utils.i18n import t
 from app.services.course_progress_summary_service import CourseProgressSummaryService
 
 
 def _reminder_keyboard(lang: str):
+    if not COURSE_MODE_ENABLED:
+        return main_menu_keyboard(lang)
+
     labels = {
         "uz": "📖 Darsni davom ettirish",
         "ru": "📖 Продолжить урок",
@@ -28,6 +33,9 @@ class CourseReminderService:
 
     async def _build_reminder_text(self, progress: CourseProgress, lang: str) -> str:
         summary = await CourseProgressSummaryService(self.session).summarize_last_completed_lesson(progress)
+        if not COURSE_MODE_ENABLED or (summary["vocab"] == 0 and summary["dialogues"] == 0):
+            return t("qa_reminder_text", lang)
+
         return t(
             "course_reminder_text",
             lang,

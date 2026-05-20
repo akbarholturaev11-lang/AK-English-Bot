@@ -765,7 +765,7 @@ async def handle_text_message(message: Message, state: FSMContext, session):
         )
         return
 
-    if user and COURSE_MODE_ENABLED:
+    if user:
         reminder_engine = CourseEngineService(session)
         reminder_progress = await reminder_engine.progress_repo.get_by_user_id(user.id)
         if reminder_progress and reminder_progress.waiting_for == "reminder_setup":

@@ -10,6 +10,7 @@ TEXTS = {
         "onboarding_special_welcome": "🌟 Шумо <b>{user_num}</b>-умин корбари мо шудед!\n\n<blockquote>🎁 Ба хотири ин, ба шумо 24 соат дастрасии пурра кушода шуд. Фото-анализ бо лимити рӯзона кор мекунад.</blockquote>",
         "trial_24h_info": "🎁 <b>24 соат дастрасии пурра кушода шуд!</b>\n\n<blockquote>Шумо метавонед аз режими савол-ҷавоб ва таҳлили матни акс барои омӯзиши англисӣ истифода баред.\n\n📸 Фото-анализ бо лимити рӯзона кор мекунад.\n⏰ 24 соат баъд лимити рӯзонаи матн ҳам фаъол мешавад.</blockquote>",
         "send_first_message": "Акнун калима, ҷумла ё саволи англисии худро фиристед — омӯзишро аз ҳамон ҷо оғоз мекунем.",
+        "qa_reminder_text": "⏰ <b>Вақти practice-и англисӣ расид!</b>\n\n<blockquote>Як калима, ҷумла ё саволи англисӣ фиристед — 5 дақиқа машқ мекунем.</blockquote>",
         "level_beginner": "Аз 0",
 
         "menu_start_lesson": "📘 Оғози дарс",
@@ -155,6 +156,7 @@ TEXTS = {
         "onboarding_special_welcome": "🌟 Вы стали нашим <b>{user_num}-м</b> пользователем!\n\n<blockquote>🎁 В честь этого вам открыт полный доступ на <b>24 часа</b>. Фото-анализ работает с дневным лимитом.</blockquote>",
         "trial_24h_info": "🎁 <b>24 часа полного доступа активированы!</b>\n\n<blockquote>Вы можете использовать вопрос-ответ и разбор текста на фото для изучения английского.\n\n📸 Фото-анализ работает с дневным лимитом.\n⏰ Через 24 часа активируется дневной лимит на текст.</blockquote>",
         "send_first_message": "Теперь отправьте английское слово, фразу или свой вопрос — и начнём с этого.",
+        "qa_reminder_text": "⏰ <b>Время английской практики!</b>\n\n<blockquote>Отправьте слово, фразу или вопрос на английском — потренируемся 5 минут.</blockquote>",
         "level_beginner": "С нуля",
 
         "menu_start_lesson": "📘 Начать урок",
@@ -296,6 +298,7 @@ TEXTS = {
         "onboarding_special_welcome": "🌟 Siz bizning <b>{user_num}-chi</b> foydalanuvchimiz bo’ldingiz!\n\n<blockquote>🎁 Buning sharofati bilan sizga to’liq <b>24 soat</b> kirish ochildi. Foto analiz kunlik limit bilan ishlaydi.</blockquote>",
         "trial_24h_info": "🎁 <b>24 soatlik to’liq kirish faollashtirildi!</b>\n\n<blockquote>Ingliz tili uchun savol-javob va rasmdagi matn tahlilidan foydalanishingiz mumkin.\n\n📸 Foto analiz kunlik limit bilan ishlaydi.\n⏰ 24 soatdan keyin matn uchun ham kunlik limit ishga tushadi.</blockquote>",
         "send_first_message": "Endi inglizcha so'z, gap yoki savolingizni yuboring — o'rganishni shu yerdan boshlaymiz.",
+        "qa_reminder_text": "⏰ <b>Inglizcha practice vaqti keldi!</b>\n\n<blockquote>Bitta inglizcha so'z, gap yoki savol yuboring — 5 daqiqa mashq qilamiz.</blockquote>",
         "level_beginner": "0 dan",
 
         "menu_start_lesson": "📘 Darsni boshlash",

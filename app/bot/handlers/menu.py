@@ -1,12 +1,13 @@
 from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message
+from aiogram.types import Message, CallbackQuery
 
 from app.config import settings, COURSE_MODE_ENABLED
 from app.repositories.user_repo import UserRepository
 from app.services.course_engine_service import CourseEngineService
 from app.bot.keyboards.subscription import payment_method_keyboard
 from app.bot.keyboards.course import reminder_time_keyboard
+from app.bot.keyboards.main_menu import main_menu_keyboard, course_menu_keyboard
 from app.bot.utils.i18n import t
 
 
@@ -138,9 +139,7 @@ async def handle_reminder_time_button(message: Message, state: FSMContext, sessi
 
     lang = user.language if user.language else "ru"
     await _clear_voice_mode(user, session, state)
-    if not COURSE_MODE_ENABLED:
-        await message.answer(t("course_disabled", lang))
-        return
+
     engine = CourseEngineService(session)
     _, progress, error_key = await engine.get_or_create_progress(message.from_user.id)
     if error_key or not progress:
@@ -152,6 +151,57 @@ async def handle_reminder_time_button(message: Message, state: FSMContext, sessi
     await message.answer(
         t("course_reminder_setup_msg", lang),
         reply_markup=reminder_time_keyboard(lang),
+        parse_mode="HTML",
+    )
+
+
+@router.callback_query(F.data.startswith("course:set_tz:"))
+async def handle_reminder_timezone_callback(callback: CallbackQuery, session):
+    user_repo = UserRepository(session)
+    engine = CourseEngineService(session)
+
+    user = await user_repo.get_by_telegram_id(callback.from_user.id)
+    if not user:
+        await callback.answer()
+        return
+
+    lang = user.language if user.language else "ru"
+
+    try:
+        tz_offset = int(callback.data.split(":")[-1])
+    except (ValueError, IndexError):
+        await callback.answer()
+        return
+
+    progress = await engine.progress_repo.get_by_user_id(user.id)
+    if not progress or not progress.reminder_enabled or not progress.reminder_time:
+        await callback.answer()
+        return
+
+    progress.reminder_tz_offset = tz_offset
+    await session.commit()
+
+    tz_labels = {
+        3: "UTC+3 🇷🇺 Москва",
+        5: "UTC+5 🇺🇿🇹🇯 Тошкент/Душанбе",
+        8: "UTC+8 🇨🇳 Пекин",
+    }
+    tz_label = tz_labels.get(tz_offset, f"UTC+{tz_offset}")
+    time_str = progress.reminder_time.strftime("%H:%M")
+    keyboard = (
+        course_menu_keyboard(lang)
+        if COURSE_MODE_ENABLED and user.learning_mode == "course"
+        else main_menu_keyboard(lang)
+    )
+
+    await callback.answer()
+    try:
+        await callback.message.delete()
+    except Exception:
+        pass
+    await callback.message.answer(
+        t("course_reminder_tz_saved", lang, time=time_str, tz=tz_label),
+        reply_markup=keyboard,
         parse_mode="HTML",
     )
 
