@@ -7,6 +7,7 @@ from aiogram.fsm.context import FSMContext
 
 from app.services.onboarding_service import OnboardingService
 from app.bot.utils.i18n import t
+from app.bot.keyboards.main_menu import main_menu_keyboard
 from app.bot.keyboards.onboarding import language_keyboard, level_keyboard
 from app.bot.fsm.onboarding import OnboardingStates
 
@@ -36,8 +37,19 @@ async def cmd_start(
     await state.clear()
 
     if not created and user.language and user.level:
+        changed = False
+        if user.learning_mode != "qa":
+            user.learning_mode = "qa"
+            changed = True
+        if user.voice_mode != "none":
+            user.voice_mode = "none"
+            changed = True
+        if changed:
+            await session.commit()
+
         await message.answer(
-            t("welcome_back", user.language, name=first_name)
+            t("welcome_back", user.language, name=first_name),
+            reply_markup=main_menu_keyboard(user.language),
         )
         return
 
@@ -291,6 +303,7 @@ async def process_level(callback: CallbackQuery, state: FSMContext, session):
     await callback.message.answer(
         t("onboarding_special_welcome", user.language, user_num=user_num),
         parse_mode="HTML",
+        reply_markup=main_menu_keyboard(user.language),
     )
 
     display_text, ai_context = _get_demo_lesson(level, user.language)
