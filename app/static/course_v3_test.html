@@ -67,7 +67,7 @@ h1{font-size:23px}
   <div id="hub">
     <div class="top"><button class="ix" onclick="goBack()" aria-label="Orqaga"><i class="ti ti-arrow-left"></i></button><h1 id="t-title"></h1></div>
     <div class="sub" id="t-sub"></div>
-    <div class="place"><span class="gw han">级</span><b><i class="ti ti-target"></i> <span id="p-title"></span></b><p id="p-sub"></p><button onclick="openExam('placement')"><i class="ti ti-player-play"></i> <span id="p-btn"></span></button></div>
+    <div class="place"><span class="gw han">Aa</span><b><i class="ti ti-target"></i> <span id="p-title"></span></b><p id="p-sub"></p><button onclick="openExam('placement')"><i class="ti ti-player-play"></i> <span id="p-btn"></span></button></div>
     <div class="sech" id="ex-head"></div>
     <div id="ex-list"></div>
   </div>
@@ -84,9 +84,9 @@ h1{font-size:23px}
 <script>
 var params=new URLSearchParams(location.search||"");
 var LANG=(params.get("lang")||"ru");if(["uz","ru","tj"].indexOf(LANG)<0)LANG="ru";
-var L={ru:{title:"Тест-центр",sub:"Проверьте себя в формате реального English",pTitle:"Не знаете свой уровень?",pSub:"Пройдите короткий тест — мы определим подходящий уровень English.",pBtn:"Тест на уровень · ~10 мин",exHead:"Экзамены English",eTitle:"Материал готовится",eSub:"Экзаменационные вопросы будут добавлены позже и подгружены из заданного источника.",eBack:"К списку",listen:"听力 Аудир.",read:"阅读 Чтение",write:"书写 Письмо",q:"вопросов",min:"мин",start:"Начать",limTitle:"Бесплатный тест на сегодня исчерпан",limSub:"В бесплатном режиме тест доступен 1 раз в день. Откройте Premium для безлимита или возвращайтесь завтра.",limPay:"Открыть Premium",limBack:"Назад",adCont:"Продолжить с рекламой",adLimSub:"Бесплатная попытка использована. Посмотрите короткую рекламу, чтобы продолжить, или откройте Premium."},
-  uz:{title:"Test markazi",sub:"O'zingizni haqiqiy English formatida sinang",pTitle:"Darajangizni bilmaysizmi?",pSub:"Qisqa testdan o'ting — sizga mos English darajasini aytamiz.",pBtn:"Daraja aniqlash testi · ~10 daq",exHead:"English imtihonlari",eTitle:"Material tayyorlanmoqda",eSub:"Imtihon savollari keyinroq qo'shiladi va belgilangan manbadan yuklanadi.",eBack:"Ro'yxatga",listen:"听力 Tinglash",read:"阅读 O'qish",write:"书写 Yozish",q:"savol",min:"daq",start:"Boshlash",limTitle:"Bugungi bepul test tugadi",limSub:"Bepul rejimda test kuniga 1 marta ochiladi. Cheksiz test uchun Premium oching yoki ertaga qaytib keling.",limPay:"Premium ochish",limBack:"Orqaga",adCont:"Reklama bilan davom etish",adLimSub:"Bepul sinov tugadi. Davom etish uchun qisqa reklama ko'ring yoki Premium oching."},
-  tj:{title:"Маркази тест",sub:"Худро дар формати English санҷед",pTitle:"Сатҳи худро намедонед?",pSub:"Тести кӯтоҳро гузаред — сатҳи мувофиқи English-ро муайян мекунем.",pBtn:"Тести муайянкунии сатҳ",exHead:"Имтиҳонҳои English",eTitle:"Мавод омода мешавад",eSub:"Саволҳои имтиҳон баъдтар илова ва аз манбаи муайян бор карда мешаванд.",eBack:"Ба рӯйхат",listen:"听力 Шунидан",read:"阅读 Хондан",write:"书写 Навиштан",q:"савол",min:"дақ",start:"Оғоз",limTitle:"Тести ройгони имрӯза тамом шуд",limSub:"Дар ҳолати ройгон тест рӯзе 1 маротиба дастрас аст. Барои бепоён Premium кушоед ё фардо баргардед.",limPay:"Кушодани Premium",limBack:"Бозгашт",adCont:"Идома бо реклама",adLimSub:"Кӯшиши ройгон истифода шуд. Барои идома рекламаи кӯтоҳро бинед ё Premium кушоед."}}[LANG];
+var L={ru:{title:"Тест-центр",sub:"Проверьте себя в формате реального English",pTitle:"Не знаете свой уровень?",pSub:"Пройдите короткий тест — мы определим подходящий уровень English.",pBtn:"Тест на уровень · ~10 мин",exHead:"Экзамены English",eTitle:"Материал готовится",eSub:"Экзаменационные вопросы будут добавлены позже и подгружены из заданного источника.",eBack:"К списку",listen:"Listening Аудир.",read:"Reading Чтение",write:"Writing Письмо",q:"вопросов",min:"мин",start:"Начать",limTitle:"Бесплатный тест на сегодня исчерпан",limSub:"В бесплатном режиме тест доступен 1 раз в день. Откройте Premium для безлимита или возвращайтесь завтра.",limPay:"Открыть Premium",limBack:"Назад",adCont:"Продолжить с рекламой",adLimSub:"Бесплатная попытка использована. Посмотрите короткую рекламу, чтобы продолжить, или откройте Premium."},
+  uz:{title:"Test markazi",sub:"O'zingizni haqiqiy English formatida sinang",pTitle:"Darajangizni bilmaysizmi?",pSub:"Qisqa testdan o'ting — sizga mos English darajasini aytamiz.",pBtn:"Daraja aniqlash testi · ~10 daq",exHead:"English imtihonlari",eTitle:"Material tayyorlanmoqda",eSub:"Imtihon savollari keyinroq qo'shiladi va belgilangan manbadan yuklanadi.",eBack:"Ro'yxatga",listen:"Listening Tinglash",read:"Reading O'qish",write:"Writing Yozish",q:"savol",min:"daq",start:"Boshlash",limTitle:"Bugungi bepul test tugadi",limSub:"Bepul rejimda test kuniga 1 marta ochiladi. Cheksiz test uchun Premium oching yoki ertaga qaytib keling.",limPay:"Premium ochish",limBack:"Orqaga",adCont:"Reklama bilan davom etish",adLimSub:"Bepul sinov tugadi. Davom etish uchun qisqa reklama ko'ring yoki Premium oching."},
+  tj:{title:"Маркази тест",sub:"Худро дар формати English санҷед",pTitle:"Сатҳи худро намедонед?",pSub:"Тести кӯтоҳро гузаред — сатҳи мувофиқи English-ро муайян мекунем.",pBtn:"Тести муайянкунии сатҳ",exHead:"Имтиҳонҳои English",eTitle:"Мавод омода мешавад",eSub:"Саволҳои имтиҳон баъдтар илова ва аз манбаи муайян бор карда мешаванд.",eBack:"Ба рӯйхат",listen:"Listening Шунидан",read:"Reading Хондан",write:"Writing Навиштан",q:"савол",min:"дақ",start:"Оғоз",limTitle:"Тести ройгони имрӯза тамом шуд",limSub:"Дар ҳолати ройгон тест рӯзе 1 маротиба дастрас аст. Барои бепоён Premium кушоед ё фардо баргардед.",limPay:"Кушодани Premium",limBack:"Бозгашт",adCont:"Идома бо реклама",adLimSub:"Кӯшиши ройгон истифода шуд. Барои идома рекламаи кӯтоҳро бинед ё Premium кушоед."}}[LANG];
 var EM={ru:{tfTrue:"Верно",tfFalse:"Неверно",listen:"Прослушать",q:"Вопрос",of:"из",result:"Результат",passed:"Тест пройден!",failed:"Пока не пройден",passSub:"Вы готовы к уровню English ",failSub:"Продолжайте подготовку к English ",again:"Пройти заново",toList:"К списку экзаменов",sec:{listening:"Аудирование",reading:"Чтение",writing:"Письмо"}},
   uz:{tfTrue:"To'g'ri",tfFalse:"Noto'g'ri",listen:"Tinglash",q:"Savol",of:"/",result:"Natija",passed:"Test topshirildi!",failed:"Hozircha o'tilmadi",passSub:"Siz English darajasiga tayyorsiz: English ",failSub:"Tayyorgarlikni davom ettiring: English ",again:"Qayta topshirish",toList:"Imtihonlar ro'yxatiga",sec:{listening:"Tinglash",reading:"O'qish",writing:"Yozish"}},
   tj:{tfTrue:"Дуруст",tfFalse:"Нодуруст",listen:"Шунидан",q:"Савол",of:"аз",result:"Натиҷа",passed:"Тест супорида шуд!",failed:"Ҳоло гузаронида нашуд",passSub:"Шумо ба сатҳи English тайёред: English ",failSub:"Омодагиро давом диҳед: English ",again:"Аз нав супоридан",toList:"Ба рӯйхати имтиҳонҳо",sec:{listening:"Шунидан",reading:"Хондан",writing:"Навиштан"}}}[LANG];
@@ -190,7 +190,7 @@ function examStem(q){return q.stem?(q.stem[LANG]||q.stem.ru||q.stem.uz||q.stem.t
 function isMeaningQuestion(q){
   var zh=q.stem_zh||"";
   var stem=examStem(q).toLowerCase();
-  return zh.indexOf("意思")>-1||stem.indexOf("ma'nosi")>-1||stem.indexOf("значит")>-1||stem.indexOf("маъно")>-1;
+  return zh.indexOf("meaning")>-1||stem.indexOf("ma'nosi")>-1||stem.indexOf("значит")>-1||stem.indexOf("маъно")>-1;
 }
 function examOptionText(q,o){
   var lab=examLabel(o),zh=o.zh||"";
@@ -269,11 +269,11 @@ var PT={ru:{lead:"Выберите значение",rec:"Рекомендуем
   tj:{lead:"Маъноро интихоб кунед",rec:"Тавсия",recSub:"Сатҳҳои поёнро хуб азхуд кардаед. Аз English ",start:"Курси English ",retake:"Аз нав",lvl:"English"}}[LANG];
 var QP=[
   {lvl:1,h:"Thanks",py:"xièxie",o:[{ru:"спасибо",uz:"rahmat",tj:"ташаккур",ok:1},{ru:"привет",uz:"salom",tj:"салом"},{ru:"пока",uz:"xayr",tj:"хайр"}]},
-  {lvl:1,h:"再见",py:"zàijiàn",o:[{ru:"до свидания",uz:"xayr",tj:"хайр",ok:1},{ru:"спасибо",uz:"rahmat",tj:"ташаккур"},{ru:"да",uz:"ha",tj:"ҳа"}]},
-  {lvl:2,h:"已经",py:"yǐjīng",o:[{ru:"уже",uz:"allaqachon",tj:"аллакай",ok:1},{ru:"ещё",uz:"hali",tj:"ҳоло"},{ru:"снова",uz:"yana",tj:"боз"}]},
-  {lvl:2,h:"因为",py:"yīnwèi",o:[{ru:"потому что",uz:"chunki",tj:"зеро",ok:1},{ru:"но",uz:"lekin",tj:"аммо"},{ru:"поэтому",uz:"shuning uchun",tj:"барои ҳамин"}]},
-  {lvl:3,h:"虽然",py:"suīrán",o:[{ru:"хотя",uz:"garchi",tj:"ҳарчанд",ok:1},{ru:"если",uz:"agar",tj:"агар"},{ru:"потому что",uz:"chunki",tj:"зеро"}]},
-  {lvl:4,h:"表示",py:"biǎoshì",o:[{ru:"выражать",uz:"ifodalamoq",tj:"ифода кардан",ok:1},{ru:"заканчивать",uz:"tugatmoq",tj:"тамом кардан"},{ru:"начинать",uz:"boshlamoq",tj:"оғоз кардан"}]}
+  {lvl:1,h:"Goodbye",py:"/ɡʊdˈbaɪ/",o:[{ru:"до свидания",uz:"xayr",tj:"хайр",ok:1},{ru:"спасибо",uz:"rahmat",tj:"ташаккур"},{ru:"да",uz:"ha",tj:"ҳа"}]},
+  {lvl:2,h:"Already",py:"/ɔːlˈredi/",o:[{ru:"уже",uz:"allaqachon",tj:"аллакай",ok:1},{ru:"ещё",uz:"hali",tj:"ҳоло"},{ru:"снова",uz:"yana",tj:"боз"}]},
+  {lvl:2,h:"Because",py:"/bɪˈkɔːz/",o:[{ru:"потому что",uz:"chunki",tj:"зеро",ok:1},{ru:"но",uz:"lekin",tj:"аммо"},{ru:"поэтому",uz:"shuning uchun",tj:"барои ҳамин"}]},
+  {lvl:3,h:"Although",py:"/ɔːlˈðoʊ/",o:[{ru:"хотя",uz:"garchi",tj:"ҳарчанд",ok:1},{ru:"если",uz:"agar",tj:"агар"},{ru:"потому что",uz:"chunki",tj:"зеро"}]},
+  {lvl:4,h:"Express",py:"/ɪkˈspres/",o:[{ru:"выражать",uz:"ifodalamoq",tj:"ифода кардан",ok:1},{ru:"заканчивать",uz:"tugatmoq",tj:"тамом кардан"},{ru:"начинать",uz:"boshlamoq",tj:"оғоз кардан"}]}
 ];
 var pi=0,pans=[];
 function olang(o){return o[LANG]||o.ru}

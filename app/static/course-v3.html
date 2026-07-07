@@ -605,8 +605,8 @@ var App={
     var awardedXp=Math.max(0,Number(g.awarded_xp||0));
     var xpRows=awardedXp>0?[["+"+awardedXp,"XP"]]:[];
     var levelRows=[[nextLabel||curLabel,lu.opened]].concat(xpRows);
-    var V={lesson:{emb:'<span class="h2 han">毕</span>',h:lu.lessonH,p:lu.lessonP,rw:xpRows},
-      level:{emb:'<span class="h2 han">二</span>',h:levelCopy.h||lu.levelH,p:levelCopy.p||lu.levelP,rw:levelRows},
+    var V={lesson:{emb:'<span class="h2 han">✓</span>',h:lu.lessonH,p:lu.lessonP,rw:xpRows},
+      level:{emb:'<span class="h2 han">II</span>',h:levelCopy.h||lu.levelH,p:levelCopy.p||lu.levelP,rw:levelRows},
       xp:{emb:'<small>'+lu.lvl+'</small><b>5</b>',h:lu.xpH,p:lu.xpP,rw:xpRows}}[type||"lesson"];
     if(!$("#lu-rays").innerHTML){var r="";for(var a=0;a<24;a++)r+='<rect x="99" y="0" width="2" height="100" fill="#C2962F" transform="rotate('+(a*15)+' 100 100)"/>';$("#lu-rays").innerHTML=r;}
     $("#lu-panda").innerHTML=pandaChar("celebrate");
@@ -645,9 +645,9 @@ var App={
     var r={title:LANG==="ru"?"Вы поднялись в рейтинге!":LANG==="tj"?"Дар рейтинг боло рафтед!":"Reytingda ko'tarildingiz!",sub:sub,cont:T().cont};
     var rows=[];
 	    if(aboveU)rows.push({rk:meIdx,a:aboveU.a,n:aboveU.n,xp:(aboveU.weeklyXp||0).toLocaleString("ru")});
-	    if(meU)rows.push({rk:meIdx+1,a:meU.a||PROF.avatar||"阿",n:T().you,xp:ratingScore(meU).toLocaleString("ru"),me:1,from:aboveU?1:0});
+	    if(meU)rows.push({rk:meIdx+1,a:meU.a||PROF.avatar||"A",n:T().you,xp:ratingScore(meU).toLocaleString("ru"),me:1,from:aboveU?1:0});
 	    if(belowU)rows.push({rk:meIdx+2,a:belowU.a,n:belowU.n,xp:(belowU.weeklyXp||0).toLocaleString("ru"),from:-1});
-	    if(!rows.length)rows=[{rk:1,a:PROF.avatar||"阿",n:T().you,xp:currentUserWeeklyXp().toLocaleString("ru"),me:1,from:0}];
+	    if(!rows.length)rows=[{rk:1,a:PROF.avatar||"A",n:T().you,xp:currentUserWeeklyXp().toLocaleString("ru"),me:1,from:0}];
     $("#lu-panda").innerHTML=pandaChar("celebrate");
     $("#lu-stage").innerHTML='<div class="ru-wrap"><h2>'+r.title+'</h2><p>'+r.sub+'</p><div class="ru-board">'+rows.map(function(u){return '<div class="ru-row '+(u.me?"me":"")+'" data-from="'+(u.from||0)+'"><span class="ru-rk">'+u.rk+'</span><span class="ru-av'+(u.me?" han":"")+'">'+u.a+'</span><span class="ru-nm">'+esc(u.n)+'</span><span class="ru-xp">'+u.xp+'</span></div>'}).join("")+'</div></div>';
     $("#levelup").classList.add("on");
@@ -661,7 +661,7 @@ var App={
       c:"Вот ваш курс! Каждый кружок — это урок. Нажми на узел и начни учиться.",
       cNode:"Это твой текущий урок — нажми и начни! Внутри урока появится кнопка ✏️ — нажми, чтобы увидеть как пишется слово.",
       m:"Раздел практики — тут всё для закрепления знаний.",
-      mDict:"Словарь слов 字 — все знаки Beginner–Advanced: написание, произношение, значение. Можно искать по слову или значению.",
+      mDict:"Словарь слов — все знаки Beginner–Advanced: написание, произношение, значение. Можно искать по слову или значению.",
       mRecog:"Распознавание — слышишь и видишь слово, выбираешь нужный слово. Тренирует чтение знаков.",
       mPron:"Произношение — слушай эталон, повторяй вслух, а ИИ проверит твоё произношение и тон.",
       mTest:"Тест-центр — официальные экзамены Beginner–Advanced и тест для определения твоего уровня с нуля.",
@@ -675,7 +675,7 @@ var App={
       c:"Mana kursingiz! Har bir doira — bitta dars. Tugmachani bosing va o'qishni boshlang.",
       cNode:"Bu hozirgi darsingiz — bosing va boshlang! Dars ichida ✏️ tugmasi paydo bo'ladi — so'z yozilishini ko'rish uchun bosing.",
       m:"Mashq bo'limi — bilimlarni mustahkamlash uchun hamma narsa.",
-      mDict:"So'z lug'ati 字 — Beginner–Advanced barcha belgilar: yozilishi, talaffuz va ma'nosi. So'z yoki ma'no bo'yicha qidirish mumkin.",
+      mDict:"So'z lug'ati  — Beginner–Advanced barcha belgilar: yozilishi, talaffuz va ma'nosi. So'z yoki ma'no bo'yicha qidirish mumkin.",
       mRecog:"So'zni tanish — so'zni eshitib, ko'rib, to'g'ri so'zni tanlaysiz. Belgilarni o'qishni mashq qiladi.",
       mPron:"Talaffuz mashqi — namunani eshiting, ovoz chiqarib takrorlang, AI talaffuz va ohangni tekshiradi.",
       mTest:"Test markazi — Beginner–Advanced rasmiy imtihon savollari va noldan daraja aniqlash testi.",
@@ -689,7 +689,7 @@ var App={
       c:"Ин ҷо курси шумо! Ҳар доира — як дарс. Тугмачаро пахш кунед ва омӯзишро оғоз кунед.",
       cNode:"Ин дарси ҷории шумо — пахш кунед ва оғоз кунед! Дар дарс тугмаи ✏️ пайдо мешавад — барои дидани навиштани слово пахш кунед.",
       m:"Бахши машқ — ҳама чиз барои мустаҳкам кардани дониш.",
-      mDict:"Луғати калимаҳо 字 — ҳамаи аломатҳои Beginner–Advanced: навишт, талаффуз, маъно. Ҷустуҷӯ мумкин аст.",
+      mDict:"Луғати калимаҳо  — ҳамаи аломатҳои Beginner–Advanced: навишт, талаффуз, маъно. Ҷустуҷӯ мумкин аст.",
       mRecog:"Шинохти калимаҳо — калимаро шунида ва дида, словои дурустро интихоб мекунед. Хонданро машқ мекунад.",
       mPron:"Машқи талаффуз — намунаро гӯш кунед, бо овоз такрор кунед, AI талаффуз ва оҳангро месанҷад.",
       mTest:"Маркази тест — имтиҳонҳои расмии Beginner–Advanced ва тести муайянкунии сатҳ аз сифр.",
@@ -734,7 +734,7 @@ var App={
   notifToggle:function(){if(notifOn){App.confirmNotifOff()}else{App.applyNotif(true)}},
   applyNotif:function(on){notifOn=on;if(MAP)MAP.notify={enabled:on};renderProfile();if(INIT_DATA)_apiPost("/api/v3/notify",{enabled:on}).catch(function(){})},
   confirmNotifOff:function(){var w={uz:{title:"Bildirishnomalarni o'chirasizmi?",body:"Kunlik eslatma va haftalik hisobotlar kelmaydi. Bu eslatmalar o'qishni tashlab qo'ymaslikka yordam beradi.",keep:"Yoqilgan qoldirish",off:"O'chirish"},ru:{title:"Отключить уведомления?",body:"Вы перестанете получать ежедневные напоминания и еженедельный отчёт. Они помогают не бросать учёбу.",keep:"Оставить включёнными",off:"Отключить"},tj:{title:"Огоҳиҳоро хомӯш мекунед?",body:"Шумо ёдовариҳои ҳаррӯза ва ҳисоботи ҳафтаинаро намегиред. Онҳо барои тарк накардани омӯзиш кӯмак мекунанд.",keep:"Фаъол мондан",off:"Хомӯш кардан"}}[LANG]||{};App.openSheet('<div class="shead"><div style="width:52px;height:52px;border-radius:15px;background:var(--card);border:1px solid var(--line);color:var(--cin);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px"><i class="ti ti-bell-off"></i></div><div class="tr" style="font-size:16px;color:var(--ink)">'+esc(w.title)+'</div><div class="tr">'+esc(w.body)+'</div></div><button class="scta" onclick="App.closeSheet()">'+esc(w.keep)+'</button><button class="scta ghost" style="margin-top:8px" onclick="App.closeSheet();App.applyNotif(false)">'+esc(w.off)+'</button>')},
-  avatarEdit:function(){var t=T();var note=LANG==="ru"?"Аватар берётся из вашего профиля Telegram":LANG==="tj"?"Аватар аз профили Telegram шумо гирифта мешавад":"Avatar Telegram profilingizdan olinadi";App.openSheet('<div class="shead"><div class="zh han" style="font-size:30px">'+(PROF.avatar||"阿")+'</div><div class="tr" style="margin-top:8px">'+esc(note)+'</div></div><button class="scta ghost" onclick="App.closeSheet()">OK</button>')},
+  avatarEdit:function(){var t=T();var note=LANG==="ru"?"Аватар берётся из вашего профиля Telegram":LANG==="tj"?"Аватар аз профили Telegram шумо гирифта мешавад":"Avatar Telegram profilingizdan olinadi";App.openSheet('<div class="shead"><div class="zh han" style="font-size:30px">'+(PROF.avatar||"A")+'</div><div class="tr" style="margin-top:8px">'+esc(note)+'</div></div><button class="scta ghost" onclick="App.closeSheet()">OK</button>')},
   goalPicker:function(){var p=pl();var opts=[10,20,30,50];
     App.openSheet('<div class="shead"><div class="tr" style="font-size:16px;color:var(--ink)">'+p.goalSet+'</div></div>'
       +opts.map(function(v){return '<button class="opt-row'+(v===dailyGoal?" on":"")+'" onclick="App.pickGoal('+v+')"><i class="ti ti-target"></i> '+v+' XP'+(v===dailyGoal?'<span class="chk"><i class="ti ti-check"></i></span>':'')+'</button>'}).join(""))},
@@ -1153,7 +1153,7 @@ function renderCourse(){
       else{
         var st=isPremiumLocked(n.l)?"locked":n.l.status;cls=st;
         if(st==="done")inner='<i class="ti ti-check"></i>';
-        else if(st==="current"){inner='<span class="han" style="font-size:19px">学</span>';bub='<div class="bubble">'+T().cont.toUpperCase()+'</div>'}
+        else if(st==="current"){inner='<span class="han" style="font-size:19px">A</span>';bub='<div class="bubble">'+T().cont.toUpperCase()+'</div>'}
         else inner='<i class="ti ti-lock"></i>';
         lbl=n.l.zh;clk='onclick="openLessonSheet('+JSON.stringify(allLessons().indexOf(n.l))+')"';
       }
@@ -1490,7 +1490,7 @@ function teachContinue(){var cta=$("#f-cta");cta.style.display="flex"}
 function _wrongWordOptions(words,field,correct){
   var vals=(words||[]).map(function(c){var w=c.word||{};return field==="meaning"?tr(w.meaning):w.zh}).filter(Boolean);
   vals=vals.filter(function(v,i,a){return v!==correct&&a.indexOf(v)===i}).slice(0,3);
-  while(vals.length<3){vals.push(field==="meaning"?["men","sen","dars","savol"][vals.length]:["我","你","学"][vals.length])}
+  while(vals.length<3){vals.push(field==="meaning"?["men","sen","dars","savol"][vals.length]:["word","hello","today"][vals.length])}
   return vals;
 }
 function _choiceFromWord(c,opts,correctIndex,title,question,headHtml){
@@ -1821,7 +1821,7 @@ function renderMashq(){
   $("#s-mashq").innerHTML='<div class="htop" style="padding-bottom:6px"><span class="lvpill"><i class="ti ti-cards"></i> '+t.nav.mashq+'</span></div>'
     +'<div class="phead"><div class="sub">'+t.mashqSub+'</div></div>'
     +'<div class="sech">'+t.grammar+' · '+t.pron+'</div>'
-    +rowCard("t-amber",'<span class="han">字</span>',t.dict,t.dictSub,"App.openDict()","m-dict")
+    +rowCard("t-amber",'<span class="han"></span>',t.dict,t.dictSub,"App.openDict()","m-dict")
     +rowCard("t-blue",'<i class="ti ti-eye"></i>',t.recog,t.recogSub,"App.openRecog()","m-recog")
     +rowCard("t-jade",'<i class="ti ti-microphone"></i>',t.pron,t.pronSub,"App.openPron()","m-pron")
     +'<div class="sech">'+t.testCenter.split(" ")[0]+'</div>'
@@ -1973,14 +1973,14 @@ function _renderRatingContent(){
 	      loadReferrals().then(function(){_renderRatingContent()}).catch(function(){referralMeta={loaded:true,error:true,joined:0,active:0,required:0};referralUsers=[];_renderRatingContent()});
 	      return;
 	    }
-	    h+='<div class="rt-invite" style="padding:20px 22px 18px"><span class="han">友</span><p>'+esc(r.refSub||r.inviteSub)+'</p><button onclick="openInviteSheet()"><i class="ti ti-user-plus"></i> '+esc(r.invite)+'</button></div>'
+	    h+='<div class="rt-invite" style="padding:20px 22px 18px"><span class="han">+</span><p>'+esc(r.refSub||r.inviteSub)+'</p><button onclick="openInviteSheet()"><i class="ti ti-user-plus"></i> '+esc(r.invite)+'</button></div>'
 	      +'<div class="ref-stat"><div><b>'+Number(referralMeta.joined||0)+'</b><small>'+(LANG==="ru"?"перешли":LANG==="tj"?"даромаданд":"kirgan")+'</small></div><div><b>'+Number(referralMeta.active||0)+' / '+Number(referralMeta.required||0)+'</b><small>'+(LANG==="ru"?"актив":LANG==="tj"?"фаъол":"faol")+'</small></div></div>';
 	    if(referralMeta.error){
-	      h+='<div class="rt-invite"><span class="han">友</span><p>'+esc(r.refLoadErr)+'</p></div>';
+	      h+='<div class="rt-invite"><span class="han">+</span><p>'+esc(r.refLoadErr)+'</p></div>';
 	      $("#s-rating").innerHTML=h;return;
 	    }
 	    if(!referralUsers.length){
-	      h+='<div class="rt-invite"><span class="han">人</span><p>'+esc(r.refEmpty)+'</p></div>';
+	      h+='<div class="rt-invite"><span class="han">P</span><p>'+esc(r.refEmpty)+'</p></div>';
 	      $("#s-rating").innerHTML=h;return;
 	    }
 	    referralUsers.forEach(function(u,i){
@@ -1991,14 +1991,14 @@ function _renderRatingContent(){
 	    });
 	    $("#s-rating").innerHTML=h;return;
 	  }
-  h+='<div class="rt-league"><div class="rt-emb han">朱</div><div><div class="nm2">'+t.league+'</div><div class="sb"><i class="ti ti-users" style="font-size:12px"></i> '+memberCount+' '+r.members+'</div></div><div class="rt-cd"><b>'+ratingCountdownText()+'</b><small>'+r.left+'</small></div></div>'
-    +'<div class="rt-ladder"><span class="rt-step han">玄</span><span class="rt-step line"></span><span class="rt-step cur han">朱</span><span class="rt-step line"></span><span class="rt-step han">龙</span><span class="rt-step line"></span><span class="rt-step han">凤</span></div>';
+  h+='<div class="rt-league"><div class="rt-emb han">P</div><div><div class="nm2">'+t.league+'</div><div class="sb"><i class="ti ti-users" style="font-size:12px"></i> '+memberCount+' '+r.members+'</div></div><div class="rt-cd"><b>'+ratingCountdownText()+'</b><small>'+r.left+'</small></div></div>'
+    +'<div class="rt-ladder"><span class="rt-step han">B</span><span class="rt-step line"></span><span class="rt-step cur han">P</span><span class="rt-step line"></span><span class="rt-step han">D</span><span class="rt-step line"></span><span class="rt-step han">P</span></div>';
   if(ratingMeta.error){
-    h+='<div class="rt-invite"><span class="han">榜</span><p>'+esc(r.loadErr)+'</p></div>';
+    h+='<div class="rt-invite"><span class="han">#</span><p>'+esc(r.loadErr)+'</p></div>';
     $("#s-rating").innerHTML=h;return;
   }
   if(!ratingUsers.length){
-    h+='<div class="rt-invite"><span class="han">榜</span><p>'+esc(r.empty)+'</p></div>';
+    h+='<div class="rt-invite"><span class="han">#</span><p>'+esc(r.empty)+'</p></div>';
     $("#s-rating").innerHTML=h;return;
   }
   if(ratingUsers.length>=5)h+='<div class="rt-zone up"><i class="ti ti-arrow-up"></i> '+r.promote+' <span class="ln"></span></div>';
@@ -2081,7 +2081,7 @@ function challengeViewerId(ch){
 function renderChallengeSheet(ch){
   var c=chL(),other=(ch.other_user&&ch.other_user.name)||"?";
   var level=courseLevelLabel(ch.level||((MAP&&MAP.level)||"hsk1"));
-  var head='<div class="shead"><div class="zh han" style="font-size:34px">战</div><div class="tr" style="font-size:16px;color:var(--ink);margin-top:8px">'+esc(c.title)+'</div><div class="tr">'+esc(other)+' · '+esc(level)+'</div></div>'
+  var head='<div class="shead"><div class="zh han" style="font-size:34px">VS</div><div class="tr" style="font-size:16px;color:var(--ink);margin-top:8px">'+esc(c.title)+'</div><div class="tr">'+esc(other)+' · '+esc(level)+'</div></div>'
     +'<div class="tmpl">'+esc(c.same)+'<br>'+esc(c.mix)+'</div>';
   if(ch.status==="pending"){
     if(ch.viewer_role==="opponent"){
@@ -2119,13 +2119,13 @@ function openChallengeById(id){
   var c=chL();id=Number(id||0);
   if(!id)return;
   App.show("rating");
-  App.openSheet('<div class="shead"><div class="zh han" style="font-size:34px">战</div><div class="tr">'+esc(c.load)+'</div></div>');
-  if(!INIT_DATA){App.openSheet('<div class="shead"><div class="zh han" style="font-size:34px">战</div><div class="tr">'+esc(c.needTg)+'</div></div>');return}
+  App.openSheet('<div class="shead"><div class="zh han" style="font-size:34px">VS</div><div class="tr">'+esc(c.load)+'</div></div>');
+  if(!INIT_DATA){App.openSheet('<div class="shead"><div class="zh han" style="font-size:34px">VS</div><div class="tr">'+esc(c.needTg)+'</div></div>');return}
   _apiGet("/api/miniapp/challenges").then(function(r){return r.json()}).then(function(d){
     var item=null;(d.items||[]).forEach(function(ch){if(Number(ch.id)===id)item=ch});
     if(item){renderChallengeSheet(item);return}
     throw new Error("not_found");
-  }).catch(function(){App.openSheet('<div class="shead"><div class="zh han" style="font-size:34px">战</div><div class="tr">'+esc(c.err)+'</div></div>')});
+  }).catch(function(){App.openSheet('<div class="shead"><div class="zh han" style="font-size:34px">VS</div><div class="tr">'+esc(c.err)+'</div></div>')});
 }
 function respondChallenge(id,action){
   var c=chL();
@@ -2178,7 +2178,7 @@ function showChallengeResult(d){
   var title=ch.status==="completed"?(tie?c.tie:(won?c.youWon:c.youLost)):c.sent;
   var xp=Number(d&&d.reward&&d.reward.awarded_xp||0)+Number(d&&d.winner_reward&&d.winner_reward.awarded_xp||0);
   var sub=ch.status==="completed"?(c.score+": "+challengeScore(ch,"challenger")+" vs "+challengeScore(ch,"opponent")):c.waitSub;
-  App.openSheet('<div class="shead"><div class="zh han" style="font-size:38px">战</div><div class="tr" style="font-size:18px;color:var(--ink);font-weight:700">'+esc(title)+'</div><div class="tr" style="line-height:1.5">'+esc(sub)+'</div></div>'
+  App.openSheet('<div class="shead"><div class="zh han" style="font-size:38px">VS</div><div class="tr" style="font-size:18px;color:var(--ink);font-weight:700">'+esc(title)+'</div><div class="tr" style="line-height:1.5">'+esc(sub)+'</div></div>'
     +'<div class="sst"><div><b>'+esc((d.score||0)+" / "+(d.total||0))+'</b><small>'+esc(c.score)+'</small></div><div><b>+'+xp+'</b><small>'+esc(c.xp)+'</small></div></div>'
     +'<button class="scta" onclick="App.closeSheet();App.show(\'rating\');ratingLoaded=false;renderRating()"><i class="ti ti-trophy"></i> '+esc(c.rating)+'</button>');
 }
@@ -2187,11 +2187,11 @@ function finishChallengeRound(){
   $("#flow").classList.remove("on");$("#f-cta").style.display="none";hideBar();setWriteBtn("");
   var duration=Math.max(0,Math.round((Date.now()-(ch.startedAt||Date.now()))/1000));
   var payload={answers:ch.answers||[],duration_seconds:duration};
-  App.openSheet('<div class="shead"><div class="zh han" style="font-size:34px">战</div><div class="tr">'+esc(c.load)+'</div></div>');
+  App.openSheet('<div class="shead"><div class="zh han" style="font-size:34px">VS</div><div class="tr">'+esc(c.load)+'</div></div>');
   _apiPost("/api/miniapp/challenges/"+Number(ch.id)+"/submit",payload).then(function(r){return r.json()}).then(function(d){
     if(!d||!d.ok)throw new Error("submit_failed");
     Flow.challenge=null;applyChallengeReward(d);showChallengeResult(d);
-  }).catch(function(){Flow.challenge=ch;App.openSheet('<div class="shead"><div class="zh han" style="font-size:34px">战</div><div class="tr">'+esc(c.err)+'</div></div><button class="scta" onclick="finishChallengeRound()"><i class="ti ti-refresh"></i> '+esc(c.load)+'</button>')});
+  }).catch(function(){Flow.challenge=ch;App.openSheet('<div class="shead"><div class="zh han" style="font-size:34px">VS</div><div class="tr">'+esc(c.err)+'</div></div><button class="scta" onclick="finishChallengeRound()"><i class="ti ti-refresh"></i> '+esc(c.load)+'</button>')});
 }
 
 /* ---------- Write templates sheet ---------- */
@@ -2229,14 +2229,14 @@ function renderInviteSheet(d){
   var title=LANG==="ru"?"Пригласить друга":LANG==="tj"?"Дӯстро даъват кардан":"Do'st chaqirish";
   var hint=LANG==="ru"?"Готовый текст откроется в Telegram. Выберите друга и отправьте.":LANG==="tj"?"Матни тайёр дар Telegram кушода мешавад. Дӯстро интихоб кунед ва фиристед.":"Tayyor matn Telegramda ochiladi. Do'stni tanlab yuboring.";
   var stat=(typeof d.active_count!=="undefined")?'<div class="sst"><div><b>'+Number(d.joined_count||0)+'</b><small>'+(LANG==="ru"?"перешли":LANG==="tj"?"даромаданд":"kirgan")+'</small></div><div><b>'+Number(d.active_count||0)+' / '+Number(d.required||10)+'</b><small>'+(LANG==="ru"?"актив":LANG==="tj"?"фаъол":"faol")+'</small></div></div>':'';
-  App.openSheet('<div class="shead"><div class="zh han" style="font-size:34px">友</div><div class="tr" style="font-size:16px;color:var(--ink);margin-top:8px">'+title+'</div><div class="tr">'+hint+'</div></div>'
+  App.openSheet('<div class="shead"><div class="zh han" style="font-size:34px">+</div><div class="tr" style="font-size:16px;color:var(--ink);margin-top:8px">'+title+'</div><div class="tr">'+hint+'</div></div>'
     +stat
     +'<div class="tmpl">'+esc((d.share_text||"")+" "+(d.link||""))+'</div>'
     +'<button class="scta" onclick="tgShareLink(_invitePayload.link,_invitePayload.share_text)"><i class="ti ti-brand-telegram"></i> '+sendLbl+'</button>');
 }
 function openInviteSheet(){
   var loading=LANG==="ru"?"Готовим ссылку…":LANG==="tj"?"Силка омода мешавад…":"Link tayyorlanyapti…";
-	  App.openSheet('<div class="shead"><div class="zh han" style="font-size:34px">友</div><div class="tr">'+loading+'</div></div>');
+	  App.openSheet('<div class="shead"><div class="zh han" style="font-size:34px">+</div><div class="tr">'+loading+'</div></div>');
 	  if(INIT_DATA){
 	    _apiGet(invitePayloadUrl()).then(function(r){return r.json()}).then(function(d){
 	      if(d&&d.ok){renderInviteSheet(d);return}
@@ -2322,13 +2322,13 @@ function renderProfile(){
   var lessonAchPct=Math.min(100,Math.round(completedLessons/100*100));
   var streakAchPct=Math.min(100,Math.round(streak/30*100));
   $("#s-profile").innerHTML='<div class="htop" style="padding-bottom:4px"><span class="lvpill"><i class="ti ti-user"></i> '+t.nav.profile+'</span></div>'
-    +'<div class="phero"><div class="pav'+(PROF.avatar&&/[一-鿿]/.test(PROF.avatar)?"":" han")+'" onclick="App.avatarEdit()">'+(PROF.avatar||"阿")+'<span class="ed"><i class="ti ti-pencil"></i></span></div><div><div class="pname">'+(PROF.name||t.you)+'</div><div class="pun">'+(PROF.name?"@"+PROF.name.toLowerCase().replace(/\s+/g,"_"):"@hsk_ai")+'</div><span class="lvb"><i class="ti ti-bolt"></i> '+(MAP&&MAP.level?MAP.level.toUpperCase():"Beginner")+' · '+t.league+'</span></div></div>'
+    +'<div class="phero"><div class="pav'+(PROF.avatar&&/[一-鿿]/.test(PROF.avatar)?"":" han")+'" onclick="App.avatarEdit()">'+(PROF.avatar||"A")+'<span class="ed"><i class="ti ti-pencil"></i></span></div><div><div class="pname">'+(PROF.name||t.you)+'</div><div class="pun">'+(PROF.name?"@"+PROF.name.toLowerCase().replace(/\s+/g,"_"):"@english_ai")+'</div><span class="lvb"><i class="ti ti-bolt"></i> '+(MAP&&MAP.level?MAP.level.toUpperCase():"Beginner")+' · '+t.league+'</span></div></div>'
     +'<div class="pgoal" onclick="App.goCurrentLesson()" style="cursor:pointer"><svg class="ring" viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" fill="none" stroke="var(--line)" stroke-width="6"/><circle cx="30" cy="30" r="25" fill="none" stroke="var(--cin)" stroke-width="6" stroke-linecap="round" stroke-dasharray="157" stroke-dashoffset="'+off+'" transform="rotate(-90 30 30)"/><text x="30" y="35" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">'+pct+'%</text></svg><div class="gt"><b>'+p.todayGoal+'</b><small>'+todayXp+' / '+dailyGoal+' XP · '+(dailyGoal-todayXp)+' '+p.goalLeft+'</small></div><div class="fl"><b>'+streak+'</b><small>'+t.streak+'</small></div></div>'
     +'<div class="sech" style="display:flex;justify-content:space-between"><span>'+p.calTitle+'</span><span style="color:var(--cin)"><i class="ti ti-flame" style="font-size:12px"></i> '+streak+' '+t.streak+'</span></div><div class="card2"><div class="cal">'+streakCalHtml()+'</div></div>'
     +'<div class="sech">'+p.ach+'</div><div class="ach"><div class="arow"><div class="aic c3"><i class="ti ti-check"></i></div><div class="at"><div class="ah"><span>'+p.a1+'</span><small>'+(firstDone?p.a1d:"0 / 1")+'</small></div><div class="abar"><i style="width:'+(firstDone?100:0)+'%;background:var(--jade)"></i></div></div></div>'
     +'<div class="arow"><div class="aic c1"><i class="ti ti-book"></i></div><div class="at"><div class="ah"><span>'+p.a2+'</span><small>'+completedLessons+' / 100</small></div><div class="abar"><i style="width:'+lessonAchPct+'%"></i></div></div></div>'
     +'<div class="arow"><div class="aic c2"><i class="ti ti-flame"></i></div><div class="at"><div class="ah"><span>'+p.a3+'</span><small>'+streak+' / 30</small></div><div class="abar"><i style="width:'+streakAchPct+'%"></i></div></div></div></div>'
-    +'<div class="pro" onclick="App.openPaywall(\'profile\')"><span class="gw han">会</span><h3>'+t.unlockTitle+'</h3><p>'+t.unlockSub+'</p><button>'+t.unlockBtn+' →</button></div>'
+    +'<div class="pro" onclick="App.openPaywall(\'profile\')"><span class="gw han">★</span><h3>'+t.unlockTitle+'</h3><p>'+t.unlockSub+'</p><button>'+t.unlockBtn+' →</button></div>'
     +'<div class="sech">'+t.mistakes+' · '+t.friends+'</div>'
     +rowCard("t-cin",'<i class="ti ti-alert-triangle"></i>',t.mistakes,t.mistakesSub,"App.openMistakes()")
     +rowCard("t-jade",'<i class="ti ti-users"></i>',t.friends,"","App.openFriends()")
@@ -2350,7 +2350,7 @@ function payHintHtml(){
 }
 function paywallHtml(ctx){
   var t=T();var ctxTitle=ctx==="lockedLesson"?t.lockedLesson:t.payTitle;
-  return '<div class="shead"><div style="width:54px;height:54px;border-radius:15px;background:var(--cin);border:2px solid var(--gold);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px" class="han">会</div><div class="tr" style="font-size:15px;color:var(--ink)">'+esc(ctxTitle)+'</div><div class="tr">'+t.paySub+'</div></div>'
+  return '<div class="shead"><div style="width:54px;height:54px;border-radius:15px;background:var(--cin);border:2px solid var(--gold);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px" class="han">★</div><div class="tr" style="font-size:15px;color:var(--ink)">'+esc(ctxTitle)+'</div><div class="tr">'+t.paySub+'</div></div>'
     +promoBlockHtml()
     +'<button class="scta" onclick="App.goPay()"><i class="ti ti-lock-open"></i> '+t.subscribe+'</button>'
     +payHintHtml();

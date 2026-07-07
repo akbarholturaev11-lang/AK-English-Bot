@@ -127,7 +127,7 @@ $("m-title").textContent=L.title;$("m-sub").textContent=L.sub;
 // Mistakes are user data from the server (Mistake Engine). Render list when present; otherwise the empty state.
 function renderList(items){
   var chips='<div class="chips"><button class="on">'+L.title+'</button></div>';
-  var cta='<div class="cta"><span class="gw han">错</span><b><i class="ti ti-refresh"></i> '+L.review+'</b><p>'+items.length+' · '+L.reviewSub+'</p><button onclick="startReview()"><i class="ti ti-player-play"></i> '+L.start+'</button></div>';
+  var cta='<div class="cta"><span class="gw han">!</span><b><i class="ti ti-refresh"></i> '+L.review+'</b><p>'+items.length+' · '+L.reviewSub+'</p><button onclick="startReview()"><i class="ti ti-player-play"></i> '+L.start+'</button></div>';
   var list=items.map(function(it){var wrong=it.user_answer?'<span class="x">✗ '+esc(it.user_answer)+'</span> ':'';return '<div class="item"><span class="tl"><i class="ti ti-book"></i></span><span class="mid"><span class="w"><b>'+esc(it.question)+'</b></span><span class="err">'+wrong+'<span class="c">✓ '+esc(it.correct_answer)+'</span></span></span><span class="cnt">'+(it.count||1)+'×</span></div>'}).join("");
   $("content").innerHTML=cta+chips+list;
 }

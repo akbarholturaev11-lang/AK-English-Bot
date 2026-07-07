@@ -169,7 +169,7 @@ html.theme-light .hero{padding-bottom:10px;}
       <div class="hero-top">
         <button class="list-back-btn" id="list-back-btn" aria-label="Orqaga">←</button>
         <div class="hero-copy">
-          <div class="eyebrow" id="hero-eyebrow">汉字 · Beginner–Advanced</div>
+          <div class="eyebrow" id="hero-eyebrow">Words · Beginner–Advanced</div>
           <div class="hero-title" id="hero-title">Yangi so'zlar lug'ati</div>
         </div>
       </div>
@@ -376,9 +376,9 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
       ru:{close:'Закрыть',play:'Показать',replay:'Повторить',dict:'Открыть в словаре',strokes:function(n){return n + ' черт';},fallback:'Анимация написания не загрузилась'},
       tj:{close:'Пӯшидан',play:'Нишон додан',replay:'Такрор',dict:'Дар луғат кушодан',strokes:function(n){return n + ' хат';},fallback:'Аниматсияи навишт бор нашуд'}
     }[lang] || {};
-    var raw = fastParams.get('char') || '字';
+    var raw = fastParams.get('char') || 'word';
     var chars = Array.from(raw).filter(function(c){return c.trim();});
-    if(!chars.length) chars = ['字'];
+    if(!chars.length) chars = ['word'];
     var pinyin = fastParams.get('pinyin') || '';
     var meaning = fastParams.get('meaning') || '';
     var app = document.getElementById('app');
@@ -412,7 +412,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
               '<button class="ctrl-btn ctrl-main" id="fast-play">▶</button>'+
               '<button class="ctrl-btn" id="fast-replay">↻</button>'+
             '</div>'+
-            '<button class="next-word-btn" id="fast-dict"><span>字</span><b>'+e(labels.dict)+'</b></button>'+
+            '<button class="next-word-btn" id="fast-dict"><span>Aa</span><b>'+e(labels.dict)+'</b></button>'+
           '</div>'+
         '</div>'+
       '</div>';
@@ -666,7 +666,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
     document.documentElement.lang = currentLang;
     document.title = t.title;
     heroTitle.textContent = t.title;
-    heroEyebrow.textContent = '汉字 · ' + label;
+    heroEyebrow.textContent = 'Words · ' + label;
     searchEl.placeholder = t.placeholder;
     grammarLabel.textContent = t.grammar;
     langSwitch.innerHTML = validLangs.map(function(value){
@@ -971,7 +971,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
   }
 
   // Deep-link (?char=...) opened from a lesson. The requested value may be a full
-  // word ("学生"), a single character, or something not present as an exact dictionary
+  // word ("student"), a single character, or something not present as an exact dictionary
   // entry. Always open a detail for it instead of silently falling back to the list.
   function openDeepChar(deep){
     deep = (deep || '').trim();

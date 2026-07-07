@@ -289,7 +289,7 @@ function sTest(s){
   var k=s.kind,q,answer,items,errType=k;
   if(k==="meaning"){q=H+" "+t(UI.testMeaningQ);answer=mean(H);items=distract(mean(H),poolMeans(),true)}
   else if(k==="pinyin"){q=H+" "+t(UI.testPinyinQ);answer=pin(H);items=distract(pin(H),poolPins(),false)}
-  else if(k==="radical"){q=H+" "+t(UI.testRadicalQ);answer=D.radical.r;items=distract(D.radical.r,["心","口","女","木","目","日","亻","囗","马"],true,true)}
+  else if(k==="radical"){q=H+" "+t(UI.testRadicalQ);answer=D.radical.r;items=distract(D.radical.r,["a","e","i","o","u","b","c","d","g"],true,true)}
   else if(k==="reverse"){q=mean(H)+" — "+t(UI.testReverseQ);answer=H;items=distract(H,KEYS,true,true);errType="meaning"}
   else if(k==="confusion"){q=t(UI.testConfusionQ)+" "+mean(H);answer=H;items=distract(H,[H].concat(D.confusables.map(function(c){return c.h})),true,true);errType="confusion"}
   var opts=items.list,han=items.han;

@@ -1019,7 +1019,7 @@ function renderStart(text){
   $("#methodsTitle").textContent=text.methodsTitle;
   $("#methodHint").textContent=text.methodHint;
   $("#methodHint").style.display=text.methodHint?"block":"none";
-  const methodIcons={visa:"💳",alipay:"支",wechat:"微"};
+  const methodIcons={visa:"💳",alipay:"A",wechat:"W"};
   $("#methods").innerHTML=availableMethods().map(method=>{
     const item=text.methods[method];
     const selected=state.method===method?"selected":"";
