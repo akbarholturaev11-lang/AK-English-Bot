@@ -105,14 +105,14 @@ def broadcast_panel_keyboard(
         ]
     elif section == "level":
         rows = [
-            [level_btn(None, "Hammasi"), level_btn("beginner", "Boshlang'ich"), level_btn("a1", "A1")],
-            [level_btn("a2", "A2"), level_btn("b1", "B1"), level_btn("b2", "B2")],
+            [level_btn(None, "Hammasi"), level_btn("beginner", "Boshlang'ich"), level_btn("hsk1", "HSK1")],
+            [level_btn("hsk2", "HSK2"), level_btn("hsk3", "HSK3"), level_btn("hsk4", "HSK4")],
         ]
     elif section == "mode":
         rows = [[mode_btn(None, "Hammasi"), mode_btn("qa", "Savol-javob"), mode_btn("course", "Kurs")]]
     elif section == "payment":
         rows = [
-            [pay_status_btn(None, "Status: Hammasi"), pay_status_btn("none", "Yo'q"), pay_status_btn("pending", "Kutilmoqda")],
+            [pay_status_btn(None, "Holat: Hammasi"), pay_status_btn("none", "Yo'q"), pay_status_btn("pending", "Kutilmoqda")],
             [pay_status_btn("approved", "Tasdiqlangan"), pay_status_btn("rejected", "Rad etilgan")],
             [pay_method_btn(None, "Usul: Hammasi"), pay_method_btn("visa", "Visa")],
             [pay_method_btn("alipay", "Alipay"), pay_method_btn("wechat", "WeChat")],
@@ -131,7 +131,7 @@ def broadcast_panel_keyboard(
         ]
     else:
         return InlineKeyboardMarkup(inline_keyboard=[
-            [section_btn("lang", "🌐 Til"), section_btn("status", "👤 Status")],
+            [section_btn("lang", "🌐 Til"), section_btn("status", "👤 Holat")],
             [section_btn("level", "📚 Daraja"), section_btn("mode", "🎯 Rejim")],
             [section_btn("payment", "💳 To'lov"), section_btn("discount", "🎁 Chegirma")],
             [section_btn("activity", "⚡ Aktivlik")],

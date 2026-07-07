@@ -1,7 +1,7 @@
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from typing import Optional
 
-from sqlalchemy import BigInteger, String, Integer, DateTime, Boolean
+from sqlalchemy import BigInteger, String, Integer, DateTime, Boolean, Date
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import Column
 
@@ -26,7 +26,7 @@ class User(Base):
     status: Mapped[str] = mapped_column(String(16), default="free", nullable=False)
     payment_status: Mapped[str] = mapped_column(String(16), default="none", nullable=False)
 
-    question_limit: Mapped[int] = mapped_column(Integer, default=10, nullable=False)
+    question_limit: Mapped[int] = mapped_column(Integer, default=5, nullable=False)
     questions_used: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     bonus_questions: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     bonus_questions_used: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
@@ -74,6 +74,19 @@ class User(Base):
         DateTime(timezone=True),
         nullable=True,
     )
+    subscription_expired_offer_sent_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    subscription_churn_followup_sent_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    subscription_churn_responded_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    subscription_churn_reason: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
 
     referrer_id: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
 
@@ -100,6 +113,29 @@ class User(Base):
         DateTime(timezone=True),
         nullable=True,
     )
+    bot_blocked_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    bot_unblocked_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    last_bot_block_check_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    bot_block_reason: Mapped[Optional[str]] = mapped_column(String(120), nullable=True)
+    daily_practice_started_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    daily_practice_completed_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    daily_practice_streak: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    daily_practice_last_day: Mapped[Optional[date]] = mapped_column(Date, nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),

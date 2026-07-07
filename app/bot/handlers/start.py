@@ -4,19 +4,28 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
 
 from app.repositories.user_repo import UserRepository
-from app.services.onboarding_service import OnboardingService
+from app.services.onboarding_service import (
+    ONBOARDING_MODE_CHOICE_MODE,
+    OnboardingService,
+    onboarding_stage,
+)
 from app.services.access_service import AccessService
 from app.services.course_engine_service import CourseEngineService
-from app.services.course_trial_service import CourseTrialService
+from app.services.conversion_funnel_service import ConversionFunnelService
+from app.services.daily_practice_service import DailyPracticeService
 from app.bot.utils.i18n import t
 from app.bot.keyboards.main_menu import course_menu_keyboard, main_menu_keyboard
 from app.bot.keyboards.onboarding import (
+    course_mode_entry_keyboard,
+    daily_practice_check_keyboard,
+    daily_practice_entry_keyboard,
+    daily_practice_finish_keyboard,
     language_keyboard,
     level_keyboard,
     trial_lesson_choice_keyboard,
     trial_lesson_selection_keyboard,
 )
-from app.bot.fsm.onboarding import OnboardingStates
+from app.bot.fsm.onboarding import OnboardingStates, QA_MODE_LEVEL_CHOICE_KEY
 
 
 router = Router()
@@ -43,14 +52,34 @@ def _menu_keyboard_for_user(user):
     return main_menu_keyboard(lang)
 
 
+def _mode_choice_text(lang: str) -> str:
+    texts = {
+        "uz": (
+            "🎉 <b>Tabriklaymiz! Kurs rejimi ochildi</b>\n\n"
+            "<blockquote>Siz uchun tartibli HSK darslari yo‘li ochildi — so‘zlar, "
+            "grammatika, quiz va AI Voice bitta ilovada, qadam-baqadam.</blockquote>\n\n"
+            "Hoziroq boshlaymizmi?"
+        ),
+        "ru": (
+            "🎉 <b>Поздравляем! Режим курса открыт</b>\n\n"
+            "<blockquote>Для вас открыт путь последовательных уроков HSK — слова, "
+            "грамматика, квиз и AI Voice в одном приложении, шаг за шагом.</blockquote>\n\n"
+            "Начнём прямо сейчас?"
+        ),
+        "tj": (
+            "🎉 <b>Табрик! Реҷаи курс кушода шуд</b>\n\n"
+            "<blockquote>Барои шумо роҳи дарсҳои пайдарпайи HSK кушода шуд — калимаҳо, "
+            "грамматика, quiz ва AI Voice дар як барнома, қадам ба қадам.</blockquote>\n\n"
+            "Ҳозир оғоз мекунем?"
+        ),
+    }
+    return texts.get(lang, texts["ru"])
+
+
 def _course_level_candidates(level: str | None) -> tuple[str, ...]:
     normalized = (level or "").strip().lower()
     fallback_map = {
         "beginner": ("hsk1",),
-        "a1": ("hsk1",),
-        "a2": ("hsk2", "hsk1"),
-        "b1": ("hsk3", "hsk2", "hsk1"),
-        "b2": ("hsk4", "hsk3", "hsk2", "hsk1"),
         "hsk1": ("hsk1",),
         "hsk2": ("hsk2", "hsk1"),
         "hsk3": ("hsk3", "hsk2", "hsk1"),
@@ -59,55 +88,19 @@ def _course_level_candidates(level: str | None) -> tuple[str, ...]:
     return fallback_map.get(normalized, ("hsk1",))
 
 
-def _contains_cjk(value: object) -> bool:
-    return any("\u4e00" <= char <= "\u9fff" for char in str(value or ""))
-
-
-def _lesson_looks_english_ready(lesson) -> bool:
-    fields = (
-        getattr(lesson, "title", None),
-        getattr(lesson, "intro_text", None),
-        getattr(lesson, "vocabulary_json", None),
-        getattr(lesson, "dialogue_json", None),
-        getattr(lesson, "grammar_json", None),
-        getattr(lesson, "exercise_json", None),
-        getattr(lesson, "quiz_json", None),
-        getattr(lesson, "homework_json", None),
-    )
-    return not any(_contains_cjk(field) for field in fields)
-
-
 async def _resolve_lessons_for_user_level(engine: CourseEngineService, level: str | None):
     candidates = _course_level_candidates(level)
     for candidate in candidates:
-        lessons = [
-            lesson
-            for lesson in await engine.lesson_repo.list_by_level(candidate)
-            if _lesson_looks_english_ready(lesson)
-        ]
+        lessons = await engine.lesson_repo.list_by_level(candidate)
         if lessons:
             return lessons, candidate
     return [], candidates[0]
 
 
-def _display_level_label(level: str | None) -> str:
-    normalized = (level or "").strip().lower()
-    labels = {
-        "beginner": "Beginner",
-        "hsk1": "Beginner",
-        "hsk2": "Elementary",
-        "hsk3": "Intermediate",
-        "hsk4": "Advanced",
-        "a1": "Beginner",
-        "a2": "Elementary",
-        "b1": "Intermediate",
-        "b2": "Advanced",
-    }
-    return labels.get(normalized, (level or "English").upper())
-
-
 def _lesson_choice_text(lang: str, level: str | None) -> str:
-    label = _display_level_label(level)
+    label = (level or "HSK").upper()
+    if label == "BEGINNER":
+        label = "HSK1"
     texts = {
         "uz": f"<b>{label} kursi</b>\n\nQaysi darsdan boshlaymiz?",
         "ru": f"<b>Курс {label}</b>\n\nС какого урока начнём?",
@@ -119,6 +112,12 @@ def _lesson_choice_text(lang: str, level: str | None) -> str:
 async def _send_trial_lesson_choice(callback: CallbackQuery, state: FSMContext, session, *, edit: bool) -> None:
     user = await UserRepository(session).get_by_telegram_id(callback.from_user.id)
     lang = user.language if user and user.language else "ru"
+    if user:
+        await ConversionFunnelService().record(
+            event_name="course_started",
+            user=user,
+            source=str(callback.data or "trial_lesson_choice"),
+        )
     text = _lesson_choice_text(lang, user.level if user else None)
     keyboard = trial_lesson_choice_keyboard(lang)
     if edit:
@@ -132,71 +131,137 @@ async def _send_trial_lesson_choice(callback: CallbackQuery, state: FSMContext, 
     await state.set_state(OnboardingStates.choosing_trial_lesson)
 
 
+async def _send_daily_practice_entry_message(message: Message, state: FSMContext, session, user=None) -> None:
+    if user is None:
+        user = await UserRepository(session).get_by_telegram_id(message.from_user.id)
+    lang = user.language if user and user.language else "ru"
+    service = DailyPracticeService(session)
+    await message.answer(
+        service.entry_text(user, lang),
+        reply_markup=daily_practice_entry_keyboard(lang),
+        parse_mode="HTML",
+    )
+    await state.set_state(OnboardingStates.daily_practice)
+
+
+async def _send_daily_practice_entry_callback(
+    callback: CallbackQuery,
+    state: FSMContext,
+    session,
+    *,
+    edit: bool,
+) -> None:
+    user = await UserRepository(session).get_by_telegram_id(callback.from_user.id)
+    lang = user.language if user and user.language else "ru"
+    service = DailyPracticeService(session)
+    text = service.entry_text(user, lang)
+    keyboard = daily_practice_entry_keyboard(lang)
+    if edit:
+        try:
+            await callback.message.edit_text(text, reply_markup=keyboard, parse_mode="HTML")
+            await state.set_state(OnboardingStates.daily_practice)
+            return
+        except Exception:
+            pass
+    await callback.message.answer(text, reply_markup=keyboard, parse_mode="HTML")
+    await state.set_state(OnboardingStates.daily_practice)
+
+
 async def _start_trial_lesson(
     *,
     callback: CallbackQuery,
     state: FSMContext,
     session,
     lesson_id: int,
+    show_menu: bool = False,
 ) -> None:
-    user_repo = UserRepository(session)
-    engine = CourseEngineService(session)
-    trial_service = CourseTrialService(session)
-
-    user = await user_repo.get_by_telegram_id(callback.from_user.id)
-    if not user:
-        await callback.answer()
-        await callback.message.answer(t("access_start_first", "ru"))
-        return
-
-    lang = user.language if user.language else "ru"
-    lesson = await engine.lesson_repo.get_by_id(lesson_id)
-    if not lesson or lesson.level not in _course_level_candidates(user.level):
-        await callback.answer()
-        await callback.message.answer(t("course_lesson_not_unlocked", lang))
-        return
-
-    if not await trial_service.ensure_trial_lesson(user, lesson.id):
-        from app.bot.handlers.course import _send_course_access_offer
-
-        await callback.answer()
-        await _send_course_access_offer(
-            respond=callback.message.answer,
-            lang=lang,
-            expired_from_course=False,
-        )
-        return
-
-    user.learning_mode = "course"
-    user.voice_mode = "none"
-    if user.payment_status != "approved":
-        user.status = "trial"
-        user.start_date = None
-        user.end_date = None
-    user.expiry_reminder_sent_at = None
-    await session.flush()
-
-    _, _, _, error_key = await engine.pick_lesson(callback.from_user.id, lesson.id)
-    if error_key:
-        await callback.answer()
-        await callback.message.answer(t(error_key, lang))
-        return
-
-    await state.clear()
     await callback.answer()
-
     try:
         await callback.message.delete()
     except Exception:
         pass
 
-    from app.bot.handlers.course import run_course_entry_flow
-
-    await run_course_entry_flow(
-        session=session,
+    await _start_lesson_for_user(
         telegram_id=callback.from_user.id,
         respond=callback.message.answer,
-        show_menu=True,
+        state=state,
+        session=session,
+        lesson_id=lesson_id,
+        source="trial_lesson_pick",
+        show_menu=show_menu,
+    )
+
+
+async def _start_lesson_for_user(
+    *,
+    telegram_id: int,
+    respond,
+    state: FSMContext | None,
+    session,
+    lesson_id: int,
+    source: str,
+    show_menu: bool = False,
+) -> bool:
+    user_repo = UserRepository(session)
+    engine = CourseEngineService(session)
+
+    user = await user_repo.get_by_telegram_id(telegram_id)
+    if not user:
+        await respond(t("access_start_first", "ru"))
+        return False
+
+    lang = user.language if user.language else "ru"
+    lesson = await engine.lesson_repo.get_by_id(lesson_id)
+    if not lesson or lesson.level not in _course_level_candidates(user.level):
+        await respond(t("course_lesson_not_unlocked", lang))
+        return False
+
+    user.voice_mode = "none"
+    user.expiry_reminder_sent_at = None
+    await session.flush()
+
+    if state:
+        await state.clear()
+
+    from app.bot.handlers.course import send_course_miniapp_entry
+
+    await send_course_miniapp_entry(
+        session=session,
+        telegram_id=telegram_id,
+        respond=respond,
+        state=state,
+        source=source,
+        level=getattr(lesson, "level", None),
+        lesson=getattr(lesson, "lesson_order", None),
+    )
+    return True
+
+
+async def _start_first_available_course_lesson(
+    *,
+    telegram_id: int,
+    respond,
+    state: FSMContext | None,
+    session,
+    source: str,
+    show_menu: bool = False,
+) -> bool:
+    user = await UserRepository(session).get_by_telegram_id(telegram_id)
+    lang = user.language if user and user.language else "ru"
+    engine = CourseEngineService(session)
+    lessons, _ = await _resolve_lessons_for_user_level(engine, user.level if user else None)
+    if not lessons:
+        await respond(t("course_no_lessons_available", lang))
+        return False
+
+    return await _start_lesson_for_user(
+        telegram_id=telegram_id,
+        respond=respond,
+        state=state,
+        session=session,
+        lesson_id=lessons[0].id,
+        source=source,
+        show_menu=show_menu,
     )
 
 
@@ -210,7 +275,7 @@ async def cmd_start(
     service = OnboardingService(session)
     first_name = message.from_user.first_name if message.from_user and message.from_user.first_name else "Friend"
 
-    referral_code = command.args if command and command.args else None
+    referral_code = command.args.strip() if command and command.args else None
 
     user, created = await service.get_or_create_user(
         telegram_id=message.from_user.id,
@@ -222,27 +287,32 @@ async def cmd_start(
 
     await state.clear()
 
-    if not created and user.language and user.level:
-        if (
-            user.payment_status != "approved"
-            and user.status == "trial"
-            and not getattr(user, "trial_course_lesson_id", None)
-        ):
-            await message.answer(
-                _lesson_choice_text(user.language, user.level),
-                reply_markup=trial_lesson_choice_keyboard(user.language),
-                parse_mode="HTML",
-            )
-            await state.set_state(OnboardingStates.choosing_trial_lesson)
-            return
-
-        if getattr(user, "learning_mode", "qa") == "course":
-            await AccessService(session).ensure_active_course_access(user)
-            await session.commit()
+    stage = onboarding_stage(user)
+    if not created and stage == "mode":
+        lang = user.language if user and user.language else "ru"
         await message.answer(
-            t("welcome_back", user.language, name=first_name),
-            reply_markup=_menu_keyboard_for_user(user),
+            _mode_choice_text(lang),
+            reply_markup=course_mode_entry_keyboard(lang),
+            parse_mode="HTML",
         )
+        return
+
+    if not created and not stage and user.language and user.level:
+        if getattr(user, "learning_mode", "qa") == "course":
+            from app.bot.handlers.course import send_course_miniapp_entry
+
+            await send_course_miniapp_entry(
+                session=session,
+                telegram_id=message.from_user.id,
+                respond=message.answer,
+                state=state,
+                source="start_course_migration",
+            )
+        else:
+            await message.answer(
+                t("send_first_message", user.language),
+                reply_markup=main_menu_keyboard(user.language),
+            )
         return
 
     onboarding_msg = await message.answer(
@@ -252,7 +322,6 @@ async def cmd_start(
 
     await state.update_data(
         onboarding_message_id=onboarding_msg.message_id,
-        first_name=first_name,
     )
     await state.set_state(OnboardingStates.choosing_language)
 
@@ -269,27 +338,31 @@ async def process_language(callback: CallbackQuery, state: FSMContext, session):
         username=callback.from_user.username if callback.from_user else None,
     )
     user.language = lang
+    user.learning_mode = ONBOARDING_MODE_CHOICE_MODE
     await session.commit()
 
     await callback.answer()
 
     data = await state.get_data()
     onboarding_message_id = data.get("onboarding_message_id")
-    first_name = data.get("first_name", "Friend")
 
     try:
         if onboarding_message_id:
             await callback.bot.edit_message_text(
                 chat_id=callback.message.chat.id,
                 message_id=onboarding_message_id,
-                text=f"{t('welcome', lang, name=first_name)}\n\n{t('choose_level', lang)}",
-                reply_markup=level_keyboard(lang),
+                text=_mode_choice_text(lang),
+                reply_markup=course_mode_entry_keyboard(lang),
+                parse_mode="HTML",
             )
     except Exception:
-        pass
+        await callback.message.answer(
+            _mode_choice_text(lang),
+            reply_markup=course_mode_entry_keyboard(lang),
+            parse_mode="HTML",
+        )
 
-    await state.update_data(lang=lang)
-    await state.set_state(OnboardingStates.choosing_level)
+    await state.clear()
 
 
 def _get_demo_lesson(level: str, lang: str) -> tuple:
@@ -300,173 +373,173 @@ def _get_demo_lesson(level: str, lang: str) -> tuple:
             "tj": (
                 "🎮 <b>Омода-ед? Бозӣ мекунем!</b>\n\n"
                 "Ман ба шумо 3 калима медиҳам:\n\n"
-                "✨ <b>Hello</b> · <b>Thank you</b> · <b>Goodbye</b>\n\n"
-                "Агар хоҳед, аз ин калимаҳо як ҷумлаи англисӣ созед. Нависед — бот месанҷад; нахоҳед, саволи худро диҳед 😄",
+                "✨ <b>你好</b> · <b>谢谢</b> · <b>再见</b>\n\n"
+                "Агар хоҳед, аз ин калимаҳо як ҷумла созед. Нависед — бот месанҷад; нахоҳед, саволи худро диҳед 😄",
                 _challenge_context(
-                    "The user just started learning English (beginner level). "
-                    "You offered an optional mini-challenge: make a sentence using Hello, Thank you, Goodbye. "
+                    "The user just started learning Chinese (beginner level). "
+                    "You offered an optional mini-challenge: make a sentence using 你好, 谢谢, 再见. "
                     "Encourage them, correct gently, and explain the words when they attempt it."
                 )
             ),
             "uz": (
                 "🎮 <b>Tayyor bo'ldingizmi? O'yin boshlanadi!</b>\n\n"
                 "Sizga 3 ta so'z beraman:\n\n"
-                "✨ <b>Hello</b> · <b>Thank you</b> · <b>Goodbye</b>\n\n"
-                "Xohlasangiz, shu so'zlardan bitta inglizcha gap tuzing. Yozsangiz, bot tekshiradi; xohlamasangiz, oddiy savol bering 😄",
+                "✨ <b>你好</b> · <b>谢谢</b> · <b>再见</b>\n\n"
+                "Xohlasangiz, shu so'zlardan bitta gap tuzing. Yozsangiz, bot tekshiradi; xohlamasangiz, oddiy savol bering 😄",
                 _challenge_context(
-                    "The user just started learning English (beginner level). "
-                    "You offered an optional mini-challenge: make a sentence using Hello, Thank you, Goodbye. "
+                    "The user just started learning Chinese (beginner level). "
+                    "You offered an optional mini-challenge: make a sentence using 你好, 谢谢, 再见. "
                     "Encourage them, correct gently, and explain the words when they attempt it."
                 )
             ),
             "ru": (
                 "🎮 <b>Готовы? Начинаем игру!</b>\n\n"
                 "Даю вам 3 слова:\n\n"
-                "✨ <b>Hello</b> · <b>Thank you</b> · <b>Goodbye</b>\n\n"
-                "Если хотите, составьте из них одно английское предложение. Напишете — бот проверит; не хотите — задайте любой вопрос 😄",
+                "✨ <b>你好</b> · <b>谢谢</b> · <b>再见</b>\n\n"
+                "Если хотите, составьте из них одно предложение. Напишете — бот проверит; не хотите — задайте любой вопрос 😄",
                 _challenge_context(
-                    "The user just started learning English (beginner level). "
-                    "You offered an optional mini-challenge: make a sentence using Hello, Thank you, Goodbye. "
+                    "The user just started learning Chinese (beginner level). "
+                    "You offered an optional mini-challenge: make a sentence using 你好, 谢谢, 再见. "
                     "Encourage them, correct gently, and explain the words when they attempt it."
                 )
             ),
         },
         "hsk1": {
             "tj": (
-                "🎯 <b>A1 — Осон оғоз мекунем!</b>\n\n"
-                "Ин 3 калимаро истифода баред:\n\n"
-                "🔤 <b>I</b> · <b>am</b> · <b>student</b>\n\n"
-                "Агар хоҳед, бо онҳо як ҷумлаи кӯтоҳи англисӣ созед. Нависед — месанҷам 🕵️",
+                "🎯 <b>HSK1 — Мушкилӣ дорад!</b>\n\n"
+                "Ин 3 рақамро хонед:\n\n"
+                "🔢 <b>三</b> · <b>十</b> · <b>百</b>\n\n"
+                "Агар хоҳед, бо рақамҳо як ҷумла бисозед — масалан синнатон ё шумораи чизе. Нависед — месанҷам 🕵️",
                 _challenge_context(
-                    "The user is English A1 level. You offered an optional mini-challenge: "
-                    "make a short sentence using I, am, student. "
+                    "The user is HSK1 level. You offered an optional mini-challenge: "
+                    "make a sentence using Chinese numbers 三(3), 十(10), 百(100). "
                     "Correct and encourage when they attempt it."
                 )
             ),
             "uz": (
-                "🎯 <b>A1 — Osondan boshlaymiz!</b>\n\n"
-                "Bu 3 so'zni ishlating:\n\n"
-                "🔤 <b>I</b> · <b>am</b> · <b>student</b>\n\n"
-                "Xohlasangiz, ular bilan bitta qisqa inglizcha gap tuzing. Yozsangiz, tekshiraman 🕵️",
+                "🎯 <b>HSK1 — Qiyin emas!</b>\n\n"
+                "Bu 3 raqamni o'qing:\n\n"
+                "🔢 <b>三</b> · <b>十</b> · <b>百</b>\n\n"
+                "Xohlasangiz, raqamlar bilan gap tuzing — masalan yoshingiz yoki biror narsa soni. Yozsangiz, tekshiraman 🕵️",
                 _challenge_context(
-                    "The user is English A1 level. You offered an optional mini-challenge: "
-                    "make a short sentence using I, am, student. "
+                    "The user is HSK1 level. You offered an optional mini-challenge: "
+                    "make a sentence using Chinese numbers 三(3), 十(10), 百(100). "
                     "Correct and encourage when they attempt it."
                 )
             ),
             "ru": (
-                "🎯 <b>A1 — Начинаем просто!</b>\n\n"
-                "Используйте эти 3 слова:\n\n"
-                "🔤 <b>I</b> · <b>am</b> · <b>student</b>\n\n"
-                "Если хотите, составьте с ними одно короткое английское предложение. Напишете — проверю 🕵️",
+                "🎯 <b>HSK1 — Это несложно!</b>\n\n"
+                "Прочитайте эти 3 числа:\n\n"
+                "🔢 <b>三</b> · <b>十</b> · <b>百</b>\n\n"
+                "Если хотите, составьте предложение с числами — например ваш возраст или количество чего-то. Напишете — проверю 🕵️",
                 _challenge_context(
-                    "The user is English A1 level. You offered an optional mini-challenge: "
-                    "make a short sentence using I, am, student. "
+                    "The user is HSK1 level. You offered an optional mini-challenge: "
+                    "make a sentence using Chinese numbers 三(3), 十(10), 百(100). "
                     "Correct and encourage when they attempt it."
                 )
             ),
         },
         "hsk2": {
             "tj": (
-                "🕵️ <b>A2 — Ҷумларо табиӣ мекунем!</b>\n\n"
-                "Ин калимаҳоро дар як ҷумла ҷамъ кунед:\n\n"
-                "🇬🇧 <b>usually</b> · <b>study</b> · <b>evening</b>\n\n"
-                "Агар хоҳед, як ҷумлаи оддӣ дар бораи рӯзи худ нависед. Нависед — месанҷам 😏",
+                "🕵️ <b>HSK2 — Сир нигоҳ доред!</b>\n\n"
+                "Дар ин ҷумла як иборае пинҳон аст:\n\n"
+                "🇨🇳 <b>高兴 · 认识 · 你</b>\n\n"
+                "Агар хоҳед, онҳоро дар як ҷумла ҷамъ кунед — шояд ибораи машҳур пайдо шавад. Нависед — месанҷам 😏",
                 _challenge_context(
-                    "The user is English A2 level. You offered an optional mini-challenge: "
-                    "make a sentence about their day using usually, study, evening. "
-                    "Correct word order and grammar gently."
+                    "The user is HSK2 level. You offered an optional mini-challenge: "
+                    "combine 高兴(happy), 认识(meet/know), 你(you) into a sentence. "
+                    "The hidden phrase is 很高兴认识你. Reveal it if they get close, explain it warmly."
                 )
             ),
             "uz": (
-                "🕵️ <b>A2 — Gapni tabiiy qilamiz!</b>\n\n"
-                "Bu so'zlardan bitta gap tuzing:\n\n"
-                "🇬🇧 <b>usually</b> · <b>study</b> · <b>evening</b>\n\n"
-                "Xohlasangiz, kuningiz haqida oddiy inglizcha gap yozing. Yozsangiz, tekshiraman 😏",
+                "🕵️ <b>HSK2 — Sir saqlang!</b>\n\n"
+                "Bu so'zlarda mashhur ibora yashiringan:\n\n"
+                "🇨🇳 <b>高兴 · 认识 · 你</b>\n\n"
+                "Xohlasangiz, ulardan gap tuzing — nima hosil bo'lishini ko'ramiz. Yozsangiz, tekshiraman 😏",
                 _challenge_context(
-                    "The user is English A2 level. You offered an optional mini-challenge: "
-                    "make a sentence about their day using usually, study, evening. "
-                    "Correct word order and grammar gently."
+                    "The user is HSK2 level. You offered an optional mini-challenge: "
+                    "combine 高兴(happy), 认识(meet/know), 你(you) into a sentence. "
+                    "The hidden phrase is 很高兴认识你. Reveal it if they get close, explain it warmly."
                 )
             ),
             "ru": (
-                "🕵️ <b>A2 — Делаем фразу естественной!</b>\n\n"
-                "Составьте одно предложение из этих слов:\n\n"
-                "🇬🇧 <b>usually</b> · <b>study</b> · <b>evening</b>\n\n"
-                "Если хотите, напишите простое английское предложение о своём дне. Напишете — проверю 😏",
+                "🕵️ <b>HSK2 — Держите в тайне!</b>\n\n"
+                "В этих словах спрятана знаменитая фраза:\n\n"
+                "🇨🇳 <b>高兴 · 认识 · 你</b>\n\n"
+                "Если хотите, составьте из них предложение — посмотрим, что получится. Напишете — проверю 😏",
                 _challenge_context(
-                    "The user is English A2 level. You offered an optional mini-challenge: "
-                    "make a sentence about their day using usually, study, evening. "
-                    "Correct word order and grammar gently."
+                    "The user is HSK2 level. You offered an optional mini-challenge: "
+                    "combine 高兴(happy), 认识(meet/know), 你(you) into a sentence. "
+                    "The hidden phrase is 很高兴认识你. Reveal it if they get close, explain it warmly."
                 )
             ),
         },
         "hsk3": {
             "tj": (
-                "🔥 <b>B1 — Санҷиши зуд!</b>\n\n"
-                "Ба ин савол бо англисӣ ҷавоб диҳед:\n\n"
-                "🇬🇧 <b>What did you do yesterday?</b>\n\n"
-                "Агар хоҳед, 2 ҷумла нависед. Ман месанҷам ва беҳтар мекунам 😤",
+                "🔥 <b>HSK3 — Имтиҳони зудӣ!</b>\n\n"
+                "Ин ҷумларо тарҷума кунед:\n\n"
+                "🇨🇳 <b>你今天心情怎么样？</b>\n\n"
+                "Агар хоҳед, ҷавобро ба хитоӣ нависед. Нависед — ман месанҷам ва беҳтар мекунам 😤",
                 _challenge_context(
-                    "The user is English B1 level. You offered an optional mini-challenge: "
-                    "answer What did you do yesterday? in 2 English sentences. "
-                    "Evaluate grammar, correct errors, and praise effort when they attempt it."
+                    "The user is HSK3 level. You offered an optional mini-challenge: "
+                    "translate 你今天心情怎么样 (How are you feeling today?) and answer in Chinese. "
+                    "Evaluate their Chinese, correct errors, and praise effort when they attempt it."
                 )
             ),
             "uz": (
-                "🔥 <b>B1 — Tezkor sinov!</b>\n\n"
-                "Bu savolga inglizcha javob bering:\n\n"
-                "🇬🇧 <b>What did you do yesterday?</b>\n\n"
-                "Xohlasangiz, 2 ta gap yozing. Yozsangiz, tekshiraman va yaxshilab beraman 😤",
+                "🔥 <b>HSK3 — Tezkor imtihon!</b>\n\n"
+                "Bu jumlani tarjima qiling:\n\n"
+                "🇨🇳 <b>你今天心情怎么样？</b>\n\n"
+                "Xohlasangiz, javobni xitoycha yozing. Yozsangiz, tekshiraman va yaxshilab beraman 😤",
                 _challenge_context(
-                    "The user is English B1 level. You offered an optional mini-challenge: "
-                    "answer What did you do yesterday? in 2 English sentences. "
-                    "Evaluate grammar, correct errors, and praise effort when they attempt it."
+                    "The user is HSK3 level. You offered an optional mini-challenge: "
+                    "translate 你今天心情怎么样 (How are you feeling today?) and answer in Chinese. "
+                    "Evaluate their Chinese, correct errors, and praise effort when they attempt it."
                 )
             ),
             "ru": (
-                "🔥 <b>B1 — Быстрая проверка!</b>\n\n"
-                "Ответьте по-английски на вопрос:\n\n"
-                "🇬🇧 <b>What did you do yesterday?</b>\n\n"
-                "Если хотите, напишите 2 предложения. Напишете — проверю и улучшу ответ 😤",
+                "🔥 <b>HSK3 — Быстрый тест!</b>\n\n"
+                "Переведите это предложение:\n\n"
+                "🇨🇳 <b>你今天心情怎么样？</b>\n\n"
+                "Если хотите, ответьте по-китайски. Напишете — проверю и улучшу ответ 😤",
                 _challenge_context(
-                    "The user is English B1 level. You offered an optional mini-challenge: "
-                    "answer What did you do yesterday? in 2 English sentences. "
-                    "Evaluate grammar, correct errors, and praise effort when they attempt it."
+                    "The user is HSK3 level. You offered an optional mini-challenge: "
+                    "translate 你今天心情怎么样 (How are you feeling today?) and answer in Chinese. "
+                    "Evaluate their Chinese, correct errors, and praise effort when they attempt it."
                 )
             ),
         },
         "hsk4": {
             "tj": (
-                "⚡ <b>B2 — Услубро месанҷем!</b>\n\n"
-                "Ин қолабро дар як ҷумла истифода баред:\n\n"
-                "🇬🇧 <b>Although ..., ...</b>\n\n"
-                "Агар хоҳед, аз зиндагии худатон мисол оред. Нависед — грамматикаро таҳлил мекунам 🎓",
+                "⚡ <b>HSK4 — Устодро санҷем!</b>\n\n"
+                "Ин ибораро дар як ҷумлаи мураккаб истифода баред:\n\n"
+                "🇨🇳 <b>虽然...但是...</b>\n\n"
+                "Агар хоҳед, онро дар як ҷумла аз ҳаёти худ истифода баред. Нависед — грамматикаро таҳлил мекунам 🎓",
                 _challenge_context(
-                    "The user is English B2 level. You offered an optional mini-challenge: "
-                    "use Although ..., ... in a sentence about their life. "
+                    "The user is HSK4 level. You offered an optional mini-challenge: "
+                    "use the grammar pattern 虽然...但是... (although...but...) in a complex sentence about their life. "
                     "Analyze grammar deeply and suggest improvements when they attempt it."
                 )
             ),
             "uz": (
-                "⚡ <b>B2 — Uslubni sinaymiz!</b>\n\n"
-                "Bu grammatik patternni bitta gapda ishlating:\n\n"
-                "🇬🇧 <b>Although ..., ...</b>\n\n"
-                "Xohlasangiz, o'z hayotingizdan misol keltiring. Yozsangiz, grammatikasini tahlil qilaman 🎓",
+                "⚡ <b>HSK4 — Ustani sinaylik!</b>\n\n"
+                "Bu grammatik konstruktsiyani murakkab gapda ishlating:\n\n"
+                "🇨🇳 <b>虽然...但是...</b>\n\n"
+                "Xohlasangiz, uni o'z hayotingizdan bitta gapda ishlating. Yozsangiz, grammatikasini tahlil qilaman 🎓",
                 _challenge_context(
-                    "The user is English B2 level. You offered an optional mini-challenge: "
-                    "use Although ..., ... in a sentence about their life. "
+                    "The user is HSK4 level. You offered an optional mini-challenge: "
+                    "use the grammar pattern 虽然...但是... (although...but...) in a complex sentence about their life. "
                     "Analyze grammar deeply and suggest improvements when they attempt it."
                 )
             ),
             "ru": (
-                "⚡ <b>B2 — Проверим стиль!</b>\n\n"
-                "Используйте эту конструкцию в одном предложении:\n\n"
-                "🇬🇧 <b>Although ..., ...</b>\n\n"
-                "Если хотите, возьмите пример из своей жизни. Напишете — разберу грамматику 🎓",
+                "⚡ <b>HSK4 — Проверим мастера!</b>\n\n"
+                "Используйте эту конструкцию в сложном предложении:\n\n"
+                "🇨🇳 <b>虽然...但是...</b>\n\n"
+                "Если хотите, используйте её в одном предложении из своей жизни. Напишете — разберу грамматику 🎓",
                 _challenge_context(
-                    "The user is English B2 level. You offered an optional mini-challenge: "
-                    "use Although ..., ... in a sentence about their life. "
+                    "The user is HSK4 level. You offered an optional mini-challenge: "
+                    "use the grammar pattern 虽然...但是... (although...but...) in a complex sentence about their life. "
                     "Analyze grammar deeply and suggest improvements when they attempt it."
                 )
             ),
@@ -478,7 +551,6 @@ def _get_demo_lesson(level: str, lang: str) -> tuple:
 
     level_map = {
         "beginner": "beginner", "az0": "beginner",
-        "a1": "hsk1", "a2": "hsk2", "b1": "hsk3", "b2": "hsk4",
         "hsk1": "hsk1", "hsk2": "hsk2", "hsk3": "hsk3", "hsk4": "hsk4",
     }
     mapped = level_map.get(level_key, "beginner")
@@ -491,6 +563,8 @@ def _get_demo_lesson(level: str, lang: str) -> tuple:
 @router.callback_query(OnboardingStates.choosing_level)
 async def process_level(callback: CallbackQuery, state: FSMContext, session):
     level = callback.data.split(":")[1]
+    data = await state.get_data()
+    is_qa_mode_level_choice = bool(data.get(QA_MODE_LEVEL_CHOICE_KEY))
 
     service = OnboardingService(session)
 
@@ -502,16 +576,128 @@ async def process_level(callback: CallbackQuery, state: FSMContext, session):
     user.level = level
     user.learning_mode = "qa"
     user.voice_mode = "none"
-    if user.payment_status != "approved":
-        user.status = "trial"
-        user.start_date = None
-        user.end_date = None
     user.expiry_reminder_sent_at = None
     await session.commit()
 
     await callback.answer()
+    if is_qa_mode_level_choice:
+        lang = user.language if user.language else "ru"
+        await state.clear()
+        try:
+            await callback.message.edit_text(
+                t("free_mode_info", lang),
+                parse_mode="HTML",
+            )
+        except Exception:
+            await callback.message.answer(
+                t("free_mode_info", lang),
+                parse_mode="HTML",
+            )
+        await callback.message.answer(
+            t("send_first_message", lang),
+            reply_markup=main_menu_keyboard(lang),
+        )
+        return
 
-    await _send_trial_lesson_choice(callback, state, session, edit=True)
+    try:
+        await callback.message.delete()
+    except Exception:
+        pass
+
+    await _start_first_available_course_lesson(
+        telegram_id=callback.from_user.id,
+        respond=callback.message.answer,
+        state=state,
+        session=session,
+        source="onboarding_first_lesson",
+    )
+
+
+@router.callback_query(F.data == "daily_practice:start")
+async def daily_practice_start(callback: CallbackQuery, state: FSMContext, session):
+    user = await UserRepository(session).get_by_telegram_id(callback.from_user.id)
+    lang = user.language if user and user.language else "ru"
+    if not user:
+        await callback.answer()
+        await callback.message.answer(t("access_start_first", lang))
+        return
+
+    service = DailyPracticeService(session)
+    await service.mark_started(user)
+    await session.commit()
+
+    await callback.answer()
+    try:
+        await callback.message.edit_text(
+            service.practice_text(user, lang),
+            reply_markup=daily_practice_check_keyboard(lang),
+            parse_mode="HTML",
+        )
+    except Exception:
+        await callback.message.answer(
+            service.practice_text(user, lang),
+            reply_markup=daily_practice_check_keyboard(lang),
+            parse_mode="HTML",
+        )
+    await state.set_state(OnboardingStates.daily_practice)
+
+
+@router.callback_query(F.data == "daily_practice:complete")
+async def daily_practice_complete(callback: CallbackQuery, state: FSMContext, session):
+    user = await UserRepository(session).get_by_telegram_id(callback.from_user.id)
+    lang = user.language if user and user.language else "ru"
+    if not user:
+        await callback.answer()
+        await callback.message.answer(t("access_start_first", lang))
+        return
+
+    service = DailyPracticeService(session)
+    if not getattr(user, "daily_practice_started_at", None):
+        await service.mark_started(user)
+    await service.mark_completed(user)
+    user.learning_mode = "qa"
+    user.voice_mode = "none"
+    if user.payment_status != "approved" and user.status != "blocked":
+        user.status = "trial"
+        user.start_date = None
+        user.end_date = None
+    await session.commit()
+    await ConversionFunnelService().record(
+        event_name="course_cta_seen",
+        user=user,
+        source="daily_practice_completion",
+    )
+
+    await callback.answer()
+    try:
+        await callback.message.edit_text(
+            service.completion_text(user, lang),
+            reply_markup=daily_practice_finish_keyboard(lang),
+            parse_mode="HTML",
+        )
+    except Exception:
+        await callback.message.answer(
+            service.completion_text(user, lang),
+            reply_markup=daily_practice_finish_keyboard(lang),
+            parse_mode="HTML",
+        )
+    await state.clear()
+
+
+@router.callback_query(F.data == "daily_practice:course")
+async def daily_practice_course(callback: CallbackQuery, state: FSMContext, session):
+    await callback.answer()
+    try:
+        await callback.message.delete()
+    except Exception:
+        pass
+    await _start_first_available_course_lesson(
+        telegram_id=callback.from_user.id,
+        respond=callback.message.answer,
+        state=state,
+        session=session,
+        source="daily_practice_course",
+    )
 
 
 @router.callback_query(OnboardingStates.choosing_trial_lesson, F.data == "trial_lesson:first")

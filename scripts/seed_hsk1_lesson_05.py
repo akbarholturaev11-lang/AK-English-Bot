@@ -5,6 +5,7 @@ from sqlalchemy import select
 
 from app.db.session import async_session_maker as SessionLocal
 from app.db.models.course_lessons import CourseLesson
+from scripts.hsk1_block_metadata import apply_hsk1_block_metadata
 
 
 LESSON = {
@@ -111,7 +112,7 @@ LESSON = {
                  "uz": "Muallima Li necha yoshda?",
                  "ru": "Сколько лет преподавателю Ли?",
                  "tj": "Муаллима Ли чанд сол дорад?"},
-                {"speaker": "B", "zh": "她今年五十岁了。",     "pinyin": "Tā jīnnián wǔshí suì le.",
+                {"speaker": "B", "zh": "她今年50岁了。",       "pinyin": "Tā jīnnián wǔshí suì le.",
                  "uz": "U bu yil ellik yoshga kirdi.",
                  "ru": "В этом году ей исполнилось пятьдесят.",
                  "tj": "Вай имсол панҷоҳ сол шуд."},
@@ -119,7 +120,7 @@ LESSON = {
                  "uz": "Uning qizi-chi?",
                  "ru": "А её дочь?",
                  "tj": "Духтараш чӣ?"},
-                {"speaker": "B", "zh": "她女儿今年二十岁。",   "pinyin": "Tā nǚ'ér jīnnián èrshí suì.",
+                {"speaker": "B", "zh": "她女儿今年20岁。",     "pinyin": "Tā nǚ'ér jīnnián èrshí suì.",
                  "uz": "Uning qizi bu yil yigirma yoshda.",
                  "ru": "Её дочери в этом году двадцать лет.",
                  "tj": "Духтараш имсол бист сол дорад."},
@@ -359,6 +360,9 @@ LESSON = {
 
     "is_active": True,
 }
+
+
+apply_hsk1_block_metadata(LESSON)
 
 
 async def seed():

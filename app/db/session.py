@@ -32,6 +32,18 @@ _BOOTSTRAP_COLUMNS: dict[str, dict[str, str]] = {
         "trial_quiz_explanation_used_at": "TIMESTAMP WITH TIME ZONE",
         "trial_voice_used_at": "TIMESTAMP WITH TIME ZONE",
         "force_sub_required_at": "TIMESTAMP WITH TIME ZONE",
+        "bot_blocked_at": "TIMESTAMP WITH TIME ZONE",
+        "bot_unblocked_at": "TIMESTAMP WITH TIME ZONE",
+        "last_bot_block_check_at": "TIMESTAMP WITH TIME ZONE",
+        "bot_block_reason": "VARCHAR(120)",
+        "subscription_expired_offer_sent_at": "TIMESTAMP WITH TIME ZONE",
+        "subscription_churn_followup_sent_at": "TIMESTAMP WITH TIME ZONE",
+        "subscription_churn_responded_at": "TIMESTAMP WITH TIME ZONE",
+        "subscription_churn_reason": "VARCHAR(64)",
+        "daily_practice_started_at": "TIMESTAMP WITH TIME ZONE",
+        "daily_practice_completed_at": "TIMESTAMP WITH TIME ZONE",
+        "daily_practice_streak": "INTEGER DEFAULT 0 NOT NULL",
+        "daily_practice_last_day": "DATE",
     },
     "payments": {
         "checkout_msg_id": "INTEGER",
@@ -64,6 +76,12 @@ _BOOTSTRAP_COLUMNS: dict[str, dict[str, str]] = {
         "notification_sent_at": "TIMESTAMP WITH TIME ZONE",
         "notification_sent_count": "INTEGER DEFAULT 0 NOT NULL",
         "notification_failed_count": "INTEGER DEFAULT 0 NOT NULL",
+    },
+    "ad_campaigns": {
+        "button_config": "TEXT",
+    },
+    "release_feedback_campaigns": {
+        "feature_key": "VARCHAR(32) DEFAULT 'general' NOT NULL",
     },
     "bot_feedbacks": {
         "price_offer_due_at": "TIMESTAMP WITH TIME ZONE",
@@ -125,6 +143,19 @@ _BOOTSTRAP_COLUMNS: dict[str, dict[str, str]] = {
         "local_currency": "VARCHAR(8) DEFAULT 'TJS' NOT NULL",
         "processing_by_telegram_id": "BIGINT",
         "processing_started_at": "TIMESTAMP WITH TIME ZONE",
+    },
+    "course_miniapp_profiles": {
+        "last_known_rank": "INTEGER",
+        "motivation_overtaken_date": "DATE",
+        "motivation_goal_date": "DATE",
+        "motivation_streak_date": "DATE",
+    },
+    "course_ad_creatives": {
+        "link_url": "VARCHAR(512)",
+        "language": "VARCHAR(8) DEFAULT 'all' NOT NULL",
+        "media_blob": "BYTEA",
+        "media_size": "INTEGER",
+        "media_checksum": "VARCHAR(64)",
     },
 }
 

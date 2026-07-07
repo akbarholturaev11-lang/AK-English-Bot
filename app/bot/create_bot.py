@@ -18,15 +18,17 @@ from app.bot.handlers.payments import router as payments_router
 from app.bot.handlers.admin_payments import router as admin_payments_router
 from app.bot.handlers.admin_broadcast import router as admin_broadcast_router
 from app.bot.handlers.admin_ads import router as admin_ads_router
+from app.bot.handlers.release_feedback import router as release_feedback_router
 from app.bot.handlers.admin_discount import router as admin_discount_router
 from app.bot.handlers.feedback import router as feedback_router
+from app.bot.handlers.subscription_churn import router as subscription_churn_router
 from app.bot.handlers.messages import router as messages_router
 from app.bot.handlers.course import router as course_router
 from app.bot.handlers.admin import router as admin_router
 from app.bot.handlers.admin_audio import router as admin_audio_router
 from app.bot.handlers.partner import router as partner_router
 from app.bot.handlers.admin_partner import router as admin_partner_router
-from app.config import COURSE_MODE_ENABLED
+from app.bot.handlers.challenge import router as challenge_router
 
 
 def create_bot(settings):
@@ -48,17 +50,19 @@ def create_bot(settings):
     dp.include_router(admin_discount_router)
     dp.include_router(admin_broadcast_router)
     dp.include_router(admin_ads_router)
+    dp.include_router(release_feedback_router)
     dp.include_router(admin_audio_router)   # admin FSM flows must stay before generic text/photo handlers
     dp.include_router(admin_partner_router)
     dp.include_router(feedback_router)
+    dp.include_router(subscription_churn_router)
     dp.include_router(partner_router)
+    dp.include_router(challenge_router)
     dp.include_router(referral_router)
     dp.include_router(subscription_router)
     dp.include_router(menu_router)
     dp.include_router(payments_router)
     dp.include_router(admin_payments_router)
-    if COURSE_MODE_ENABLED:
-        dp.include_router(course_router)
+    dp.include_router(course_router)
     dp.include_router(admin_router)
     dp.include_router(messages_router)
 

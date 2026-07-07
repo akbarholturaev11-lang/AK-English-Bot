@@ -189,6 +189,7 @@ class AIService:
         filename: str,
         user_language: str,
         user_level: str,
+        speech_hint: str | None = None,
     ) -> AIUsageResult:
         lang_labels = {
             "tj": "Tajik",
@@ -197,18 +198,30 @@ class AIService:
         }
         primary_lang = lang_labels.get(user_language, "Russian")
         prompt = (
-            "Transcribe this Telegram voice message. Do not translate it. "
-            f"The user's interface language is {primary_lang}, and their English level is {user_level}. "
-            "The audio is likely in the user's interface language or English. "
-            "Preserve English words, names, numbers, and short mixed-language phrases carefully. "
-            "If speech is unclear, transcribe only what you can hear."
+            "Transcribe only, do not translate. "
+            f"Likely {primary_lang} or Chinese, level {user_level}. "
+            "Keep Chinese, pinyin, names, numbers, and short mixed-language phrases."
         )
+        if speech_hint:
+            prompt += (
+                f" Pronunciation target hint: {speech_hint[:180]}. "
+                "Use the hint only to resolve unclear Chinese sounds; do not copy it if it was not spoken."
+            )
 
         model = "gpt-4o-mini-transcribe"
+        mime_type = {
+            ".aac": "audio/aac",
+            ".m4a": "audio/mp4",
+            ".mp4": "audio/mp4",
+            ".ogg": "audio/ogg",
+            ".webm": "audio/webm",
+            ".mp3": "audio/mpeg",
+            ".wav": "audio/wav",
+        }.get(Path(filename).suffix.lower(), "application/octet-stream")
         response = await self.client.audio.transcriptions.create(
             model=model,
             chunking_strategy="auto",
-            file=(filename, audio_bytes, "audio/ogg"),
+            file=(filename, audio_bytes, mime_type),
             prompt=prompt,
             temperature=0,
         )
@@ -227,12 +240,14 @@ class AIService:
         filename: str,
         user_language: str,
         user_level: str,
+        speech_hint: str | None = None,
     ) -> str:
         result = await self.transcribe_voice_with_usage(
             audio_bytes=audio_bytes,
             filename=filename,
             user_language=user_language,
             user_level=user_level,
+            speech_hint=speech_hint,
         )
         return result.content
 
@@ -249,16 +264,18 @@ class AIService:
         }
         target_lang = lang_labels.get(user_language, "Russian")
         model = "gpt-4o-mini"
+        has_chinese = any("\u4e00" <= char <= "\u9fff" for char in transcript)
         direction = (
-            f"If the latest transcript is English, translate only the latest transcript into {target_lang}. "
-            "If it is in the user's interface language or another language, translate it into natural English."
+            f"The latest transcript contains Chinese. Translate only the latest transcript into {target_lang}."
+            if has_chinese
+            else "The latest transcript is not Chinese. Interpret only the latest transcript into natural Simplified Chinese."
         )
 
         messages = [
             {
                 "role": "system",
                 "content": (
-                    "You are a context-aware English conversation interpreter for real-life dialogue. "
+                    "You are a context-aware Chinese conversation interpreter for real-life dialogue. "
                     f"The user's interface language is {target_lang}. "
                     f"{direction} "
                     "Use recent context only to resolve pronouns, tone, missing objects, and situation. "

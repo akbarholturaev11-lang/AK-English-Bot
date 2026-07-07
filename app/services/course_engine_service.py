@@ -231,10 +231,6 @@ class CourseEngineService:
         normalized = (level or "").strip().lower()
         fallback_map = {
             "beginner": ("hsk1",),
-            "a1": ("hsk1",),
-            "a2": ("hsk2", "hsk1"),
-            "b1": ("hsk3", "hsk2", "hsk1"),
-            "b2": ("hsk4", "hsk3", "hsk2", "hsk1"),
             "hsk1": ("hsk1",),
             "hsk2": ("hsk2", "hsk1"),
             "hsk3": ("hsk3", "hsk2", "hsk1"),

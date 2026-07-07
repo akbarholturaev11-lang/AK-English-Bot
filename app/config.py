@@ -16,12 +16,14 @@ class Settings(BaseSettings):
     REDIS_URL: str = "redis://localhost:6379/0"
 
     ADMIN_IDS: str = "7965751363"
+    FEEDBACK_NOTIFY_CHAT_IDS: str = "-1004311413349"
     PAYMENT_DETAILS: str = ""
     BOT_USERNAME: str = ""
-    MINI_APP_BASE_URL: str = ""
+    MINI_APP_BASE_URL: str = "https://web-production-1235a.up.railway.app/course-v3.html"
 
     DEFAULT_LANGUAGE: str = "tj"
     LOG_LEVEL: str = "INFO"
+    ENABLE_RICH_MESSAGES: bool = True
 
     AIRTABLE_API_KEY: str = ""
     AIRTABLE_BASE_ID: str = ""
@@ -35,6 +37,11 @@ class Settings(BaseSettings):
     def admin_id_list(self) -> List[int]:
         return [int(x.strip()) for x in self.ADMIN_IDS.split(",") if x.strip()]
 
+    @property
+    def feedback_notify_chat_id_list(self) -> List[int]:
+        return [int(x.strip()) for x in self.FEEDBACK_NOTIFY_CHAT_IDS.split(",") if x.strip()]
+
 
 settings = Settings()
 COURSE_MODE_ENABLED = True
+# ENABLE_RICH_MESSAGES = True  # Moved to Settings class

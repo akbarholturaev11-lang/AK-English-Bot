@@ -5,11 +5,13 @@ from app.repositories.bot_feedback_repo import BotFeedbackRepository
 from app.repositories.user_repo import UserRepository
 from app.services.ai_usage_budget_service import AIUsageBudgetService
 from app.services.portfolio_service import PortfolioService
+from app.services.subscription_churn_service import SubscriptionChurnService
 
 
 PLAN_DURATIONS = {
     "10_days": 10,
     "1_month": 30,
+    "3_months": 90,
 }
 
 
@@ -42,6 +44,7 @@ class SubscriptionService:
         user.end_date = now + timedelta(days=duration_days)
         user.selected_plan_type = None
         user.expiry_reminder_sent_at = None
+        await SubscriptionChurnService(self.session).reset_after_paid_activation(user)
 
         if discount_source == "referral" and user.discount_eligible and not user.discount_used:
             user.discount_used = True

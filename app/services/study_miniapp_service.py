@@ -8,6 +8,15 @@ from app.repositories.course_lesson_repo import CourseLessonRepository
 from app.repositories.course_progress_repo import CourseProgressRepository
 from app.repositories.user_repo import UserRepository
 from app.services.qa_service import QAService
+from app.services.course_engine_service import CourseEngineService
+from app.services.course_trial_service import CourseTrialService
+from app.services.course_miniapp_access_service import CourseMiniAppAccessService
+from app.services.course_miniapp_profile_service import CourseMiniAppProfileService
+from app.services.course_gamification_service import CourseGamificationService
+from app.services.support_contact_service import get_admin_contact_url
+from app.services.user_access_state_service import UserAccessStateService
+from app.db.models.course_mistake import CourseMistake
+from sqlalchemy import func, select
 
 
 TRIAL_LIMITS = {
@@ -46,14 +55,7 @@ class StudyMiniAppService:
 
     @classmethod
     def is_paid_user(cls, user) -> bool:
-        end_date = cls._as_utc(getattr(user, "end_date", None))
-        return bool(
-            user
-            and getattr(user, "status", "") == "active"
-            and getattr(user, "payment_status", "") == "approved"
-            and end_date
-            and end_date > datetime.now(timezone.utc)
-        )
+        return CourseMiniAppAccessService.is_paid_user(user)
 
     async def _resolve_level(self, user) -> str:
         level = str(getattr(user, "level", "") or "").strip().lower()
@@ -82,14 +84,81 @@ class StudyMiniAppService:
             return {"ok": False, "error": "access_start_first"}
 
         paid = self.is_paid_user(user)
+        access_state = UserAccessStateService.classify(user)
         limits = dict(PAID_LIMITS if paid else TRIAL_LIMITS)
         if not paid and getattr(user, "trial_quiz_explanation_used_at", None) is None:
             limits["wrong_analysis"] = True
+        features = await CourseMiniAppAccessService(self.session).get_entitlements(user)
+        profile = await CourseMiniAppProfileService(self.session).get_or_create(user.id)
+        progress = await self.progress_repo.get_by_user_id(user.id)
+        gamification = await CourseGamificationService(self.session).snapshot(user, profile=profile)
+        support_url = await get_admin_contact_url(self.session)
         return {
-            "status": "active" if paid else "trial",
+            "status": "active" if paid else access_state,
             "language": getattr(user, "language", None) or "uz",
             "level": await self._resolve_level(user),
+            "support_url": support_url,
             "limits": limits,
+            "course_features": features,
+            "course_profile": {
+                "goal": profile.goal,
+                "daily_minutes": profile.daily_minutes,
+                "start_mode": profile.start_mode,
+                "timezone_offset_minutes": profile.timezone_offset_minutes,
+                "onboarding_completed": profile.onboarding_completed_at is not None,
+                "has_progress": bool(progress and progress.current_lesson_id),
+            },
+            "gamification": gamification,
+        }
+
+    async def get_profile_payload(self, telegram_id: int) -> dict:
+        user = await self.user_repo.get_by_telegram_id(telegram_id)
+        if not user:
+            return {"ok": False, "error": "access_start_first"}
+        paid = self.is_paid_user(user)
+        access_state = UserAccessStateService.classify(user)
+        profile = await CourseMiniAppProfileService(self.session).get_or_create(user.id)
+        gamification = await CourseGamificationService(self.session).snapshot(user, profile=profile)
+        features = await CourseMiniAppAccessService(self.session).get_entitlements(user)
+        progress = await self.progress_repo.get_by_user_id(user.id)
+        support_url = await get_admin_contact_url(self.session)
+        mistakes_result = await self.session.execute(
+            select(func.coalesce(func.sum(CourseMistake.wrong_count - CourseMistake.resolved_count), 0)).where(
+                CourseMistake.user_id == user.id,
+                CourseMistake.wrong_count > CourseMistake.resolved_count,
+            )
+        )
+        display_name = str(getattr(user, "full_name", None) or getattr(user, "username", None) or "HSK Student").strip()
+        initials = "".join(part[:1] for part in display_name.split()[:2]).upper() or "HSK"
+        return {
+            "ok": True,
+            "support_url": support_url,
+            "user": {
+                "name": display_name[:80],
+                "avatar": initials[:3],
+                "level": await self._resolve_level(user),
+                "language": getattr(user, "language", None) or "ru",
+            },
+            "stats": {
+                "xp": gamification["xp"],
+                "streak": gamification["streak"],
+                "league": gamification["league"],
+                "weekly_xp": gamification["weekly_xp"],
+                "completed_lessons": int(getattr(progress, "completed_lessons_count", 0) or 0),
+                "mistakes": int(mistakes_result.scalar_one() or 0),
+            },
+            "subscription": {
+                "status": "active" if paid else access_state,
+                "is_paid": paid,
+                "until": self._as_utc(getattr(user, "end_date", None)).isoformat() if getattr(user, "end_date", None) else None,
+            },
+            "course_features": features,
+            "course_profile": {
+                "goal": profile.goal,
+                "daily_minutes": profile.daily_minutes,
+                "onboarding_completed": profile.onboarding_completed_at is not None,
+            },
+            "gamification": gamification,
         }
 
     async def send_subscription_menu(self, bot, telegram_id: int) -> bool:
@@ -105,6 +174,54 @@ class StudyMiniAppService:
             parse_mode="HTML",
         )
         return True
+
+    async def complete_v2_lesson(
+        self,
+        telegram_id: int,
+        *,
+        level: str,
+        lesson_order: int,
+        percent: int,
+    ) -> dict:
+        if percent < 60:
+            return {"ok": False, "error": "lesson_score_too_low"}
+
+        user = await self.user_repo.get_by_telegram_id(telegram_id)
+        if not user:
+            return {"ok": False, "error": "access_start_first"}
+
+        progress = await self.progress_repo.get_by_user_id(user.id, for_update=True)
+        if not progress or not progress.current_lesson_id:
+            return {"ok": False, "error": "course_no_lesson_found"}
+
+        lesson = await self.lesson_repo.get_by_id(progress.current_lesson_id)
+        normalized_level = "hsk4" if level in {"hsk4", "hsk4a", "hsk4b"} else level
+        if (
+            not lesson
+            or str(getattr(lesson, "level", "") or "").lower() != normalized_level
+            or int(getattr(lesson, "lesson_order", 0) or 0) != lesson_order
+        ):
+            return {"ok": False, "error": "course_lesson_not_current"}
+
+        trial_service = CourseTrialService(self.session)
+        if not trial_service.is_paid_user(user) and not trial_service.can_access_lesson(user, lesson.id):
+            return {"ok": False, "error": "course_trial_lesson_locked"}
+        if not trial_service.is_paid_user(user):
+            await trial_service.mark_trial_completed(user, lesson.id)
+
+        engine = CourseEngineService(self.session)
+        _, updated_progress, completed_lesson, next_lesson, error_key = (
+            await engine.complete_lesson_and_unlock_next(telegram_id)
+        )
+        if error_key:
+            return {"ok": False, "error": error_key}
+
+        return {
+            "ok": True,
+            "completed_lesson": getattr(completed_lesson, "lesson_order", lesson_order),
+            "next_lesson": getattr(next_lesson, "lesson_order", None),
+            "completed_lessons_count": getattr(updated_progress, "completed_lessons_count", 0),
+        }
 
     @staticmethod
     def _discussion_prompt(payload: dict, lang: str) -> str:

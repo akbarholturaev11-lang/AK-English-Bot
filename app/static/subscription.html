@@ -91,6 +91,8 @@ h1{font-size:27px;line-height:1.06;font-weight:900;letter-spacing:-.01em}
 .plans{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .plan{position:relative;min-height:130px;text-align:left;border:1px solid var(--line);border-radius:var(--radius);background:rgba(255,255,255,.04);padding:14px;display:flex;flex-direction:column;justify-content:space-between;transition:.18s}
 .plan.selected,.choice.selected{border-color:var(--emerald);box-shadow:0 0 0 1px var(--emerald),0 10px 30px rgba(52,227,164,.22);background:linear-gradient(160deg,rgba(52,227,164,.14),rgba(52,227,164,.05))}
+.plan.wide{grid-column:1/-1;min-height:auto}
+.plan-note{margin-top:6px;color:var(--muted);font-size:12px;font-weight:800}
 .plan-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .plan-name{font-size:13px;color:var(--muted);font-weight:850}
 .badge{display:inline-flex;align-items:center;justify-content:center;min-height:22px;border-radius:999px;padding:3px 9px;background:linear-gradient(135deg,rgba(255,210,125,.22),rgba(255,186,77,.16));color:var(--gold);font-size:11px;font-weight:900;border:1px solid rgba(255,210,125,.3)}
@@ -143,11 +145,24 @@ h1{font-size:27px;line-height:1.06;font-weight:900;letter-spacing:-.01em}
 .qr-actions.show{grid-template-rows:1fr;opacity:1;transform:translateY(0)}
 .qr-actions-inner{overflow:hidden}
 .qr-download{width:100%;height:46px;margin-top:10px;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--mint),var(--emerald));color:#04130d;font-size:14px;font-weight:950}
-.upload{display:block;margin-top:14px;border:1.5px dashed var(--line2);border-radius:var(--radius);background:rgba(255,255,255,.04);padding:14px;cursor:pointer;transition:.18s}
+.qr-preview{position:fixed;inset:0;z-index:28;display:none;background:radial-gradient(110% 70% at 50% 0%,#0d3127 0%,#05110d 58%,#030a08 100%);padding:calc(18px + env(safe-area-inset-top,0px)) 15px calc(88px + env(safe-area-inset-bottom,0px))}
+.qr-preview.show{display:flex;flex-direction:column}
+.qr-preview-head{width:100%;max-width:520px;margin:0 auto 12px}
+.qr-preview-head h3{font-size:18px;line-height:1.2;font-weight:950}
+.qr-preview-body{flex:1;display:flex;align-items:center;justify-content:center;width:100%;max-width:520px;margin:0 auto}
+.qr-preview-frame{display:grid;place-items:center;width:100%;max-width:430px;aspect-ratio:1/1;border:1px solid rgba(255,255,255,.16);border-radius:var(--radius);background:#fff;padding:12px;box-shadow:0 22px 70px rgba(0,0,0,.42)}
+.qr-preview-frame img{display:block;width:100%;height:100%;object-fit:contain}
+.qr-preview-bottom{position:fixed;left:0;right:0;bottom:0;z-index:29;padding:11px 15px calc(11px + env(safe-area-inset-bottom,0px));background:linear-gradient(180deg,rgba(5,17,13,.22),rgba(5,17,13,.95));backdrop-filter:blur(18px);border-top:1px solid var(--line)}
+.qr-preview-bottom-inner{max-width:520px;margin:0 auto}
+.qr-preview-back{width:100%;height:54px;border-radius:var(--radius);border:1px solid var(--line);background:rgba(255,255,255,.07);color:var(--text);font-size:15px;font-weight:950}
+.upload{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:9px;margin-top:14px;min-height:150px;border:2px dashed var(--line2);border-radius:var(--radius);background:rgba(255,255,255,.04);padding:22px 16px;cursor:pointer;transition:.18s}
 .upload input{display:none}
-.upload strong{display:block;font-size:14px;font-weight:850}
-.upload span{display:block;margin-top:6px;color:var(--muted);font-size:12px;line-height:1.4}
+.upload:active{transform:scale(.99)}
+.upload-plus{display:flex;align-items:center;justify-content:center;width:62px;height:62px;border-radius:50%;background:rgba(52,227,164,.12);border:1.5px solid var(--line2);color:var(--emerald);font-size:38px;font-weight:300;line-height:1;transition:.18s}
+.upload strong{display:block;font-size:15px;font-weight:850}
+.upload span{display:block;color:var(--muted);font-size:12px;line-height:1.4}
 .upload.ready{border-style:solid;border-color:var(--emerald);background:linear-gradient(160deg,rgba(52,227,164,.14),rgba(52,227,164,.05))}
+.upload.ready .upload-plus{background:var(--emerald);color:#04130d;border-color:var(--emerald)}
 .done{display:grid;gap:14px;text-align:center;padding-top:54px;animation:fade .3s ease}
 .done-mark{position:relative;width:84px;height:84px;border-radius:50%;display:grid;place-items:center;margin:0 auto;background:linear-gradient(135deg,var(--emerald),var(--emerald2));color:#04130d;font-size:42px;font-weight:950;box-shadow:0 0 0 10px rgba(52,227,164,.12),0 18px 50px rgba(52,227,164,.4);animation:pop .45s cubic-bezier(.2,1.3,.4,1)}
 .done h2{font-size:25px;font-weight:900}
@@ -272,6 +287,7 @@ h1{font-size:27px;line-height:1.06;font-weight:900;letter-spacing:-.01em}
       <div class="paybox" id="paymentBox"></div>
       <label class="upload" id="uploadBox">
         <input type="file" id="receiptInput" accept="image/*">
+        <div class="upload-plus" id="uploadPlus">+</div>
         <strong id="uploadTitle"></strong>
         <span id="uploadText"></span>
       </label>
@@ -319,6 +335,21 @@ h1{font-size:27px;line-height:1.06;font-weight:900;letter-spacing:-.01em}
     </div>
   </div>
 </div>
+<div class="qr-preview" id="qrPreview" aria-hidden="true">
+  <div class="qr-preview-head">
+    <h3 id="qrPreviewTitle"></h3>
+  </div>
+  <div class="qr-preview-body">
+    <div class="qr-preview-frame">
+      <img id="qrPreviewImg" alt="QR">
+    </div>
+  </div>
+  <div class="qr-preview-bottom">
+    <div class="qr-preview-bottom-inner">
+      <button class="qr-preview-back" type="button" id="qrPreviewBackBtn"></button>
+    </div>
+  </div>
+</div>
 <div class="loading" id="loading"><div class="spinner"></div></div>
 
 <script>
@@ -333,11 +364,10 @@ const API={
 };
 const PARAMS=new URLSearchParams(window.location.search);
 const INIT_DATA=tg?.initData||"";
-const PLAN_ORDER=["10_days","1_month"];
+const PLAN_ORDER=["10_days","1_month","3_months"];
 const METHOD_ORDER=["visa","alipay","wechat"];
 const COUNTRY_ORDER=["tj","uz","ru","other"];
 const CARD_BANK_NAME="Dushanbe City";
-const DEFAULT_SUPPORT_URL="https://t.me/akbarchina";
 const MODE_ORDER=["subscription","referral_discount","admin_discount","feedback_discount"];
 
 const I18N={
@@ -355,7 +385,7 @@ const I18N={
     heroText:"Obuna bilan kurs, AI javoblar, foto, voice, quiz va xato tahlili to'liq ochiladi.",
     benefits:[
       ["AI yordamchi","Savol va mashqlarga tez javob olasiz."],
-      ["Kurs rejimi","HSK darslari va progress tartibli boradi."],
+      ["HSK kursi","Darslar bosqichma-bosqich, progress saqlanib boradi."],
       ["Foto va voice","Rasm va ovozli savollar bilan ishlaysiz."],
       ["Xato tahlili","Quiz va javoblardagi xatolar tushuntiriladi."]
     ],
@@ -382,7 +412,7 @@ const I18N={
     methodsTitle:"To'lov usuli",
     discountReady:"20% chegirma qo'llanadi",
     discountProgress:"20% chegirma: {count}/{required} referral",
-    planLabels:{ten:"10 kun",month:"1 oy",fast:"Tez start",best:"Eng foydali"},
+    planLabels:{ten:"10 kun",month:"1 oy",quarter:"3 oy",fast:"Tez start",best:"Eng foydali",quarterBadge:"Foydali",quarterNote:"≈ 2 TJS/kun"},
     methods:{
       visa:["Bank karta / VISA","Tojik, o'zbek, rus yoki boshqa davlat kartasi"],
       alipay:["Alipay","QR orqali yuan to'lovi"],
@@ -413,12 +443,11 @@ const I18N={
     copiedValue:"Copy qilindi.",
     noDetails:"Karta rekviziti hali kiritilmagan. Keyinroq qayta urinib ko'ring.",
     qrTitle:"QR kod",
-    qrTapHint:"QR ustiga bosing — yuklab olish tugmasi chiqadi.",
-    downloadQr:"QR kodni yuklab olish",
-    qrDownloaded:"QR yuklash boshlandi.",
+    qrTapHint:"QR ustiga bosing — kattalashtirish tugmasi chiqadi.",
+    downloadQr:"QR kodni kattalashtirish",
     qrMissing:"QR kod hozircha tayyor emas.",
     uploadTitle:"To'lov screenshotini yuklash",
-    uploadText:"JPG, PNG yoki WEBP.",
+    uploadText:"Bu yerni bosing va skrin tanlang.",
     uploaded:"Screenshot tanlandi: {name}",
     next:"Davom etish",
     back:"Orqaga",
@@ -453,7 +482,7 @@ const I18N={
     heroText:"Подписка открывает курс, AI-ответы, фото, voice, quiz и разбор ошибок.",
     benefits:[
       ["AI-помощник","Быстрые ответы по вопросам и упражнениям."],
-      ["Курс","HSK-уроки и прогресс идут по порядку."],
+      ["Курс HSK","Уроки по порядку, прогресс сохраняется."],
       ["Фото и voice","Работаете с фото и голосовыми вопросами."],
       ["Разбор ошибок","Ошибки в quiz и ответах объясняются."]
     ],
@@ -480,7 +509,7 @@ const I18N={
     methodsTitle:"Способ оплаты",
     discountReady:"Скидка 20% применится",
     discountProgress:"Скидка 20%: {count}/{required} реферала",
-    planLabels:{ten:"10 дней",month:"1 месяц",fast:"Быстрый старт",best:"Выгодно"},
+    planLabels:{ten:"10 дней",month:"1 месяц",quarter:"3 месяца",fast:"Быстрый старт",best:"Выгодно",quarterBadge:"Выгодно",quarterNote:"≈ 2 TJS/день"},
     methods:{
       visa:["Банковская карта / VISA","Карта Таджикистана, Узбекистана, России или другой страны"],
       alipay:["Alipay","Оплата в юанях через QR"],
@@ -511,12 +540,11 @@ const I18N={
     copiedValue:"Скопировано.",
     noDetails:"Реквизиты карты ещё не добавлены. Попробуйте позже.",
     qrTitle:"QR-код",
-    qrTapHint:"Нажмите на QR — появится кнопка загрузки.",
-    downloadQr:"Скачать QR-код",
-    qrDownloaded:"Загрузка QR началась.",
+    qrTapHint:"Нажмите на QR — появится кнопка крупного вида.",
+    downloadQr:"Открыть QR крупно",
     qrMissing:"QR-код пока не готов.",
     uploadTitle:"Загрузить screenshot оплаты",
-    uploadText:"JPG, PNG или WEBP.",
+    uploadText:"Нажмите сюда и выберите screenshot.",
     uploaded:"Screenshot выбран: {name}",
     next:"Продолжить",
     back:"Назад",
@@ -551,7 +579,7 @@ const I18N={
     heroText:"Бо обуна курс, AI ҷавобҳо, фото, voice, quiz ва таҳлили хатоҳо кушода мешаванд.",
     benefits:[
       ["AI ёрдамчӣ","Ба саволҳо ва машқҳо зуд ҷавоб мегиред."],
-      ["Режими курс","Дарсҳои HSK ва progress бо тартиб мераванд."],
+      ["Курси HSK","Дарсҳо паёпай, progress нигоҳ дошта мешавад."],
       ["Фото ва voice","Бо расм ва саволҳои овозӣ кор мекунед."],
       ["Таҳлили хато","Хатоҳои quiz ва ҷавобҳо шарҳ дода мешаванд."]
     ],
@@ -578,7 +606,7 @@ const I18N={
     methodsTitle:"Усули пардохт",
     discountReady:"20% тахфиф ҳисоб мешавад",
     discountProgress:"20% тахфиф: {count}/{required} referral",
-    planLabels:{ten:"10 рӯз",month:"1 моҳ",fast:"Оғози тез",best:"Фоиданок"},
+    planLabels:{ten:"10 рӯз",month:"1 моҳ",quarter:"3 моҳ",fast:"Оғози тез",best:"Фоиданок",quarterBadge:"Фоиданок",quarterNote:"≈ 2 TJS/рӯз"},
     methods:{
       visa:["Корти бонкӣ / VISA","Корти тоҷик, ӯзбек, рус ё дигар давлат"],
       alipay:["Alipay","Пардохти юан бо QR"],
@@ -609,12 +637,11 @@ const I18N={
     copiedValue:"Copy шуд.",
     noDetails:"Реквизити корт ҳоло ворид нашудааст. Баъдтар боз кӯшиш кунед.",
     qrTitle:"QR код",
-    qrTapHint:"QR-ро пахш кунед — тугмаи download мебарояд.",
-    downloadQr:"QR кодро download кардан",
-    qrDownloaded:"Download-и QR оғоз шуд.",
+    qrTapHint:"QR-ро пахш кунед — тугмаи калон дидан мебарояд.",
+    downloadQr:"QR-ро калон дидан",
     qrMissing:"QR код ҳоло тайёр нест.",
     uploadTitle:"Screenshot-и пардохтро бор кунед",
-    uploadText:"JPG, PNG ё WEBP.",
+    uploadText:"Ин ҷоро пахш кунед ва screenshot интихоб кунед.",
     uploaded:"Screenshot интихоб шуд: {name}",
     next:"Давом",
     back:"Бозгашт",
@@ -639,6 +666,7 @@ const I18N={
 
 const state={
   lang:normalizeLang(PARAMS.get("lang")||tg?.initDataUnsafe?.user?.language_code||"uz"),
+  source:String(PARAMS.get("source")||"").trim(),
   mode:normalizeMode(PARAMS.get("mode")),
   campaignId:positiveParam(PARAMS.get("campaign_id")),
   feedbackId:positiveParam(PARAMS.get("feedback_id")),
@@ -656,13 +684,14 @@ const state={
   inviteLink:"",
   inviteCopied:false,
   supportOpen:false,
-  supportUrl:DEFAULT_SUPPORT_URL,
+  supportUrl:"",
   busy:false,
   busyOverlay:false,
   done:false,
   pending:false,
   pendingPayment:null,
   qrActionsOpen:false,
+  qrPreviewOpen:false,
   detailHintOpen:false,
   loadError:false
 };
@@ -690,17 +719,29 @@ function money(amount){
   if(Number.isFinite(numeric))return numeric.toLocaleString("ru-RU");
   return raw||"...";
 }
+function planName(text,plan){
+  const labels=text.planLabels||{};
+  return ({"10_days":labels.ten,"1_month":labels.month,"3_months":labels.quarter})[plan]||plan;
+}
+function planBadge(text,plan){
+  const labels=text.planLabels||{};
+  return ({"10_days":labels.fast,"1_month":labels.best,"3_months":labels.quarterBadge})[plan]||labels.best;
+}
 function priceInfo(method=state.method,plan=state.plan){
   const real=state.overview?.prices?.[method]?.[plan];
   if(real)return real;
   return state.preview?mockOverview().prices?.[method]?.[plan]||null:null;
 }
+function overviewPrices(){
+  if(state.overview?.prices)return state.overview.prices;
+  return state.preview?mockOverview().prices:{};
+}
 function availableMethods(){
-  const prices=state.overview?.prices||mockOverview().prices;
+  const prices=overviewPrices();
   return METHOD_ORDER.filter(method=>Object.keys(prices?.[method]||{}).length>0);
 }
 function availablePlans(method=state.method){
-  const prices=state.overview?.prices||mockOverview().prices;
+  const prices=overviewPrices();
   return PLAN_ORDER.filter(plan=>prices?.[method]?.[plan]);
 }
 function ensureSelection(){
@@ -711,6 +752,7 @@ function ensureSelection(){
 }
 function contextPayload(){
   return {
+    source:state.source,
     mode:state.mode,
     campaign_id:state.campaignId,
     feedback_id:state.feedbackId
@@ -766,15 +808,18 @@ function mockOverview(){
     prices:{
       visa:{
         "10_days":apply({base_amount:29,final_amount:29,currency:"TJS",discount_applied:false,discount_percent:0}),
-        "1_month":apply({base_amount:89,final_amount:89,currency:"TJS",discount_applied:false,discount_percent:0})
+        "1_month":apply({base_amount:89,final_amount:89,currency:"TJS",discount_applied:false,discount_percent:0}),
+        "3_months":apply({base_amount:179,final_amount:179,currency:"TJS",discount_applied:false,discount_percent:0})
       },
       alipay:{
         "10_days":apply({base_amount:29,final_amount:29,currency:"¥",discount_applied:false,discount_percent:0}),
-        "1_month":apply({base_amount:66,final_amount:66,currency:"¥",discount_applied:false,discount_percent:0})
+        "1_month":apply({base_amount:66,final_amount:66,currency:"¥",discount_applied:false,discount_percent:0}),
+        "3_months":apply({base_amount:179,final_amount:179,currency:"¥",discount_applied:false,discount_percent:0})
       },
       wechat:{
         "10_days":apply({base_amount:29,final_amount:29,currency:"¥",discount_applied:false,discount_percent:0}),
-        "1_month":apply({base_amount:66,final_amount:66,currency:"¥",discount_applied:false,discount_percent:0})
+        "1_month":apply({base_amount:66,final_amount:66,currency:"¥",discount_applied:false,discount_percent:0}),
+        "3_months":apply({base_amount:179,final_amount:179,currency:"¥",discount_applied:false,discount_percent:0})
       }
     }
   };
@@ -810,7 +855,6 @@ function mockQuote(){
   };
 }
 function fallbackOverview(){
-  const mock=mockOverview();
   return {
     ok:true,
     language:state.lang,
@@ -819,13 +863,13 @@ function fallbackOverview(){
     offer:null,
     discount:null,
     payment_details:"",
-    prices:mock.prices
+    prices:{}
   };
 }
 function applyOverview(data){
   state.overview=data;
   state.mode=normalizeMode(data?.mode||state.mode);
-  state.supportUrl=data?.support_url||DEFAULT_SUPPORT_URL;
+  state.supportUrl=data?.support_url||"";
   state.pending=Boolean(data?.pending_payment);
   state.pendingPayment=data?.pending_payment||null;
   ensureSelection();
@@ -834,6 +878,7 @@ function applyOverview(data){
     state.step=0;
     state.quote=null;
     state.qrActionsOpen=false;
+    state.qrPreviewOpen=false;
     state.screenshotDataUrl="";
     state.screenshotName="";
   }
@@ -867,6 +912,7 @@ async function loadQuote(){
   setBusy(true);
   state.quoteError="";
   state.qrActionsOpen=false;
+  state.qrPreviewOpen=false;
   state.detailHintOpen=false;
   try{
     if(!hasCurrentPrice())throw new Error(tr().offerExpired);
@@ -932,12 +978,13 @@ function render(){
     node.style.display=finalScreen||index>=items.length?"none":"block";
     node.classList.toggle("active",index<=state.step);
   });
-  $("#bottom").style.display=finalScreen?"none":"block";
+  $("#bottom").style.display=finalScreen||state.qrPreviewOpen?"none":"block";
   renderStart(text);
   renderCountry(text);
   renderPay(text);
   renderDone(text);
   renderSupportSheet(text);
+  renderQrPreview(text);
   $("#backBtn").textContent=text.back;
   $("#nextBtn").textContent=screen==="pay"?text.submit:text.next;
   $("#backBtn").classList.toggle("hide",state.step===0);
@@ -956,13 +1003,16 @@ function renderStart(text){
     if(!info)return "";
     const selected=state.plan===plan?"selected":"";
     const discounted=info.discount_applied?"discounted":"";
-    const name=plan==="10_days"?text.planLabels.ten:text.planLabels.month;
-    const badge=plan==="10_days"?text.planLabels.fast:text.planLabels.best;
-    return `<button class="plan ${selected} ${discounted}" type="button" data-plan="${plan}">
+    const wide=plan==="3_months"?"wide":"";
+    const name=planName(text,plan);
+    const badge=planBadge(text,plan);
+    const note=(plan==="3_months"&&!info.discount_applied&&text.planLabels.quarterNote)?`<span class="plan-note">${text.planLabels.quarterNote}</span>`:"";
+    return `<button class="plan ${selected} ${discounted} ${wide}" type="button" data-plan="${plan}">
       <span class="plan-top"><span class="plan-name">${name}</span><span class="badge">${badge}</span></span>
       <span>
         <span class="price">${money(info.final_amount)}<small>${info.currency}</small></span>
         <span class="old-price">${money(info.base_amount)} ${info.currency}</span>
+        ${note}
       </span>
     </button>`;
   }).join("") || `<div class="detail-empty">${text.offerExpired}</div>`;
@@ -1061,6 +1111,7 @@ function renderPay(text){
     $("#paymentBox").innerHTML=`<h4>${text.detailsTitle}</h4><div class="qr empty">${state.quoteError||text.quoteError}</div>`;
     $("#uploadTitle").textContent=state.screenshotName?text.uploaded.replace("{name}",state.screenshotName):text.uploadTitle;
     $("#uploadText").textContent=text.uploadText;
+    $("#uploadPlus").textContent=state.screenshotDataUrl?"✓":"+";
     $("#uploadBox").classList.toggle("ready",Boolean(state.screenshotDataUrl));
     return;
   }
@@ -1071,7 +1122,7 @@ function renderPay(text){
   const hasOldAmount=Boolean(quote.discount_applied&&oldAmount&&(`${oldAmount}`!==`${quote.pay_amount}`||oldCurrency!==quote.pay_currency));
   $("#amountOld").textContent=hasOldAmount?`${money(oldAmount)} ${oldCurrency}`:"";
   $("#amountOld").classList.toggle("show",hasOldAmount);
-  const planText=state.plan==="10_days"?text.planLabels.ten:text.planLabels.month;
+  const planText=planName(text,state.plan);
   const methodText=text.methods[state.method][0];
   const rows=[
     [text.rows.plan,planText],
@@ -1092,7 +1143,7 @@ function renderPay(text){
       <p class="qr-hint">${text.qrTapHint}</p>
       <div class="qr-actions ${state.qrActionsOpen?"show":""}">
         <div class="qr-actions-inner">
-          <button class="qr-download" type="button" data-download-qr>${text.downloadQr}</button>
+          <button class="qr-download" type="button" data-open-qr-preview>${text.downloadQr}</button>
         </div>
       </div>`;
   }else{
@@ -1100,7 +1151,20 @@ function renderPay(text){
   }
   $("#uploadTitle").textContent=state.screenshotName?text.uploaded.replace("{name}",state.screenshotName):text.uploadTitle;
   $("#uploadText").textContent=state.screenshotName?text.uploadText:text.uploadText;
+  $("#uploadPlus").textContent=state.screenshotDataUrl?"✓":"+";
   $("#uploadBox").classList.toggle("ready",Boolean(state.screenshotDataUrl));
+}
+function currentQrImage(){
+  return state.quote?.qr?.image_data_url||"";
+}
+function renderQrPreview(text){
+  const image=currentQrImage();
+  const visible=Boolean(state.qrPreviewOpen&&image);
+  $("#qrPreview").classList.toggle("show",visible);
+  $("#qrPreview").setAttribute("aria-hidden",visible?"false":"true");
+  $("#qrPreviewTitle").textContent=text.qrTitle;
+  $("#qrPreviewImg").src=visible?image:"";
+  $("#qrPreviewBackBtn").textContent=text.back;
 }
 function escapeHtml(value){
   return String(value||"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
@@ -1231,7 +1295,8 @@ function closeMiniApp(){
   window.close();
 }
 function openSupportChat(){
-  const url=state.supportUrl||DEFAULT_SUPPORT_URL;
+  const url=state.supportUrl||"";
+  if(!url)return;
   if(tg&&typeof tg.openTelegramLink==="function"&&(url.includes("t.me/")||url.startsWith("tg://"))){
     tg.openTelegramLink(url);
     return;
@@ -1242,36 +1307,18 @@ function openSupportChat(){
   }
   window.open(url,"_blank");
 }
-function qrFileName(){
-  const plan=String(state.plan||"plan").replace(/[^a-z0-9_-]/gi,"");
-  const method=String(state.method||"qr").replace(/[^a-z0-9_-]/gi,"");
-  return `hsk-ai-${method}-${plan}-qr.jpg`;
-}
-function downloadQrImage(){
-  const image=state.quote?.qr?.image_data_url;
+function openQrPreview(){
+  const image=currentQrImage();
   if(!image){
     toast(tr().qrMissing);
     return;
   }
-  try{
-    fetch(image)
-      .then(response=>response.blob())
-      .then(blob=>{
-        const objectUrl=URL.createObjectURL(blob);
-        const link=document.createElement("a");
-        link.href=objectUrl;
-        link.download=qrFileName();
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        window.setTimeout(()=>URL.revokeObjectURL(objectUrl),30000);
-        toast(tr().qrDownloaded);
-      })
-      .catch(()=>{window.open(image,"_blank");toast(tr().qrDownloaded)});
-  }catch(error){
-    window.open(image,"_blank");
-    toast(tr().qrDownloaded);
-  }
+  state.qrPreviewOpen=true;
+  render();
+}
+function closeQrPreview(){
+  state.qrPreviewOpen=false;
+  render();
 }
 async function submitPayment(){
   if(!state.screenshotDataUrl){
@@ -1309,8 +1356,8 @@ async function submitPayment(){
 document.addEventListener("click",event=>{
   const qrToggle=event.target.closest("[data-qr-toggle]");
   if(qrToggle){state.qrActionsOpen=!state.qrActionsOpen;render();return}
-  const qrDownload=event.target.closest("[data-download-qr]");
-  if(qrDownload){downloadQrImage();return}
+  const qrPreview=event.target.closest("[data-open-qr-preview]");
+  if(qrPreview){openQrPreview();return}
   const detailHint=event.target.closest("[data-detail-hint-toggle]");
   if(detailHint){state.detailHintOpen=!state.detailHintOpen;render();return}
   const copyBtn=event.target.closest("[data-copy-detail]");
@@ -1318,20 +1365,21 @@ document.addEventListener("click",event=>{
   const langBtn=event.target.closest("[data-lang]");
   if(langBtn){setLang(langBtn.dataset.lang);return}
   const planBtn=event.target.closest("[data-plan]");
-  if(planBtn){state.plan=planBtn.dataset.plan;state.quote=null;state.qrActionsOpen=false;state.detailHintOpen=false;render();return}
+  if(planBtn){state.plan=planBtn.dataset.plan;state.quote=null;state.qrActionsOpen=false;state.qrPreviewOpen=false;state.detailHintOpen=false;render();return}
   const methodBtn=event.target.closest("[data-method]");
   if(methodBtn){
     state.method=methodBtn.dataset.method;
     ensureSelection();
     state.quote=null;
     state.qrActionsOpen=false;
+    state.qrPreviewOpen=false;
     state.detailHintOpen=false;
     state.step=0;
     render();
     return;
   }
   const countryBtn=event.target.closest("[data-country]");
-  if(countryBtn){state.country=countryBtn.dataset.country;state.quote=null;state.qrActionsOpen=false;state.detailHintOpen=false;render();return}
+  if(countryBtn){state.country=countryBtn.dataset.country;state.quote=null;state.qrActionsOpen=false;state.qrPreviewOpen=false;state.detailHintOpen=false;render();return}
 });
 $("#nextBtn").addEventListener("click",()=>{
   const screen=currentScreen();
@@ -1341,6 +1389,7 @@ $("#nextBtn").addEventListener("click",()=>{
 });
 $("#backBtn").addEventListener("click",()=>setStep(state.step-1));
 $("#botReturnBtn").addEventListener("click",closeMiniApp);
+$("#qrPreviewBackBtn").addEventListener("click",closeQrPreview);
 function shareReferral(link){
   if(!link){toast(tr().error);return}
   const url="https://t.me/share/url?url="+encodeURIComponent(link)+"&text="+encodeURIComponent(tr().shareText);
@@ -1376,20 +1425,55 @@ $("#helpBtn").addEventListener("click",showSupportSheet);
 $("#openSupportBtn").addEventListener("click",openSupportChat);
 $("#closeSupportBtn").addEventListener("click",hideSupportSheet);
 $("#supportBackdrop").addEventListener("click",hideSupportSheet);
-$("#receiptInput").addEventListener("change",event=>{
+function readFileAsDataUrl(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onerror=()=>reject(new Error("read"));
+    reader.onload=()=>resolve(String(reader.result||""));
+    reader.readAsDataURL(file);
+  });
+}
+// Telefon rasmlari 8MB serverchekdan oshib ketmasligi uchun canvasda siqamiz.
+function compressDataUrl(dataUrl){
+  return new Promise(resolve=>{
+    const img=new Image();
+    img.onerror=()=>resolve(dataUrl);
+    img.onload=()=>{
+      try{
+        const max=1600;
+        const scale=Math.min(1,max/Math.max(img.width,img.height));
+        const w=Math.max(1,Math.round(img.width*scale));
+        const h=Math.max(1,Math.round(img.height*scale));
+        const canvas=document.createElement("canvas");
+        canvas.width=w;canvas.height=h;
+        const ctx=canvas.getContext("2d");
+        if(!ctx){resolve(dataUrl);return}
+        ctx.drawImage(img,0,0,w,h);
+        const out=canvas.toDataURL("image/jpeg",0.82);
+        resolve(out&&out.length>60?out:dataUrl);
+      }catch(e){resolve(dataUrl);}
+    };
+    img.src=dataUrl;
+  });
+}
+$("#receiptInput").addEventListener("change",async event=>{
   const file=event.target.files?.[0];
   if(!file)return;
   if(!file.type.startsWith("image/")){
     toast(tr().needScreenshot);
+    event.target.value="";
     return;
   }
-  const reader=new FileReader();
-  reader.onload=()=>{
-    state.screenshotDataUrl=String(reader.result||"");
+  try{
+    const raw=await readFileAsDataUrl(file);
+    state.screenshotDataUrl=await compressDataUrl(raw);
     state.screenshotName=file.name;
     render();
-  };
-  reader.readAsDataURL(file);
+  }catch(err){
+    toast(tr().needScreenshot);
+  }finally{
+    event.target.value="";
+  }
 });
 render();
 loadOverview();

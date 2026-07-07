@@ -117,12 +117,12 @@ def _group_audio_by_lesson(rows) -> dict[int, set[str]]:
 def _level_keyboard() -> InlineKeyboardMarkup:
     buttons = [
         [
-            InlineKeyboardButton(text="Beginner", callback_data="adm_audio:level:hsk1"),
-            InlineKeyboardButton(text="Elementary", callback_data="adm_audio:level:hsk2"),
+            InlineKeyboardButton(text="HSK 1", callback_data="adm_audio:level:hsk1"),
+            InlineKeyboardButton(text="HSK 2", callback_data="adm_audio:level:hsk2"),
         ],
         [
-            InlineKeyboardButton(text="Intermediate", callback_data="adm_audio:level:hsk3"),
-            InlineKeyboardButton(text="Advanced", callback_data="adm_audio:level:hsk4"),
+            InlineKeyboardButton(text="HSK 3", callback_data="adm_audio:level:hsk3"),
+            InlineKeyboardButton(text="HSK 4", callback_data="adm_audio:level:hsk4"),
         ],
         [InlineKeyboardButton(text="📊 Statistika", callback_data="adm_audio:stats")],
     ]
@@ -206,7 +206,7 @@ async def admin_audio_entry(message: Message, state: FSMContext):
         return
     await state.clear()
     await message.answer(
-        "🎵 <b>Audio boshqaruv paneli</b>\n\nQaysi English darajasi?",
+        "🎵 <b>Audio boshqaruv paneli</b>\n\nQaysi HSK darajasi?",
         reply_markup=_level_keyboard(),
         parse_mode="HTML",
     )
@@ -221,7 +221,7 @@ async def admin_audio_from_panel(callback: CallbackQuery, state: FSMContext):
     await state.clear()
     await callback.answer()
     await callback.message.edit_text(
-        "🎵 <b>Audio boshqaruv paneli</b>\n\nQaysi English darajasi?",
+        "🎵 <b>Audio boshqaruv paneli</b>\n\nQaysi HSK darajasi?",
         reply_markup=_level_keyboard(),
         parse_mode="HTML",
     )
@@ -234,7 +234,7 @@ async def back_to_levels(callback: CallbackQuery, state: FSMContext):
         return
     await state.clear()
     await callback.message.edit_text(
-        "🎵 <b>Audio boshqaruv paneli</b>\n\nQaysi English darajasi?",
+        "🎵 <b>Audio boshqaruv paneli</b>\n\nQaysi HSK darajasi?",
         reply_markup=_level_keyboard(),
         parse_mode="HTML",
     )

@@ -16,17 +16,37 @@ def language_keyboard() -> InlineKeyboardMarkup:
     )
 
 
+def course_mode_entry_keyboard(lang: str) -> InlineKeyboardMarkup:
+    labels = {
+        "uz": ("🚀 Kursni boshlash", "🤖 Oddiy rejim (chatda savol-javob)"),
+        "ru": ("🚀 Начать курс", "🤖 Обычный режим (вопрос-ответ в чате)"),
+        "tj": ("🚀 Оғози курс", "🤖 Реҷаи оддӣ (савол-ҷавоб дар чат)"),
+    }
+    course_label, qa_label = labels.get(lang, labels["ru"])
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text=course_label,
+                    callback_data="mode:course",
+                )
+            ],
+            [InlineKeyboardButton(text=qa_label, callback_data="mode:free_qa")],
+        ]
+    )
+
+
 def level_keyboard(lang: str) -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [InlineKeyboardButton(text=t("level_beginner", lang), callback_data="level:beginner")],
             [
-                InlineKeyboardButton(text="A1", callback_data="level:a1"),
-                InlineKeyboardButton(text="A2", callback_data="level:a2"),
+                InlineKeyboardButton(text="HSK 1", callback_data="level:hsk1"),
+                InlineKeyboardButton(text="HSK 2", callback_data="level:hsk2"),
             ],
             [
-                InlineKeyboardButton(text="B1", callback_data="level:b1"),
-                InlineKeyboardButton(text="B2", callback_data="level:b2"),
+                InlineKeyboardButton(text="HSK 3", callback_data="level:hsk3"),
+                InlineKeyboardButton(text="HSK 4", callback_data="level:hsk4"),
             ],
         ]
     )
@@ -47,6 +67,49 @@ def trial_lesson_choice_keyboard(lang: str) -> InlineKeyboardMarkup:
     )
 
 
+def daily_practice_entry_keyboard(lang: str) -> InlineKeyboardMarkup:
+    labels = {
+        "uz": ("🚀 Bugungi 3 daqiqalik mashq", "📚 Kursni boshlash"),
+        "ru": ("🚀 Сегодняшняя практика на 3 минуты", "📚 Начать курс"),
+        "tj": ("🚀 Машқи 3-дақиқаи имрӯз", "📚 Оғози курс"),
+    }
+    practice_label, course_label = labels.get(lang, labels["ru"])
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text=practice_label, callback_data="daily_practice:start")],
+            [InlineKeyboardButton(text=course_label, callback_data="daily_practice:course")],
+        ]
+    )
+
+
+def daily_practice_finish_keyboard(lang: str) -> InlineKeyboardMarkup:
+    labels = {
+        "uz": ("📚 Kursni boshlash", "💬 Bepul savol-javobga o'tish"),
+        "ru": ("📚 Начать курс", "💬 Перейти в бесплатный вопрос-ответ"),
+        "tj": ("📚 Оғози курс", "💬 Ба савол-ҷавоби ройгон гузаштан"),
+    }
+    course_label, qa_label = labels.get(lang, labels["ru"])
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text=course_label, callback_data="daily_practice:course")],
+            [InlineKeyboardButton(text=qa_label, callback_data="mode:free_qa")],
+        ]
+    )
+
+
+def daily_practice_check_keyboard(lang: str) -> InlineKeyboardMarkup:
+    labels = {
+        "uz": "✅ Javoblarni ko'rish",
+        "ru": "✅ Посмотреть ответы",
+        "tj": "✅ Дидани ҷавобҳо",
+    }
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text=labels.get(lang, labels["ru"]), callback_data="daily_practice:complete")],
+        ]
+    )
+
+
 def _parse_lesson_title(raw: str, lang: str) -> str:
     if not raw:
         return ""
@@ -55,15 +118,7 @@ def _parse_lesson_title(raw: str, lang: str) -> str:
     except Exception:
         return raw
     if isinstance(data, dict):
-        return str(
-            data.get("en")
-            or data.get(lang)
-            or data.get("uz")
-            or data.get("ru")
-            or data.get("tj")
-            or data.get("zh")
-            or raw
-        )
+        return str(data.get("zh") or data.get(lang) or data.get("uz") or data.get("ru") or raw)
     return raw
 
 

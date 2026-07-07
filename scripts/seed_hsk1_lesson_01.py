@@ -5,106 +5,101 @@ from sqlalchemy import select
 
 from app.db.session import async_session_maker as SessionLocal
 from app.db.models.course_lessons import CourseLesson
+from scripts.hsk1_block_metadata import apply_hsk1_block_metadata
 
 
-# English course — Beginner, Lesson 1.
-# Data contract (kept from the original design, repurposed for English):
-#   zh     -> the English word / phrase (shown large in the mini app)
-#   pinyin -> pronunciation (shown small under the word)
-#   uz/ru/tj -> meaning in the learner's own language
 LESSON = {
     "level": "hsk1",
     "lesson_order": 1,
     "lesson_code": "HSK1-L01",
-    "title": json.dumps({
-        "en": "Greetings & Politeness",
-        "uz": "Salomlashish va xushmuomalalik",
-        "ru": "Приветствия и вежливость",
-        "tj": "Салом ва хушмуомилагӣ",
-    }, ensure_ascii=False),
+    "title": "你好",
     "goal": json.dumps({
-        "uz": "Ingliz tilida salomlashish, xayrlashish va xushmuomala so'zlarni o'rganing",
-        "ru": "Научитесь здороваться, прощаться и быть вежливым на английском",
-        "tj": "Ба забони англисӣ салом гуфтан, хайрухуш ва хушмуомилагиро омӯзед",
+        "uz": "Xitoycha salomlashish va uzr so'rashni o'rganing",
+        "ru": "Научитесь здороваться и извиняться по-китайски",
+        "tj": "Омӯзед, ки чӣ тавр ба забони чинӣ салом гӯед ва узр пурсед",
     }, ensure_ascii=False),
     "intro_text": json.dumps({
-        "uz": "Birinchi darsda siz ingliz tilida salomlashishni o'rganasiz. Bu dars 8 ta yangi so'z, 3 ta dialog va asosiy talaffuz qoidalarini o'z ichiga oladi.",
-        "ru": "На первом уроке вы научитесь английским приветствиям. Урок включает 8 новых слов, 3 диалога и основные правила произношения.",
-        "tj": "Дар дарси аввал шумо салом гуфтан ба забони англисиро меомӯзед. Ин дарс 8 калимаи нав, 3 муколама ва қоидаҳои асосии талаффузро дар бар мегирад.",
+        "uz": "Birinchi darsda siz xitoycha salomlashishni o'rganasiz. Bu dars 6 ta yangi so'z, 3 ta dialog va asosiy talaffuz qoidalarini o'z ichiga oladi.",
+        "ru": "На первом уроке вы научитесь китайским приветствиям. Урок включает 6 новых слов, 3 диалога и основные правила произношения.",
+        "tj": "Дар дарси аввал шумо шиносоӣ бо хитоиро меомӯзед. Ин дарс 6 калимаи нав, 3 муколама ва қоидаҳои асосии талаффузро дар бар мегирад.",
     }, ensure_ascii=False),
     "vocabulary_json": json.dumps([
-        {"no": 1, "zh": "Hello", "pinyin": "/həˈloʊ/", "pos": "interj.",
-         "uz": "salom (umumiy)",
-         "ru": "привет / здравствуйте",
-         "tj": "салом (умумӣ)"},
-        {"no": 2, "zh": "Hi", "pinyin": "/haɪ/", "pos": "interj.",
-         "uz": "salom (norasmiy)",
-         "ru": "привет (неформально)",
-         "tj": "салом (ғайрирасмӣ)"},
-        {"no": 3, "zh": "Good morning", "pinyin": "/ɡʊd ˈmɔːrnɪŋ/", "pos": "expr.",
-         "uz": "xayrli tong",
-         "ru": "доброе утро",
-         "tj": "субҳ ба хайр"},
-        {"no": 4, "zh": "Goodbye", "pinyin": "/ɡʊdˈbaɪ/", "pos": "interj.",
-         "uz": "xayr",
-         "ru": "до свидания",
-         "tj": "хайр"},
-        {"no": 5, "zh": "Please", "pinyin": "/pliːz/", "pos": "adv.",
-         "uz": "iltimos",
-         "ru": "пожалуйста (просьба)",
-         "tj": "лутфан"},
-        {"no": 6, "zh": "Thank you", "pinyin": "/ˈθæŋk juː/", "pos": "expr.",
-         "uz": "rahmat",
-         "ru": "спасибо",
-         "tj": "ташаккур"},
-        {"no": 7, "zh": "Sorry", "pinyin": "/ˈsɒri/", "pos": "interj.",
+        {"no": 1, "zh": "你",    "pinyin": "nǐ",        "pos": "pron.",
+         "uz": "sen (birlik)",
+         "ru": "ты (единственное число)",
+         "tj": "ту (яккашумора)"},
+        {"no": 2, "zh": "好",    "pinyin": "hǎo",       "pos": "adj.",
+         "uz": "yaxshi, ajoyib",
+         "ru": "хорошо, хороший",
+         "tj": "хуб, олӣ"},
+        {"no": 3, "zh": "您",    "pinyin": "nín",       "pos": "pron.",
+         "uz": "siz (rasmiy/hurmat)",
+         "ru": "вы (вежливая форма)",
+         "tj": "шумо (расмӣ/эҳтиромона)"},
+        {"no": 4, "zh": "你们",  "pinyin": "nǐmen",     "pos": "pron.",
+         "uz": "sizlar (ko'plik)",
+         "ru": "вы (множественное число)",
+         "tj": "шумоён (ҷамъшумора)"},
+        {"no": 5, "zh": "对不起","pinyin": "duìbuqǐ",   "pos": "v.",
          "uz": "kechirasiz, uzr",
-         "ru": "извините, простите",
-         "tj": "бубахшед"},
-        {"no": 8, "zh": "You're welcome", "pinyin": "/jʊr ˈwelkəm/", "pos": "expr.",
-         "uz": "arzimaydi (rahmatga javob)",
-         "ru": "пожалуйста (в ответ на спасибо)",
-         "tj": "хоҳиш мекунам"},
+         "ru": "извините, прости",
+         "tj": "бубахшед, узр"},
+        {"no": 6, "zh": "没关系","pinyin": "méi guānxi","pos": "expr.",
+         "uz": "hech gap emas, muammo yo'q",
+         "ru": "ничего страшного, всё в порядке",
+         "tj": "майлаш, мушкиле нест"},
     ], ensure_ascii=False),
 
     "dialogue_json": json.dumps([
         {
             "block_no": 1,
-            "section_label": "Dialogue 1",
-            "scene_uz": "Ikki do'st uchrashadi",
-            "scene_ru": "Встречаются два друга",
-            "scene_tj": "Ду дӯст вомехӯранд",
+            "section_label": "课文 1",
+            "scene_uz": "Tanishlar uchrashadi",
+            "scene_ru": "Знакомые встречаются",
+            "scene_tj": "Шиносон вомехӯранд",
             "dialogue": [
-                {"speaker": "A", "zh": "Hello!", "pinyin": "/həˈloʊ/",
-                 "uz": "Salom!", "ru": "Привет!", "tj": "Салом!"},
-                {"speaker": "B", "zh": "Hi! Good morning!", "pinyin": "/haɪ ɡʊd ˈmɔːrnɪŋ/",
-                 "uz": "Salom! Xayrli tong!", "ru": "Привет! Доброе утро!", "tj": "Салом! Субҳ ба хайр!"},
+                {"speaker": "A", "zh": "你好！", "pinyin": "Nǐ hǎo!",
+                 "uz": "Salom!",
+                 "ru": "Привет!",
+                 "tj": "Салом!"},
+                {"speaker": "B", "zh": "你好！", "pinyin": "Nǐ hǎo!",
+                 "uz": "Salom!",
+                 "ru": "Привет!",
+                 "tj": "Салом!"},
             ]
         },
         {
             "block_no": 2,
-            "section_label": "Dialogue 2",
-            "scene_uz": "Xushmuomala javob",
-            "scene_ru": "Вежливый ответ",
-            "scene_tj": "Ҷавоби хушмуомила",
+            "section_label": "课文 2",
+            "scene_uz": "Hurmatli salomlashuv",
+            "scene_ru": "Официальное приветствие",
+            "scene_tj": "Салому алейки расмӣ",
             "dialogue": [
-                {"speaker": "A", "zh": "Thank you!", "pinyin": "/ˈθæŋk juː/",
-                 "uz": "Rahmat!", "ru": "Спасибо!", "tj": "Ташаккур!"},
-                {"speaker": "B", "zh": "You're welcome!", "pinyin": "/jʊr ˈwelkəm/",
-                 "uz": "Arzimaydi!", "ru": "Пожалуйста!", "tj": "Хоҳиш мекунам!"},
+                {"speaker": "A", "zh": "您好！",   "pinyin": "Nín hǎo!",
+                 "uz": "Salom (rasmiy)!",
+                 "ru": "Здравствуйте!",
+                 "tj": "Салом (расмӣ)!"},
+                {"speaker": "B", "zh": "你们好！", "pinyin": "Nǐmen hǎo!",
+                 "uz": "Hammangizga salom!",
+                 "ru": "Здравствуйте все!",
+                 "tj": "Ба ҳамаи шумо салом!"},
             ]
         },
         {
             "block_no": 3,
-            "section_label": "Dialogue 3",
+            "section_label": "课文 3",
             "scene_uz": "Kechirim so'rash",
             "scene_ru": "Извинение",
             "scene_tj": "Узрпурсӣ",
             "dialogue": [
-                {"speaker": "A", "zh": "Sorry!", "pinyin": "/ˈsɒri/",
-                 "uz": "Kechirasiz!", "ru": "Извините!", "tj": "Бубахшед!"},
-                {"speaker": "B", "zh": "No problem!", "pinyin": "/noʊ ˈprɒbləm/",
-                 "uz": "Muammo yo'q!", "ru": "Ничего страшного!", "tj": "Мушкиле нест!"},
+                {"speaker": "A", "zh": "对不起！", "pinyin": "Duìbuqǐ!",
+                 "uz": "Kechirasiz!",
+                 "ru": "Извините!",
+                 "tj": "Бубахшед!"},
+                {"speaker": "B", "zh": "没关系！", "pinyin": "Méi guānxi!",
+                 "uz": "Hech gap emas!",
+                 "ru": "Ничего страшного!",
+                 "tj": "Майлаш!"},
             ]
         },
     ], ensure_ascii=False),
@@ -112,67 +107,69 @@ LESSON = {
     "grammar_json": json.dumps([
         {
             "no": 1,
-            "title_en": "Formal vs informal greetings",
-            "title_uz": "Rasmiy va norasmiy salomlashish",
-            "title_ru": "Формальные и неформальные приветствия",
-            "title_tj": "Салому алейки расмӣ ва ғайрирасмӣ",
+            "title_zh": "四声",
+            "title_uz": "To'rt ton",
+            "title_ru": "Четыре тона",
+            "title_tj": "Чор садо",
             "rule_uz": (
-                "Ingliz tilida salomlashish vaziyatga qarab tanlanadi:\n"
-                "• Norasmiy: Hi / Hey — do'stlar bilan\n"
-                "• Umumiy: Hello — deyarli har doim mos\n"
-                "• Rasmiy: Good morning / Good afternoon / Good evening\n\n"
-                "Rasmiy vaziyatda 'Hi' emas, 'Hello' yoki 'Good morning' ishlatiladi."
+                "Xitoy tilida har bir bo'g'in 4 xil tonda aytiladi:\n"
+                "1-ton (—): baland va tekis — mā (ona)\n"
+                "2-ton (ˊ): ko'tariluvchi — má (kanop o'simligi)\n"
+                "3-ton (ˇ): tushib ko'tariluvchi — mǎ (ot)\n"
+                "4-ton (ˋ): tushuvchi — mà (so'kishmoq)\n\n"
+                "Ton ma'noni o'zgartiradi!"
             ),
             "rule_ru": (
-                "В английском приветствие выбирается по ситуации:\n"
-                "• Неформально: Hi / Hey — с друзьями\n"
-                "• Нейтрально: Hello — подходит почти всегда\n"
-                "• Формально: Good morning / Good afternoon / Good evening\n\n"
-                "В формальной ситуации используйте 'Hello' или 'Good morning', а не 'Hi'."
+                "В китайском языке каждый слог произносится в одном из 4 тонов:\n"
+                "Тон 1 (—): ровный и высокий — mā (мама)\n"
+                "Тон 2 (ˊ): восходящий — má (конопля)\n"
+                "Тон 3 (ˇ): нисходяще-восходящий — mǎ (лошадь)\n"
+                "Тон 4 (ˋ): нисходящий — mà (ругать)\n\n"
+                "Тон меняет смысл слова!"
             ),
             "rule_tj": (
-                "Дар забони англисӣ салом аз рӯи вазъият интихоб мешавад:\n"
-                "• Ғайрирасмӣ: Hi / Hey — бо дӯстон\n"
-                "• Умумӣ: Hello — қариб ҳамеша мувофиқ\n"
-                "• Расмӣ: Good morning / Good afternoon / Good evening\n\n"
-                "Дар вазъияти расмӣ 'Hello' ё 'Good morning' гӯед, на 'Hi'."
+                "Дар забони чинӣ ҳар як ҳиҷо бо яке аз 4 садо гуфта мешавад:\n"
+                "Садои 1 (—): баланд ва ҳамвор — mā (модар)\n"
+                "Садои 2 (ˊ): боравандаи — má (канабис)\n"
+                "Садои 3 (ˇ): поинравандаю боравандаи — mǎ (асп)\n"
+                "Садои 4 (ˋ): поинравандаи — mà (дашном додан)\n\n"
+                "Садо маъноро тағйир медиҳад!"
             ),
             "examples": [
-                {"zh": "Hi, Tom!", "pinyin": "/haɪ tɒm/",
-                 "uz": "Salom, Tom! (norasmiy)", "ru": "Привет, Том! (неформ.)", "tj": "Салом, Том! (ғайрирасмӣ)"},
-                {"zh": "Good morning, Mr. Lee.", "pinyin": "/ɡʊd ˈmɔːrnɪŋ ˈmɪstər liː/",
-                 "uz": "Xayrli tong, janob Li. (rasmiy)", "ru": "Доброе утро, мистер Ли. (формально)", "tj": "Субҳ ба хайр, ҷаноби Ли. (расмӣ)"},
+                {"zh": "妈", "pinyin": "mā",
+                 "uz": "ona (1-ton)", "ru": "мама (1-й тон)", "tj": "модар (садои 1)"},
+                {"zh": "马", "pinyin": "mǎ",
+                 "uz": "ot (3-ton)", "ru": "лошадь (3-й тон)", "tj": "асп (садои 3)"},
+                {"zh": "骂", "pinyin": "mà",
+                 "uz": "so'kmoq (4-ton)", "ru": "ругать (4-й тон)", "tj": "дашном додан (садои 4)"},
             ]
         },
         {
             "no": 2,
-            "title_en": "Responding to 'Thank you'",
-            "title_uz": "'Thank you' ga javob berish",
-            "title_ru": "Ответ на 'Thank you'",
-            "title_tj": "Ҷавоб ба 'Thank you'",
+            "title_zh": "变调 (3+3)",
+            "title_uz": "Ton o'zgarishi (3+3)",
+            "title_ru": "Изменение тона (3+3)",
+            "title_tj": "Тағйири садо (3+3)",
             "rule_uz": (
-                "Kimdir 'Thank you' desa, quyidagicha javob beriladi:\n"
-                "• You're welcome — eng keng tarqalgan, xushmuomala\n"
-                "• No problem — norasmiy, do'stona\n\n"
-                "'Sorry' ga esa 'No problem' yoki 'It's okay' deb javob beriladi."
+                "Ketma-ket ikkita 3-ton kelganda, birinchisi 2-tonga o'zgaradi.\n"
+                "3+3 → 2+3\n"
+                "Misol: 你(nǐ) + 好(hǎo) → nī hǎo (lekin yoziladi: nǐ hǎo)"
             ),
             "rule_ru": (
-                "Когда кто-то говорит 'Thank you', отвечают так:\n"
-                "• You're welcome — самое распространённое, вежливое\n"
-                "• No problem — неформально, по-дружески\n\n"
-                "На 'Sorry' отвечают 'No problem' или 'It's okay'."
+                "Когда два слога 3-го тона идут подряд, первый меняется на 2-й тон.\n"
+                "3+3 → 2+3\n"
+                "Пример: 你(nǐ) + 好(hǎo) → nī hǎo (но пишется: nǐ hǎo)"
             ),
             "rule_tj": (
-                "Вақте касе 'Thank you' мегӯяд, чунин ҷавоб медиҳанд:\n"
-                "• You're welcome — маъмултарин, хушмуомила\n"
-                "• No problem — ғайрирасмӣ, дӯстона\n\n"
-                "Ба 'Sorry' бошад 'No problem' ё 'It's okay' ҷавоб медиҳанд."
+                "Вақте ки ду ҳиҷои садои 3 паи ҳам меоянд, аввалӣ ба садои 2 табдил меёбад.\n"
+                "3+3 → 2+3\n"
+                "Мисол: 你(nǐ) + 好(hǎo) → nī hǎo (аммо навишта мешавад: nǐ hǎo)"
             ),
             "examples": [
-                {"zh": "A: Thank you! B: You're welcome!", "pinyin": "/ˈθæŋk juː — jʊr ˈwelkəm/",
-                 "uz": "A: Rahmat! B: Arzimaydi!", "ru": "A: Спасибо! B: Пожалуйста!", "tj": "A: Ташаккур! B: Хоҳиш мекунам!"},
-                {"zh": "A: Sorry! B: No problem!", "pinyin": "/ˈsɒri — noʊ ˈprɒbləm/",
-                 "uz": "A: Kechirasiz! B: Muammo yo'q!", "ru": "A: Извините! B: Ничего страшного!", "tj": "A: Бубахшед! B: Мушкиле нест!"},
+                {"zh": "你好", "pinyin": "nī hǎo → nǐ hǎo",
+                 "uz": "salom (nǐ hǎo deb yoziladi)", "ru": "привет (пишется nǐ hǎo)", "tj": "салом (навишта мешавад nǐ hǎo)"},
+                {"zh": "可以", "pinyin": "ké yǐ → kě yǐ",
+                 "uz": "mumkin, bo'ladi", "ru": "можно, разрешено", "tj": "мумкин, иҷозат"},
             ]
         },
     ], ensure_ascii=False),
@@ -180,15 +177,15 @@ LESSON = {
     "exercise_json": json.dumps([
         {
             "no": 1,
-            "type": "translate_to_english",
-            "instruction_uz": "Quyidagilarni ingliz tilida yozing:",
-            "instruction_ru": "Напишите по-английски:",
-            "instruction_tj": "Ба забони англисӣ нависед:",
+            "type": "translate_to_chinese",
+            "instruction_uz": "Quyidagilarni xitoycha yozing:",
+            "instruction_ru": "Напишите по-китайски:",
+            "instruction_tj": "Ба хитоӣ нависед:",
             "items": [
-                {"prompt_uz": "salom (umumiy)", "prompt_ru": "привет (нейтрально)", "prompt_tj": "салом (умумӣ)", "answer": "Hello", "pinyin": "/həˈloʊ/"},
-                {"prompt_uz": "xayrli tong", "prompt_ru": "доброе утро", "prompt_tj": "субҳ ба хайр", "answer": "Good morning", "pinyin": "/ɡʊd ˈmɔːrnɪŋ/"},
-                {"prompt_uz": "rahmat", "prompt_ru": "спасибо", "prompt_tj": "ташаккур", "answer": "Thank you", "pinyin": "/ˈθæŋk juː/"},
-                {"prompt_uz": "kechirasiz", "prompt_ru": "извините", "prompt_tj": "бубахшед", "answer": "Sorry", "pinyin": "/ˈsɒri/"},
+                {"prompt_uz": "salom (norasmiy)", "prompt_ru": "привет (неформально)", "prompt_tj": "салом (ғайрирасмӣ)", "answer": "你好！", "pinyin": "Nǐ hǎo!"},
+                {"prompt_uz": "salom (rasmiy)", "prompt_ru": "здравствуйте (официально)", "prompt_tj": "салом (расмӣ)", "answer": "您好！", "pinyin": "Nín hǎo!"},
+                {"prompt_uz": "kechirasiz!", "prompt_ru": "извините!", "prompt_tj": "бубахшед!", "answer": "对不起！", "pinyin": "Duìbuqǐ!"},
+                {"prompt_uz": "hech gap emas!", "prompt_ru": "ничего страшного!", "prompt_tj": "майлаш!", "answer": "没关系！", "pinyin": "Méi guānxi!"},
             ]
         },
         {
@@ -198,42 +195,45 @@ LESSON = {
             "instruction_ru": "Заполните пропуск:",
             "instruction_tj": "Холиро пур кунед:",
             "items": [
-                {"prompt_uz": "A: Thank you!  B: You're ___!", "prompt_ru": "A: Thank you!  B: You're ___!", "prompt_tj": "A: Thank you!  B: You're ___!", "answer": "welcome", "pinyin": "/ˈwelkəm/"},
-                {"prompt_uz": "A: ___!  B: Hi!", "prompt_ru": "A: ___!  B: Hi!", "prompt_tj": "A: ___!  B: Hi!", "answer": "Hello", "pinyin": "/həˈloʊ/"},
-                {"prompt_uz": "A: Sorry!  B: No ___!", "prompt_ru": "A: Sorry!  B: No ___!", "prompt_tj": "A: Sorry!  B: No ___!", "answer": "problem", "pinyin": "/ˈprɒbləm/"},
+                {"prompt_uz": "A: 你___！  B: 你好！", "prompt_ru": "A: 你___！  B: 你好！", "prompt_tj": "A: 你___！  B: 你好！", "answer": "好", "pinyin": "hǎo"},
+                {"prompt_uz": "A: 对不起！  B: ___！", "prompt_ru": "A: 对不起！  B: ___！", "prompt_tj": "A: 对不起！  B: ___！", "answer": "没关系", "pinyin": "méi guānxi"},
+                {"prompt_uz": "Bir o'qituvchi ko'p o'quvchilarga: ___好！", "prompt_ru": "Учитель говорит многим ученикам: ___好！", "prompt_tj": "Муаллим ба хонандагони зиёд мегӯяд: ___好！", "answer": "你们", "pinyin": "nǐmen"},
             ]
         },
     ], ensure_ascii=False),
 
     "answers_json": json.dumps([
-        {"no": 1, "answers": ["Hello", "Good morning", "Thank you", "Sorry"]},
-        {"no": 2, "answers": ["welcome", "Hello", "problem"]},
+        {"no": 1, "answers": ["你好！", "您好！", "对不起！", "没关系！"]},
+        {"no": 2, "answers": ["好", "没关系", "你们"]},
     ], ensure_ascii=False),
 
     "homework_json": json.dumps([
         {
             "no": 1,
-            "instruction_uz": "Quyidagi so'zlardan foydalanib 2 ta qisqa dialog yozing:",
-            "instruction_ru": "Напишите 2 коротких диалога, используя следующие слова:",
-            "instruction_tj": "Бо истифодаи калимаҳои зерин 2 муколамаи кӯтоҳ нависед:",
-            "words": ["Hello", "Good morning", "Thank you", "You're welcome", "Sorry"],
-            "example": "A: Sorry! B: No problem!",
+            "instruction_uz": "Quyidagi so'zlardan foydalanib 2 ta dialog yozing:",
+            "instruction_ru": "Напишите 2 диалога, используя следующие слова:",
+            "instruction_tj": "Бо истифодаи калимаҳои зерин 2 муколама нависед:",
+            "words": ["你好", "您好", "对不起", "没关系"],
+            "example": "A: 对不起！B: 没关系！",
         },
         {
             "no": 2,
-            "instruction_uz": "So'zlarni baland ovozda talaffuz qiling va yozib mashq qiling:",
-            "instruction_ru": "Произнесите слова вслух и отработайте их письменно:",
-            "instruction_tj": "Калимаҳоро баланд талаффуз кунед ва навишта машқ кунед:",
+            "instruction_uz": "Tonlarni mashq qiling va baland ovozda ayting:",
+            "instruction_ru": "Отработайте тоны и произнесите их вслух:",
+            "instruction_tj": "Садоҳоро машқ кунед ва баланд гӯед:",
             "words": [
-                {"zh": "Hello", "pinyin": "/həˈloʊ/", "uz": "salom", "ru": "привет", "tj": "салом"},
-                {"zh": "Thank you", "pinyin": "/ˈθæŋk juː/", "uz": "rahmat", "ru": "спасибо", "tj": "ташаккур"},
-                {"zh": "Goodbye", "pinyin": "/ɡʊdˈbaɪ/", "uz": "xayr", "ru": "до свидания", "tj": "хайр"},
+                {"zh": "妈", "pinyin": "mā", "uz": "ona", "ru": "мама", "tj": "модар"},
+                {"zh": "马", "pinyin": "mǎ", "uz": "ot", "ru": "лошадь", "tj": "асп"},
+                {"zh": "骂", "pinyin": "mà", "uz": "so'kmoq", "ru": "ругать", "tj": "дашном додан"},
             ]
         }
     ], ensure_ascii=False),
 
     "is_active": True,
 }
+
+
+apply_hsk1_block_metadata(LESSON)
 
 
 async def seed():
@@ -246,12 +246,12 @@ async def seed():
             for key, value in LESSON.items():
                 setattr(existing, key, value)
             await session.commit()
-            print(f"✅ Lesson {LESSON['lesson_code']} updated (English).")
+            print(f"✅ Lesson {LESSON['lesson_code']} — {LESSON['title']} updated.")
         else:
             lesson = CourseLesson(**LESSON)
             session.add(lesson)
             await session.commit()
-            print(f"✅ Lesson {LESSON['lesson_code']} created (English).")
+            print(f"✅ Lesson {LESSON['lesson_code']} — {LESSON['title']} created.")
 
 
 if __name__ == "__main__":

@@ -1,7 +1,90 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 
-from app.bot.utils.course_miniapp import course_miniapp_url, course_stroke_order_url
+from app.bot.utils.course_miniapp import course_miniapp_url, course_stroke_order_url, course_study_miniapp_url, course_v3_miniapp_url
 from app.bot.utils.i18n import t
+
+
+def course_v3_miniapp_keyboard(lang: str) -> InlineKeyboardMarkup:
+    labels = {
+        "uz": "📚 Kursni ochish",
+        "ru": "📚 Открыть курс",
+        "tj": "📚 Курсро кушодан",
+    }
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text=labels.get(lang, labels["ru"]),
+                    web_app=WebAppInfo(url=course_v3_miniapp_url(lang=lang)),
+                )
+            ]
+        ]
+    )
+
+
+def course_study_miniapp_keyboard(
+    lang: str,
+    *,
+    level: str | None = None,
+    lesson: int | None = None,
+    tab: str | None = None,
+    text: str | None = None,
+) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                course_study_miniapp_button(
+                    lang,
+                    level=level,
+                    lesson=lesson,
+                    tab=tab,
+                    text=text,
+                )
+            ],
+        ]
+    )
+
+
+def course_study_miniapp_button(
+    lang: str,
+    *,
+    level: str | None = None,
+    lesson: int | None = None,
+    tab: str | None = None,
+    text: str | None = None,
+) -> InlineKeyboardButton:
+    labels = {
+        "uz": "📚 Kursni Mini Appda ochish",
+        "ru": "📚 Открыть курс в Mini App",
+        "tj": "📚 Курсро дар Mini App кушодан",
+    }
+    return InlineKeyboardButton(
+        text=text or labels.get(lang, labels["ru"]),
+        web_app=WebAppInfo(
+            url=course_study_miniapp_url(
+                lang=lang,
+                level=level,
+                lesson=lesson,
+                tab=tab,
+            )
+        ),
+    )
+
+
+_MAIN_MINIAPP_LABELS = {
+    "uz": "📚 Mini Appda ochish",
+    "ru": "📚 Открыть в Mini App",
+    "tj": "📚 Дар Mini App кушодан",
+}
+
+
+def _main_miniapp_row(lang: str) -> list[InlineKeyboardButton]:
+    return [
+        course_study_miniapp_button(
+            lang,
+            text=_MAIN_MINIAPP_LABELS.get(lang, _MAIN_MINIAPP_LABELS["ru"]),
+        )
+    ]
 
 
 def course_quiz_miniapp_keyboard(lang: str, lesson, block_no: int | None = None) -> InlineKeyboardMarkup:
@@ -47,7 +130,7 @@ def course_vocab_stroke_order_keyboard(
         inline_keyboard=[
             [
                 InlineKeyboardButton(
-                    text="🔤",
+                    text="🀄",
                     web_app=WebAppInfo(
                         url=course_stroke_order_url(
                             lesson,
@@ -62,6 +145,7 @@ def course_vocab_stroke_order_keyboard(
                     callback_data=next_callback,
                 )
             ],
+            _main_miniapp_row(lang),
         ]
     )
 
@@ -95,6 +179,7 @@ def course_miniapp_understood_keyboard(
             ),
         ]
     )
+    rows.append(_main_miniapp_row(lang))
     return InlineKeyboardMarkup(
         inline_keyboard=rows
     )
@@ -116,6 +201,7 @@ def course_miniapp_continue_keyboard(
             )
         ]
     )
+    rows.append(_main_miniapp_row(lang))
     return InlineKeyboardMarkup(
         inline_keyboard=rows
     )
@@ -160,6 +246,7 @@ def course_miniapp_quiz_result_keyboard(
                 ),
             ]
         )
+    rows.append(_main_miniapp_row(lang))
 
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
@@ -179,5 +266,6 @@ def course_homework_done_keyboard(lang: str) -> InlineKeyboardMarkup:
                     callback_data="course:homework_reread",
                 )
             ],
+            _main_miniapp_row(lang),
         ]
     )

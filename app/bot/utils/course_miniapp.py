@@ -13,7 +13,21 @@ MINIAPP_SUPPORTED_LEVELS = {
     "hsk4": (1, 20),
 }
 
-MINIAPP_ASSET_VERSION = "20260612-all-level-quiz-grammar"
+MINIAPP_ASSET_VERSION = "20260628-challenge-v1"
+COURSE_V3_TABS = {"course", "mashq", "voice", "rating", "profile"}
+LEGACY_TAB_MAP = {
+    "home": "course",
+    "course": "course",
+    "training": "mashq",
+    "quiz": "mashq",
+    "words": "mashq",
+    "grammar": "mashq",
+    "tests": "mashq",
+    "mashq": "mashq",
+    "voice": "voice",
+    "rating": "rating",
+    "profile": "profile",
+}
 
 
 def normalize_miniapp_lang(lang: str | None) -> str:
@@ -44,9 +58,10 @@ def is_course_miniapp_supported(lesson) -> bool:
 
 
 def _miniapp_base_url_for_file(target_file: str) -> str:
-    base_url = (settings.MINI_APP_BASE_URL or "").strip()
-    if not base_url:
-        return f"/{target_file}"
+    base_url = (
+        (settings.MINI_APP_BASE_URL or "").strip()
+        or "https://telegram-chinese-bot-production.up.railway.app/course-v3.html"
+    )
 
     parts = urlsplit(base_url)
     if parts.path.endswith(".html"):
@@ -57,13 +72,12 @@ def _miniapp_base_url_for_file(target_file: str) -> str:
 
 
 def _miniapp_base_url_for_level(level: str) -> str:
-    normalized_level = (level or "").strip().lower()
-    target_file = {
-        "hsk1": "hsk1.html",
-        "hsk2": "hsk2.html",
-        "hsk4": "hsk4.html",
-    }.get(normalized_level, "hsk3.html")
-    return _miniapp_base_url_for_file(target_file)
+    return _miniapp_base_url_for_file("course-v3.html")
+
+
+def _course_v3_tab(tab: str | None, *, mode: str | None = None) -> str:
+    raw = (tab or mode or "course").strip().lower()
+    return LEGACY_TAB_MAP.get(raw, raw if raw in COURSE_V3_TABS else "course")
 
 
 def course_miniapp_url(lesson, mode: str, lang: str | None = None, block_no: int | None = None) -> str:
@@ -72,7 +86,9 @@ def course_miniapp_url(lesson, mode: str, lang: str | None = None, block_no: int
     separator = "&" if "?" in base_url else "?"
     params = {
         "lesson": course_miniapp_lesson_id(lesson),
+        "level": level or "hsk1",
         "mode": mode,
+        "tab": _course_v3_tab(None, mode=mode),
         "lang": normalize_miniapp_lang(lang),
         "v": MINIAPP_ASSET_VERSION,
     }
@@ -82,18 +98,43 @@ def course_miniapp_url(lesson, mode: str, lang: str | None = None, block_no: int
     return f"{base_url}{separator}{query}"
 
 
+def course_study_miniapp_url(
+    *,
+    lang: str | None = None,
+    level: str | None = None,
+    lesson: int | None = None,
+    tab: str | None = None,
+    challenge_id: int | None = None,
+) -> str:
+    base_url = _miniapp_base_url_for_file("course-v3.html")
+    separator = "&" if "?" in base_url else "?"
+    params = {
+        "lang": normalize_miniapp_lang(lang),
+        "tab": _course_v3_tab(tab),
+        "v": MINIAPP_ASSET_VERSION,
+    }
+    if level:
+        params["level"] = str(level).strip().lower()
+    if lesson:
+        params["lesson"] = int(lesson)
+    if challenge_id:
+        params["challenge_id"] = int(challenge_id)
+    return f"{base_url}{separator}{urlencode(params)}"
+
+
 def course_stroke_order_url(
     lesson,
     lang: str | None = None,
     block_no: int | None = None,
     vocab_page: int | None = None,
 ) -> str:
-    base_url = _miniapp_base_url_for_file("stroke-order.html")
+    base_url = _miniapp_base_url_for_file("hsk-lugat.html")
     separator = "&" if "?" in base_url else "?"
     params = {
         "lesson": course_miniapp_lesson_id(lesson),
         "level": (getattr(lesson, "level", "") or "hsk1").strip().lower(),
         "lang": normalize_miniapp_lang(lang),
+        "from": "course",
         "v": MINIAPP_ASSET_VERSION,
     }
     if block_no:
@@ -131,6 +172,18 @@ def subscription_miniapp_url(
     if method:
         params["method"] = str(method)
     return f"{base_url}{separator}{urlencode(params)}"
+
+
+def course_v3_miniapp_url(lang: str | None = None) -> str:
+    base_url = _miniapp_base_url_for_file("course-v3.html")
+    separator = "&" if "?" in base_url else "?"
+    return f"{base_url}{separator}{urlencode({'lang': normalize_miniapp_lang(lang), 'v': MINIAPP_ASSET_VERSION})}"
+
+
+def admin_miniapp_url() -> str:
+    base_url = _miniapp_base_url_for_file("admin.html")
+    separator = "&" if "?" in base_url else "?"
+    return f"{base_url}{separator}{urlencode({'v': MINIAPP_ASSET_VERSION})}"
 
 
 def format_miniapp_quiz_intro(lang: str, lesson, block_no: int | None = None) -> str:

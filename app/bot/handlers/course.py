@@ -3,6 +3,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 import json
+import logging
 
 from app.repositories.user_repo import UserRepository
 from app.services.course_engine_service import (
@@ -17,6 +18,7 @@ from app.services.course_engine_service import (
 )
 from app.services.course_progress_summary_service import CourseProgressSummaryService
 from app.services.access_service import AccessService
+from app.services.conversion_funnel_service import ConversionFunnelService
 from app.services.course_trial_service import CourseTrialService
 from app.services.onboarding_tip_service import (
     OnboardingTipService,
@@ -46,6 +48,8 @@ from app.bot.keyboards.course_context import (
 from app.bot.keyboards.course_miniapp import (
     course_homework_miniapp_keyboard,
     course_quiz_miniapp_keyboard,
+    course_study_miniapp_keyboard,
+    course_v3_miniapp_keyboard,
     course_vocab_stroke_order_keyboard,
 )
 
@@ -61,6 +65,14 @@ from app.bot.utils.course_formatter import (
 )
 from app.bot.keyboards.main_menu import course_menu_keyboard, main_menu_keyboard
 from app.bot.keyboards.course import course_reminder_timezone_keyboard
+from app.bot.middlewares.required_channel import (
+    FORCE_SUB_ACTION_OPEN_COURSE,
+    FORCE_SUB_ACTION_OPEN_FREE_QA,
+    PENDING_FORCE_SUB_ACTION,
+    PENDING_FORCE_SUB_PAYLOAD,
+)
+from app.bot.fsm.onboarding import OnboardingStates, QA_MODE_LEVEL_CHOICE_KEY
+from app.bot.keyboards.onboarding import level_keyboard
 from app.bot.utils.workflow_message import (
     REMINDER_PANEL_CHAT_ID,
     REMINDER_PANEL_MSG_ID,
@@ -68,6 +80,199 @@ from app.bot.utils.workflow_message import (
 )
 from datetime import datetime, time, timezone
 
+
+logger = logging.getLogger(__name__)
+
+
+class _MessageEditResponder:
+    def __init__(self, message):
+        self._message = message
+        self._used_edit = False
+
+    async def __call__(self, text: str, **kwargs):
+        if self._message and not self._used_edit:
+            self._used_edit = True
+            try:
+                return await self._message.edit_text(text, **kwargs)
+            except Exception:
+                logger.exception("Failed to edit workflow message; falling back to answer")
+        return await self._message.answer(text, **kwargs)
+
+
+async def show_free_qa_level_choice(
+    *,
+    respond,
+    state: FSMContext,
+    lang: str,
+) -> None:
+    await state.update_data(
+        **{
+            QA_MODE_LEVEL_CHOICE_KEY: True,
+            "pending_voice_transcript": None,
+            "pending_voice_message_id": None,
+        }
+    )
+    await state.set_state(OnboardingStates.choosing_level)
+    await respond(
+        t("choose_level", lang),
+        reply_markup=level_keyboard(lang),
+    )
+
+
+def course_miniapp_entry_text(lang: str, *, lesson: int | None = None) -> str:
+    texts = {
+        "uz": (
+            "📚 <b>English AI kursi — Mini App</b>\n\n"
+            "<blockquote>Darslar, so‘zlar, grammatika, quiz va AI Voice — hammasi bitta "
+            "ilovada. Har dars sizni qadam-baqadam olib boradi.</blockquote>"
+        ),
+        "ru": (
+            "📚 <b>Курс English AI — Mini App</b>\n\n"
+            "<blockquote>Уроки, слова, грамматика, квиз и AI Voice — всё в одном "
+            "приложении. Каждый урок ведёт вас шаг за шагом.</blockquote>"
+        ),
+        "tj": (
+            "📚 <b>Курси English AI — Mini App</b>\n\n"
+            "<blockquote>Дарсҳо, калимаҳо, грамматика, quiz ва AI Voice — ҳама дар як "
+            "барнома. Ҳар дарс шуморо қадам ба қадам мебарад.</blockquote>"
+        ),
+    }
+    lead = {
+        "uz": "\n\n{label} darsni hoziroq boshlaymiz 👇",
+        "ru": "\n\nНачнём {label} урок прямо сейчас 👇",
+        "tj": "\n\nДарси {label}-ро ҳозир оғоз мекунем 👇",
+    }
+    base = texts.get(lang, texts["ru"])
+    if lesson:
+        label = _entry_lesson_ordinal(lang, lesson)
+        base += lead.get(lang, lead["ru"]).format(label=label)
+    return base
+
+
+def _entry_lesson_ordinal(lang: str, lesson: int) -> str:
+    labels = {
+        "uz": f"{lesson}-",
+        "ru": f"{lesson}-й",
+        "tj": f"{lesson}-",
+    }
+    return labels.get(lang, labels["ru"])
+
+
+def course_miniapp_reentry_text(lang: str, lesson: int | None = None) -> str:
+    if lesson and lesson > 1:
+        texts = {
+            "uz": f"📚 <b>Davom etamiz</b>\n\n{lesson}-darsni ochish uchun bosing 👇",
+            "ru": f"📚 <b>Продолжаем</b>\n\nНажмите, чтобы открыть урок {lesson} 👇",
+            "tj": f"📚 <b>Идома медиҳем</b>\n\nБарои кушодани дарси {lesson} зер кунед 👇",
+        }
+    else:
+        texts = {
+            "uz": "📚 <b>Kursni ochamiz</b>\n\n1-darsni boshlash uchun bosing 👇",
+            "ru": "📚 <b>Открываем курс</b>\n\nНажмите, чтобы начать урок 1 👇",
+            "tj": "📚 <b>Курсро мекушоем</b>\n\nБарои оғози дарси 1 зер кунед 👇",
+        }
+    return texts.get(lang, texts["ru"])
+
+
+def _course_entry_button_label(lang: str, lesson: int | None) -> str:
+    if not lesson or lesson <= 1:
+        labels = {
+            "uz": "▶️ 1-darsni boshlash",
+            "ru": "▶️ Начать 1-й урок",
+            "tj": "▶️ Оғози дарси 1",
+        }
+    else:
+        labels = {
+            "uz": f"▶️ Davom etish · {lesson}-dars",
+            "ru": f"▶️ Продолжить · урок {lesson}",
+            "tj": f"▶️ Идома · дарси {lesson}",
+        }
+    return labels.get(lang, labels["ru"])
+
+
+async def send_course_miniapp_entry(
+    *,
+    session,
+    telegram_id: int,
+    respond,
+    state: FSMContext | None = None,
+    source: str = "course_miniapp_entry",
+    level: str | None = None,
+    lesson: int | None = None,
+    tab: str | None = None,
+) -> None:
+    user = await UserRepository(session).get_by_telegram_id(telegram_id)
+    lang = user.language if user and user.language else "ru"
+
+    if user:
+        user.learning_mode = "qa"
+        user.voice_mode = "none"
+        await session.commit()
+
+    if state:
+        await state.update_data(pending_voice_transcript=None, pending_voice_message_id=None)
+
+    entry_level = level
+    entry_lesson = lesson
+    if entry_lesson is None:
+        try:
+            engine = CourseEngineService(session)
+            lessons, resolved_level = await _resolve_lessons_for_user_level(
+                engine, getattr(user, "level", None)
+            )
+            if lessons:
+                # get_or_create_progress -> (user, progress, error_key)
+                _u, progress, _err = await engine.get_or_create_progress(telegram_id)
+                completed = int(getattr(progress, "completed_lessons_count", 0) or 0) if progress else 0
+                # Mini App bilan bir xil qoida: joriy dars = completed + 1,
+                # lekin mavjud darslar oralig'idan chiqib ketmasin.
+                orders = [int(getattr(l, "lesson_order", 0) or 0) for l in lessons]
+                next_order = min(completed + 1, max(orders))
+                target = next(
+                    (l for l in lessons if int(getattr(l, "lesson_order", 0) or 0) == next_order),
+                    lessons[0],
+                )
+                entry_level = resolved_level
+                entry_lesson = int(getattr(target, "lesson_order", 0) or 0) or None
+        except Exception:
+            entry_level = level
+            entry_lesson = None
+
+    # Birinchi marta to'liq tanishtiruv, keyingi safar qisqa xabar.
+    first_time = True
+    try:
+        first_time = not await ConversionFunnelService(session).has_event(
+            telegram_id=telegram_id, event_name="course_cta_seen"
+        )
+    except Exception:
+        first_time = True
+
+    if entry_lesson:
+        text = (
+            course_miniapp_entry_text(lang, lesson=entry_lesson)
+            if first_time
+            else course_miniapp_reentry_text(lang, entry_lesson)
+        )
+        keyboard = course_study_miniapp_keyboard(
+            lang,
+            level=entry_level,
+            lesson=entry_lesson,
+            tab="course",
+            text=_course_entry_button_label(lang, entry_lesson),
+        )
+    else:
+        text = course_miniapp_entry_text(lang)
+        keyboard = course_v3_miniapp_keyboard(lang)
+
+    await respond(text, reply_markup=keyboard, parse_mode="HTML")
+
+    if user:
+        await ConversionFunnelService().record(
+            event_name="course_cta_seen",
+            user=user,
+            source=source,
+            payload={"level": entry_level or getattr(user, "level", None), "lesson": entry_lesson, "tab": tab},
+        )
 
 
 async def _block_if_course_disabled(callback, session):
@@ -108,10 +313,16 @@ router = Router()
 
 
 def _course_locked_offer_text(lang: str) -> str:
+    free_fallback = {
+        "uz": "Obuna olmasangiz ham daily limit bilan savol-javobda davom etishingiz mumkin.",
+        "ru": "Даже без подписки можно продолжить в вопрос-ответ с дневным лимитом.",
+        "tj": "Бе обуна ҳам метавонед дар савол-ҷавоб бо лимити рӯзона давом диҳед.",
+    }.get(lang, "Даже без подписки можно продолжить в вопрос-ответ с дневным лимитом.")
     return (
         f"<b>{t('course_locked_title', lang)}</b>\n\n"
         f"<blockquote>{t('course_locked_text', lang)}</blockquote>\n\n"
-        f"{t('subscription_miniapp_entry_text', lang)}"
+        f"{t('subscription_miniapp_entry_text', lang)}\n"
+        f"{free_fallback}"
     )
 
 
@@ -158,24 +369,41 @@ def _trial_course_completed_text(lang: str) -> str:
     texts = {
         "uz": (
             "🎉 <b>Bepul dars tugadi</b>\n\n"
-            "<blockquote>Siz kurs rejimini sinab ko'rdingiz: dars, quiz, xato tahlili va uyga vazifa.</blockquote>\n\n"
-            "Keyingi darslarni ochish uchun obuna oling."
+            "<blockquote>Siz kurs rejimini sinab ko'rdingiz: dars, quiz, xato tahlili va mustahkamlash.</blockquote>\n\n"
+            "Keyingi darslarni ochish uchun obuna oling.\n"
+            "Obuna olmasangiz ham daily limit bilan savol-javobda davom etishingiz mumkin."
         ),
         "ru": (
             "🎉 <b>Бесплатный урок завершён</b>\n\n"
-            "<blockquote>Вы попробовали режим курса: урок, quiz, разбор ошибок и домашнее задание.</blockquote>\n\n"
-            "Чтобы открыть следующие уроки, оформите подписку."
+            "<blockquote>Вы попробовали режим курса: урок, quiz, разбор ошибок и закрепление.</blockquote>\n\n"
+            "Чтобы открыть следующие уроки, оформите подписку.\n"
+            "Даже без подписки можно продолжить в вопрос-ответ с дневным лимитом."
         ),
         "tj": (
             "🎉 <b>Дарси ройгон анҷом шуд</b>\n\n"
-            "<blockquote>Шумо реҷаи курсро санҷидед: дарс, quiz, таҳлили хатоҳо ва вазифаи хонагӣ.</blockquote>\n\n"
-            "Барои кушодани дарсҳои навбатӣ обуна гиред."
+            "<blockquote>Шумо реҷаи курсро санҷидед: дарс, quiz, таҳлили хатоҳо ва мустаҳкамкунӣ.</blockquote>\n\n"
+            "Барои кушодани дарсҳои навбатӣ обуна гиред.\n"
+            "Бе обуна ҳам метавонед дар савол-ҷавоб бо лимити рӯзона давом диҳед."
         ),
     }
     return texts.get(lang, texts["ru"])
 
 
-async def _send_trial_completed_offer(*, respond, lang: str) -> None:
+async def _send_trial_completed_offer(
+    *,
+    respond,
+    lang: str,
+    user=None,
+    telegram_id: int | None = None,
+    lesson_id: int | None = None,
+) -> None:
+    await ConversionFunnelService().record(
+        event_name="paywall_seen",
+        user=user,
+        telegram_id=telegram_id,
+        source="course_trial_completed",
+        lesson_id=lesson_id,
+    )
     await respond(
         _trial_course_completed_text(lang),
         reply_markup=subscription_miniapp_keyboard(
@@ -242,6 +470,44 @@ async def _maybe_show_force_sub_checkpoint(*, callback: CallbackQuery, session, 
     return True
 
 
+async def _show_required_channel_for_pending_action(
+    *,
+    callback: CallbackQuery,
+    state: FSMContext,
+    session,
+    user,
+    lang: str,
+    action: str,
+    payload: dict | None = None,
+) -> bool:
+    required_service = RequiredChannelService(session)
+    missing = await required_service.missing_channels(callback.bot, callback.from_user.id)
+    if not missing:
+        return False
+
+    if user and getattr(user, "force_sub_required_at", None) is None:
+        user.force_sub_required_at = datetime.now(timezone.utc)
+        await session.flush()
+
+    await state.update_data(
+        **{
+            PENDING_FORCE_SUB_ACTION: action,
+            PENDING_FORCE_SUB_PAYLOAD: payload or {},
+        }
+    )
+    await session.commit()
+    await callback.answer(t("force_sub_required_alert", lang), show_alert=True)
+
+    respond = _MessageEditResponder(callback.message)
+    await respond(
+        required_service.build_required_text(missing, lang),
+        reply_markup=required_service.build_required_keyboard(missing, lang),
+        parse_mode="HTML",
+        disable_web_page_preview=True,
+    )
+    return True
+
+
 async def _ensure_active_course_access(
     *,
     session,
@@ -271,10 +537,6 @@ def _course_level_candidates(level: str | None) -> tuple[str, ...]:
     normalized = (level or "").strip().lower()
     fallback_map = {
         "beginner": ("hsk1",),
-        "a1": ("hsk1",),
-        "a2": ("hsk2", "hsk1"),
-        "b1": ("hsk3", "hsk2", "hsk1"),
-        "b2": ("hsk4", "hsk3", "hsk2", "hsk1"),
         "hsk1": ("hsk1",),
         "hsk2": ("hsk2", "hsk1"),
         "hsk3": ("hsk3", "hsk2", "hsk1"),
@@ -283,32 +545,10 @@ def _course_level_candidates(level: str | None) -> tuple[str, ...]:
     return fallback_map.get(normalized, ("hsk1",))
 
 
-def _contains_cjk(value: object) -> bool:
-    return any("\u4e00" <= char <= "\u9fff" for char in str(value or ""))
-
-
-def _lesson_looks_english_ready(lesson) -> bool:
-    fields = (
-        getattr(lesson, "title", None),
-        getattr(lesson, "intro_text", None),
-        getattr(lesson, "vocabulary_json", None),
-        getattr(lesson, "dialogue_json", None),
-        getattr(lesson, "grammar_json", None),
-        getattr(lesson, "exercise_json", None),
-        getattr(lesson, "quiz_json", None),
-        getattr(lesson, "homework_json", None),
-    )
-    return not any(_contains_cjk(field) for field in fields)
-
-
 async def _resolve_lessons_for_user_level(engine: CourseEngineService, level: str | None):
     candidates = _course_level_candidates(level)
     for candidate in candidates:
-        lessons = [
-            lesson
-            for lesson in await engine.lesson_repo.list_by_level(candidate)
-            if _lesson_looks_english_ready(lesson)
-        ]
+        lessons = await engine.lesson_repo.list_by_level(candidate)
         if lessons:
             return lessons, candidate
     return [], candidates[0]
@@ -320,7 +560,7 @@ def filter_unlocked_lessons(lessons: list, progress) -> list:
 
 
 def _hsk4_part_label(part: str | None) -> str:
-    return "Part 2" if part == "lower" else "Part 1"
+    return "下" if part == "lower" else "上"
 
 
 def _lesson_selection_markup(lessons: list, resolved_level: str, lang: str):
@@ -331,20 +571,11 @@ def _lesson_selection_markup(lessons: list, resolved_level: str, lang: str):
 
 def _course_level_label(level: str | None) -> str:
     normalized = (level or "").strip().lower()
-    labels = {
-        "beginner": "Beginner",
-        "a1": "Beginner",
-        "a2": "Elementary",
-        "b1": "Intermediate",
-        "b2": "Advanced",
-        "hsk1": "Beginner",
-        "hsk2": "Elementary",
-        "hsk3": "Intermediate",
-        "hsk4": "Advanced",
-    }
-    if normalized in labels:
-        return labels[normalized]
-    return (level or "English").upper()
+    if normalized.startswith("hsk") and len(normalized) > 3:
+        return f"HSK {normalized[3:]}"
+    if normalized == "beginner":
+        return "HSK 1"
+    return (level or "HSK").upper()
 
 
 def _course_days_since(created_at) -> int:
@@ -579,7 +810,7 @@ async def course_hsk4_part_handler(callback: CallbackQuery, session):
         await callback.answer(t("course_no_lessons_available", lang), show_alert=True)
         return
 
-    text = f"{_course_level_label(resolved_level)} {_hsk4_part_label(hsk4_part)}. {t('course_choose_lesson', lang)}"
+    text = f"HSK4 {_hsk4_part_label(hsk4_part)}. {t('course_choose_lesson', lang)}"
 
     await callback.answer()
     await callback.message.edit_text(
@@ -637,17 +868,29 @@ async def course_pick_lesson_handler(callback: CallbackQuery, session):
             await callback.answer()
             await callback.message.answer(t(error_key, lang))
         return
+    await ConversionFunnelService().record(
+        event_name="lesson_started",
+        user=user,
+        source="course_pick_lesson",
+        lesson_id=lesson.id,
+        payload={
+            "lesson_order": getattr(lesson, "lesson_order", None),
+            "level": getattr(lesson, "level", None),
+        },
+    )
 
     await callback.answer()
     try:
         await callback.message.delete()
     except Exception:
         pass
-    await run_course_entry_flow(
+    await send_course_miniapp_entry(
         session=session,
         telegram_id=callback.from_user.id,
         respond=callback.message.answer,
-        show_menu=True,
+        source="course_pick_lesson",
+        level=getattr(lesson, "level", None),
+        lesson=getattr(lesson, "lesson_order", None),
     )
 
 
@@ -688,16 +931,22 @@ async def mode_free_qa_handler(callback: CallbackQuery, state: FSMContext, sessi
         return
 
     lang = user.language if user.language else "ru"
-    user.learning_mode = "qa"
-    user.voice_mode = "none"
-    await state.update_data(pending_voice_transcript=None, pending_voice_message_id=None)
-    await session.commit()
+    if await _show_required_channel_for_pending_action(
+        callback=callback,
+        state=state,
+        session=session,
+        user=user,
+        lang=lang,
+        action=FORCE_SUB_ACTION_OPEN_FREE_QA,
+        payload={"source": "mode_free_qa"},
+    ):
+        return
 
     await callback.answer()
-    await callback.message.answer(
-        t("free_mode_info", lang),
-        reply_markup=main_menu_keyboard(lang),
-        parse_mode="HTML",
+    await show_free_qa_level_choice(
+        respond=_MessageEditResponder(callback.message),
+        state=state,
+        lang=lang,
     )
 
 
@@ -706,14 +955,53 @@ async def course_mode_open_handler(callback: CallbackQuery, state: FSMContext, s
     if await _block_if_course_disabled(callback, session):
         return
 
-    await state.update_data(pending_voice_transcript=None, pending_voice_message_id=None)
+    user = await UserRepository(session).get_by_telegram_id(callback.from_user.id)
+    lang = user.language if user and user.language else "ru"
+    if await _show_required_channel_for_pending_action(
+        callback=callback,
+        state=state,
+        session=session,
+        user=user,
+        lang=lang,
+        action=FORCE_SUB_ACTION_OPEN_COURSE,
+        payload={"source": "mode_course"},
+    ):
+        return
+
     await callback.answer()
-    await run_course_entry_flow(
+    await send_course_miniapp_entry(
         session=session,
         telegram_id=callback.from_user.id,
-        respond=callback.message.answer,
-        show_menu=True,
+        respond=_MessageEditResponder(callback.message),
+        state=state,
+        source="mode_course",
     )
+
+
+async def activate_free_qa_mode(
+    *,
+    session,
+    telegram_id: int,
+    respond,
+    state: FSMContext | None = None,
+) -> bool:
+    user = await UserRepository(session).get_by_telegram_id(telegram_id)
+    if not user:
+        await respond(t("user_not_found", "ru"))
+        return False
+
+    lang = user.language if user.language else "ru"
+    user.learning_mode = "qa"
+    user.voice_mode = "none"
+    if state:
+        await state.update_data(pending_voice_transcript=None, pending_voice_message_id=None)
+    await session.commit()
+    await respond(
+        t("free_mode_info", lang),
+        reply_markup=main_menu_keyboard(lang),
+        parse_mode="HTML",
+    )
+    return True
 
 
 
@@ -745,6 +1033,11 @@ async def run_course_entry_flow(
     user.learning_mode = "course"
     user.voice_mode = "none"
     await session.commit()
+    await ConversionFunnelService().record(
+        event_name="course_started",
+        user=user,
+        source="course_entry",
+    )
 
     progress = await engine.progress_repo.get_by_user_id(user.id)
     if not progress:
@@ -756,6 +1049,7 @@ async def run_course_entry_flow(
             waiting_for="none",
         )
 
+    current_lesson = None
     if progress.current_lesson_id:
         current_lesson = await engine.lesson_repo.get_by_id(progress.current_lesson_id)
         if current_lesson and not await _ensure_trial_lesson_access(
@@ -765,9 +1059,49 @@ async def run_course_entry_flow(
             respond=respond,
         ):
             return
+    else:
+        lessons, _ = await _resolve_lessons_for_user_level(engine, user.level)
+        if not lessons:
+            await respond(t("course_no_lessons_available", lang))
+            return
+        _, progress, current_lesson, error_key = await engine.pick_lesson(
+            telegram_id,
+            lessons[0].id,
+        )
+        if error_key:
+            await respond(t(error_key, lang))
+            return
+        if not await _ensure_trial_lesson_access(
+            session=session,
+            user=user,
+            lesson=current_lesson,
+            respond=respond,
+        ):
+            return
 
-    if show_menu:
-        await respond(t("course_menu_title", lang), reply_markup=course_menu_keyboard(lang))
+    open_text = {
+        "uz": (
+            "📚 <b>English AI kursi Mini Appga ko‘chdi</b>\n\n"
+            "<blockquote>Darslar, so‘zlar, grammatika, quiz va AI Voice bitta joyda.</blockquote>"
+        ),
+        "ru": (
+            "📚 <b>Курс English AI переехал в Mini App</b>\n\n"
+            "<blockquote>Уроки, слова, грамматика, квиз и AI Voice теперь в одном месте.</blockquote>"
+        ),
+        "tj": (
+            "📚 <b>Курси English AI ба Mini App гузашт</b>\n\n"
+            "<blockquote>Дарсҳо, калимаҳо, грамматика, quiz ва AI Voice дар як ҷо.</blockquote>"
+        ),
+    }
+    try:
+        await respond(
+            open_text.get(lang, open_text["ru"]),
+            reply_markup=course_v3_miniapp_keyboard(lang),
+            parse_mode="HTML",
+        )
+        return
+    except Exception:
+        logger.exception("Failed to open Course Mini App; using legacy course fallback")
 
     if not progress.current_lesson_id:
         lessons, resolved_level = await _resolve_lessons_for_user_level(engine, user.level)
@@ -776,7 +1110,7 @@ async def run_course_entry_flow(
             await respond(t("course_no_lessons_available", lang))
             return
 
-        level_label = _course_level_label(resolved_level)
+        level_label = resolved_level.upper() if resolved_level else "HSK"
         await respond(
             f"{level_label}. {t('course_choose_lesson', lang)}",
             reply_markup=_lesson_selection_markup(lessons, resolved_level, lang),
@@ -812,7 +1146,13 @@ async def run_course_entry_flow(
         lesson = await engine.lesson_repo.get_by_id(progress.current_lesson_id)
         await trial_service.mark_trial_completed(user, getattr(lesson, "id", None))
         await session.commit()
-        await _send_trial_completed_offer(respond=respond, lang=lang)
+        await _send_trial_completed_offer(
+            respond=respond,
+            lang=lang,
+            user=user,
+            telegram_id=telegram_id,
+            lesson_id=getattr(lesson, "id", None),
+        )
         return
 
     if (
@@ -902,11 +1242,12 @@ async def course_command_handler(message: Message, state: FSMContext, session):
         await message.answer(msg_map.get(lang, msg_map["ru"]))
         return
 
-    await run_course_entry_flow(
+    await send_course_miniapp_entry(
         session=session,
         telegram_id=message.from_user.id,
         respond=message.answer,
-        show_menu=True,
+        state=state,
+        source="course_command",
     )
 
 
@@ -941,12 +1282,13 @@ async def course_continue_handler(callback: CallbackQuery, state: FSMContext, se
     if await _block_if_course_disabled(callback, session):
         return
 
-    await state.update_data(pending_voice_transcript=None, pending_voice_message_id=None)
     await callback.answer()
-    await run_course_entry_flow(
+    await send_course_miniapp_entry(
         session=session,
         telegram_id=callback.from_user.id,
         respond=callback.message.answer,
+        state=state,
+        source="course_continue",
     )
 
 
@@ -1070,7 +1412,13 @@ async def course_review_no_handler(callback: CallbackQuery, session):
         await trial_service.mark_trial_completed(user, getattr(completed_lesson, "id", None))
         await session.commit()
         await callback.answer()
-        await _send_trial_completed_offer(respond=callback.message.answer, lang=lang)
+        await _send_trial_completed_offer(
+            respond=callback.message.answer,
+            lang=lang,
+            user=user,
+            telegram_id=callback.from_user.id,
+            lesson_id=getattr(completed_lesson, "id", None),
+        )
         return
 
     user, progress, lesson, next_lesson, error_key = await engine.complete_lesson_and_unlock_next(callback.from_user.id)
@@ -1090,6 +1438,16 @@ async def course_review_no_handler(callback: CallbackQuery, session):
         )
         return
 
+    await ConversionFunnelService().record(
+        event_name="lesson_started",
+        user=user,
+        source="course_next_lesson",
+        lesson_id=next_lesson.id,
+        payload={
+            "lesson_order": getattr(next_lesson, "lesson_order", None),
+            "level": getattr(next_lesson, "level", None),
+        },
+    )
     text = format_intro(next_lesson, lang)
 
     await callback.answer()
@@ -1171,11 +1529,6 @@ async def course_review_last_handler(callback: CallbackQuery, state: FSMContext,
 
     lang = user.language if user.language else "ru"
 
-    user.learning_mode = "course"
-    user.voice_mode = "none"
-    await state.update_data(pending_voice_transcript=None, pending_voice_message_id=None)
-    await session.commit()
-
     user, progress, lesson, error_key = await engine.get_current_lesson(callback.from_user.id)
     if error_key:
         await callback.answer()
@@ -1190,11 +1543,16 @@ async def course_review_last_handler(callback: CallbackQuery, state: FSMContext,
         await callback.answer()
         return
 
-    step = progress.current_step
-    text = format_step(lesson, lang, step) or ""
-
     await callback.answer()
-    await callback.message.answer(text, parse_mode="HTML")
+    await send_course_miniapp_entry(
+        session=session,
+        telegram_id=callback.from_user.id,
+        respond=callback.message.answer,
+        state=state,
+        source="course_review_last",
+        level=getattr(lesson, "level", None),
+        lesson=getattr(lesson, "lesson_order", None),
+    )
 
 
 
@@ -1447,7 +1805,13 @@ async def course_start_next_lesson_handler(callback: CallbackQuery, session):
         await trial_service.mark_trial_completed(user, getattr(completed_lesson, "id", None))
         await session.commit()
         await callback.answer()
-        await _send_trial_completed_offer(respond=callback.message.answer, lang=lang)
+        await _send_trial_completed_offer(
+            respond=callback.message.answer,
+            lang=lang,
+            user=user,
+            telegram_id=callback.from_user.id,
+            lesson_id=getattr(completed_lesson, "id", None),
+        )
         return
 
     user, progress, lesson, next_lesson, error_key = await engine.complete_lesson_and_unlock_next(callback.from_user.id)
@@ -1467,11 +1831,24 @@ async def course_start_next_lesson_handler(callback: CallbackQuery, session):
         )
         return
 
+    await ConversionFunnelService().record(
+        event_name="lesson_started",
+        user=user,
+        source="course_next_lesson",
+        lesson_id=next_lesson.id,
+        payload={
+            "lesson_order": getattr(next_lesson, "lesson_order", None),
+            "level": getattr(next_lesson, "level", None),
+        },
+    )
     await callback.answer()
-    await run_course_entry_flow(
+    await send_course_miniapp_entry(
         session=session,
         telegram_id=callback.from_user.id,
         respond=callback.message.answer,
+        source="course_next_lesson",
+        level=getattr(next_lesson, "level", None),
+        lesson=getattr(next_lesson, "lesson_order", None),
     )
 
 
@@ -1502,6 +1879,16 @@ async def course_level_upgrade_yes_handler(callback: CallbackQuery, session):
         await callback.message.answer(t(error_key, lang))
         return
 
+    await ConversionFunnelService().record(
+        event_name="lesson_started",
+        user=user,
+        source="course_level_upgrade",
+        lesson_id=next_lesson.id,
+        payload={
+            "lesson_order": getattr(next_lesson, "lesson_order", None),
+            "level": getattr(next_lesson, "level", None),
+        },
+    )
     await callback.answer()
     await callback.message.answer(
         t("course_level_upgraded", lang, level=_course_level_label(next_lesson.level)),
@@ -1616,11 +2003,17 @@ def _course_tip_key_for_step(step: str) -> str | None:
     return None
 
 
-async def _queue_course_onboarding_tip(session, user, lesson, step: str, lang: str) -> None:
+def _bot_from_respond(respond):
+    owner = getattr(respond, "__self__", None)
+    return getattr(owner, "bot", None)
+
+
+async def _queue_course_onboarding_tip(session, user, lesson, step: str, lang: str, bot=None) -> None:
     tip_key = _course_tip_key_for_step(step)
     if not tip_key:
         return
-    queued = await OnboardingTipService(session).queue_course_tip(
+    tip_service = OnboardingTipService(session)
+    queued = await tip_service.queue_course_tip(
         user=user,
         lesson=lesson,
         step=step,
@@ -1629,6 +2022,8 @@ async def _queue_course_onboarding_tip(session, user, lesson, step: str, lang: s
     )
     if queued:
         await session.commit()
+        if bot:
+            await tip_service.send_due_tips(bot, limit=5)
 
 
 def _static_course_missing_text(lang: str) -> str:
@@ -1679,7 +2074,14 @@ async def _send_step(respond, user, lesson, step: str, lang: str, session):
     if text is not None:
         keyboard = _keyboard_for_step(lang, step, lesson)
         await respond(text, reply_markup=keyboard, parse_mode="HTML")
-        await _queue_course_onboarding_tip(session, user, lesson, step, lang)
+        await _queue_course_onboarding_tip(
+            session,
+            user,
+            lesson,
+            step,
+            lang,
+            bot=_bot_from_respond(respond),
+        )
     else:
         keyboard = _keyboard_for_step(lang, step, lesson)
         await respond(_static_course_missing_text(lang), reply_markup=keyboard, parse_mode="HTML")
@@ -1872,7 +2274,13 @@ async def _finish_study_time_flow(callback: CallbackQuery, session, saved_text: 
     if not trial_service.is_paid_user(user):
         await trial_service.mark_trial_completed(user, getattr(lesson, "id", None))
         await session.commit()
-        await _send_trial_completed_offer(respond=callback.message.answer, lang=lang)
+        await _send_trial_completed_offer(
+            respond=callback.message.answer,
+            lang=lang,
+            user=user,
+            telegram_id=callback.from_user.id,
+            lesson_id=getattr(lesson, "id", None),
+        )
         return
 
     if getattr(progress, "waiting_for", None) == "review_choice":
@@ -2112,7 +2520,7 @@ async def course_set_timezone_handler(callback: CallbackQuery, state: FSMContext
     progress.reminder_tz_offset = tz_offset
     await session.commit()
 
-    tz_labels = {3: "UTC+3 🇷🇺 Москва", 5: "UTC+5 🇺🇿🇹🇯 Тошкент/Душанбе", 8: "UTC+8 Asia"}
+    tz_labels = {3: "UTC+3 🇷🇺 Москва", 5: "UTC+5 🇺🇿🇹🇯 Тошкент/Душанбе", 8: "UTC+8 🇨🇳 Пекин"}
     tz_label = tz_labels.get(tz_offset, f"UTC+{tz_offset}")
     time_str = progress.reminder_time.strftime("%H:%M")
 

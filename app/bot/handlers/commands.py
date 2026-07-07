@@ -1,5 +1,7 @@
+import asyncio
+
 from app.bot.keyboards.onboarding import level_keyboard
-from aiogram import Router, F
+from aiogram import Router, F, Bot
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import (
@@ -12,6 +14,8 @@ from sqlalchemy import select, func
 from app.db.models.user import User
 
 from app.repositories.user_repo import UserRepository
+from app.services.conversion_funnel_service import ConversionFunnelService
+from app.services.course_miniapp_admin_analytics_service import CourseMiniAppAdminAnalyticsService
 from app.services.referral_service import ReferralService
 from app.bot.handlers.subscription import build_subscription_main_text_for_user
 from app.bot.keyboards.main_menu import main_menu_keyboard
@@ -23,7 +27,15 @@ from app.bot.keyboards.subscription import (
 from app.bot.keyboards.referral import photo_limit_subscription_keyboard
 from app.bot.keyboards.help import help_contact_keyboard
 from app.bot.utils.i18n import t
+from app.services.help_settings_service import build_help_text
+from app.services.message_draft_service import (
+    finish_draft_if_needed,
+    send_draft_or_fallback,
+    update_draft_or_fallback,
+)
 from app.services.support_contact_service import get_admin_contact_url
+from app.services.rich_message_service import RichMessageService
+from app.config import settings
 
 
 router = Router()
@@ -56,16 +68,32 @@ def _pct(part: int, total: int) -> float:
 
 def _status_label(status: str, lang: str) -> str:
     return {
-        "free": "Free",
-        "trial": "Free",
-        "active": "Active",
-        "expired": "Free",
+        "free": {
+            "tj": "Ройгон",
+            "uz": "Bepul",
+            "ru": "Бесплатно",
+        }.get(lang, "Bepul"),
+        "trial": {
+            "tj": "Санҷишӣ",
+            "uz": "Sinov rejimi",
+            "ru": "Пробный режим",
+        }.get(lang, "Sinov rejimi"),
+        "active": {
+            "tj": "Фаъол",
+            "uz": "Faol",
+            "ru": "Активный",
+        }.get(lang, "Faol"),
+        "expired": {
+            "tj": "Муддат гузаштааст",
+            "uz": "Muddati tugagan",
+            "ru": "Срок истек",
+        }.get(lang, "Muddati tugagan"),
         "blocked": {
             "tj": "Баста",
             "uz": "Bloklangan",
             "ru": "Заблокирован",
         }.get(lang, "Заблокирован"),
-    }.get(status, "Free")
+    }.get(status, {"tj": "Ройгон", "uz": "Bepul", "ru": "Бесплатно"}.get(lang, "Bepul"))
 
 
 def _profile_status_label(user, lang: str) -> str:
@@ -73,14 +101,18 @@ def _profile_status_label(user, lang: str) -> str:
     is_paid = getattr(user, "payment_status", "") == "approved"
 
     if status == "active" and is_paid:
-        return "Active"
+        return {
+            "tj": "Пардохт фаъол",
+            "uz": "To'lov faol",
+            "ru": "Оплата активна",
+        }.get(lang, "To'lov faol")
 
     if status == "active":
         return {
-            "tj": "Мӯҳлати санҷишӣ",
-            "uz": "Sinov muddati",
-            "ru": "Пробный срок",
-        }.get(lang, "Sinov muddati")
+            "tj": "Дастрасии тестӣ",
+            "uz": "Bepul test ruxsati",
+            "ru": "Тестовый доступ",
+        }.get(lang, "Bepul test ruxsati")
 
     return _status_label(status, lang)
 
@@ -98,18 +130,8 @@ def _language_label(value: str, lang: str) -> str:
 def _level_label(value: str, lang: str) -> str:
     if not value:
         return "—"
-    level_labels = {
-        "a1": "Beginner",
-        "a2": "Elementary",
-        "b1": "Intermediate",
-        "b2": "Advanced",
-        "hsk1": "Beginner",
-        "hsk2": "Elementary",
-        "hsk3": "Intermediate",
-        "hsk4": "Advanced",
-    }
-    if value in level_labels:
-        return level_labels[value]
+    if value.startswith("hsk"):
+        return value.upper()
     beginner = {
         "tj": "Оғозӣ",
         "uz": "Boshlang'ich",
@@ -292,7 +314,7 @@ def _profile_text(
             details.append(f"💳 <b>Обуна:</b> {plan}")
             details.append(f"⌛ <b>Анҷом:</b> {ends_str}")
         elif is_temporary_active and temporary_days is not None:
-            details.append(f"⏳ <b>Мӯҳлати санҷишӣ:</b> {_days_label(temporary_days, lang)}")
+            details.append("⏳ <b>Дастрасии тестӣ:</b> фаъол")
             details.append(f"⌛ <b>Анҷом:</b> {ends_str}")
         text = (
             f"<b>👤 Профили шумо</b>\n\n"
@@ -315,7 +337,7 @@ def _profile_text(
             details.append(f"💳 <b>Obuna:</b> {plan}")
             details.append(f"⌛ <b>Tugash:</b> {ends_str}")
         elif is_temporary_active and temporary_days is not None:
-            details.append(f"⏳ <b>Sinov muddati:</b> {_days_label(temporary_days, lang)}")
+            details.append("⏳ <b>Test access:</b> faol")
             details.append(f"⌛ <b>Tugash:</b> {ends_str}")
         text = (
             f"<b>👤 Profilingiz</b>\n\n"
@@ -337,7 +359,7 @@ def _profile_text(
         details.append(f"💳 <b>Подписка:</b> {plan}")
         details.append(f"⌛ <b>Окончание:</b> {ends_str}")
     elif is_temporary_active and temporary_days is not None:
-        details.append(f"⏳ <b>Пробный срок:</b> {_days_label(temporary_days, lang)}")
+        details.append("⏳ <b>Тестовый доступ:</b> активен")
         details.append(f"⌛ <b>Окончание:</b> {ends_str}")
     text = (
         f"<b>👤 Ваш профиль</b>\n\n"
@@ -373,30 +395,67 @@ def profile_menu_keyboard(lang: str, user=None) -> InlineKeyboardMarkup:
     }
     l = labels.get(lang, labels["ru"])
     rows = [
-            [
-                subscription_miniapp_button(
-                    lang,
-                    source="profile_subscription",
-                    mode="subscription",
-                    text=l["subscription"],
-                ),
-                InlineKeyboardButton(text=l["language"], callback_data="profile_menu:language"),
-            ],
-            [
-                InlineKeyboardButton(text=l["level"], callback_data="profile_menu:level"),
-            ],
+        [
+            subscription_miniapp_button(
+                lang,
+                source="profile_subscription",
+                mode="subscription",
+                text=l["subscription"],
+            ),
+            InlineKeyboardButton(text=l["language"], callback_data="profile_menu:language"),
+        ],
+        [
+            InlineKeyboardButton(text=l["level"], callback_data="profile_menu:level"),
+            InlineKeyboardButton(text=t("menu_partner", lang), callback_data="partner:open"),
+        ],
+        [
+            InlineKeyboardButton(text=t("profile_to_course_button", lang), callback_data="profile_menu:course"),
+        ],
     ]
-    mode_button = (
-        InlineKeyboardButton(text=t("profile_to_qa_button", lang), callback_data="profile_menu:qa")
-        if getattr(user, "learning_mode", "qa") == "course"
-        else InlineKeyboardButton(text=t("profile_to_course_button", lang), callback_data="profile_menu:course")
-    )
-    rows.append([
-        InlineKeyboardButton(text=t("menu_partner", lang), callback_data="partner:open"),
-        mode_button,
-    ])
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
+
+@router.message(Command("rich_test"))
+async def rich_test_command(message: Message, bot: Bot):
+    rich_service = RichMessageService(settings.BOT_TOKEN)
+    
+    # 1. Vocabulary Test
+    vocab_payload = rich_service.build_vocab_rich_message(
+        word="学习",
+        pinyin="xuéxí",
+        translation="O'qish, o'rganish",
+        examples=["我喜欢学习汉语 (Men xitoy tilini o'rganishni yoqtiraman)"],
+        mistakes="xuéxí ni 'o'qituvchi' deb ishlatmang."
+    )
+    await message.answer("🧪 <b>Test 1: Vocabulary Rich Message</b>", parse_mode="HTML")
+    await rich_service.send_rich_or_fallback(
+        bot, message.chat.id, vocab_payload, "Vocabulary Fallback: 学习 (xuéxí) - O'qish"
+    )
+
+    # 2. Grammar Test
+    grammar_payload = rich_service.build_grammar_rich_message(
+        title="'了' (le) qo'shimchasi",
+        formula="S + V + 了 + O",
+        explanation="Harakat tugallanganini bildiradi.",
+        examples=["我吃饭了 (Men ovqat yedim)"],
+        common_mistakes="Kelajakdagi harakatlar uchun '了' ishlatmang."
+    )
+    await message.answer("\n🧪 <b>Test 2: Grammar Rich Message</b>", parse_mode="HTML")
+    await rich_service.send_rich_or_fallback(
+        bot, message.chat.id, grammar_payload, "Grammar Fallback: '了' (le) - Harakat tugallangan"
+    )
+
+    # 3. Quiz Result Test
+    quiz_payload = rich_service.build_quiz_result_rich_message(
+        score=8,
+        total=10,
+        weak_points=["Tonlar", "Yozish"],
+        wrong_answers=["savol_3", "savol_7"]
+    )
+    await message.answer("\n🧪 <b>Test 3: Quiz Result Rich Message</b>", parse_mode="HTML")
+    await rich_service.send_rich_or_fallback(
+        bot, message.chat.id, quiz_payload, "Quiz Result Fallback: 8/10"
+    )
 
 @router.message(Command("profile"))
 async def profile_command(message: Message, state: FSMContext, session):
@@ -526,7 +585,7 @@ async def command_level_callback_handler(callback: CallbackQuery, session):
     except Exception:
         pass
 
-    level_label = _level_label(level, lang)
+    level_label = level.upper() if level.startswith("hsk") else level
 
     if lang == "tj":
         msg = f"✅ Дараҷа нав шуд: {level_label}"
@@ -572,10 +631,38 @@ async def help_command_handler(message: Message, state: FSMContext, session):
     contact_url = await get_admin_contact_url(session)
 
     await message.answer(
-        t("help_section_text", lang),
+        await build_help_text(session, lang),
         reply_markup=help_contact_keyboard(lang, contact_url),
         parse_mode="HTML",
         disable_web_page_preview=True,
+    )
+
+
+@router.message(Command("draft_test"))
+async def draft_test_handler(message: Message):
+    chat_id = message.chat.id
+    await send_draft_or_fallback(
+        message.bot,
+        chat_id,
+        "Draft test: preparing reply...",
+        draft_id=message.message_id,
+        source_message=message,
+        fallback_mode="qa",
+        seed=message.message_id,
+    )
+    try:
+        for preview in (
+            "Draft test: analyzing question...",
+            "Draft test: preparing examples...",
+            "Draft test: finalizing answer...",
+        ):
+            await asyncio.sleep(1.3)
+            await update_draft_or_fallback(message.bot, chat_id, preview)
+    finally:
+        await finish_draft_if_needed(message.bot, chat_id)
+
+    await message.answer(
+        "Draft test complete. Final message was sent through normal sendMessage flow."
     )
 
 
@@ -611,7 +698,10 @@ async def admin_stats_handler(message: Message, session):
 
     # Users registered in last 7 days
     from datetime import datetime, timezone, timedelta
-    week_ago = datetime.now(timezone.utc) - timedelta(days=7)
+    now = datetime.now(timezone.utc)
+    today = now.date()
+    today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    week_ago = now - timedelta(days=7)
     result = await session.execute(
         select(func.count()).select_from(User).where(User.created_at >= week_ago)
     )
@@ -624,14 +714,24 @@ async def admin_stats_handler(message: Message, session):
     )
     pending_payments = result.scalar() or 0
 
-    # Approved payments total
+    # Tasdiqlangan to'lovlar jami
     result = await session.execute(
         select(func.count()).select_from(Payment).where(Payment.payment_status == "approved")
     )
     total_paid = result.scalar() or 0
     paid_users = (await session.execute(
+        select(func.count()).select_from(User).where(
+            User.payment_status == "approved",
+            User.status == "active",
+            User.end_date.is_not(None),
+            User.end_date > now,
+        )
+    )).scalar() or 0
+    historical_approved_users = (await session.execute(
         select(func.count()).select_from(User).where(User.payment_status == "approved")
     )).scalar() or 0
+    funnel_text = await ConversionFunnelService(session).admin_funnel_text(week_ago=week_ago)
+    course_miniapp_text = await CourseMiniAppAdminAnalyticsService(session).admin_text(week_ago=week_ago)
     trial_course_started = (await session.execute(
         select(func.count()).select_from(User).where(User.trial_course_started_at.is_not(None))
     )).scalar() or 0
@@ -712,6 +812,97 @@ async def admin_stats_handler(message: Message, session):
             Payment.reviewed_at >= User.trial_course_started_at,
         )
     )).scalar() or 0
+    daily_started = (await session.execute(
+        select(func.count()).select_from(User).where(User.daily_practice_started_at.is_not(None))
+    )).scalar() or 0
+    daily_started_today = (await session.execute(
+        select(func.count()).select_from(User).where(User.daily_practice_started_at >= today_start)
+    )).scalar() or 0
+    daily_started_week = (await session.execute(
+        select(func.count()).select_from(User).where(User.daily_practice_started_at >= week_ago)
+    )).scalar() or 0
+    daily_completed = (await session.execute(
+        select(func.count()).select_from(User).where(User.daily_practice_completed_at.is_not(None))
+    )).scalar() or 0
+    daily_completed_today = (await session.execute(
+        select(func.count()).select_from(User).where(User.daily_practice_last_day == today)
+    )).scalar() or 0
+    daily_completed_week = (await session.execute(
+        select(func.count()).select_from(User).where(User.daily_practice_completed_at >= week_ago)
+    )).scalar() or 0
+    daily_d2_return = (await session.execute(
+        select(func.count()).select_from(User).where(User.daily_practice_streak >= 2)
+    )).scalar() or 0
+    daily_completed_course_opened = (await session.execute(
+        select(func.count()).select_from(User).where(
+            User.daily_practice_completed_at.is_not(None),
+            User.trial_course_started_at.is_not(None),
+            User.trial_course_started_at >= User.daily_practice_completed_at,
+        )
+    )).scalar() or 0
+    daily_completed_paid = (await session.execute(
+        select(func.count(func.distinct(Payment.user_telegram_id)))
+        .select_from(Payment)
+        .join(User, User.telegram_id == Payment.user_telegram_id)
+        .where(
+            Payment.payment_status == "approved",
+            Payment.reviewed_at.is_not(None),
+            User.daily_practice_completed_at.is_not(None),
+            Payment.reviewed_at >= User.daily_practice_completed_at,
+        )
+    )).scalar() or 0
+    qa_limit_channel_joined = (await session.execute(
+        select(func.count()).select_from(User).where(
+            User.force_sub_required_at.is_not(None),
+            User.last_active_at >= User.force_sub_required_at,
+        )
+    )).scalar() or 0
+
+    daily_started = (await session.execute(
+        select(func.count()).select_from(User).where(User.daily_practice_started_at.is_not(None))
+    )).scalar() or 0
+    daily_started_today = (await session.execute(
+        select(func.count()).select_from(User).where(User.daily_practice_started_at >= today_start)
+    )).scalar() or 0
+    daily_started_week = (await session.execute(
+        select(func.count()).select_from(User).where(User.daily_practice_started_at >= week_ago)
+    )).scalar() or 0
+    daily_completed = (await session.execute(
+        select(func.count()).select_from(User).where(User.daily_practice_completed_at.is_not(None))
+    )).scalar() or 0
+    daily_completed_today = (await session.execute(
+        select(func.count()).select_from(User).where(User.daily_practice_last_day == today)
+    )).scalar() or 0
+    daily_completed_week = (await session.execute(
+        select(func.count()).select_from(User).where(User.daily_practice_completed_at >= week_ago)
+    )).scalar() or 0
+    daily_d2_return = (await session.execute(
+        select(func.count()).select_from(User).where(User.daily_practice_streak >= 2)
+    )).scalar() or 0
+    daily_completed_course_opened = (await session.execute(
+        select(func.count()).select_from(User).where(
+            User.daily_practice_completed_at.is_not(None),
+            User.trial_course_started_at.is_not(None),
+            User.trial_course_started_at >= User.daily_practice_completed_at,
+        )
+    )).scalar() or 0
+    daily_completed_paid = (await session.execute(
+        select(func.count(func.distinct(Payment.user_telegram_id)))
+        .select_from(Payment)
+        .join(User, User.telegram_id == Payment.user_telegram_id)
+        .where(
+            Payment.payment_status == "approved",
+            Payment.reviewed_at.is_not(None),
+            User.daily_practice_completed_at.is_not(None),
+            Payment.reviewed_at >= User.daily_practice_completed_at,
+        )
+    )).scalar() or 0
+    qa_limit_channel_joined = (await session.execute(
+        select(func.count()).select_from(User).where(
+            User.force_sub_required_at.is_not(None),
+            User.last_active_at >= User.force_sub_required_at,
+        )
+    )).scalar() or 0
 
     trial = status_counts.get("trial", 0)
     active = status_counts.get("active", 0)
@@ -726,6 +917,11 @@ async def admin_stats_handler(message: Message, session):
     completed_paid_rate = _pct(completed_paid_after, trial_course_completed)
     checkpoint_complete_rate = _pct(checkpoint_completed, force_sub_checkpoint)
     checkpoint_paid_rate = _pct(checkpoint_paid_after, force_sub_checkpoint)
+    daily_complete_rate = _pct(daily_completed, daily_started)
+    daily_return_rate = _pct(daily_d2_return, daily_completed)
+    daily_course_rate = _pct(daily_completed_course_opened, daily_completed)
+    daily_paid_rate = _pct(daily_completed_paid, daily_completed)
+    qa_channel_join_rate = _pct(qa_limit_channel_joined, force_sub_checkpoint)
 
     lang_str = " | ".join(f"{k}: {v}" for k, v in sorted(lang_counts.items()))
 
@@ -733,22 +929,32 @@ async def admin_stats_handler(message: Message, session):
         f"📊 <b>Admin statistika</b>\n\n"
         f"<b>👥 Foydalanuvchilar:</b>\n"
         f"  Jami: {total}\n"
-        f"  Trial: {trial}\n"
-        f"  Active status: {active}\n"
-        f"  Paid user: {paid_users}\n"
+        f"  Sinov: {trial}\n"
+        f"  Faol status: {active}\n"
+        f"  To'lovli user: {paid_users}\n"
+        f"  Tarixiy tasdiqlangan: {historical_approved_users}\n"
         f"  Tugagan: {expired}\n"
         f"  Bloklangan: {blocked}\n\n"
-        f"<b>📚 Trial course funnel:</b>\n"
+        f"<b>⚡ Daily 3-min retention:</b>\n"
+        f"  Boshladi: {daily_started} | bugun: +{daily_started_today} | 7 kun: +{daily_started_week}\n"
+        f"  Tugatdi: {daily_completed} ({daily_complete_rate}%) | bugun: +{daily_completed_today} | 7 kun: +{daily_completed_week}\n"
+        f"  D1 → D2 qaytdi: {daily_d2_return} ({daily_return_rate}%)\n"
+        f"  Daily → Kurs: {daily_completed_course_opened} ({daily_course_rate}%)\n"
+        f"  Daily → Paid: {daily_completed_paid} ({daily_paid_rate}%)\n"
+        f"  QA limit → kanal: {force_sub_checkpoint} | joined/continued: {qa_limit_channel_joined} ({qa_channel_join_rate}%)\n\n"
+        f"<b>📚 Sinov kurs funnel:</b>\n"
         f"  Dars boshlagan: {trial_course_started} | 7 kun: +{trial_started_week}\n"
         f"  Dars tugatgan: {trial_course_completed} ({trial_complete_rate}%) | 7 kun: +{trial_completed_week}\n"
         f"  AI xato tahlili: {trial_quiz_explained} ({trial_ai_rate}%)\n"
         f"  Kanal checkpoint: {force_sub_checkpoint}\n"
         f"  Checkpoint → tugatdi: {checkpoint_completed} ({checkpoint_complete_rate}%)\n\n"
-        f"<b>💰 Trial → Payment:</b>\n"
+        f"<b>💰 Sinov → To'lov:</b>\n"
         f"  Trialdan keyin paid: {trial_paid_after_start} ({trial_paid_rate}%) | 7 kun: +{trial_paid_week}\n"
         f"  Completed → paid: {completed_paid_after} ({completed_paid_rate}%)\n"
         f"  Checkpoint → paid: {checkpoint_paid_after} ({checkpoint_paid_rate}%)\n"
         f"  Trialdan keyingi tushum: {int(trial_revenue_after_start):,} so'm\n\n"
+        f"{funnel_text}\n\n"
+        f"{course_miniapp_text}\n\n"
         f"<b>📈 Konversiya:</b>\n"
         f"  User → Paid: {conversion}%\n"
         f"  Savol berganlar: {active_users} ({engagement}%)\n"
@@ -787,13 +993,15 @@ async def profile_menu_level(callback: CallbackQuery, state: FSMContext, session
 
 @router.callback_query(F.data == "profile_menu:course")
 async def profile_menu_course(callback: CallbackQuery, state: FSMContext, session):
-    from app.bot.handlers.course import run_course_entry_flow
-    await state.update_data(pending_voice_transcript=None, pending_voice_message_id=None)
+    from app.bot.handlers.course import send_course_miniapp_entry
+
     await callback.answer()
-    await run_course_entry_flow(
+    await send_course_miniapp_entry(
         session=session,
         telegram_id=callback.from_user.id,
         respond=callback.message.answer,
+        state=state,
+        source="profile_course",
     )
 
 @router.callback_query(F.data == "profile_menu:qa")

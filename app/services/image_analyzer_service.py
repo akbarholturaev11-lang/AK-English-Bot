@@ -2,19 +2,19 @@ from app.services.ai_service import AIService
 
 
 ANALYZER_PROMPT = """
-You are an image text extraction assistant.
+Ту ассистенти таҳлили тасвир ҳастӣ.
 
-Task:
-Identify only the text visible inside the image.
+Вазифа:
+Аз рӯи акс танҳо матни дар дохили тасвир бударо муайян кун.
 
-Strict rules:
+Қоидаҳои қатъӣ:
 
-1. Analyze the image carefully.
-2. If the image contains English text, words, sentences, letters, numbers, or symbols, write them exactly.
-3. Do not add anything from yourself.
-4. Do not correct spelling or grammar.
-5. If the text is unclear, write only the clear part.
-6. If there is no text in the image, write exactly:
+1. Аксро бодиққат таҳлил кун.
+2. Агар дар акс иероглиф, калима, ҷумла, ҳарф ё рақам бошад — онҳоро айнан навис.
+3. Ҳеҷ чизро аз худ илова накун.
+4. Матнро ислоҳ накун.
+5. Агар матн норавшан бошад, танҳо ҳамон қисми равшанро навис.
+6. Агар дар акс ҳеҷ матн набошад, танҳо навис:
 
 TEXT:
 No text found
@@ -22,19 +22,19 @@ No text found
 ELEMENTS:
 None
 
-Response format:
+Формати ҷавоб:
 
 TEXT:
-(the exact text from the image)
+(ҳамон матне ки дар акс ҳаст)
 
 ELEMENTS:
-- each visible word, phrase, line, or useful text fragment on a separate line
+— ҳар иероглиф, калима ё қисми ҷудогона дар сатри алоҳида
 
-Important:
-- Do not translate
-- Do not explain
-- Do not teach
-- Only extract the text visible in the image
+Муҳим:
+— Тарҷума накун
+— Шарҳ надиҳ
+— Дарс накун
+— Танҳо матни дар акс бударо барор
 """
 
 

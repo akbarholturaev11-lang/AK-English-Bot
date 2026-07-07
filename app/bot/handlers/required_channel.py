@@ -1,10 +1,16 @@
+from datetime import datetime, timezone
+
 from aiogram import F, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery
 
 from app.bot.utils.i18n import t
 from app.bot.middlewares.required_channel import (
+    FORCE_SUB_ACTION_OPEN_COURSE,
+    FORCE_SUB_ACTION_OPEN_FREE_QA,
+    PENDING_FORCE_SUB_ACTION,
     PENDING_FORCE_SUB_MESSAGE_ID,
+    PENDING_FORCE_SUB_PAYLOAD,
     PENDING_FORCE_SUB_TEXT,
 )
 from app.repositories.user_repo import UserRepository
@@ -12,6 +18,21 @@ from app.services.required_channel_service import RequiredChannelService
 
 
 router = Router()
+
+
+class _MessageEditResponder:
+    def __init__(self, message):
+        self._message = message
+        self._used_edit = False
+
+    async def __call__(self, text: str, **kwargs):
+        if self._message and not self._used_edit:
+            self._used_edit = True
+            try:
+                return await self._message.edit_text(text, **kwargs)
+            except Exception:
+                pass
+        return await self._message.answer(text, **kwargs)
 
 
 class _ForceSubTextProxy:
@@ -43,24 +64,32 @@ async def force_sub_check(callback: CallbackQuery, state: FSMContext, session):
         return
 
     await callback.answer(t("force_sub_unlocked_alert", lang), show_alert=True)
+    if user:
+        user.last_active_at = datetime.now(timezone.utc)
+        await session.flush()
+
     data = await state.get_data()
     pending_text = (data.get(PENDING_FORCE_SUB_TEXT) or "").strip()
     pending_message_id = data.get(PENDING_FORCE_SUB_MESSAGE_ID)
+    pending_action = data.get(PENDING_FORCE_SUB_ACTION)
+    pending_payload = data.get(PENDING_FORCE_SUB_PAYLOAD) or {}
+    if not isinstance(pending_payload, dict):
+        pending_payload = {}
     await state.update_data(
         **{
             PENDING_FORCE_SUB_TEXT: None,
             PENDING_FORCE_SUB_MESSAGE_ID: None,
+            PENDING_FORCE_SUB_ACTION: None,
+            PENDING_FORCE_SUB_PAYLOAD: None,
         }
     )
 
-    if callback.message:
+    if pending_text and callback.message:
         try:
             await callback.message.delete()
         except Exception:
-            if not pending_text:
-                await callback.message.edit_text(t("force_sub_unlocked_text", lang), parse_mode="HTML")
+            pass
 
-    if pending_text and callback.message:
         from app.bot.handlers.messages import handle_text_message
 
         await handle_text_message(
@@ -70,12 +99,44 @@ async def force_sub_check(callback: CallbackQuery, state: FSMContext, session):
         )
         return
 
-    if user and getattr(user, "learning_mode", "qa") == "course" and callback.message:
-        from app.bot.handlers.course import run_course_entry_flow
+    if pending_action and callback.message:
+        respond = _MessageEditResponder(callback.message)
+        if pending_action == FORCE_SUB_ACTION_OPEN_COURSE:
+            from app.bot.handlers.course import send_course_miniapp_entry
 
-        await run_course_entry_flow(
+            await send_course_miniapp_entry(
+                session=session,
+                telegram_id=callback.from_user.id,
+                respond=respond,
+                state=state,
+                source=str(pending_payload.get("source") or "required_channel_mode_course"),
+                level=pending_payload.get("level"),
+                lesson=pending_payload.get("lesson"),
+                tab=pending_payload.get("tab"),
+            )
+            return
+
+        if pending_action == FORCE_SUB_ACTION_OPEN_FREE_QA:
+            from app.bot.handlers.course import show_free_qa_level_choice
+
+            await show_free_qa_level_choice(
+                respond=respond,
+                state=state,
+                lang=lang,
+            )
+            return
+
+    if user and getattr(user, "learning_mode", "qa") == "course" and callback.message:
+        from app.bot.handlers.course import send_course_miniapp_entry
+
+        await send_course_miniapp_entry(
             session=session,
             telegram_id=callback.from_user.id,
-            respond=callback.message.answer,
-            show_menu=False,
+            respond=_MessageEditResponder(callback.message),
+            state=state,
+            source="required_channel_course",
         )
+        return
+
+    if callback.message:
+        await callback.message.edit_text(t("force_sub_unlocked_text", lang), parse_mode="HTML")

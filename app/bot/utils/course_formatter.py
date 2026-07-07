@@ -14,14 +14,15 @@ def _parse(value: Any, default: Any = None):
 
 
 def _parse_title(raw: str) -> str:
-    """Return the most English-friendly lesson title available."""
+    """lesson.title oddiy string yoki JSON bo'lishi mumkin.
+    JSON bo'lsa — xitoycha (zh) qismini, yo'q bo'lsa uz ni qaytaradi."""
     if not raw:
         return ""
     if raw.strip().startswith("{"):
         try:
             d = json.loads(raw)
             if isinstance(d, dict):
-                return d.get("en") or d.get("uz") or d.get("ru") or d.get("tj") or d.get("zh") or raw
+                return d.get("zh") or d.get("uz") or raw
         except Exception:
             pass
     return raw
@@ -224,9 +225,9 @@ def _hsk4_grammar_analysis(title_zh: str, lang: str) -> str:
             "tj": "Маъно танҳо дар феъл нест, балки дар қисми баъди феъл ҳам ҳаст; натиҷа, самт ё ҳолатро санҷед.",
         },
         "generic": {
-            "uz": "Avval gapdagi mantiqiy munosabatni toping, keyin English patternni shu joyga qo'ying.",
-            "ru": "Сначала найдите логическую связь в предложении, затем поставьте English pattern в это место.",
-            "tj": "Аввал робитаи мантиқии ҷумларо ёбед, баъд English pattern-ро ба ҳамон ҷо гузоред.",
+            "uz": "Avval gapdagi mantiqiy munosabatni toping, keyin xitoycha qolipni shu joyga qo'ying.",
+            "ru": "Сначала найдите логическую связь в предложении, затем поставьте китайский шаблон в это место.",
+            "tj": "Аввал робитаи мантиқии ҷумларо ёбед, баъд қолаби чиниро ба ҳамон ҷо гузоред.",
         },
     }
 
@@ -387,7 +388,7 @@ def format_vocab(lesson, lang: str, lesson_total_steps: int = 6) -> str:
     vocab = _parse(lesson.vocabulary_json, [])
     title = _parse_title(lesson.title or "")
 
-    label = {"uz": "Yangi so'zlar 🇬🇧", "tj": "Калимаҳои нав 🇬🇧", "ru": "Новые слова 🇬🇧"}
+    label = {"uz": "Yangi so'zlar 🇨🇳", "tj": "Калимаҳои нав 🇨🇳", "ru": "Новые слова 🇨🇳"}
     lines = [f"【1/{lesson_total_steps}】 {title} · {label.get(lang, label['ru'])}", ""]
 
     hint = {
@@ -633,9 +634,9 @@ def format_vocab_1(lesson, lang: str) -> str:
     title = _parse_title(lesson.title or "")
 
     hdr = {
-        "uz": "📖 Yangi so'zlar 🇬🇧",
-        "tj": "📖 Калимаҳои нав 🇬🇧",
-        "ru": "📖 Новые слова 🇬🇧",
+        "uz": "📖 Yangi so'zlar 🇨🇳",
+        "tj": "📖 Калимаҳои нав 🇨🇳",
+        "ru": "📖 Новые слова 🇨🇳",
     }
     hint_tpl = {
         "uz": "✨ Bugun <b>{}</b> ta yangi so'z — darsni tugatgach amalda ishlata olasiz!",
@@ -666,9 +667,9 @@ def format_vocab_2(lesson, lang: str) -> str:
     title = _parse_title(lesson.title or "")
 
     hdr = {
-        "uz": "📖 Yangi so'zlar — davomi 🇬🇧",
-        "tj": "📖 Калимаҳои нав — давом 🇬🇧",
-        "ru": "📖 Новые слова — продолжение 🇬🇧",
+        "uz": "📖 Yangi so'zlar — davomi 🇨🇳",
+        "tj": "📖 Калимаҳои нав — давом 🇨🇳",
+        "ru": "📖 Новые слова — продолжение 🇨🇳",
     }
 
     lines = [

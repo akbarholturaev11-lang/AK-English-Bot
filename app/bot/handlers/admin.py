@@ -3,15 +3,16 @@ from aiogram.dispatcher.event.bases import SkipHandler
 from aiogram.exceptions import TelegramBadRequest
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
-from sqlalchemy import select, func
+from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
+from sqlalchemy import and_, or_, select, func
 from datetime import datetime, timezone, timedelta
 from decimal import Decimal, InvalidOperation
 from html import escape
 from math import isfinite
+from zoneinfo import ZoneInfo
 
 from app.bot.fsm.admin_portfolio import AdminPortfolioStates
-from app.bot.fsm.admin_management import AdminPriceStates, AdminRequiredChannelStates, AdminUserStates
+from app.bot.fsm.admin_management import AdminHelpStates, AdminPriceStates, AdminRequiredChannelStates, AdminUserStates
 from app.config import settings
 from app.repositories.bot_setting_repo import BotSettingRepository
 from app.repositories.user_repo import UserRepository
@@ -20,7 +21,18 @@ from app.db.models.user import User
 from app.db.models.payment import Payment
 from app.db.models.course_progress import CourseProgress
 from app.db.models.referral import Referral
-from app.services.ai_usage_budget_service import USD_TO_SOMONI, USD_TO_YUAN
+from app.db.models.bot_feedback import BotFeedback
+from app.db.models.ai_usage import AIUsageBudget
+from app.services.ai_usage_budget_service import (
+    REFERRAL_TRIAL_PLAN_TYPE,
+    USD_TO_SOMONI,
+    USD_TO_YUAN,
+)
+from app.services.referral_service import REFERRAL_TRIAL_ACCESS_DAYS
+from app.services.admin_stats_service import feature_usage_stats, top_referrers
+from app.services.bot_block_status_service import BotBlockStatusService
+from app.services.course_miniapp_admin_analytics_service import CourseMiniAppAdminAnalyticsService
+from app.services.subscription_entry_analytics_service import SubscriptionEntryAnalyticsService
 from app.services.portfolio_service import PortfolioService
 from app.services.payment_qr_code_service import (
     PaymentQrCodeService,
@@ -46,18 +58,32 @@ from app.services.support_contact_service import (
     get_admin_contact,
     normalize_admin_contact,
 )
+from app.services.help_settings_service import (
+    HELP_LANGS,
+    HELP_VIDEO_FIELD_BY_KEY,
+    HELP_VIDEO_FIELDS,
+    normalize_help_url,
+)
 from app.bot.handlers.admin_broadcast import open_broadcast_panel_for_callback
 from app.bot.utils.workflow_message import (
     delete_message_safely,
     edit_callback_workflow_message,
     edit_stored_workflow_message,
 )
+from app.bot.utils.course_miniapp import admin_miniapp_url
 
 router = Router()
 
-ADMIN_MENU_TEXT = "<b>🛠 Admin panel</b>\n\nQuyidagi amallardan birini tanlang:"
+ADMIN_ENTRY_TEXT = (
+    "<b>🛠 Admin panel</b>\n\n"
+    "Kerakli rejimni tanlang:\n"
+    "• <b>Admin mini ilova</b> — to'liq grafik panel (statistika, sof foyda, to'lov, sozlash)\n"
+    "• <b>Ruchnoy panel</b> — chat ichidagi qo'lda boshqaruv bo'limlari"
+)
+ADMIN_MENU_TEXT = "<b>🛠 Ruchnoy panel</b>\n\nQuyidagi amallardan birini tanlang:"
 _ADMIN_FLOW_CHAT_ID = "admin_flow_chat_id"
 _ADMIN_FLOW_MSG_ID = "admin_flow_msg_id"
+ADMIN_STATS_TZ = ZoneInfo("Asia/Shanghai")
 
 
 def _is_admin(user_id: int) -> bool:
@@ -69,7 +95,16 @@ def _pct(part: int, total: int) -> float:
     return round(part / total * 100, 1) if total > 0 else 0.0
 
 
+def admin_entry_keyboard() -> InlineKeyboardMarkup:
+    """/admin asosiy ekrani: 1) Admin mini ilova  2) Ruchnoy (qo'lda) panel."""
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="🧭 Admin mini ilova", web_app=WebAppInfo(url=admin_miniapp_url()))],
+        [InlineKeyboardButton(text="🛠 Ruchnoy panel", callback_data="adm:menu")],
+    ])
+
+
 def admin_menu_keyboard() -> InlineKeyboardMarkup:
+    """Ruchnoy (qo'lda) panel: barcha bo'limlar chat ichida callback orqali."""
     return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="📊 Statistika", callback_data="adm:stats")],
         [InlineKeyboardButton(text="🔎 Foydalanuvchi qidirish", callback_data="adm:user_search_info")],
@@ -77,13 +112,15 @@ def admin_menu_keyboard() -> InlineKeyboardMarkup:
         [InlineKeyboardButton(text="💳 Obuna narxlari", callback_data="adm:prices")],
         [InlineKeyboardButton(text="📣 Majburiy kanal obunasi", callback_data="adm:channels")],
         [InlineKeyboardButton(text="🗑 Foydalanuvchini o'chirish", callback_data="adm:deleteuser_info")],
-        [InlineKeyboardButton(text="📢 Broadcast xabar", callback_data="adm:broadcast_info")],
+        [InlineKeyboardButton(text="📢 Ommaviy xabar", callback_data="adm:broadcast_info")],
         [InlineKeyboardButton(text="📣 Reklama kampaniyasi", callback_data="adm:ads_panel")],
+        [InlineKeyboardButton(text="🆕 Yangilik otzivi", callback_data="adm:release_feedback")],
         [InlineKeyboardButton(text="🎁 Chegirma boshqaruv", callback_data="adm:discount_panel")],
         [InlineKeyboardButton(text="🤝 Hamkorlar", callback_data="adm:partners")],
-        [InlineKeyboardButton(text="🆘 Yordam kontakti", callback_data="adm:support_contact")],
+        [InlineKeyboardButton(text="🆘 Yordam sozlamalari", callback_data="adm:help_settings")],
         [InlineKeyboardButton(text="✅ Obuna berish", callback_data="adm:giveaccess_info")],
         [InlineKeyboardButton(text="🎵 Audio boshqaruv", callback_data="adm:audio_panel")],
+        [InlineKeyboardButton(text="⬅️ Asosiy menyu", callback_data="adm:entry")],
     ])
 
 
@@ -93,9 +130,82 @@ def admin_back_keyboard() -> InlineKeyboardMarkup:
     ])
 
 
+def admin_stats_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="🧭 Admin mini ilovada ochish", web_app=WebAppInfo(url=admin_miniapp_url()))],
+        [InlineKeyboardButton(text="📝 Otziv statistikasi", callback_data="adm:feedback_stats")],
+        [InlineKeyboardButton(text="⬅️ Admin panel", callback_data="adm:menu")],
+    ])
+
+
+def help_settings_back_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="⬅️ Yordam sozlamalari", callback_data="adm:help_settings")],
+        [InlineKeyboardButton(text="⬅️ Admin panel", callback_data="adm:menu")],
+    ])
+
+
+def help_settings_keyboard() -> InlineKeyboardMarkup:
+    rows = []
+    for field in HELP_VIDEO_FIELDS:
+        rows.extend([
+            [
+                InlineKeyboardButton(
+                    text=f"{field.icon} {field.label} · TJ",
+                    callback_data=f"adm:help_link:{field.key}:tj",
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    text=f"{field.icon} {field.label} · RU",
+                    callback_data=f"adm:help_link:{field.key}:ru",
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    text=f"{field.icon} {field.label} · UZ",
+                    callback_data=f"adm:help_link:{field.key}:uz",
+                )
+            ],
+        ])
+    rows.append([InlineKeyboardButton(text="🆘 Admin aloqa linki", callback_data="adm:help_link:admin_contact")])
+    rows.append([InlineKeyboardButton(text="⬅️ Admin panel", callback_data="adm:menu")])
+    return InlineKeyboardMarkup(inline_keyboard=rows)
+
+
+def _help_lang_label(lang: str | None) -> str:
+    return {"tj": "TJ", "ru": "RU", "uz": "UZ"}.get(lang or "", "—")
+
+
+async def help_settings_text(session) -> str:
+    repo = BotSettingRepository(session)
+    lines = [
+        "🆘 <b>Yordam sozlamalari</b>",
+        "",
+        "Video linklar 3 tilda alohida boshqariladi. Bo'sh link yordam matnida ko'rsatilmaydi.",
+        "",
+    ]
+    for field in HELP_VIDEO_FIELDS:
+        lines.append(f"{field.icon} <b>{escape(field.label)}</b>")
+        for lang in HELP_LANGS:
+            current = normalize_help_url(await repo.get(field.setting_key(lang)))
+            lines.append(f"{_help_lang_label(lang)}: <code>{escape(current or '—')}</code>")
+        lines.append("")
+
+    contact = await get_admin_contact(session)
+    contact_url = admin_contact_url(contact)
+    lines.extend([
+        "🆘 <b>Admin aloqa linki</b>",
+        f"<code>{escape(contact_url or contact or '—')}</code>",
+        "",
+        "Tahrirlashda linkni tozalash uchun <code>-</code> yuboring.",
+    ])
+    return "\n".join(lines).strip()
+
+
 def portfolio_keyboard() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="📜 History", callback_data="adm:portfolio_history")],
+        [InlineKeyboardButton(text="📜 Tarix", callback_data="adm:portfolio_history")],
         [
             InlineKeyboardButton(text="➕ Foyda qo'shish", callback_data="adm:portfolio_profit_info"),
             InlineKeyboardButton(text="➖ Rasxod qo'shish", callback_data="adm:portfolio_expense_info"),
@@ -355,7 +465,7 @@ async def _prices_text(session) -> str:
     currency_service = SubscriptionCurrencyService(session)
     auto_rates = await currency_service.is_auto_rate_enabled()
     rates, rate_source = await currency_service.effective_rates()
-    rate_mode = "AUTO real kurs" if auto_rates and rate_source == "auto" else "AUTO fallback: MANUAL kurs" if auto_rates else "MANUAL admin kurs"
+    rate_mode = "Avto real kurs" if auto_rates and rate_source == "auto" else "Avto fallback: qo'lbola kurs" if auto_rates else "Qo'lbola admin kurs"
     lines = ["💳 <b>Obuna narxlari</b>", ""]
     for price in prices:
         lines.append(
@@ -410,8 +520,8 @@ def prices_keyboard() -> InlineKeyboardMarkup:
         InlineKeyboardButton(text="💴 CNY kurs", callback_data="adm:visa_rate_set:cny"),
     ])
     rows.append([
-        InlineKeyboardButton(text="🔄 AUTO kurs ON", callback_data="adm:visa_rate_auto:on"),
-        InlineKeyboardButton(text="✋ AUTO kurs OFF", callback_data="adm:visa_rate_auto:off"),
+        InlineKeyboardButton(text="🔄 Avto kursni yoqish", callback_data="adm:visa_rate_auto:on"),
+        InlineKeyboardButton(text="✋ Avto kursni o'chirish", callback_data="adm:visa_rate_auto:off"),
     ])
     rows.append([InlineKeyboardButton(text="💳 Karta rekviziti", callback_data="adm:payment_details")])
     rows.append([InlineKeyboardButton(text="⬅️ Admin panel", callback_data="adm:menu")])
@@ -421,11 +531,11 @@ def prices_keyboard() -> InlineKeyboardMarkup:
 def channel_panel_keyboard(enabled: bool, channels) -> InlineKeyboardMarkup:
     rows = [[
         InlineKeyboardButton(
-            text="🟢 ON" if enabled else "⚪ ON",
+            text="🟢 Yoqilgan" if enabled else "⚪ Yoqish",
             callback_data="adm:channels_mode:on",
         ),
         InlineKeyboardButton(
-            text="🔴 OFF" if not enabled else "⚪ OFF",
+            text="🔴 O'chirilgan" if not enabled else "⚪ O'chirish",
             callback_data="adm:channels_mode:off",
         ),
     ]]
@@ -454,7 +564,7 @@ async def _channel_panel_text(session) -> tuple[str, InlineKeyboardMarkup]:
     lines = [
         "📣 <b>Majburiy kanal obunasi</b>",
         "",
-        f"Rejim: <b>{'ON' if enabled else 'OFF'}</b>",
+        f"Rejim: <b>{_enabled_label(enabled)}</b>",
         f"Aktiv kanallar: <b>{active_count}</b>",
         "Ishlash joyi: <b>course 2-qism yangi so'zlar checkpointidan keyin</b>",
         "",
@@ -465,7 +575,7 @@ async def _channel_panel_text(session) -> tuple[str, InlineKeyboardMarkup]:
     if channels:
         lines.extend(["", "<b>Kanallar:</b>"])
         for channel in channels[:20]:
-            status = "ON" if channel.is_active else "OFF"
+            status = "Yoqilgan" if channel.is_active else "O'chirilgan"
             lines.append(
                 f"#{channel.id} [{status}] <code>{escape(channel.chat_id)}</code> — {escape(channel.title)}"
             )
@@ -662,6 +772,39 @@ async def _admin_user_info_text(session, user: User) -> str:
     )
     progress = progress_result.scalar_one_or_none()
 
+    now = datetime.now(timezone.utc)
+
+    # Botda necha kundan beri (ro'yxatdan o'tgandan beri)
+    days_in_bot = None
+    if user.created_at:
+        created = user.created_at
+        if created.tzinfo is None:
+            created = created.replace(tzinfo=timezone.utc)
+        days_in_bot = max((now - created).days, 0)
+
+    # Oxirgi tasdiqlangan to'lov tarifi (selected_plan_type ko'pincha bo'sh bo'ladi)
+    latest_approved_plan = (await session.execute(
+        select(Payment.plan_type)
+        .where(
+            Payment.user_telegram_id == user.telegram_id,
+            Payment.payment_status == "approved",
+        )
+        .order_by(Payment.submitted_at.desc())
+        .limit(1)
+    )).scalar_one_or_none()
+
+    # Referral sovg'asi orqali faollikni aniqlash (3 kunlik trial budjeti)
+    referral_trial_budget = (await session.execute(
+        select(AIUsageBudget)
+        .where(
+            AIUsageBudget.user_telegram_id == user.telegram_id,
+            AIUsageBudget.plan_type == REFERRAL_TRIAL_PLAN_TYPE,
+            AIUsageBudget.ends_at > now,
+        )
+        .order_by(AIUsageBudget.id.desc())
+        .limit(1)
+    )).scalar_one_or_none()
+
     status_labels = {
         "active": "Faol",
         "trial": "Sinov rejimi",
@@ -681,6 +824,32 @@ async def _admin_user_info_text(session, user: User) -> str:
     plan_labels = {"10_days": "10 kunlik", "1_month": "1 oylik"}
     bonus_balance = max((user.bonus_questions or 0) - (user.bonus_questions_used or 0), 0)
 
+    # Access turi (tarif) — selected_plan_type ko'pincha bo'sh, shuning uchun
+    # haqiqiy holatdan kelib chiqib aniqlanadi.
+    end_date = user.end_date
+    if end_date is not None and end_date.tzinfo is None:
+        end_date = end_date.replace(tzinfo=timezone.utc)
+    is_paid_active = (
+        user.payment_status == "approved"
+        and user.status == "active"
+        and end_date is not None
+        and end_date > now
+    )
+    if is_paid_active:
+        plan_lbl = _admin_label(latest_approved_plan or user.selected_plan_type, plan_labels)
+        access_type = f"💳 Pullik obuna ({plan_lbl})"
+    elif referral_trial_budget is not None and user.status == "active":
+        access_type = f"🎁 Referral sovg'asi ({REFERRAL_TRIAL_ACCESS_DAYS} kunlik)"
+    elif user.status == "active":
+        access_type = "✅ Faol (boshqa trial)"
+    elif user.status == "trial":
+        access_type = "🆓 Sinov rejimi"
+    elif user.status == "expired":
+        access_type = "⌛️ Obuna tugagan"
+    else:
+        access_type = "🆓 Bepul"
+    days_in_bot_str = f"{days_in_bot} kun" if days_in_bot is not None else "—"
+
     lines = [
         "🔎 <b>Foydalanuvchi ma'lumoti</b>",
         "",
@@ -691,10 +860,15 @@ async def _admin_user_info_text(session, user: User) -> str:
         f"Til: <b>{_admin_label(user.language, language_labels)}</b>",
         f"Daraja: <b>{escape(user.level or '—')}</b>",
         f"Ro'yxatdan o'tgan: <code>{_fmt_dt(user.created_at)}</code>",
+        f"Botda: <b>{days_in_bot_str}</b> dan beri",
         f"Oxirgi faollik: <code>{_fmt_dt(user.last_active_at)}</code>",
         "",
         "🔐 <b>Kirish va obuna</b>",
+        f"Access turi: <b>{access_type}</b>",
         f"Holat: <b>{_admin_label(user.status, status_labels)}</b>",
+        f"Telegram bot blok: <b>{_yes_no(BotBlockStatusService.is_bot_blocked(user))}</b>",
+        f"Bot bloklangan vaqt: <code>{_fmt_dt(user.bot_blocked_at)}</code>",
+        f"Bot blok tekshiruvi: <code>{_fmt_dt(user.last_bot_block_check_at)}</code>",
         f"O'qish rejimi: <b>{_admin_label(user.learning_mode, learning_mode_labels)}</b>",
         f"To'lov holati: <b>{_admin_label(user.payment_status, payment_status_labels)}</b>",
         f"To'lov usuli: <b>{escape(_method_label(user.payment_method)) if user.payment_method else '—'}</b>",
@@ -703,16 +877,25 @@ async def _admin_user_info_text(session, user: User) -> str:
         f"Obuna tugaydi: <code>{_fmt_dt(user.end_date)}</code>",
         f"Savollar: <b>{user.questions_used}/{user.question_limit}</b>",
         f"Bonus savollar qoldig'i: <b>{bonus_balance}</b>",
-        f"Trial dars ID: <b>{user.trial_course_lesson_id or '—'}</b>",
-        f"Trial dars boshlandi: <code>{_fmt_dt(user.trial_course_started_at)}</code>",
-        f"Trial dars tugadi: <code>{_fmt_dt(user.trial_course_completed_at)}</code>",
-        f"Trial AI xato tahlili: <code>{_fmt_dt(user.trial_quiz_explanation_used_at)}</code>",
+        f"Daily practice boshlandi: <code>{_fmt_dt(user.daily_practice_started_at)}</code>",
+        f"Daily practice tugadi: <code>{_fmt_dt(user.daily_practice_completed_at)}</code>",
+        f"Daily streak: <b>{user.daily_practice_streak or 0}</b>",
+        f"Daily oxirgi kun: <code>{user.daily_practice_last_day or '—'}</code>",
+        f"Sinov darsi ID: <b>{user.trial_course_lesson_id or '—'}</b>",
+        f"Sinov darsi boshlandi: <code>{_fmt_dt(user.trial_course_started_at)}</code>",
+        f"Sinov darsi tugadi: <code>{_fmt_dt(user.trial_course_completed_at)}</code>",
+        f"Sinov AI xato tahlili: <code>{_fmt_dt(user.trial_quiz_explanation_used_at)}</code>",
         f"Kanal checkpoint: <code>{_fmt_dt(user.force_sub_required_at)}</code>",
         "",
         "🎁 <b>Referallar va chegirma</b>",
         f"Chaqirganlari jami: <b>{referral_total}</b>",
         f"Faollashgan: <b>{referral_counts.get('active', 0)}</b>",
         f"Kutilmoqda: <b>{referral_counts.get('pending', 0)}</b>",
+        (
+            f"Referral sovg'asi: <b>🎁 FAOL</b> (tugaydi: <code>{_fmt_dt(referral_trial_budget.ends_at)}</code>)"
+            if referral_trial_budget is not None
+            else "Referral sovg'asi: <b>—</b>"
+        ),
         f"Chegirma hisobi: <b>{user.discount_referral_count}/3</b>",
         f"Chegirmaga tayyor: <b>{_yes_no(user.discount_eligible)}</b>",
         f"Chegirma ishlatilgan: <b>{_yes_no(user.discount_used)}</b>",
@@ -868,7 +1051,7 @@ def _portfolio_summary_text(summary) -> str:
         f"  Jami rasxod: <b>{_usd(summary.total_expense_usd)}</b>\n\n"
         f"<b>📊 Holat</b>\n"
         f"  Net: <b>{_signed_usd(summary.net_usd)}</b>\n"
-        f"  Status: <b>{status}</b>\n\n"
+        f"  Holat: <b>{status}</b>\n\n"
         f"<i>OpenAI, Railway, reklama va boshqa tushum/rasxodlar tokenlardan avtomatik olinmaydi. Ularni o'zingiz +/- qilib kiritasiz.</i>"
     )
 
@@ -903,8 +1086,23 @@ async def admin_menu_handler(message: Message, session):
     if not _is_admin(message.from_user.id):
         return
     await message.answer(
-        ADMIN_MENU_TEXT,
-        reply_markup=admin_menu_keyboard(),
+        ADMIN_ENTRY_TEXT,
+        reply_markup=admin_entry_keyboard(),
+        parse_mode="HTML",
+    )
+
+
+@router.callback_query(F.data == "adm:entry")
+async def admin_entry_callback(callback: CallbackQuery, state: FSMContext, session):
+    if not _is_admin(callback.from_user.id):
+        await callback.answer()
+        return
+    await state.clear()
+    await callback.answer()
+    await _edit_callback_message(
+        callback,
+        ADMIN_ENTRY_TEXT,
+        reply_markup=admin_entry_keyboard(),
         parse_mode="HTML",
     )
 
@@ -1169,7 +1367,7 @@ async def admin_visa_rate_auto_callback(callback: CallbackQuery, state: FSMConte
     await SubscriptionCurrencyService(session).set_auto_rate_enabled(enabled)
     await session.commit()
     await state.clear()
-    await callback.answer("AUTO kurs yoqildi" if enabled else "AUTO kurs o'chirildi", show_alert=True)
+    await callback.answer("Avto kurs yoqildi" if enabled else "Avto kurs o'chirildi", show_alert=True)
     await _edit_callback_message(
         callback,
         await _prices_text(session),
@@ -1290,69 +1488,128 @@ async def admin_payment_details_handler(message: Message, state: FSMContext, ses
     await state.clear()
 
 
-@router.callback_query(F.data == "adm:support_contact")
-async def admin_support_contact_callback(callback: CallbackQuery, state: FSMContext, session):
+@router.callback_query(F.data.in_({"adm:help_settings", "adm:support_contact"}))
+async def admin_help_settings_callback(callback: CallbackQuery, state: FSMContext, session):
     if not _is_admin(callback.from_user.id):
         await callback.answer()
         return
-    current = await get_admin_contact(session)
-    await state.set_state(AdminPriceStates.waiting_admin_contact)
+    await state.clear()
     await callback.answer()
     await _edit_admin_flow_callback(
         callback,
         state,
-        "🆘 <b>Yordam kontakti</b>\n\n"
-        "Bu kontakt /help va menyudagi Yordam blokida inline tugma sifatida chiqadi.\n\n"
-        f"Joriy:\n<code>{escape(current)}</code>\n\n"
-        "Yangi kontaktni yuboring. Masalan: <code>@username</code> yoki "
-        "<code>https://t.me/username</code>.",
-        reply_markup=admin_back_keyboard(),
+        await help_settings_text(session),
+        reply_markup=help_settings_keyboard(),
     )
 
 
-@router.message(StateFilter(AdminPriceStates.waiting_admin_contact))
-async def admin_support_contact_handler(message: Message, state: FSMContext, session):
+@router.callback_query(F.data.startswith("adm:help_link:"))
+async def admin_help_link_prompt(callback: CallbackQuery, state: FSMContext, session):
+    if not _is_admin(callback.from_user.id):
+        await callback.answer()
+        return
+
+    parts = (callback.data or "").split(":")
+    target = parts[2] if len(parts) >= 3 else ""
+    lang = parts[3] if len(parts) >= 4 else None
+
+    if target == "admin_contact":
+        current = await get_admin_contact(session)
+        title = "Admin aloqa linki"
+        current_display = admin_contact_url(current) or current
+    else:
+        field = HELP_VIDEO_FIELD_BY_KEY.get(target)
+        if not field or lang not in HELP_LANGS:
+            await callback.answer("Noto'g'ri sozlama.", show_alert=True)
+            return
+        current = await BotSettingRepository(session).get(field.setting_key(lang))
+        title = f"{field.label} · {_help_lang_label(lang)}"
+        current_display = normalize_help_url(current)
+
+    await state.update_data(admin_help_target=target, admin_help_lang=lang)
+    await state.set_state(AdminHelpStates.waiting_link)
+    await callback.answer()
+    await _edit_admin_flow_callback(
+        callback,
+        state,
+        "🆘 <b>Yordam linki tahriri</b>\n\n"
+        f"Maydon: <b>{escape(title)}</b>\n\n"
+        f"Joriy:\n<code>{escape(current_display or '—')}</code>\n\n"
+        "Yangi link yuboring.\n"
+        "Qabul qilinadi: <code>https://...</code>, <code>http://...</code>, "
+        "<code>tg://...</code>, <code>t.me/...</code>"
+        "\n\nBo'sh qilish uchun <code>-</code> yuboring.",
+        reply_markup=help_settings_back_keyboard(),
+    )
+
+
+@router.message(StateFilter(AdminHelpStates.waiting_link))
+async def admin_help_link_handler(message: Message, state: FSMContext, session):
     if not _is_admin(message.from_user.id):
         return
-    raw_contact = (message.text or "").strip()
-    if not raw_contact:
+
+    data = await state.get_data()
+    target = data.get("admin_help_target")
+    lang = data.get("admin_help_lang")
+    raw_value = (message.text or "").strip()
+    should_clear = raw_value.lower() in {"-", "—", "clear", "tozalash", "очистить"}
+
+    if target == "admin_contact":
+        value = "" if should_clear else normalize_admin_contact(raw_value)
+        if value and not admin_contact_url(value):
+            await delete_message_safely(message)
+            await _edit_admin_flow_message(
+                message,
+                state,
+                "❌ Kontakt noto'g'ri. <code>@username</code>, <code>t.me/username</code> "
+                "yoki <code>https://t.me/username</code> formatida yuboring.",
+                reply_markup=help_settings_back_keyboard(),
+            )
+            return
+        setting_key = ADMIN_CONTACT_KEY
+    else:
+        field = HELP_VIDEO_FIELD_BY_KEY.get(str(target or ""))
+        if not field or lang not in HELP_LANGS:
+            await delete_message_safely(message)
+            await _edit_admin_flow_message(
+                message,
+                state,
+                "❌ Sozlama topilmadi. Yordam sozlamalaridan qayta tanlang.",
+                reply_markup=help_settings_keyboard(),
+            )
+            await state.clear()
+            return
+        value = "" if should_clear else normalize_help_url(raw_value)
+        if raw_value and not should_clear and not value:
+            await delete_message_safely(message)
+            await _edit_admin_flow_message(
+                message,
+                state,
+                "❌ Link noto'g'ri. <code>https://...</code>, <code>http://...</code>, "
+                "<code>tg://...</code> yoki <code>t.me/...</code> yuboring.",
+                reply_markup=help_settings_back_keyboard(),
+            )
+            return
+        setting_key = field.setting_key(lang)
+
+    if len(value) > 500:
         await delete_message_safely(message)
         await _edit_admin_flow_message(
             message,
             state,
-            "❌ Kontakt bo'sh bo'lmasin.",
-            reply_markup=admin_back_keyboard(),
-        )
-        return
-    contact = normalize_admin_contact(raw_contact)
-    if not admin_contact_url(contact):
-        await delete_message_safely(message)
-        await _edit_admin_flow_message(
-            message,
-            state,
-            "❌ Kontakt noto'g'ri. <code>@username</code> yoki "
-            "<code>https://t.me/username</code> formatida yuboring.",
-            reply_markup=admin_back_keyboard(),
-        )
-        return
-    if len(contact) > 200:
-        await delete_message_safely(message)
-        await _edit_admin_flow_message(
-            message,
-            state,
-            "❌ Kontakt 200 belgidan oshmasin.",
-            reply_markup=admin_back_keyboard(),
+            "❌ Link 500 belgidan oshmasin.",
+            reply_markup=help_settings_back_keyboard(),
         )
         return
 
-    await BotSettingRepository(session).set(ADMIN_CONTACT_KEY, contact)
+    await BotSettingRepository(session).set(setting_key, value)
     await session.commit()
     await delete_message_safely(message)
     await _edit_admin_flow_message(
         message,
         state,
-        "✅ Yordam kontakti yangilandi.",
-        reply_markup=admin_menu_keyboard(),
+        f"✅ Saqlandi.\n\n{await help_settings_text(session)}",
+        reply_markup=help_settings_keyboard(),
     )
     await state.clear()
 
@@ -1771,7 +2028,8 @@ async def admin_stats_callback(callback: CallbackQuery, session):
         return
 
     now = datetime.now(timezone.utc)
-    today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    today_start = now.astimezone(ADMIN_STATS_TZ).replace(hour=0, minute=0, second=0, microsecond=0).astimezone(timezone.utc)
+    last_24h = now - timedelta(hours=24)
     week_ago = now - timedelta(days=7)
     month_ago = now - timedelta(days=30)
 
@@ -1796,13 +2054,6 @@ async def admin_stats_callback(callback: CallbackQuery, session):
             select(User.level, func.count().label("cnt")).group_by(User.level)
         )).fetchall()
     }
-    mode_counts = {
-        r.learning_mode: r.cnt
-        for r in (await session.execute(
-            select(User.learning_mode, func.count().label("cnt")).group_by(User.learning_mode)
-        )).fetchall()
-    }
-
     # --- Faollik ---
     new_today = (await session.execute(
         select(func.count()).select_from(User).where(User.created_at >= today_start)
@@ -1816,8 +2067,46 @@ async def admin_stats_callback(callback: CallbackQuery, session):
     active_today = (await session.execute(
         select(func.count()).select_from(User).where(User.last_active_at >= today_start)
     )).scalar() or 0
+    active_24h = (await session.execute(
+        select(func.count()).select_from(User).where(User.last_active_at >= last_24h)
+    )).scalar() or 0
     active_week = (await session.execute(
         select(func.count()).select_from(User).where(User.last_active_at >= week_ago)
+    )).scalar() or 0
+
+    # --- Botni bloklaganlar (haqiqiy Telegram blok: bot_blocked_at orqali, status emas) ---
+    bot_block_condition = and_(
+        User.bot_blocked_at.is_not(None),
+        or_(
+            User.bot_unblocked_at.is_(None),
+            User.bot_unblocked_at < User.bot_blocked_at,
+        ),
+    )
+    bot_blocked_now = (await session.execute(
+        select(func.count()).select_from(User).where(bot_block_condition)
+    )).scalar() or 0
+    bot_blocked_week = (await session.execute(
+        select(func.count()).select_from(User).where(
+            bot_block_condition, User.bot_blocked_at >= week_ago
+        )
+    )).scalar() or 0
+
+    # --- Issiq mijozlar (kunlik faol dars o'quvchilar — daily practice) ---
+    today_date = now.astimezone(ADMIN_STATS_TZ).date()
+    yesterday_date = today_date - timedelta(days=1)
+    learners_today = (await session.execute(
+        select(func.count()).select_from(User).where(User.daily_practice_last_day == today_date)
+    )).scalar() or 0
+    learners_active = (await session.execute(
+        select(func.count()).select_from(User).where(
+            User.daily_practice_last_day >= yesterday_date
+        )
+    )).scalar() or 0
+    streak_3 = (await session.execute(
+        select(func.count()).select_from(User).where(User.daily_practice_streak >= 3)
+    )).scalar() or 0
+    streak_7 = (await session.execute(
+        select(func.count()).select_from(User).where(User.daily_practice_streak >= 7)
     )).scalar() or 0
 
     # --- To'lovlar ---
@@ -1837,104 +2126,11 @@ async def admin_stats_callback(callback: CallbackQuery, session):
     )).fetchall()
     pay_by_plan = {r.plan_type: r.cnt for r in pay_plan_rows}
 
-    # --- Kurs ---
-    course_total = (await session.execute(
-        select(func.count()).select_from(CourseProgress)
-    )).scalar() or 0
-    course_with_lessons = (await session.execute(
-        select(func.count()).select_from(CourseProgress)
-        .where(CourseProgress.completed_lessons_count > 0)
-    )).scalar() or 0
-    course_lessons_sum = (await session.execute(
-        select(func.sum(CourseProgress.completed_lessons_count)).select_from(CourseProgress)
-    )).scalar() or 0
-    course_reminders = (await session.execute(
-        select(func.count()).select_from(CourseProgress)
-        .where(CourseProgress.reminder_enabled == True)  # noqa: E712
-    )).scalar() or 0
-    trial_course_started = (await session.execute(
-        select(func.count()).select_from(User).where(User.trial_course_started_at.is_not(None))
-    )).scalar() or 0
-    trial_course_completed = (await session.execute(
-        select(func.count()).select_from(User).where(User.trial_course_completed_at.is_not(None))
-    )).scalar() or 0
-    trial_quiz_explained = (await session.execute(
-        select(func.count()).select_from(User).where(User.trial_quiz_explanation_used_at.is_not(None))
-    )).scalar() or 0
-    force_sub_checkpoint = (await session.execute(
-        select(func.count()).select_from(User).where(User.force_sub_required_at.is_not(None))
-    )).scalar() or 0
-    checkpoint_completed = (await session.execute(
-        select(func.count()).select_from(User).where(
-            User.force_sub_required_at.is_not(None),
-            User.trial_course_completed_at.is_not(None),
-            User.trial_course_completed_at >= User.force_sub_required_at,
-        )
-    )).scalar() or 0
-    trial_paid_after_start = (await session.execute(
-        select(func.count(func.distinct(Payment.user_telegram_id)))
-        .select_from(Payment)
-        .join(User, User.telegram_id == Payment.user_telegram_id)
-        .where(
-            Payment.payment_status == "approved",
-            Payment.reviewed_at.is_not(None),
-            User.trial_course_started_at.is_not(None),
-            Payment.reviewed_at >= User.trial_course_started_at,
-        )
-    )).scalar() or 0
-    trial_revenue_after_start = (await session.execute(
-        select(func.sum(Payment.amount))
-        .select_from(Payment)
-        .join(User, User.telegram_id == Payment.user_telegram_id)
-        .where(
-            Payment.payment_status == "approved",
-            Payment.reviewed_at.is_not(None),
-            User.trial_course_started_at.is_not(None),
-            Payment.reviewed_at >= User.trial_course_started_at,
-        )
-    )).scalar() or 0
-    checkpoint_paid_after = (await session.execute(
-        select(func.count(func.distinct(Payment.user_telegram_id)))
-        .select_from(Payment)
-        .join(User, User.telegram_id == Payment.user_telegram_id)
-        .where(
-            Payment.payment_status == "approved",
-            Payment.reviewed_at.is_not(None),
-            User.force_sub_required_at.is_not(None),
-            Payment.reviewed_at >= User.force_sub_required_at,
-        )
-    )).scalar() or 0
-    completed_paid_after = (await session.execute(
-        select(func.count(func.distinct(Payment.user_telegram_id)))
-        .select_from(Payment)
-        .join(User, User.telegram_id == Payment.user_telegram_id)
-        .where(
-            Payment.payment_status == "approved",
-            Payment.reviewed_at.is_not(None),
-            User.trial_course_completed_at.is_not(None),
-            Payment.reviewed_at >= User.trial_course_completed_at,
-        )
-    )).scalar() or 0
-    trial_started_today = (await session.execute(
-        select(func.count()).select_from(User).where(User.trial_course_started_at >= today_start)
-    )).scalar() or 0
-    trial_started_week = (await session.execute(
-        select(func.count()).select_from(User).where(User.trial_course_started_at >= week_ago)
-    )).scalar() or 0
-    trial_completed_week = (await session.execute(
-        select(func.count()).select_from(User).where(User.trial_course_completed_at >= week_ago)
-    )).scalar() or 0
-    trial_paid_week = (await session.execute(
-        select(func.count(func.distinct(Payment.user_telegram_id)))
-        .select_from(Payment)
-        .join(User, User.telegram_id == Payment.user_telegram_id)
-        .where(
-            Payment.payment_status == "approved",
-            Payment.reviewed_at >= week_ago,
-            User.trial_course_started_at.is_not(None),
-            Payment.reviewed_at >= User.trial_course_started_at,
-        )
-    )).scalar() or 0
+    # --- Qaysi bo'lim ko'proq ishlatilmoqda ---
+    feature_usage = await feature_usage_stats(session, today_start, week_ago)
+
+    # --- Eng ko'p taklif qilganlar ---
+    top_referrers_list = await top_referrers(session, limit=5)
 
     # --- Referallar ---
     ref_total = (await session.execute(
@@ -1958,47 +2154,71 @@ async def admin_stats_callback(callback: CallbackQuery, session):
     trial_cnt   = status_counts.get("trial", 0)
     active_cnt  = status_counts.get("active", 0)
     expired_cnt = status_counts.get("expired", 0)
-    blocked_cnt = status_counts.get("blocked", 0)
 
     pending_cnt,  _            = pay_by_status.get("pending",  (0, 0))
     approved_cnt, approved_sum = pay_by_status.get("approved", (0, 0))
     rejected_cnt, _            = pay_by_status.get("rejected", (0, 0))
     paid_user_cnt = (await session.execute(
+        select(func.count()).select_from(User).where(
+            User.payment_status == "approved",
+            User.status == "active",
+            User.end_date.is_not(None),
+            User.end_date > now,
+        )
+    )).scalar() or 0
+    historical_approved_users = (await session.execute(
         select(func.count()).select_from(User).where(User.payment_status == "approved")
     )).scalar() or 0
+    subscription_sources_text = await SubscriptionEntryAnalyticsService(session).admin_text(week_ago=week_ago)
+    course_miniapp_text = await CourseMiniAppAdminAnalyticsService(session).admin_text(week_ago=week_ago)
 
     conversion  = _pct(paid_user_cnt, total)
     qa_users    = (await session.execute(
         select(func.count()).select_from(User).where(User.questions_used > 0)
     )).scalar() or 0
     engagement  = _pct(qa_users, total)
-    avg_lessons = round(course_lessons_sum / course_with_lessons, 1) if course_with_lessons > 0 else 0
-    trial_complete_rate = _pct(trial_course_completed, trial_course_started)
-    trial_ai_rate = _pct(trial_quiz_explained, trial_course_started)
-    trial_paid_rate = _pct(trial_paid_after_start, trial_course_started)
-    completed_paid_rate = _pct(completed_paid_after, trial_course_completed)
-    checkpoint_complete_rate = _pct(checkpoint_completed, force_sub_checkpoint)
-    checkpoint_paid_rate = _pct(checkpoint_paid_after, force_sub_checkpoint)
-
     level_order = ["beginner", "hsk1", "hsk2", "hsk3", "hsk4"]
     level_str   = "  " + "   ".join(
         f"{l.upper()}: {level_counts.get(l, 0)}" for l in level_order
     )
     lang_str = "  " + " | ".join(f"{k}: {v}" for k, v in sorted(lang_counts.items()))
-    now_str  = now.strftime("%d.%m.%Y %H:%M UTC")
+    feature_usage_str = "\n".join(
+        f"  {item.label}: <b>{item.today_users}</b> / <b>{item.week_users}</b>"
+        for item in feature_usage
+    )
+    if top_referrers_list:
+        top_ref_str = "\n".join(
+            f"  {idx}. {escape(item.name)} — <b>{item.total}</b> ta (faol: {item.activated})"
+            for idx, item in enumerate(top_referrers_list, start=1)
+        )
+    else:
+        top_ref_str = "  —"
+    now_str  = now.astimezone(ADMIN_STATS_TZ).strftime("%d.%m.%Y %H:%M Asia/Shanghai")
 
     text = (
         f"📊 <b>Statistika</b>  <i>{now_str}</i>\n"
         f"{'─' * 32}\n\n"
 
         f"<b>👥 FOYDALANUVCHILAR  [{total}]</b>\n"
-        f"  Free: <b>{free_cnt}</b>   Trial: <b>{trial_cnt}</b>\n"
-        f"  Active status: <b>{active_cnt}</b>   Paid: <b>{paid_user_cnt}</b>\n"
-        f"  Tugagan: <b>{expired_cnt}</b>   Bloklangan: <b>{blocked_cnt}</b>\n\n"
+        f"  Bepul: <b>{free_cnt}</b>   Sinov: <b>{trial_cnt}</b>\n"
+        f"  Faol status: <b>{active_cnt}</b>   To'lovli: <b>{paid_user_cnt}</b>\n"
+        f"  Tarixiy tasdiqlangan: <b>{historical_approved_users}</b>\n"
+        f"  Obunasi tugagan: <b>{expired_cnt}</b>\n"
+        f"  🚫 Botni bloklagan: <b>{bot_blocked_now}</b>  (hafta ichida +{bot_blocked_week})\n\n"
+
+        f"<b>🏆 ENG KO'P TAKLIF QILGANLAR</b>\n"
+        f"{top_ref_str}\n\n"
 
         f"<b>📅 FAOLLIK</b>\n"
         f"  Yangi:  bugun <b>+{new_today}</b>  |  hafta <b>+{new_week}</b>  |  oy <b>+{new_month}</b>\n"
-        f"  Aktiv:  bugun <b>{active_today}</b>  |  hafta <b>{active_week}</b>\n\n"
+        f"  Aktiv:  bugun <b>{active_today}</b>  |  24 soat <b>{active_24h}</b>  |  hafta <b>{active_week}</b>\n\n"
+
+        f"<b>🔥 ISSIQ MIJOZLAR</b>  <i>(kunlik dars o'quvchilar)</i>\n"
+        f"  Bugun dars qildi: <b>{learners_today}</b>   So'nggi 2 kun: <b>{learners_active}</b>\n"
+        f"  3+ kun streak: <b>{streak_3}</b>   7+ kun streak: <b>{streak_7}</b>\n\n"
+
+        f"<b>🔥 QAYSI BO'LIM KO'PROQ ISHLATILMOQDA</b>  <i>(aktiv user: bugun / hafta)</i>\n"
+        f"{feature_usage_str}\n\n"
 
         f"<b>📊 DARAJALAR</b>\n"
         f"{level_str}\n\n"
@@ -2006,31 +2226,14 @@ async def admin_stats_callback(callback: CallbackQuery, session):
         f"<b>🌐 TIL</b>\n"
         f"{lang_str}\n\n"
 
-        f"<b>🎯 O'QISH REJIMI</b>\n"
-        f"  QA: <b>{mode_counts.get('qa', 0)}</b>   Kurs: <b>{mode_counts.get('course', 0)}</b>\n\n"
-
         f"<b>💳 TO'LOVLAR</b>\n"
         f"  Kutilmoqda: <b>{pending_cnt}</b>   Tasdiqlangan: <b>{approved_cnt}</b>   Rad: <b>{rejected_cnt}</b>\n"
         f"  10 kun: <b>{pay_by_plan.get('10_days', 0)}</b>   1 oy: <b>{pay_by_plan.get('1_month', 0)}</b>\n"
         f"  Jami daromad: <b>{approved_sum:,}</b> so'm\n\n"
 
-        f"<b>📚 KURS</b>\n"
-        f"  Yozilgan: <b>{course_total}</b>   Dars tugatganlar: <b>{course_with_lessons}</b>\n"
-        f"  Jami tugatilgan darslar: <b>{course_lessons_sum}</b>   O'rtacha: <b>{avg_lessons}</b>\n"
-        f"  Eslatma yoqilgan: <b>{course_reminders}</b>\n\n"
+        f"{subscription_sources_text}\n\n"
 
-        f"<b>🧪 TRIAL FUNNEL</b>\n"
-        f"  Start: <b>{trial_course_started}</b>   Bugun: <b>+{trial_started_today}</b>   7 kun: <b>+{trial_started_week}</b>\n"
-        f"  Tugatdi: <b>{trial_course_completed}</b> (<b>{trial_complete_rate}%</b>)   7 kun: <b>+{trial_completed_week}</b>\n"
-        f"  AI xato tahlili: <b>{trial_quiz_explained}</b> (<b>{trial_ai_rate}%</b>)\n"
-        f"  Kanal checkpoint: <b>{force_sub_checkpoint}</b>\n"
-        f"  Checkpoint → tugatdi: <b>{checkpoint_completed}</b> (<b>{checkpoint_complete_rate}%</b>)\n\n"
-
-        f"<b>💰 TRIAL → PAYMENT</b>\n"
-        f"  Trialdan keyin paid: <b>{trial_paid_after_start}</b> (<b>{trial_paid_rate}%</b>)   7 kun: <b>+{trial_paid_week}</b>\n"
-        f"  Completed → paid: <b>{completed_paid_after}</b> (<b>{completed_paid_rate}%</b>)\n"
-        f"  Checkpoint → paid: <b>{checkpoint_paid_after}</b> (<b>{checkpoint_paid_rate}%</b>)\n"
-        f"  Trialdan keyingi tushum: <b>{int(trial_revenue_after_start):,}</b> so'm\n\n"
+        f"{course_miniapp_text}\n\n"
 
         f"<b>🎁 REFERALLAR</b>\n"
         f"  Jami: <b>{ref_total}</b>   Faollashgan: <b>{ref_activated}</b>   Bonus: <b>{ref_bonus}</b>\n"
@@ -2039,6 +2242,116 @@ async def admin_stats_callback(callback: CallbackQuery, session):
         f"<b>📈 KONVERSIYA</b>\n"
         f"  User → Paid: <b>{conversion}%</b>\n"
         f"  Savol berganlar: <b>{qa_users}</b> (<b>{engagement}%</b>)"
+    )
+
+    await callback.answer()
+    await _edit_callback_message(
+        callback,
+        text,
+        reply_markup=admin_stats_keyboard(),
+        parse_mode="HTML",
+    )
+
+
+@router.callback_query(F.data == "adm:feedback_stats")
+async def admin_feedback_stats_callback(callback: CallbackQuery, session):
+    if not _is_admin(callback.from_user.id):
+        await callback.answer()
+        return
+
+    now = datetime.now(timezone.utc)
+    week_ago = now - timedelta(days=7)
+    month_ago = now - timedelta(days=30)
+
+    completed = (await session.execute(
+        select(func.count()).select_from(BotFeedback).where(BotFeedback.status == "completed")
+    )).scalar() or 0
+    completed_week = (await session.execute(
+        select(func.count()).select_from(BotFeedback).where(
+            BotFeedback.status == "completed",
+            BotFeedback.completed_at >= week_ago,
+        )
+    )).scalar() or 0
+    completed_month = (await session.execute(
+        select(func.count()).select_from(BotFeedback).where(
+            BotFeedback.status == "completed",
+            BotFeedback.completed_at >= month_ago,
+        )
+    )).scalar() or 0
+    price_high = (await session.execute(
+        select(func.count()).select_from(BotFeedback).where(
+            BotFeedback.status == "completed",
+            BotFeedback.disliked_code == "price",
+        )
+    )).scalar() or 0
+    limit_unhappy = (await session.execute(
+        select(func.count()).select_from(BotFeedback).where(
+            BotFeedback.status == "completed",
+            BotFeedback.disliked_code == "limits",
+        )
+    )).scalar() or 0
+    unclear = (await session.execute(
+        select(func.count()).select_from(BotFeedback).where(
+            BotFeedback.status == "completed",
+            BotFeedback.disliked_code == "unclear",
+        )
+    )).scalar() or 0
+    pace = (await session.execute(
+        select(func.count()).select_from(BotFeedback).where(
+            BotFeedback.status == "completed",
+            BotFeedback.disliked_code == "pace",
+        )
+    )).scalar() or 0
+    other = (await session.execute(
+        select(func.count()).select_from(BotFeedback).where(
+            BotFeedback.status == "completed",
+            BotFeedback.disliked_code == "other",
+        )
+    )).scalar() or 0
+    disliked_total = (await session.execute(
+        select(func.count()).select_from(BotFeedback).where(
+            BotFeedback.status == "completed",
+            BotFeedback.disliked_code.is_not(None),
+        )
+    )).scalar() or 0
+    text_comments = (await session.execute(
+        select(func.count()).select_from(BotFeedback).where(
+            BotFeedback.status == "completed",
+            BotFeedback.disliked_text.is_not(None),
+        )
+    )).scalar() or 0
+    screenshots = (await session.execute(
+        select(func.count()).select_from(BotFeedback).where(
+            BotFeedback.status == "completed",
+            BotFeedback.disliked_attachment_file_id.is_not(None),
+        )
+    )).scalar() or 0
+    discount_offers_sent = (await session.execute(
+        select(func.count()).select_from(BotFeedback).where(BotFeedback.price_offer_sent_at.is_not(None))
+    )).scalar() or 0
+    discount_offers_used = (await session.execute(
+        select(func.count()).select_from(BotFeedback).where(BotFeedback.price_offer_used_at.is_not(None))
+    )).scalar() or 0
+
+    now_str = now.strftime("%d.%m.%Y %H:%M UTC")
+    text = (
+        f"📝 <b>Otziv statistikasi</b>  <i>{now_str}</i>\n"
+        f"{'─' * 32}\n\n"
+        f"Jami yakunlangan: <b>{completed}</b>\n"
+        f"7 kun: <b>+{completed_week}</b>   30 kun: <b>+{completed_month}</b>\n\n"
+        f"<b>Asosiy noroziliklar</b>\n"
+        f"Obuna narxi baland: <b>{price_high}</b>\n"
+        f"Limitdan norozi: <b>{limit_unhappy}</b>\n"
+        f"Tushunarsiz javob: <b>{unclear}</b>\n"
+        f"Tezlik/pace muammo: <b>{pace}</b>\n"
+        f"Boshqa: <b>{other}</b>\n"
+        f"Kamchilik yozgan jami: <b>{disliked_total}</b>\n\n"
+        f"<b>Dalil/izoh</b>\n"
+        f"Matnli izoh: <b>{text_comments}</b>\n"
+        f"Screenshot: <b>{screenshots}</b>\n\n"
+        f"<b>Chegirma offer</b>\n"
+        f"Yuborilgan: <b>{discount_offers_sent}</b>\n"
+        f"Ishlatilgan: <b>{discount_offers_used}</b>"
     )
 
     await callback.answer()
