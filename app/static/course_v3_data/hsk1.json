@@ -100,12 +100,12 @@
       "lessons": [
         {
           "n": 6,
-          "zh": "我会说汉语",
-          "py": "wǒ huì shuō Hànyǔ",
+          "zh": "Days & week",
+          "py": "/deɪz/",
           "tr": {
-            "uz": "Modal fe'l 会 yordamida qobiliyat va mahorat haqida gapirish",
-            "ru": "Говорить о способностях и умениях с помощью модального глагола 会",
-            "tj": "Дар бораи қобилият ва маҳорат бо ёрии феъли модалии 会 гап задан"
+            "uz": "Kunlar, hafta va vaqt so'zlari",
+            "ru": "Дни, неделя и слова времени",
+            "tj": "Рӯзҳо, ҳафта ва калимаҳои вақт"
           },
           "status": "locked",
           "content": "lesson_06",
