@@ -560,7 +560,7 @@ def filter_unlocked_lessons(lessons: list, progress) -> list:
 
 
 def _hsk4_part_label(part: str | None) -> str:
-    return "下" if part == "lower" else "上"
+    return "Part 2" if part == "lower" else "Part 1"
 
 
 def _lesson_selection_markup(lessons: list, resolved_level: str, lang: str):

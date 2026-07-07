@@ -56,8 +56,8 @@ def filter_hsk4_lessons_by_part(lessons: list, part: str | None) -> list:
 
 def hsk4_part_selection_keyboard() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(inline_keyboard=[[
-        InlineKeyboardButton(text="上", callback_data=f"course:hsk4_part:{Advanced_PART_UPPER}"),
-        InlineKeyboardButton(text="下", callback_data=f"course:hsk4_part:{Advanced_PART_LOWER}"),
+        InlineKeyboardButton(text="Part 1", callback_data=f"course:hsk4_part:{Advanced_PART_UPPER}"),
+        InlineKeyboardButton(text="Part 2", callback_data=f"course:hsk4_part:{Advanced_PART_LOWER}"),
     ]])
 
 

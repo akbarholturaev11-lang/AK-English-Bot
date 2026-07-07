@@ -421,28 +421,28 @@ async def rich_test_command(message: Message, bot: Bot):
     
     # 1. Vocabulary Test
     vocab_payload = rich_service.build_vocab_rich_message(
-        word="学习",
-        pinyin="xuéxí",
+        word="study",
+        pinyin="/ˈstʌdi/",
         translation="O'qish, o'rganish",
-        examples=["我喜欢学习汉语 (Men ingliz tilini o'rganishni yoqtiraman)"],
-        mistakes="xuéxí ni 'o'qituvchi' deb ishlatmang."
+        examples=["I like studying English (Men ingliz tilini o'rganishni yoqtiraman)"],
+        mistakes="'study' ni 'o'qituvchi' deb ishlatmang."
     )
     await message.answer("🧪 <b>Test 1: Vocabulary Rich Message</b>", parse_mode="HTML")
     await rich_service.send_rich_or_fallback(
-        bot, message.chat.id, vocab_payload, "Vocabulary Fallback: 学习 (xuéxí) - O'qish"
+        bot, message.chat.id, vocab_payload, "Vocabulary Fallback: study - O'qish"
     )
 
     # 2. Grammar Test
     grammar_payload = rich_service.build_grammar_rich_message(
-        title="'了' (le) qo'shimchasi",
-        formula="S + V + 了 + O",
-        explanation="Harakat tugallanganini bildiradi.",
-        examples=["我吃饭了 (Men ovqat yedim)"],
-        common_mistakes="Kelajakdagi harakatlar uchun '了' ishlatmang."
+        title="Past simple (-ed)",
+        formula="S + V-ed + O",
+        explanation="Tugallangan o'tgan zamon harakatini bildiradi.",
+        examples=["I studied English yesterday (Men kecha ingliz tilini o'qidim)"],
+        common_mistakes="Kelajakdagi harakatlar uchun '-ed' ishlatmang."
     )
     await message.answer("\n🧪 <b>Test 2: Grammar Rich Message</b>", parse_mode="HTML")
     await rich_service.send_rich_or_fallback(
-        bot, message.chat.id, grammar_payload, "Grammar Fallback: '了' (le) - Harakat tugallangan"
+        bot, message.chat.id, grammar_payload, "Grammar Fallback: Past simple - completed action"
     )
 
     # 3. Quiz Result Test

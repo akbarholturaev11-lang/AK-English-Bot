@@ -1172,7 +1172,7 @@ async def v3_course_map(request: Request, lang: str = "uz", level: str | None = 
         display_name = str(
             getattr(user, "full_name", None) or getattr(user, "username", None) or "English Student"
         ).strip()[:60]
-        initials = "".join(p[:1].upper() for p in display_name.split()[:2]) or "阿"
+        initials = "".join(p[:1].upper() for p in display_name.split()[:2]) or "A"
 
         data["authenticated"] = True
         data["level"] = resolved_level
