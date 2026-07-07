@@ -55,29 +55,29 @@ MAX_AUDIO_BYTES = 5 * 1024 * 1024
 VOICE_REPLY_MAX_TOKENS = 220
 
 ROLE_PROMPTS = {
-    "lily": "You are Lily, a cheerful and empathetic young Chinese friend. React warmly, laugh naturally, and keep beginners talking without sounding like a tutor.",
-    "chen": "You are Chen, a calm and practical Chinese travel companion. You are concise, observant, and help the learner handle realistic daily situations.",
-    "xiao_mei": "You are Xiao Mei, an energetic university student. You speak casually, show curiosity, and make natural friendly reactions.",
-    "teacher_li": "You are Teacher Li, a patient but precise Chinese teacher. Guide with short questions and correct only important mistakes without lecturing.",
-    "manager_wang": "You are Manager Wang, a professional Chinese manager. Use polite workplace Chinese, realistic business reactions, and a composed tone.",
-    "friend": "You are a warm Chinese friend. Be curious, informal, and encouraging.",
-    "roommate": "You are the learner's Chinese roommate. Discuss realistic home and daily-life situations.",
-    "seller": "You are a lively Chinese shop seller. Practice prices, quantities, choices, and bargaining.",
-    "classmate": "You are a Chinese classmate. Discuss classes, plans, campus life, and homework naturally.",
-    "social": "You are an engaging Chinese conversation partner. Adapt the topic to the learner's reply.",
+    "lily": "You are Lily, a cheerful and empathetic young friend. React warmly, laugh naturally, and keep beginners talking in English without sounding like a tutor.",
+    "chen": "You are Alex, a calm and practical travel companion. You are concise, observant, and help the learner handle realistic daily situations in English.",
+    "xiao_mei": "You are Mia, an energetic university student. You speak casual English, show curiosity, and make natural friendly reactions.",
+    "teacher_li": "You are Mr. Lee, a patient but precise English teacher. Guide with short questions and correct only important mistakes without lecturing.",
+    "manager_wang": "You are Mr. Warren, a professional manager. Use polite workplace English, realistic business reactions, and a composed tone.",
+    "friend": "You are a warm English-speaking friend. Be curious, informal, and encouraging.",
+    "roommate": "You are the learner's English-speaking roommate. Discuss realistic home and daily-life situations.",
+    "seller": "You are a lively shop assistant. Practice prices, quantities, choices, and polite requests in English.",
+    "classmate": "You are an English-speaking classmate. Discuss classes, plans, campus life, and homework naturally.",
+    "social": "You are an engaging English conversation partner. Adapt the topic to the learner's reply.",
 }
 
-# Qat'iy daraja nazorati (ENG muhim): AI hech qachon userning HSK darajasidan
+# Qat'iy daraja nazorati (ENG muhim): AI hech qachon userning darajasidan
 # yuqori so'z yoki grammatika ishlatmasligi kerak. Har bir daraja uchun aniq
 # so'z/gap uzunligi cheklovi beriladi.
 LEVEL_GUIDANCE = {
-    "beginner": "Learner is an absolute beginner (HSK1). Use ONLY the ~150 most basic HSK1 words. Sentences must be 3-6 characters, present tense, no idioms.",
-    "hsk1": "Learner is HSK1. Use ONLY HSK1 vocabulary and grammar. Short sentences (3-7 characters), no HSK2+ words, no idioms or slang.",
-    "hsk2": "Learner is HSK2. Use ONLY HSK1-HSK2 vocabulary and grammar. Simple sentences (up to ~9 characters). Avoid any HSK3+ words.",
-    "hsk3": "Learner is HSK3. Use ONLY HSK1-HSK3 vocabulary and grammar. Everyday sentences. Avoid HSK4+ words and complex written-style structures.",
-    "hsk4": "Learner is HSK4. Use ONLY HSK1-HSK4 vocabulary and grammar. Natural but not advanced; avoid HSK5+ words, literary idioms, and long clauses.",
-    "hsk1_2": "Learner knows HSK1-HSK2. Use ONLY HSK1-HSK2 vocabulary and grammar. Simple short sentences, no HSK3+ words.",
-    "hsk3_4": "Learner knows HSK3-HSK4. Use ONLY HSK1-HSK4 vocabulary and grammar. Avoid HSK5+ words and literary structures.",
+    "beginner": "Learner is an absolute beginner. Use ONLY the ~150 most basic English words. Sentences must be 3-6 words, present tense, no idioms.",
+    "hsk1": "Learner is Beginner (A1). Use ONLY basic A1 vocabulary and grammar. Short sentences (4-7 words), no advanced words, no idioms or slang.",
+    "hsk2": "Learner is Elementary (A2). Use ONLY A1-A2 vocabulary and grammar. Simple sentences (up to ~10 words). Avoid any B1+ words.",
+    "hsk3": "Learner is Intermediate (B1). Use ONLY A1-B1 vocabulary and grammar. Everyday sentences. Avoid B2+ words and complex written-style structures.",
+    "hsk4": "Learner is Advanced (B2). Use ONLY A1-B2 vocabulary and grammar. Natural but not advanced; avoid rare idioms, literary words, and long clauses.",
+    "hsk1_2": "Learner knows A1-A2. Use ONLY A1-A2 vocabulary and grammar. Simple short sentences, no B1+ words.",
+    "hsk3_4": "Learner knows B1-B2. Use ONLY A1-B2 vocabulary and grammar. Avoid rare idioms and literary structures.",
 }
 
 
@@ -92,8 +92,8 @@ LANGUAGE_NAMES = {"ru": "Russian", "tj": "Tajik", "uz": "Uzbek"}
 OPENING_MESSAGES = {
     "friend": [
         {
-            "chinese_reply": "Hello！我来了，别害羞，先跟我说一句中文吧。",
-            "pinyin": "Nǐ hǎo! Wǒ lái le, bié hàixiū, xiān gēn wǒ shuō yí jù Zhōngwén ba.",
+            "chinese_reply": "Hey, I'm here! Don't be shy — say one sentence in English first.",
+            "pinyin": "",
             "translations": {
                 "uz": "Ni hao! Keldim, uyalmang, avval menga inglizcha bitta gap ayting.",
                 "ru": "Нихао! Я здесь, не стесняйтесь, скажите мне сначала одну фразу по-английски.",
@@ -101,8 +101,8 @@ OPENING_MESSAGES = {
             },
         },
         {
-            "chinese_reply": "嘿，是我！今天过得怎么样？",
-            "pinyin": "Hēi, shì wǒ! Jīntiān guò de zěnme yàng?",
+            "chinese_reply": "Hey, it's me! How's your day going?",
+            "pinyin": "",
             "translations": {
                 "uz": "Salom, bu men! Bugun kuningiz qanday o'tyapti?",
                 "ru": "Привет, это я! Как прошёл твой день?",
@@ -110,8 +110,8 @@ OPENING_MESSAGES = {
             },
         },
         {
-            "chinese_reply": "哈喽！好久不见，想我了吗？",
-            "pinyin": "Hā lóu! Hǎojiǔ bú jiàn, xiǎng wǒ le ma?",
+            "chinese_reply": "Hello! Long time no see — did you miss me?",
+            "pinyin": "",
             "translations": {
                 "uz": "Salom! Ancha bo'ldi ko'rishmaganimizga, sog'indingizmi?",
                 "ru": "Привет! Давно не виделись, скучали по мне?",
@@ -121,8 +121,8 @@ OPENING_MESSAGES = {
     ],
     "teacher_li": [
         {
-            "chinese_reply": "哎，找到你啦！今天想聊点什么呢？",
-            "pinyin": "Āi, zhǎodào nǐ la! Jīntiān xiǎng liáo diǎn shénme ne?",
+            "chinese_reply": "There you are! What would you like to talk about today?",
+            "pinyin": "",
             "translations": {
                 "uz": "Voy, sizni topdim! Bugun nima haqida gaplashamiz?",
                 "ru": "Ага, нашёл вас! О чём поговорим сегодня?",
@@ -130,8 +130,8 @@ OPENING_MESSAGES = {
             },
         },
         {
-            "chinese_reply": "嗨，是我。我们随便聊聊吧，别紧张。",
-            "pinyin": "Hāi, shì wǒ. Wǒmen suíbiàn liáo liao ba, bié jǐnzhāng.",
+            "chinese_reply": "Hi, it's me. Let's just chat, no pressure.",
+            "pinyin": "",
             "translations": {
                 "uz": "Salom, bu men. Keling, erkin suhbatlashamiz, xavotir olmang.",
                 "ru": "Привет, это я. Давайте просто поболтаем, не волнуйтесь.",
@@ -139,8 +139,8 @@ OPENING_MESSAGES = {
             },
         },
         {
-            "chinese_reply": "Hello呀，今天心情怎么样？",
-            "pinyin": "Nǐ hǎo ya, jīntiān xīnqíng zěnme yàng?",
+            "chinese_reply": "Hello! How are you feeling today?",
+            "pinyin": "",
             "translations": {
                 "uz": "Salom, bugun kayfiyatingiz qanday?",
                 "ru": "Привет, как настроение сегодня?",
@@ -436,7 +436,7 @@ class VoicePracticeService:
         is_closing_dialog = next_dialog_no >= MAX_DIALOGS_PER_SESSION
         closing_instruction = (
             "THIS IS THE FINAL EXCHANGE: no matter the topic, warmly wrap up now — give a short natural "
-            "reason to go, say a friendly goodbye in Chinese (e.g. 再见/下次聊), and DO NOT ask any follow-up question."
+            "reason to go, say a friendly goodbye (e.g. Bye!/See you next time!), and DO NOT ask any follow-up question."
             if is_closing_dialog
             else "End with one short playful follow-up question when natural."
         )
@@ -471,7 +471,7 @@ class VoicePracticeService:
                     "Never use any word or grammar above the learner's level, even if it feels natural. "
                     "If you must reference something harder, replace it with a simpler word the learner knows. "
                     f"Current-lesson target words: {target_words}. {review_instruction}"
-                    "Fast voice roleplay. Reply in 1 short Chinese sentence, rarely 2. "
+                    "Fast voice roleplay. Reply in 1 short English sentence, rarely 2. "
                     "Use one target word only if natural. Be playful and warm: joke, laugh, lightly tease weak "
                     "answers, never humiliate; switch topic if the learner seems uncomfortable. "
                     f"{topic_instruction}"
@@ -480,7 +480,8 @@ class VoicePracticeService:
                     "in this same conversation (see the message history). This is a real casual chat, not a lesson "
                     "or class — never say things like 'let's start' or explicitly frame it as studying. "
                     f"{closing_instruction} Translate into {target_language}. "
-                    "Correct only important errors. JSON only: chinese_reply, pinyin, translation, correction. "
+                    "Correct only important errors. Return JSON only with keys: chinese_reply (your English reply), "
+                    "pinyin (simple English pronunciation), translation, correction. "
                     "Use null correction when OK."
                 ),
             }

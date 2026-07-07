@@ -33,15 +33,15 @@ _VOCAB_BLOCK_RULE = """
 FORMAT QOIDASI (JUDA MUHIM):
 - Har bir so'zni FAQAT shu ko'rinishda yoz:
 
-1. <b>汉字</b>
+1. <b>word</b>
 <code>pīnyīn</code>
 Tarjima: qisqa tarjima
 Misollar:
-- 汉字 bilan oddiy gap — tarjimasi
-- 汉字 bilan yana bitta oddiy gap — tarjimasi
+- word bilan oddiy gap — tarjimasi
+- word bilan yana bitta oddiy gap — tarjimasi
 
 - Har bir so'z alohida blok bo'lsin
-- Iyeroglif, pinyin, tarjima va misollarni bitta qatorda aralashtirma
+- So'z, talaffuz, tarjima va misollarni bitta qatorda aralashtirma
 - Dars lug'atidan tashqariga chiqma
 - Foydalanuvchi "nima", "tushunmadim", "qanaqa" kabi noaniq yozsa ham shu formatda qayta tushuntir
 - Javob oxirida "Yana misollar xohlaysizmi?" kabi savol yozma
@@ -191,14 +191,14 @@ class CourseTutorService:
             "dialogue_preview": dialogue[:1],
         }
 
-        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Talabani bu darsga iliq kutib ol.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisan. Talabani bu darsga iliq kutib ol.
 
 DARS MA'LUMOTLARI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasiga moslashtirilgan
-- Ingliz belgilari uchun <b>...</b>, pinyin uchun <code>...</code> ishlatilsin
+- Inglizcha so'z uchun <b>...</b>, talaffuz uchun <code>...</code> ishlatilsin
 - Jami 4 qatordan oshmasin
 - 2-3 ta so'z va asosiy grammatika mavzusini qiziqarli tarzda tanishtir
 - Hali o'qitma — faqat tanishtir
@@ -213,14 +213,14 @@ QOIDALAR:
 
         data = {"lesson_title": title, "vocabulary": vocab}
 
-        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Bu darsning so'zlarini qiziqarli tarzda o'rgat.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisan. Bu darsning so'zlarini qiziqarli tarzda o'rgat.
 
 SO'ZLAR MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Ingliz belgilari uchun <b>...</b>, pinyin uchun <code>...</code>
+- Inglizcha so'z uchun <b>...</b>, talaffuz uchun <code>...</code>
 - O'xshash so'zlar bo'lsa (masalan 我/你, 大/小), ularni yonma-yon solishtir
 - Maksimal 8 ta so'zni tushuntir
 {_VOCAB_BLOCK_RULE}
@@ -234,7 +234,7 @@ QOIDALAR:
 
         data = {"lesson_title": title, "dialogue": dialogue}
 
-        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Bu dialogni qadamma-qadam o'rgat.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisan. Bu dialogni qadamma-qadam o'rgat.
 
 DIALOG MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
@@ -262,7 +262,7 @@ QOIDALAR:
             "lesson_vocabulary": vocab[:5],
         }
 
-        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisan. Grammatika qoidalarini qisqa, tushunarli va amaliy tushuntir.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisan. Grammatika qoidalarini qisqa, tushunarli va amaliy tushuntir.
 
 GRAMMATIKA MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
@@ -302,7 +302,7 @@ QOIDALAR:
             "allowed_grammar": grammar[:3],
         }
 
-        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Foydalanuvchi mashq javoblarini tekshir.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisan. Foydalanuvchi mashq javoblarini tekshir.
 
 MASHQ MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
@@ -313,7 +313,7 @@ ASOSIY VAZIFA — JAVOBNI MAZMUN BO'YICHA TEKSHIR (FORMAT BO'YICHA EMAS):
 - Har bir javobni FAQAT MAZMUN bo'yicha tekshir:
   * ✅ — ma'no/so'z to'g'ri bo'lsa
   * ❌ — ma'no/so'z noto'g'ri bo'lsa
-- Noto'g'ri bo'lsa: TO'G'RI JAVOBNI ko'rsat (faqat bot o'zi <b>汉字</b> [<code>pinyin</code>] — ma'no formatida yozadi)
+- Noto'g'ri bo'lsa: TO'G'RI JAVOBNI ko'rsat (faqat bot o'zi <b>word</b> [<code>pinyin</code>] — ma'no formatida yozadi)
 - Xatolarni qisqa tushuntir
 - Rag'batlantiruvchi bo'l: "Yaxshi! 👏" yoki "Deyarli to'g'ri! Mana maslahat..."
 
@@ -336,7 +336,7 @@ QOIDALAR:
             "test_grammar": grammar[:3],
         }
 
-        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Foydalanuvchiga TEST savollarini ber.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisan. Foydalanuvchiga TEST savollarini ber.
 
 TEST MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
@@ -363,7 +363,7 @@ QOIDALAR:
         title = self._safe(getattr(lesson, "title", ""))
         data = {"lesson_title": title}
 
-        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Talaba bu darsni tushunganini tekshir.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisan. Talaba bu darsni tushunganini tekshir.
 
 DARS: {title}
 
@@ -388,7 +388,7 @@ QOIDALAR:
             "lesson_blocks": self._lesson_blocks_payload(lesson),
         }
 
-        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Talaba darsni tushunmagan joyini qayta tushuntir.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisan. Talaba darsni tushunmagan joyini qayta tushuntir.
 
 DARS MA'LUMOTLARI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
@@ -430,7 +430,7 @@ QOIDALAR:
             "allowed_grammar": grammar,
         }
 
-        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Uy vazifasini baholash.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisan. Uy vazifasini baholash.
 
 UY VAZIFASI MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
@@ -456,14 +456,14 @@ QOIDALAR:
         vocab_page = vocab[:8]
         title = self._safe(getattr(lesson, "title", ""))
         data = {"lesson_title": title, "vocabulary": vocab_page}
-        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Bu darsning birinchi qismidagi so'zlarni qiziqarli tarzda o'rgat.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisan. Bu darsning birinchi qismidagi so'zlarni qiziqarli tarzda o'rgat.
 
 SO'ZLAR (1–8):
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Ingliz belgilari uchun <b>...</b>, pinyin uchun <code>...</code>
+- Inglizcha so'z uchun <b>...</b>, talaffuz uchun <code>...</code>
 - Maksimal 8 ta so'zni tushuntir
 {_VOCAB_BLOCK_RULE}
 {_EXPLANATION_RULE}"""
@@ -475,14 +475,14 @@ QOIDALAR:
         vocab_page = vocab[8:]
         title = self._safe(getattr(lesson, "title", ""))
         data = {"lesson_title": title, "vocabulary": vocab_page}
-        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Bu darsning ikkinchi qismidagi so'zlarni o'rgat.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisan. Bu darsning ikkinchi qismidagi so'zlarni o'rgat.
 
 SO'ZLAR (9+):
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Ingliz belgilari uchun <b>...</b>, pinyin uchun <code>...</code>
+- Inglizcha so'z uchun <b>...</b>, talaffuz uchun <code>...</code>
 - Maksimal 8 ta so'zni tushuntir
 {_VOCAB_BLOCK_RULE}
 {_EXPLANATION_RULE}"""
@@ -502,7 +502,7 @@ QOIDALAR:
             "mini_quiz": block.get("mini_quiz") or [],
             "mini_homework": block.get("mini_homework") or {},
         }
-        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Bu dialogni va unga bog'liq grammatikani qisqa tushuntir.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisan. Bu dialogni va unga bog'liq grammatikani qisqa tushuntir.
 
 DIALOG MA'LUMOTI (YANGI BLOCK FORMAT):
 {_json.dumps(data, ensure_ascii=False, indent=2)}
@@ -527,14 +527,14 @@ QOIDALAR:
             "dialogue_block": block,
             "vocabulary": vocab_page,
         }
-        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisan. Faqat shu dialogdagi yangi so'zlarni tushuntir.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisan. Faqat shu dialogdagi yangi so'zlarni tushuntir.
 
 SO'ZLAR:
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Ingliz belgilari uchun <b>...</b>, pinyin uchun <code>...</code>
+- Inglizcha so'z uchun <b>...</b>, talaffuz uchun <code>...</code>
 - Faqat shu qism so'zlaridan foydalan
 {_VOCAB_BLOCK_RULE}
 {_EXPLANATION_RULE}"""
@@ -551,7 +551,7 @@ QOIDALAR:
             "grammar_points": self._block_grammar(lesson, block),
             "block_vocabulary": self._block_words(lesson, block),
         }
-        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisan. Shu dialogdan keyingi grammatikani qisqa, tushunarli va foydali blok qilib tushuntir.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisan. Shu dialogdan keyingi grammatikani qisqa, tushunarli va foydali blok qilib tushuntir.
 
 GRAMMATIKA MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
