@@ -54,30 +54,40 @@ html,body{background:var(--paper);color:var(--ink);font-family:-apple-system,"SF
 var params=new URLSearchParams(location.search||"");
 var LANG=(params.get("lang")||"ru");if(["uz","ru","tj"].indexOf(LANG)<0)LANG="ru";
 var L={ru:{boot:"Beginner с нуля — учите английский каждый день по несколько минут с пандой Alex.",ask:"С какого уровня начнём? Не знаешь — начни с Beginner.",placement:"Не знаете уровень? Короткий тест",start:"Начать",cont:"Продолжить",ready:"Готово!",readySub:"Начнём с первого урока.",first:"Начать первый урок",rec:"Рекомендуем"},
-  uz:{boot:"Beginner noldan — har kuni bir necha daqiqada panda Alex bilan ingliz tilini o'rganing.",ask:"Qaysi darajadan boshlaymiz? Bilmasang — Beginner dan ket.",placement:"Darajangni bilmaysanmi? Qisqa test",start:"Boshlash",cont:"Davom etish",ready:"Tayyor!",readySub:"Birinchi darsdan boshlaymiz.",first:"Birinchi darsni boshlash",rec:"Tavsiya"},
-  tj:{boot:"Beginner аз сифр — ҳар рӯз чанд дақиқа бо панда Alex англисиро омӯзед.",ask:"Аз кадом сатҳ оғоз кунем? Намедонӣ — аз Beginner.",placement:"Сатҳро намедонед? Тести кӯтоҳ",start:"Оғоз",cont:"Идома",ready:"Тайёр!",readySub:"Аз дарси аввал оғоз мекунем.",first:"Оғози дарси аввал",rec:"Тавсия"}}[LANG];
+  uz:{boot:"Beginner noldan — har kuni bir necha daqiqada Alex the owl bilan ingliz tilini o'rganing.",ask:"Qaysi darajadan boshlaymiz? Bilmasang — Beginner dan ket.",placement:"Darajangni bilmaysanmi? Qisqa test",start:"Boshlash",cont:"Davom etish",ready:"Tayyor!",readySub:"Birinchi darsdan boshlaymiz.",first:"Birinchi darsni boshlash",rec:"Tavsiya"},
+  tj:{boot:"Beginner аз сифр — ҳар рӯз чанд дақиқа бо сова Alex англисиро омӯзед.",ask:"Аз кадом сатҳ оғоз кунем? Намедонӣ — аз Beginner.",placement:"Сатҳро намедонед? Тести кӯтоҳ",start:"Оғоз",cont:"Идома",ready:"Тайёр!",readySub:"Аз дарси аввал оғоз мекунем.",first:"Оғози дарси аввал",rec:"Тавсия"}}[LANG];
 var tg=window.Telegram&&window.Telegram.WebApp;if(tg){try{tg.ready();tg.expand()}catch(e){}}
 function panda(m){
-  var eyes='<circle cx="36" cy="37" r="3.3" fill="#fff"/><circle cx="54" cy="37" r="3.3" fill="#fff"/><circle cx="36" cy="37" r="1.8" fill="#211D17"/><circle cx="54" cy="37" r="1.8" fill="#211D17"/><rect class="pd-blink" x="32" y="31" width="8" height="9" rx="3" fill="#211D17"/><rect class="pd-blink" x="50" y="31" width="8" height="9" rx="3" fill="#211D17"/>';
-  var mouth,armL,armR,pawL,pawR,decor="",bodyCls="pd-breathe";
+  // Owl mascot "Alex" — English-learning persona.
+  var pupils='<circle cx="34" cy="41" r="5" fill="#211D17"/><circle cx="56" cy="41" r="5" fill="#211D17"/>'
+    +'<circle cx="35.7" cy="39.3" r="1.6" fill="#fff"/><circle cx="57.7" cy="39.3" r="1.6" fill="#fff"/>'
+    +'<rect class="pd-blink" x="22" y="30" width="24" height="11" rx="5" fill="#A9743B"/>'
+    +'<rect class="pd-blink" x="44" y="30" width="24" height="11" rx="5" fill="#A9743B"/>';
+  var eyes,beak,wingL,wingR,decor="",bodyCls="pd-breathe";
   if(m==="cheer"){
-    eyes='<path d="M31 37 q5 -6 10 0" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><path d="M49 37 q5 -6 10 0" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>';
-    mouth='<path d="M38 48 q7 6 14 0" stroke="#211D17" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
-    armL="M30 50 q-10 -8 -14 -20";armR="M60 50 q10 -8 14 -20";pawL=[16,28];pawR=[74,28];bodyCls="pd-bounce";
-    decor='<path class="pd-twinkle" style="animation-delay:0s" transform="translate(14,14)" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z" fill="#E8B84B"/><path class="pd-twinkle" style="animation-delay:.3s" transform="translate(76,10)" d="M0 -3 L.8 -.8 L3 0 L.8 .8 L0 3 L-.8 .8 L-3 0 L-.8 -.8 Z" fill="#E8B84B"/><path class="pd-twinkle" style="animation-delay:.6s" transform="translate(45,4)" d="M0 -3 L.8 -.8 L3 0 L.8 .8 L0 3 L-.8 .8 L-3 0 L-.8 -.8 Z" fill="#E8B84B"/>';
+    eyes='<path d="M27 42 q7 -8 14 0" fill="none" stroke="#211D17" stroke-width="2.6" stroke-linecap="round"/><path d="M49 42 q7 -8 14 0" fill="none" stroke="#211D17" stroke-width="2.6" stroke-linecap="round"/>';
+    beak='<path d="M41 47 L49 47 L45 55 Z" fill="#E8A23B" stroke="#B9791F" stroke-width="1"/>';
+    wingL="M17 50 q-11 -10 -11 -27";wingR="M73 50 q11 -10 11 -27";bodyCls="pd-bounce";
+    decor='<path class="pd-twinkle" style="animation-delay:0s" transform="translate(14,14)" d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z" fill="#E8B84B"/><path class="pd-twinkle" style="animation-delay:.3s" transform="translate(76,10)" d="M0 -3 L.8 -.8 L3 0 L.8 .8 L0 3 L-.8 .8 L-3 0 L-.8 -.8 Z" fill="#E8B84B"/><path class="pd-twinkle" style="animation-delay:.6s" transform="translate(45,3)" d="M0 -3 L.8 -.8 L3 0 L.8 .8 L0 3 L-.8 .8 L-3 0 L-.8 -.8 Z" fill="#E8B84B"/>';
   }else{
-    mouth='<path d="M39 49 q6 4 12 0" stroke="#211D17" stroke-width="2" fill="none" stroke-linecap="round"/>';
-    armL="M30 52 q-8 6 -9 16";armR="M60 52 q8 6 9 16";pawL=[21,67];pawR=[69,67];
+    eyes=pupils;
+    beak='<path d="M41 47 L49 47 L45 55 Z" fill="#E8A23B" stroke="#B9791F" stroke-width="1"/>';
+    wingL="M17 54 q-8 8 -6 18";wingR="M73 54 q8 8 6 18";
   }
   return '<svg viewBox="0 0 90 96" width="100%" height="100%"><g class="'+bodyCls+'">'
-    +'<path d="'+armL+'" fill="none" stroke="#211D17" stroke-width="2"/><path d="'+armR+'" fill="none" stroke="#211D17" stroke-width="2"/>'
-    +'<ellipse cx="'+pawL[0]+'" cy="'+pawL[1]+'" rx="4.5" ry="5" fill="#fff" stroke="#211D17" stroke-width="1.6"/><ellipse cx="'+pawR[0]+'" cy="'+pawR[1]+'" rx="4.5" ry="5" fill="#fff" stroke="#211D17" stroke-width="1.6"/>'
-    +'<circle cx="25" cy="21" r="10" fill="#211D17"/><circle cx="65" cy="21" r="10" fill="#211D17"/>'
-    +'<path d="M31 66 q-3 -22 6 -30 h16 q9 8 6 30 z" fill="#fff" stroke="#211D17" stroke-width="2"/>'
-    +'<circle cx="45" cy="36" r="22" fill="#fff" stroke="#211D17" stroke-width="2"/>'
-    +'<path d="M33 46 q12 7 24 0 l-2 7 q-10 5 -20 0 z" fill="#C2403A"/>'
-    +'<ellipse cx="36" cy="36" rx="6.5" ry="9" fill="#211D17"/><ellipse cx="54" cy="36" rx="6.5" ry="9" fill="#211D17"/>'
-    +eyes+'<ellipse cx="45" cy="44" rx="3.4" ry="2.4" fill="#211D17"/>'+mouth+decor
+    +'<path d="'+wingL+'" fill="none" stroke="#5C3A1E" stroke-width="2"/><path d="'+wingR+'" fill="none" stroke="#5C3A1E" stroke-width="2"/>'
+    +'<path d="M30 20 L23 3 L39 15 Z" fill="#8A5A2B" stroke="#5C3A1E" stroke-width="1.6" stroke-linejoin="round"/>'
+    +'<path d="M60 20 L67 3 L51 15 Z" fill="#8A5A2B" stroke="#5C3A1E" stroke-width="1.6" stroke-linejoin="round"/>'
+    +'<ellipse cx="45" cy="52" rx="30" ry="33" fill="#A9743B" stroke="#5C3A1E" stroke-width="2"/>'
+    +'<ellipse cx="45" cy="60" rx="17" ry="21" fill="#F0D9A8"/>'
+    +'<path d="M20 44 q-5 18 5 31 q-13 -4 -13 -21 q0 -8 8 -10 z" fill="#8A5A2B"/>'
+    +'<path d="M70 44 q5 18 -5 31 q13 -4 13 -21 q0 -8 -8 -10 z" fill="#8A5A2B"/>'
+    +'<circle cx="34" cy="41" r="13" fill="#F7EAD0" stroke="#5C3A1E" stroke-width="1.8"/>'
+    +'<circle cx="56" cy="41" r="13" fill="#F7EAD0" stroke="#5C3A1E" stroke-width="1.8"/>'
+    +eyes+beak
+    +'<path d="M38 84 l-3 5 M38 84 v5 M38 84 l3 5" stroke="#E8A23B" stroke-width="2" stroke-linecap="round" fill="none"/>'
+    +'<path d="M52 84 l-3 5 M52 84 v5 M52 84 l3 5" stroke="#E8A23B" stroke-width="2" stroke-linecap="round" fill="none"/>'
+    +decor
     +'</g></svg>';
 }
 var LV=[{k:"hsk1",g:"Hello",hd:"Beginner",s:{ru:"С нуля · самый лёгкий",uz:"Noldan · eng oson",tj:"Аз сифр · осонтарин"},rec:1},
