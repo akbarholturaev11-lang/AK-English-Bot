@@ -60,7 +60,7 @@ def is_course_miniapp_supported(lesson) -> bool:
 def _miniapp_base_url_for_file(target_file: str) -> str:
     base_url = (
         (settings.MINI_APP_BASE_URL or "").strip()
-        or "https://telegram-chinese-bot-production.up.railway.app/course-v3.html"
+        or "https://web-production-1235a.up.railway.app/course-v3.html"
     )
 
     parts = urlsplit(base_url)
