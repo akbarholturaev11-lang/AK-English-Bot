@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "level": "hsk1",
-  "label": "HSK 1",
+  "label": "Beginner",
   "authenticated": false,
   "progress": {
     "streak": 0,
@@ -20,12 +20,12 @@
       "lessons": [
         {
           "n": 1,
-          "zh": "你好",
-          "py": "nǐ hǎo",
+          "zh": "Greetings",
+          "py": "/ˈɡriːtɪŋz/",
           "tr": {
-            "uz": "Xitoycha salomlashish va uzr so'rashni o'rganing",
-            "ru": "Научитесь здороваться и извиняться по-китайски",
-            "tj": "Омӯзед, ки чӣ тавр ба забони чинӣ салом гӯед ва узр пурсед"
+            "uz": "Salomlashish, xayrlashish va xushmuomala so'zlar",
+            "ru": "Приветствия, прощания и вежливые слова",
+            "tj": "Салом, хайрухуш ва калимаҳои хушмуомила"
           },
           "status": "current",
           "content": "lesson_01"
