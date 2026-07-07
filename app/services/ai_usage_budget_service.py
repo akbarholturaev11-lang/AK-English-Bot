@@ -8,14 +8,17 @@ from sqlalchemy import select
 
 from app.db.models.ai_usage import AIUsageBudget, AIUsageEvent
 from app.services.ai_service import AIUsageResult
+from app.services.subscription_currency_service import DEFAULT_USD_CNY_RATE, DEFAULT_VISA_LOCAL_RATES, SubscriptionCurrencyService
 
 
-USD_TO_SOMONI = 9.37
-USD_TO_YUAN = 6.80
-PROFIT_MARGIN = 0.40
-RAILWAY_SHARE_USD = 1.0
+USD_TO_SOMONI = float(DEFAULT_VISA_LOCAL_RATES["tjs"])
+USD_TO_YUAN = float(DEFAULT_USD_CNY_RATE)
+PROFIT_MARGIN = 0.50
+RAILWAY_SHARE_USD = 0.0
 SEGMENT_COUNT = 2
 COOLDOWN_HOURS = 6
+REFERRAL_TRIAL_PLAN_TYPE = "referral_trial_3_days"
+BUDGET_EPSILON_USD = 0.000001
 
 MODEL_PRICING_USD_PER_1M = {
     "gpt-4o-mini": (0.15, 0.60),
@@ -29,6 +32,7 @@ class BudgetAccessResult:
     allowed: bool
     message_key: str = ""
     cooldown_hours: int = COOLDOWN_HOURS
+    budget_depleted: bool = False
 
 
 @dataclass(frozen=True)
@@ -37,6 +41,7 @@ class BudgetRecordResult:
     cooldown_started: bool = False
     message_key: str = ""
     cooldown_hours: int = COOLDOWN_HOURS
+    budget_depleted: bool = False
 
 
 class AIUsageBudgetService:
@@ -48,24 +53,35 @@ class AIUsageBudgetService:
             return dt.replace(tzinfo=timezone.utc)
         return dt.astimezone(timezone.utc)
 
-    def _amount_to_usd(self, amount: int, currency: str) -> Optional[float]:
+    async def _live_or_manual_usd_rates(self):
+        rates, _ = await SubscriptionCurrencyService(self.session).live_or_manual_usd_rates()
+        return rates
+
+    def _amount_to_usd(self, amount: int, currency: str, rates) -> Optional[float]:
         currency_key = (currency or "").strip().lower()
         if currency_key in {"somoni", "tjs", "сомони"}:
-            return amount / USD_TO_SOMONI
+            return amount / float(rates["tjs"])
         if currency_key in {"usd", "$"}:
             return float(amount)
         if currency_key in {"¥", "cny", "yuan", "юань"}:
-            return amount / USD_TO_YUAN
+            return amount / float(rates["cny"])
         return None
 
-    def _ai_budget_usd(self, amount: int, currency: str) -> Optional[float]:
-        revenue_usd = self._amount_to_usd(amount, currency)
+    def _ai_budget_usd(self, amount: int, currency: str, rates) -> Optional[float]:
+        revenue_usd = self._amount_to_usd(amount, currency, rates)
         if revenue_usd is None:
             return None
         return max((revenue_usd * (1 - PROFIT_MARGIN)) - RAILWAY_SHARE_USD, 0.0)
 
     async def create_for_payment(self, payment, starts_at: datetime, ends_at: datetime) -> Optional[AIUsageBudget]:
-        total_budget = self._ai_budget_usd(payment.amount, payment.currency)
+        rates = await self._live_or_manual_usd_rates()
+        total_budget = self._ai_budget_usd(payment.amount, payment.currency, rates)
+        budget_amount = payment.amount
+        budget_currency = payment.currency
+        if total_budget is None and getattr(payment, "base_amount", None):
+            total_budget = self._ai_budget_usd(payment.base_amount, "TJS", rates)
+            budget_amount = payment.base_amount
+            budget_currency = "TJS"
         if total_budget is None:
             return None
 
@@ -77,9 +93,48 @@ class AIUsageBudgetService:
             user_telegram_id=payment.user_telegram_id,
             payment_id=payment.id,
             plan_type=payment.plan_type,
-            amount=payment.amount,
-            currency=payment.currency,
+            amount=budget_amount,
+            currency=budget_currency,
             total_budget_usd=total_budget,
+            segment_1_budget_usd=segment_budget,
+            segment_2_budget_usd=segment_budget,
+            segment_1_spent_usd=0.0,
+            segment_2_spent_usd=0.0,
+            current_window_spent_usd=0.0,
+            window_started_at=now,
+            cooldown_until=None,
+            starts_at=starts_at,
+            ends_at=ends_at,
+            status="active",
+            created_at=now,
+            updated_at=now,
+        )
+        self.session.add(budget)
+        await self.session.flush()
+        return budget
+
+    async def create_fixed_budget(
+        self,
+        *,
+        telegram_id: int,
+        plan_type: str,
+        amount: int,
+        currency: str,
+        total_budget_usd: float,
+        starts_at: datetime,
+        ends_at: datetime,
+    ) -> AIUsageBudget:
+        await self.expire_active_budgets(telegram_id)
+
+        now = datetime.now(timezone.utc)
+        segment_budget = total_budget_usd / SEGMENT_COUNT
+        budget = AIUsageBudget(
+            user_telegram_id=telegram_id,
+            payment_id=None,
+            plan_type=plan_type,
+            amount=amount,
+            currency=currency,
+            total_budget_usd=total_budget_usd,
             segment_1_budget_usd=segment_budget,
             segment_2_budget_usd=segment_budget,
             segment_1_spent_usd=0.0,
@@ -106,6 +161,23 @@ class AIUsageBudgetService:
         if budgets:
             await self.session.flush()
 
+    async def expire_budget(self, budget: AIUsageBudget) -> None:
+        budget.status = "expired"
+        budget.updated_at = datetime.now(timezone.utc)
+        await self.session.flush()
+
+    def is_fixed_trial_budget(self, budget: AIUsageBudget) -> bool:
+        return budget.plan_type == REFERRAL_TRIAL_PLAN_TYPE
+
+    def total_spent_usd(self, budget: AIUsageBudget) -> float:
+        return float(budget.segment_1_spent_usd or 0.0) + float(budget.segment_2_spent_usd or 0.0)
+
+    def remaining_total_budget_usd(self, budget: AIUsageBudget) -> float:
+        return max(float(budget.total_budget_usd or 0.0) - self.total_spent_usd(budget), 0.0)
+
+    def is_total_budget_depleted(self, budget: AIUsageBudget) -> bool:
+        return self.remaining_total_budget_usd(budget) <= BUDGET_EPSILON_USD
+
     async def _list_active_budgets(self, telegram_id: int) -> list[AIUsageBudget]:
         result = await self.session.execute(
             select(AIUsageBudget)
@@ -114,6 +186,18 @@ class AIUsageBudgetService:
             .order_by(AIUsageBudget.created_at.desc())
         )
         return list(result.scalars().all())
+
+    async def get_latest_budget(
+        self,
+        telegram_id: int,
+        plan_type: Optional[str] = None,
+    ) -> Optional[AIUsageBudget]:
+        query = select(AIUsageBudget).where(AIUsageBudget.user_telegram_id == telegram_id)
+        if plan_type:
+            query = query.where(AIUsageBudget.plan_type == plan_type)
+        query = query.order_by(AIUsageBudget.created_at.desc()).limit(1)
+        result = await self.session.execute(query)
+        return result.scalar_one_or_none()
 
     async def get_active_budget(self, telegram_id: int) -> Optional[AIUsageBudget]:
         now = datetime.now(timezone.utc)
@@ -199,6 +283,16 @@ class AIUsageBudgetService:
             return BudgetAccessResult(allowed=True)
 
         now = datetime.now(timezone.utc)
+        if self.is_fixed_trial_budget(budget):
+            if self.is_total_budget_depleted(budget):
+                await self.expire_budget(budget)
+                return BudgetAccessResult(
+                    allowed=False,
+                    message_key="ai_budget_depleted",
+                    budget_depleted=True,
+                )
+            return BudgetAccessResult(allowed=True)
+
         if budget.cooldown_until and self._as_utc(budget.cooldown_until) > now:
             return BudgetAccessResult(allowed=False, message_key="ai_budget_cooldown")
 
@@ -258,7 +352,6 @@ class AIUsageBudgetService:
 
         await self._refresh_window_if_needed(budget, now)
         segment, _, segment_end = self._segment_bounds(budget, now)
-        threshold = self._current_threshold_usd(budget, segment, segment_end, now)
 
         self._set_segment_spent(
             budget,
@@ -268,6 +361,16 @@ class AIUsageBudgetService:
         budget.current_window_spent_usd += cost_usd
         budget.updated_at = now
 
+        if self.is_fixed_trial_budget(budget):
+            budget_depleted = self.is_total_budget_depleted(budget)
+            await self.session.flush()
+            return BudgetRecordResult(
+                cost_usd=cost_usd,
+                budget_depleted=budget_depleted,
+                message_key="ai_budget_depleted_notice" if budget_depleted else "",
+            )
+
+        threshold = self._current_threshold_usd(budget, segment, segment_end, now)
         cooldown_started = threshold > 0 and budget.current_window_spent_usd >= threshold
         if cooldown_started:
             await self._start_cooldown(budget, now, flush=False)

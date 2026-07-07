@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime, timezone
+from math import isfinite
 from typing import Optional
 
 from sqlalchemy import delete, func, or_, select
@@ -27,6 +28,8 @@ class PortfolioSummary:
 
 
 class PortfolioService:
+    MANUAL_SOURCES = {"manual_profit", "manual_expense"}
+
     def __init__(self, session):
         self.session = session
 
@@ -64,14 +67,20 @@ class PortfolioService:
 
     async def record_subscription_profit(self, payment: Payment) -> None:
         revenue_usd = self.amount_to_usd(payment.amount, payment.currency)
+        original_amount = payment.amount
+        original_currency = payment.currency
+        if revenue_usd is None and payment.base_amount:
+            revenue_usd = self.amount_to_usd(payment.base_amount, "TJS")
+            original_amount = payment.base_amount
+            original_currency = "TJS"
         if revenue_usd is None:
             return
 
         transaction = await self._get_transaction(payment.id, "subscription_profit")
         if transaction:
             transaction.amount_usd = revenue_usd
-            transaction.original_amount = payment.amount
-            transaction.original_currency = payment.currency
+            transaction.original_amount = original_amount
+            transaction.original_currency = original_currency
             transaction.user_telegram_id = payment.user_telegram_id
             transaction.note = "100% revenue from subscription"
         else:
@@ -80,8 +89,8 @@ class PortfolioService:
                     transaction_type="profit",
                     source="subscription_profit",
                     amount_usd=revenue_usd,
-                    original_amount=payment.amount,
-                    original_currency=payment.currency,
+                    original_amount=original_amount,
+                    original_currency=original_currency,
                     payment_id=payment.id,
                     user_telegram_id=payment.user_telegram_id,
                     note="100% revenue from subscription",
@@ -109,7 +118,7 @@ class PortfolioService:
         currency: str,
         note: str,
     ) -> Optional[PortfolioTransaction]:
-        if transaction_type not in {"profit", "expense"}:
+        if transaction_type not in {"profit", "expense"} or not isfinite(amount) or amount <= 0:
             return None
 
         amount_usd = self.amount_to_usd(amount, currency)
@@ -127,6 +136,44 @@ class PortfolioService:
             created_at=datetime.now(timezone.utc),
         )
         self.session.add(transaction)
+        await self.session.flush()
+        return transaction
+
+    async def get_manual_transaction(self, transaction_id: int) -> Optional[PortfolioTransaction]:
+        result = await self.session.execute(
+            select(PortfolioTransaction)
+            .where(PortfolioTransaction.id == transaction_id)
+            .where(PortfolioTransaction.source.in_(self.MANUAL_SOURCES))
+            .limit(1)
+        )
+        return result.scalar_one_or_none()
+
+    async def update_manual_transaction(
+        self,
+        *,
+        transaction_id: int,
+        transaction_type: str,
+        amount: float,
+        currency: str,
+        note: str,
+    ) -> Optional[PortfolioTransaction]:
+        if transaction_type not in {"profit", "expense"} or not isfinite(amount) or amount <= 0:
+            return None
+
+        amount_usd = self.amount_to_usd(amount, currency)
+        if amount_usd is None:
+            return None
+
+        transaction = await self.get_manual_transaction(transaction_id)
+        if not transaction:
+            return None
+
+        transaction.transaction_type = transaction_type
+        transaction.source = f"manual_{transaction_type}"
+        transaction.amount_usd = amount_usd
+        transaction.original_amount = amount
+        transaction.original_currency = currency
+        transaction.note = note
         await self.session.flush()
         return transaction
 
@@ -177,6 +224,8 @@ class PortfolioService:
         count = 0
         for payment in result.scalars().all():
             amount_usd = self.amount_to_usd(payment.amount, payment.currency)
+            if amount_usd is None and payment.base_amount:
+                amount_usd = self.amount_to_usd(payment.base_amount, "TJS")
             if amount_usd is None:
                 continue
             total_usd += amount_usd

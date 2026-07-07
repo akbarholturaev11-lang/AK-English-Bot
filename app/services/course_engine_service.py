@@ -30,6 +30,7 @@ COURSE_STEP_ORDER_V2_BASE = [
     "dialogue_2",       # bo'sh bo'lsa o'tkazib yuboriladi
     "dialogue_3",       # bo'sh bo'lsa o'tkazib yuboriladi
     "dialogue_4",       # bo'sh bo'lsa o'tkazib yuboriladi
+    "dialogue_5",       # bo'sh bo'lsa o'tkazib yuboriladi
     "grammar",          # bo'sh bo'lsa o'tkazib yuboriladi
     "exercise",
     "satisfaction_check",
@@ -39,6 +40,23 @@ COURSE_STEP_ORDER_V2_BASE = [
 
 # Backward compat alias
 COURSE_STEP_ORDER = COURSE_STEP_ORDER_V1
+
+COURSE_LEVEL_ORDER = ("hsk1", "hsk2", "hsk3", "hsk4")
+
+BLOCK_STEP_PREFIXES = ("block_vocab_", "block_grammar_", "block_quiz_")
+
+
+def get_next_course_level(level: str | None) -> str | None:
+    normalized = (level or "").strip().lower()
+    if normalized == "beginner":
+        normalized = "hsk1"
+    try:
+        idx = COURSE_LEVEL_ORDER.index(normalized)
+    except ValueError:
+        return None
+    if idx >= len(COURSE_LEVEL_ORDER) - 1:
+        return None
+    return COURSE_LEVEL_ORDER[idx + 1]
 
 
 def _parse_json(value, default):
@@ -106,10 +124,77 @@ def is_v2_lesson(lesson) -> bool:
     return any(isinstance(d, dict) and d.get("block_no") for d in dialogues)
 
 
+def get_lesson_blocks(lesson) -> list[dict]:
+    dialogues = _parse_json(getattr(lesson, "dialogue_json", None), [])
+    if not isinstance(dialogues, list):
+        return []
+    return [
+        block
+        for block in dialogues
+        if isinstance(block, dict) and block.get("block_no")
+    ]
+
+
+def is_block_lesson(lesson) -> bool:
+    """Dars dialog bo'yicha kichik qismlarga bo'linganmi."""
+    return any(
+        block.get("word_nos")
+        or block.get("mini_quiz")
+        or block.get("mini_homework")
+        for block in get_lesson_blocks(lesson)
+    )
+
+
+def get_block_no_from_step(step: str) -> Optional[int]:
+    step = (step or "").strip()
+    for prefix in (*BLOCK_STEP_PREFIXES, "dialogue_"):
+        if step.startswith(prefix):
+            try:
+                return int(step.removeprefix(prefix))
+            except (TypeError, ValueError):
+                return None
+    return None
+
+
+def is_block_quiz_step(step: str) -> bool:
+    return (step or "").startswith("block_quiz_")
+
+
+def is_block_vocab_step(step: str) -> bool:
+    return (step or "").startswith("block_vocab_")
+
+
+def is_block_grammar_step(step: str) -> bool:
+    return (step or "").startswith("block_grammar_")
+
+
+def get_block_by_no(lesson, block_no: int) -> Optional[dict]:
+    for block in get_lesson_blocks(lesson):
+        if int(block.get("block_no") or 0) == block_no:
+            return block
+    return None
+
+
 def get_step_order(lesson) -> list:
     """Darsga mos step tartibini qaytaradi."""
     if not is_v2_lesson(lesson):
         return COURSE_STEP_ORDER_V1
+
+    if is_block_lesson(lesson):
+        steps = ["intro"]
+        for block in get_lesson_blocks(lesson):
+            block_no = int(block.get("block_no") or 0)
+            if block_no <= 0:
+                continue
+            if block.get("word_nos"):
+                steps.append(f"block_vocab_{block_no}")
+            steps.append(f"dialogue_{block_no}")
+            if block.get("grammar_notes") or block.get("grammar_nos"):
+                steps.append(f"block_grammar_{block_no}")
+            if block.get("mini_quiz") is not False:
+                steps.append(f"block_quiz_{block_no}")
+        steps += ["satisfaction_check", "homework", "completed"]
+        return steps
 
     vocab = _parse_json(getattr(lesson, "vocabulary_json", None), [])
     dialogues = _parse_json(getattr(lesson, "dialogue_json", None), [])
@@ -118,7 +203,7 @@ def get_step_order(lesson) -> list:
     if len(vocab) > 8:
         steps.append("vocab_2")
 
-    for i in range(1, min(len(dialogues) + 1, 5)):
+    for i in range(1, len(dialogues) + 1):
         steps.append(f"dialogue_{i}")
 
     # grammar_json bo'sh bo'lmasa — grammar stepini qo'shamiz
@@ -146,12 +231,35 @@ class CourseEngineService:
         normalized = (level or "").strip().lower()
         fallback_map = {
             "beginner": ("hsk1",),
+            "a1": ("hsk1",),
+            "a2": ("hsk2", "hsk1"),
+            "b1": ("hsk3", "hsk2", "hsk1"),
+            "b2": ("hsk4", "hsk3", "hsk2", "hsk1"),
             "hsk1": ("hsk1",),
             "hsk2": ("hsk2", "hsk1"),
             "hsk3": ("hsk3", "hsk2", "hsk1"),
             "hsk4": ("hsk4", "hsk3", "hsk2", "hsk1"),
         }
         return fallback_map.get(normalized, ("hsk1",))
+
+    def _is_lesson_already_counted(self, progress, lesson) -> bool:
+        completed_count = getattr(progress, "completed_lessons_count", 0) or 0
+        if getattr(progress, "last_completed_lesson_id", None) == getattr(lesson, "id", None):
+            return True
+        return completed_count >= (getattr(lesson, "lesson_order", 0) or 0)
+
+    async def _mark_current_lesson_completed_once(self, progress, lesson) -> None:
+        if self._is_lesson_already_counted(progress, lesson):
+            progress.current_step = "completed"
+            progress.waiting_for = "none"
+            progress.homework_status = "completed"
+            completed_count = getattr(progress, "completed_lessons_count", 0) or 0
+            if not getattr(progress, "last_completed_lesson_id", None) and completed_count == lesson.lesson_order:
+                progress.last_completed_lesson_id = lesson.id
+            await self.session.flush()
+            return
+
+        await self.progress_repo.mark_lesson_completed(progress)
 
     async def get_or_create_progress(self, telegram_id: int):
         user = await self.user_repo.get_by_telegram_id(telegram_id)
@@ -201,7 +309,9 @@ class CourseEngineService:
         if waiting_for in {
             "satisfaction_answer",
             "satisfaction_reason",
+            "quiz_result",
             "homework_submission",
+            "homework_result",
             "next_study_time",
             "review_choice",
         }:
@@ -492,10 +602,11 @@ class CourseEngineService:
             level=lesson.level,
             lesson_order=lesson.lesson_order,
         )
+        await self._mark_current_lesson_completed_once(progress, lesson)
         if not next_lesson:
+            await self.session.commit()
             return user, progress, None, "course_no_next_lesson"
 
-        await self.progress_repo.mark_lesson_completed(progress)
         await self.progress_repo.set_current_lesson_and_step(
             progress=progress,
             lesson_id=next_lesson.id,
@@ -531,7 +642,7 @@ class CourseEngineService:
             lesson_order=current_order,
         )
 
-        await self.progress_repo.mark_lesson_completed(progress)
+        await self._mark_current_lesson_completed_once(progress, lesson)
 
         await self.progress_repo.set_current_lesson_and_step(
             progress=progress,
@@ -543,6 +654,46 @@ class CourseEngineService:
         if next_lesson:
             await self.progress_repo.set_homework_status(progress, "none")
 
+        await self.session.commit()
+
+        return user, progress, lesson, next_lesson, ""
+
+    async def complete_current_lesson_once(self, telegram_id: int):
+        user, progress, lesson, error_key = await self.get_current_lesson(telegram_id)
+        if error_key:
+            return None, None, None, error_key
+
+        await self._mark_current_lesson_completed_once(progress, lesson)
+        await self.session.commit()
+        return user, progress, lesson, ""
+
+    async def advance_to_next_level(self, telegram_id: int):
+        user, progress, lesson, error_key = await self.get_current_lesson(telegram_id)
+        if error_key:
+            return None, None, None, None, error_key
+
+        next_level = get_next_course_level(lesson.level)
+        if not next_level:
+            return user, progress, lesson, None, "course_no_next_level_available"
+
+        next_lesson = await self.lesson_repo.get_first_by_level(next_level)
+        if not next_lesson:
+            return user, progress, lesson, None, "course_no_lessons_available"
+
+        await self._mark_current_lesson_completed_once(progress, lesson)
+
+        user.level = next_level
+        progress.level = next_level
+        progress.completed_lessons_count = 0
+        progress.current_lesson_id = next_lesson.id
+        progress.current_step = "intro"
+        progress.waiting_for = "none"
+        progress.homework_status = "none"
+        progress.needs_review_prompt = False
+        progress.next_study_at = None
+        progress.weekly_progress_baseline_lessons_count = 0
+
+        await self.session.flush()
         await self.session.commit()
 
         return user, progress, lesson, next_lesson, ""

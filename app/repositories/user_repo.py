@@ -18,6 +18,14 @@ class UserRepository:
         )
         return result.scalar_one_or_none()
 
+    async def get_by_telegram_id_for_update(self, telegram_id: int) -> Optional[User]:
+        result = await self.session.execute(
+            select(User)
+            .where(User.telegram_id == telegram_id)
+            .with_for_update()
+        )
+        return result.scalar_one_or_none()
+
     async def find_by_identifier(self, identifier: str) -> Optional[User]:
         value = (identifier or "").strip()
         if not value:
@@ -78,18 +86,19 @@ class UserRepository:
             level=level,
             learning_mode="qa",
             voice_mode="none",
-            status="active",
+            status="trial",
             payment_status="none",
             question_limit=5,
             questions_used=0,
             bonus_questions=0,
             bonus_questions_used=0,
             referral_code=self._generate_referral_code(),
-            start_date=now,
-            end_date=now + timedelta(hours=24),
+            start_date=None,
+            end_date=None,
             discount_referral_count=0,
             discount_eligible=False,
             discount_used=False,
+            referral_trial_count_started_at=now,
             created_at=now,
             last_active_at=now,
         )
@@ -174,6 +183,21 @@ class UserRepository:
         user.referral_code = self._generate_referral_code()
         await self.session.flush()
 
+    async def set_referral_trial_progress_message(
+        self,
+        user: User,
+        chat_id: int,
+        message_id: int,
+    ) -> None:
+        user.referral_trial_progress_chat_id = chat_id
+        user.referral_trial_progress_message_id = message_id
+        await self.session.flush()
+
+    async def clear_referral_trial_progress_message(self, user: User) -> None:
+        user.referral_trial_progress_chat_id = None
+        user.referral_trial_progress_message_id = None
+        await self.session.flush()
+
     async def was_daily_limit_offer_sent_today(self, user: User) -> bool:
         if not user.daily_limit_offer_sent_at:
             return False
@@ -225,6 +249,7 @@ class UserRepository:
     async def get_filtered_users(
         self,
         language: Optional[str] = None,
+        languages: Optional[list[str]] = None,
         status: Optional[str] = None,
         level: Optional[str] = None,
         learning_mode: Optional[str] = None,
@@ -236,7 +261,9 @@ class UserRepository:
         activity_filter: Optional[str] = None,
     ) -> list[User]:
         query = select(User)
-        if language:
+        if languages:
+            query = query.where(User.language.in_(languages))
+        elif language:
             query = query.where(User.language == language)
         if status:
             query = query.where(User.status == status)
@@ -304,11 +331,29 @@ class UserRepository:
 
     async def delete_by_telegram_id(self, telegram_id: int) -> bool:
         from sqlalchemy import delete as sql_delete
+        from app.db.models.bot_feedback import BotFeedback
+        from app.db.models.course_attempts import CourseAttempt
+        from app.db.models.course_progress import CourseProgress
         from app.db.models.message import Message
+        from app.db.models.onboarding_tip_event import OnboardingTipEvent
 
         user = await self.get_by_telegram_id(telegram_id)
         if not user:
             return False
+        await self.session.execute(
+            sql_delete(BotFeedback).where(
+                (BotFeedback.user_id == user.id) | (BotFeedback.telegram_id == telegram_id)
+            )
+        )
+        await self.session.execute(
+            sql_delete(OnboardingTipEvent).where(OnboardingTipEvent.user_id == user.id)
+        )
+        await self.session.execute(
+            sql_delete(CourseAttempt).where(CourseAttempt.user_id == user.id)
+        )
+        await self.session.execute(
+            sql_delete(CourseProgress).where(CourseProgress.user_id == user.id)
+        )
         await self.session.execute(
             sql_delete(Message).where(Message.user_id == user.id)
         )

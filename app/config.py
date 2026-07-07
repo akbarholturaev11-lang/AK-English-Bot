@@ -18,6 +18,7 @@ class Settings(BaseSettings):
     ADMIN_IDS: str = "7965751363"
     PAYMENT_DETAILS: str = ""
     BOT_USERNAME: str = ""
+    MINI_APP_BASE_URL: str = ""
 
     DEFAULT_LANGUAGE: str = "tj"
     LOG_LEVEL: str = "INFO"
@@ -36,4 +37,4 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
-COURSE_MODE_ENABLED = False
+COURSE_MODE_ENABLED = True

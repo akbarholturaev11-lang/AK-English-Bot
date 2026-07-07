@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from typing import Optional, List
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.models.referral import Referral
@@ -14,12 +14,15 @@ class ReferralRepository:
     async def get_by_invited_user_telegram_id(
         self,
         invited_user_telegram_id: int,
+        *,
+        for_update: bool = False,
     ) -> Optional[Referral]:
-        result = await self.session.execute(
-            select(Referral).where(
-                Referral.invited_user_telegram_id == invited_user_telegram_id
-            )
+        query = select(Referral).where(
+            Referral.invited_user_telegram_id == invited_user_telegram_id
         )
+        if for_update:
+            query = query.with_for_update()
+        result = await self.session.execute(query)
         return result.scalar_one_or_none()
 
     async def create(
@@ -62,8 +65,29 @@ class ReferralRepository:
             .order_by(Referral.activated_at.asc())
         )
         return list(result.scalars().all())
-    
-    from sqlalchemy import select
+
+    async def count_by_referrer(self, referrer_telegram_id: int) -> int:
+        result = await self.session.execute(
+            select(func.count())
+            .select_from(Referral)
+            .where(Referral.referrer_telegram_id == referrer_telegram_id)
+        )
+        return result.scalar() or 0
+
+    async def count_active_since(
+        self,
+        referrer_telegram_id: int,
+        started_at: datetime,
+    ) -> int:
+        result = await self.session.execute(
+            select(func.count())
+            .select_from(Referral)
+            .where(Referral.referrer_telegram_id == referrer_telegram_id)
+            .where(Referral.status == "active")
+            .where(Referral.activated_at.is_not(None))
+            .where(Referral.activated_at >= started_at)
+        )
+        return result.scalar() or 0
 
     async def get_by_pair(self, referrer_telegram_id: int, invited_user_telegram_id: int):
         result = await self.session.execute(

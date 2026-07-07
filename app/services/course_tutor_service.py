@@ -10,7 +10,7 @@ _CONVERSATIONAL_STEPS = {
     "intro", "vocab", "vocabulary", "dialogue", "grammar",
     # V2 steps:
     "vocab_1", "vocab_2",
-    "dialogue_1", "dialogue_2", "dialogue_3", "dialogue_4",
+    "dialogue_1", "dialogue_2", "dialogue_3", "dialogue_4", "dialogue_5",
 }
 
 _PRESS_BUTTON_HINT = {
@@ -33,15 +33,15 @@ _VOCAB_BLOCK_RULE = """
 FORMAT QOIDASI (JUDA MUHIM):
 - Har bir so'zni FAQAT shu ko'rinishda yoz:
 
-1. <b>汉字</b>
-<code>pīnyīn</code>
+1. <b>word</b>
+<code>/pronunciation/</code>
 Tarjima: qisqa tarjima
 Misollar:
-- 汉字 bilan oddiy gap — tarjimasi
-- 汉字 bilan yana bitta oddiy gap — tarjimasi
+- word bilan oddiy inglizcha gap — tarjimasi
+- word bilan yana bitta oddiy inglizcha gap — tarjimasi
 
 - Har bir so'z alohida blok bo'lsin
-- Iyeroglif, pinyin, tarjima va misollarni bitta qatorda aralashtirma
+- Inglizcha so'z, talaffuz, tarjima va misollarni bitta qatorda aralashtirma
 - Dars lug'atidan tashqariga chiqma
 - Foydalanuvchi "nima", "tushunmadim", "qanaqa" kabi noaniq yozsa ham shu formatda qayta tushuntir
 - Javob oxirida "Yana misollar xohlaysizmi?" kabi savol yozma
@@ -66,6 +66,105 @@ class CourseTutorService:
     def _safe(self, value: Any) -> str:
         return str(value).strip() if value else ""
 
+    def _block_by_no(self, lesson, n: int) -> dict:
+        dialogues = self._parse(getattr(lesson, "dialogue_json", None), [])
+        if not isinstance(dialogues, list):
+            return {}
+        for block in dialogues:
+            if isinstance(block, dict) and int(block.get("block_no") or 0) == n:
+                return block
+        return {}
+
+    def _block_words(self, lesson, block: dict) -> list[dict]:
+        vocab = self._parse(getattr(lesson, "vocabulary_json", None), [])
+        if not isinstance(vocab, list):
+            return []
+        word_nos = block.get("word_nos") or []
+        if not isinstance(word_nos, list):
+            return []
+        wanted = {int(no) for no in word_nos if str(no).isdigit()}
+        return [
+            word
+            for word in vocab
+            if isinstance(word, dict) and int(word.get("no") or 0) in wanted
+        ]
+
+    def _block_grammar(self, lesson, block: dict) -> list[dict]:
+        grammar = self._parse(getattr(lesson, "grammar_json", None), [])
+        grammar_nos = block.get("grammar_nos") or []
+        if not isinstance(grammar, list) or not isinstance(grammar_nos, list):
+            grammar_items = []
+        else:
+            wanted = {int(no) for no in grammar_nos if str(no).isdigit()}
+            grammar_items = [
+                item
+                for item in grammar
+                if isinstance(item, dict) and int(item.get("no") or 0) in wanted
+            ]
+        if grammar_items:
+            return grammar_items
+
+        notes = block.get("grammar_notes") or []
+        if not isinstance(notes, list):
+            return []
+
+        fallback_items = []
+        for index, note in enumerate(notes, 1):
+            if not isinstance(note, dict):
+                continue
+            example = {}
+            if note.get("example_en"):
+                example = {
+                    "en": note.get("example_en") or "",
+                    "pron": note.get("example_pron") or "",
+                    "uz": note.get("example_uz") or "",
+                    "ru": note.get("example_ru") or "",
+                    "tj": note.get("example_tj") or "",
+                }
+            fallback_items.append(
+                {
+                    "no": index,
+                    "source": "context_fallback",
+                    "title_en": note.get("pattern") or "",
+                    "title_uz": note.get("pattern_uz") or note.get("pattern") or "",
+                    "title_ru": note.get("pattern_ru") or note.get("pattern") or "",
+                    "title_tj": note.get("pattern_tj") or note.get("pattern") or "",
+                    "rule_uz": note.get("explanation_uz") or "",
+                    "rule_ru": note.get("explanation_ru") or "",
+                    "rule_tj": note.get("explanation_tj") or "",
+                    "formula": note.get("pattern") or "",
+                    "examples": [example] if example else [],
+                }
+            )
+        return fallback_items
+
+    def _lesson_blocks_payload(self, lesson) -> list[dict]:
+        dialogues = self._parse(getattr(lesson, "dialogue_json", None), [])
+        if not isinstance(dialogues, list):
+            return []
+
+        payload = []
+        for block in dialogues:
+            if not isinstance(block, dict) or not block.get("block_no"):
+                continue
+            payload.append(
+                {
+                    "block_no": block.get("block_no"),
+                    "section_label": block.get("section_label"),
+                    "scene_uz": block.get("scene_uz"),
+                    "scene_ru": block.get("scene_ru"),
+                    "scene_tj": block.get("scene_tj"),
+                    "word_nos": block.get("word_nos") or [],
+                    "vocabulary": self._block_words(lesson, block),
+                    "grammar_nos": block.get("grammar_nos") or [],
+                    "grammar_points": self._block_grammar(lesson, block),
+                    "dialogue": block.get("dialogue") or [],
+                    "mini_quiz": block.get("mini_quiz") or [],
+                    "mini_homework": block.get("mini_homework") or {},
+                }
+            )
+        return payload
+
     # ─── STEP PROMPTS ───────────────────────────────────────────
 
     def _prompt_intro(self, lesson, user_language, user_level) -> tuple:
@@ -83,14 +182,14 @@ class CourseTutorService:
             "dialogue_preview": dialogue[:1],
         }
 
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Talabani bu darsga iliq kutib ol.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisан. Talabani bu darsga iliq kutib ol.
 
 DARS MA'LUMOTLARI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasiga moslashtirilgan
-- Xitoy belgilari uchun <b>...</b>, pinyin uchun <code>...</code> ishlatilsin
+- Inglizcha so'z uchun <b>...</b>, talaffuz uchun <code>...</code> ishlatilsin
 - Jami 4 qatordan oshmasin
 - 2-3 ta so'z va asosiy grammatika mavzusini qiziqarli tarzda tanishtir
 - Hali o'qitma — faqat tanishtir
@@ -105,14 +204,14 @@ QOIDALAR:
 
         data = {"lesson_title": title, "vocabulary": vocab}
 
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Bu darsning so'zlarini qiziqarli tarzda o'rgat.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisан. Bu darsning so'zlarini qiziqarli tarzda o'rgat.
 
 SO'ZLAR MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Xitoy belgilari uchun <b>...</b>, pinyin uchun <code>...</code>
+- Inglizcha so'z uchun <b>...</b>, talaffuz uchun <code>...</code>
 - O'xshash so'zlar bo'lsa (masalan 我/你, 大/小), ularni yonma-yon solishtir
 - Maksimal 8 ta so'zni tushuntir
 {_VOCAB_BLOCK_RULE}
@@ -126,15 +225,15 @@ QOIDALAR:
 
         data = {"lesson_title": title, "dialogue": dialogue}
 
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Bu dialogni qadamma-qadam o'rgat.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisан. Bu dialogni qadamma-qadam o'rgat.
 
 DIALOG MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Xitoy: <b>...</b>, pinyin: <code>...</code>
-- Har bir qator: <b>Xitoycha</b> [<code>pinyin</code>] — {user_language}dagi ma'nosi
+- Inglizcha: <b>...</b>, talaffuz: <code>...</code>
+- Har bir qator: <b>English</b> [<code>pronunciation</code>] — {user_language}dagi ma'nosi
 - Taqdimotdan keyin kontekstni qisqacha tushuntir (bu suhbat qayerda/qachon bo'ladi)
 - Dialogdan 1-2 ta foydali iboralarni amaliy hayot bilan solishtirgan holda tushuntir
 - Jami 12 qatordan oshmasin
@@ -154,18 +253,19 @@ QOIDALAR:
             "lesson_vocabulary": vocab[:5],
         }
 
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Grammatika qoidalarini aniq va qisqa tushuntir.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisan. Grammatika qoidalarini qisqa, tushunarli va amaliy tushuntir.
 
 GRAMMATIKA MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Xitoy: <b>...</b>, pinyin: <code>...</code>
-- Har bir grammatika nuqtasi: qoida → bo'sh joy bilan naqsh → dars lug'atidan 2 ta misol
-- O'xshash tuzilmalar bo'lsa (masalan 的/地/得, 吗/呢, 在/有), tezkor maslahat bilan solishtir
-- Misollar FAQAT lesson_vocabulary so'zlaridan foydalansin
-- Jami 10 qatordan oshmasin
+- Inglizcha: <b>...</b>, talaffuz: <code>...</code>
+- Har bir grammatika nuqtasi 4-5 qatordan oshmasin
+- Format: qolip → qachon ishlatiladi → 1 aniq misol → bitta foydali ehtiyot nuqtasi
+- Misol dars lug'ati yoki darsdagi gaplardan bo'lsin
+- O'xshash tuzilmalar bo'lsa faqat 1 qisqa farqni ayt
+- Keraksiz motivatsion gap, uzun kirish va nazariya yozma
 - Foydalanuvchi savol bersa tushuntir va TAKLIF qil (masalan: "Bu qoidani boshqa misollar bilan ko'rmoqchimisiz?")
 {_EXPLANATION_RULE}"""
 
@@ -181,8 +281,8 @@ QOIDALAR:
         if not exercise:
             exercise = {
                 "instruction": "Create 3 exercises from the lesson vocabulary and grammar only.",
-                "allowed_vocabulary": [w.get("zh","") for w in vocab[:8] if isinstance(w,dict)],
-                "allowed_grammar": [g.get("title_zh","") for g in grammar[:3] if isinstance(g,dict)],
+                "allowed_vocabulary": [w.get("en","") for w in vocab[:8] if isinstance(w,dict)],
+                "allowed_grammar": [g.get("title_en","") for g in grammar[:3] if isinstance(g,dict)],
             }
 
         data = {
@@ -193,24 +293,24 @@ QOIDALAR:
             "allowed_grammar": grammar[:3],
         }
 
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Foydalanuvchi mashq javoblarini tekshir.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisан. Foydalanuvchi mashq javoblarini tekshir.
 
 MASHQ MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 ASOSIY VAZIFA — JAVOBNI MAZMUN BO'YICHA TEKSHIR (FORMAT BO'YICHA EMAS):
-- Foydalanuvchi xitoy belgilari, pinyin yoki ma'no yozishi mumkin — BARCHASI QABUL QILINADI
+- Foydalanuvchi inglizcha so'z, talaffuz yoki ma'no yozishi mumkin — BARCHASI QABUL QILINADI
 - HTML teglari (<b>, <code>) talab qilinmaydi — foydalanuvchi oddiy matn yozadi
 - Har bir javobni FAQAT MAZMUN bo'yicha tekshir:
   * ✅ — ma'no/so'z to'g'ri bo'lsa
   * ❌ — ma'no/so'z noto'g'ri bo'lsa
-- Noto'g'ri bo'lsa: TO'G'RI JAVOBNI ko'rsat (faqat bot o'zi <b>汉字</b> [<code>pinyin</code>] — ma'no formatida yozadi)
+- Noto'g'ri bo'lsa: TO'G'RI JAVOBNI ko'rsat (faqat bot o'zi <b>word</b> [<code>pronunciation</code>] — ma'no formatida yozadi)
 - Xatolarni qisqa tushuntir
 - Rag'batlantiruvchi bo'l: "Yaxshi! 👏" yoki "Deyarli to'g'ri! Mana maslahat..."
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Bot o'z javobida xitoy: <b>...</b>, pinyin: <code>...</code> ishlatadi
+- Bot o'z javobida inglizcha: <b>...</b>, talaffuz: <code>...</code> ishlatadi
 - Jami 10 qatordan oshmasin
 - Keyingi bo'limga o'tish haqida HECH NARSA dema — tizim o'zi o'tkazadi"""
 
@@ -227,14 +327,14 @@ QOIDALAR:
             "test_grammar": grammar[:3],
         }
 
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Foydalanuvchiga TEST savollarini ber.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisан. Foydalanuvchiga TEST savollarini ber.
 
 TEST MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Xitoy: <b>...</b>, pinyin: <code>...</code>
+- Inglizcha: <b>...</b>, talaffuz: <code>...</code>
 - BIRINCHI CHAQIRUVDA (foydalanuvchi xabari yo'q bo'lsa):
   * FAQAT 3-4 ta TEST SAVOLI ber — raqamlangan (1, 2, 3, 4)
   * Savol turlari: ko'p tanlovli (A/B/C/D) YOKI bo'sh to'ldirish
@@ -254,7 +354,7 @@ QOIDALAR:
         title = self._safe(getattr(lesson, "title", ""))
         data = {"lesson_title": title}
 
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Talaba bu darsni tushunganini tekshir.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisан. Talaba bu darsni tushunganini tekshir.
 
 DARS: {title}
 
@@ -267,27 +367,61 @@ QOIDALAR:
 
         return prompt, data
 
+    def _prompt_review(self, lesson, user_language, user_level) -> tuple:
+        vocab = self._parse(getattr(lesson, "vocabulary_json", None), [])
+        grammar = self._parse(getattr(lesson, "grammar_json", None), [])
+        title = self._safe(getattr(lesson, "title", ""))
+
+        data = {
+            "lesson_title": title,
+            "vocabulary": vocab,
+            "grammar_points": grammar,
+            "lesson_blocks": self._lesson_blocks_payload(lesson),
+        }
+
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisан. Talaba darsni tushunmagan joyini qayta tushuntir.
+
+DARS MA'LUMOTLARI:
+{json.dumps(data, ensure_ascii=False, indent=2)}
+
+QOIDALAR:
+- Faqat {user_language} tilida javob ber, {user_level} darajaga moslashtir
+- Agar FOYDALANUVCHI XABARI ichida MINI APP QUIZ/HOMEWORK KONTEXTI bo'lsa, avval o'sha xatolar va javoblarga tayan
+- Quiz wrong_items bo'lsa: har bir xatoni qisqa sabab + to'g'ri javob + 1 sodda misol bilan tushuntir
+- Homework answers/feedback bo'lsa: talabaning javobidagi xatoni aniq tuzat
+- Lesson_blocks yangi format: har bir block ichida dialogue, vocabulary, grammar_points, mini_quiz, mini_homework bor
+- Javobda aynan xato qilingan block/dialog/vocabulary/grammar bilan bog'lab tushuntir
+- Inglizcha: <b>...</b>, talaffuz: <code>...</code>
+- Yangi test, mashq yoki homework berma
+- Maksimal 10 qator
+- Oxirida qo'shimcha savol yozma
+{_EXPLANATION_RULE}"""
+
+        return prompt, data
+
     def _prompt_homework(self, lesson, user_language, user_level) -> tuple:
         homework = self._parse(getattr(lesson, "homework_json", None), [])
         vocab = self._parse(getattr(lesson, "vocabulary_json", None), [])
         grammar = self._parse(getattr(lesson, "grammar_json", None), [])
         title = self._safe(getattr(lesson, "title", ""))
+        lesson_blocks = self._lesson_blocks_payload(lesson)
 
         if not homework:
             homework = {
                 "instruction": "Create 1 homework task using only lesson vocabulary and grammar.",
-                "allowed_vocabulary": [w.get("zh","") for w in vocab[:8] if isinstance(w,dict)],
-                "allowed_grammar": [g.get("title_zh","") for g in grammar[:3] if isinstance(g,dict)],
+                "allowed_vocabulary": [w.get("en","") for w in vocab[:8] if isinstance(w,dict)],
+                "allowed_grammar": [g.get("title_en","") for g in grammar[:3] if isinstance(g,dict)],
             }
 
         data = {
             "lesson_title": title,
             "homework": homework,
-            "allowed_vocabulary": vocab[:8],
-            "allowed_grammar": grammar[:3],
+            "lesson_blocks": lesson_blocks,
+            "allowed_vocabulary": vocab,
+            "allowed_grammar": grammar,
         }
 
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Uy vazifasini baholash.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisан. Uy vazifasini baholash.
 
 UY VAZIFASI MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
@@ -301,7 +435,8 @@ ASOSIY VAZIFA — FOYDALANUVCHI JAVOBINI TEKSHIR:
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Xitoy: <b>...</b>, pinyin: <code>...</code>
+- Inglizcha: <b>...</b>, talaffuz: <code>...</code>
+- Yangi block formatdagi mini_homework mavjud bo'lsa, aynan shu topshiriqlarga tayan
 - Maksimal 8 qator"""
 
         return prompt, data
@@ -312,14 +447,14 @@ QOIDALAR:
         vocab_page = vocab[:8]
         title = self._safe(getattr(lesson, "title", ""))
         data = {"lesson_title": title, "vocabulary": vocab_page}
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Bu darsning birinchi qismidagi so'zlarni qiziqarli tarzda o'rgat.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisан. Bu darsning birinchi qismidagi so'zlarni qiziqarli tarzda o'rgat.
 
 SO'ZLAR (1–8):
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Xitoy belgilari uchun <b>...</b>, pinyin uchun <code>...</code>
+- Inglizcha so'z uchun <b>...</b>, talaffuz uchun <code>...</code>
 - Maksimal 8 ta so'zni tushuntir
 {_VOCAB_BLOCK_RULE}
 {_EXPLANATION_RULE}"""
@@ -331,43 +466,114 @@ QOIDALAR:
         vocab_page = vocab[8:]
         title = self._safe(getattr(lesson, "title", ""))
         data = {"lesson_title": title, "vocabulary": vocab_page}
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Bu darsning ikkinchi qismidagi so'zlarni o'rgat.
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisан. Bu darsning ikkinchi qismidagi so'zlarni o'rgat.
 
 SO'ZLAR (9+):
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Xitoy belgilari uchun <b>...</b>, pinyin uchun <code>...</code>
+- Inglizcha so'z uchun <b>...</b>, talaffuz uchun <code>...</code>
 - Maksimal 8 ta so'zni tushuntir
 {_VOCAB_BLOCK_RULE}
 {_EXPLANATION_RULE}"""
         return prompt, data
 
     def _prompt_dialogue_n(self, lesson, user_language, user_level, n: int = 1) -> tuple:
-        """V2: n-chi dialog bloki (grammar_notes inline)."""
+        """V2/block: n-chi dialog bloki va unga tegishli yangi so'z/grammatika."""
         import json as _json
-        dialogues = self._parse(getattr(lesson, "dialogue_json", None), [])
-        block = dialogues[n - 1] if isinstance(dialogues, list) and len(dialogues) >= n else {}
+        block = self._block_by_no(lesson, n)
         title = self._safe(getattr(lesson, "title", ""))
-        data = {"lesson_title": title, "dialogue_block": block, "block_number": n}
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Bu dialogni va unga bog'liq grammatikani qisqa tushuntir.
+        data = {
+            "lesson_title": title,
+            "block_number": n,
+            "dialogue_block": block,
+            "block_vocabulary": self._block_words(lesson, block),
+            "grammar_points": self._block_grammar(lesson, block),
+            "mini_quiz": block.get("mini_quiz") or [],
+            "mini_homework": block.get("mini_homework") or {},
+        }
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisан. Bu dialogni va unga bog'liq grammatikani qisqa tushuntir.
 
-DIALOG MA'LUMOTI:
+DIALOG MA'LUMOTI (YANGI BLOCK FORMAT):
 {_json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Xitoy: <b>...</b>, pinyin: <code>...</code>
-- Har bir qator: <b>Xitoycha</b> [<code>pinyin</code>] — tarjima
-- Dialogdan 1-2 ta foydali ibora va grammar_notes ni qisqa tushuntir
+- Inglizcha: <b>...</b>, talaffuz: <code>...</code>
+- Har bir qator: <b>English</b> [<code>pronunciation</code>] — tarjima
+- Faqat dialogue_block, block_vocabulary va grammar_points dan foydalan
+- Dialogdan 1-2 ta foydali ibora va grammar_points ni qisqa tushuntir
 - Jami 12 qatordan oshmasin
+{_EXPLANATION_RULE}"""
+        return prompt, data
+
+    def _prompt_block_vocab(self, lesson, user_language, user_level, n: int = 1) -> tuple:
+        block = self._block_by_no(lesson, n)
+        vocab_page = self._block_words(lesson, block)
+        title = self._safe(getattr(lesson, "title", ""))
+        data = {
+            "lesson_title": title,
+            "block_number": n,
+            "dialogue_block": block,
+            "vocabulary": vocab_page,
+        }
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisan. Faqat shu dialogdagi yangi so'zlarni tushuntir.
+
+SO'ZLAR:
+{json.dumps(data, ensure_ascii=False, indent=2)}
+
+QOIDALAR:
+- Faqat {user_language} tilida javob ber, {user_level} darajasi
+- Inglizcha so'z uchun <b>...</b>, talaffuz uchun <code>...</code>
+- Faqat shu qism so'zlaridan foydalan
+{_VOCAB_BLOCK_RULE}
+{_EXPLANATION_RULE}"""
+        return prompt, data
+
+    def _prompt_block_grammar(self, lesson, user_language, user_level, n: int = 1) -> tuple:
+        block = self._block_by_no(lesson, n)
+        title = self._safe(getattr(lesson, "title", ""))
+        data = {
+            "lesson_title": title,
+            "block_number": n,
+            "dialogue_block": block,
+            "grammar_notes": block.get("grammar_notes") or [],
+            "grammar_points": self._block_grammar(lesson, block),
+            "block_vocabulary": self._block_words(lesson, block),
+        }
+        prompt = f"""Sen do'stona ingliz tili o'qituvchisisan. Shu dialogdan keyingi grammatikani qisqa, tushunarli va foydali blok qilib tushuntir.
+
+GRAMMATIKA MA'LUMOTI:
+{json.dumps(data, ensure_ascii=False, indent=2)}
+
+QOIDALAR:
+- Faqat {user_language} tilida javob ber, {user_level} darajasi
+- Inglizcha: <b>...</b>, talaffuz: <code>...</code>
+- Har bir qoida 5-7 qatordan oshmasin
+- Format: qolip → oddiy ma'no → shu dialogda nima vazifa bajaryapti → 1 misol → bitta ehtiyot nuqtasi
+- Uzun nazariya, kitobcha uslub va keraksiz umumiy gaplar yozma
+- Darsdan tashqariga chiqma
 {_EXPLANATION_RULE}"""
         return prompt, data
 
     # ─── STEP ROUTER ────────────────────────────────────────────
 
     def _build_prompt_for_step(self, lesson, step: str, user_language: str, user_level: str) -> tuple:
+        if step.startswith("block_vocab_"):
+            try:
+                n = int(step.split("_", 2)[2])
+            except (ValueError, IndexError):
+                n = 1
+            return self._prompt_block_vocab(lesson, user_language, user_level, n)
+
+        if step.startswith("block_grammar_"):
+            try:
+                n = int(step.split("_", 2)[2])
+            except (ValueError, IndexError):
+                n = 1
+            return self._prompt_block_grammar(lesson, user_language, user_level, n)
+
         # V2 dialogue_N steps
         if step.startswith("dialogue_"):
             try:
@@ -388,6 +594,7 @@ QOIDALAR:
             "exercise":            self._prompt_exercise,
             "quiz":                self._prompt_quiz,
             "satisfaction_check":  self._prompt_satisfaction_check,
+            "review":              self._prompt_review,
             "homework":            self._prompt_homework,
         }
         handler = handlers.get(step, self._prompt_intro)
@@ -417,9 +624,16 @@ QOIDALAR:
             history=history or [],
             model_override=COURSE_MODEL,
         )
-        response = self.last_ai_result.content
+        response = (self.last_ai_result.content or "").strip()
+        if not response:
+            return ""
 
-        if step in _CONVERSATIONAL_STEPS:
+        if (
+            step in _CONVERSATIONAL_STEPS
+            or step.startswith("dialogue_")
+            or step.startswith("block_vocab_")
+            or step.startswith("block_grammar_")
+        ):
             hint = _PRESS_BUTTON_HINT.get(user_language, _PRESS_BUTTON_HINT["ru"])
             response = response.rstrip() + hint
 
@@ -430,28 +644,32 @@ QOIDALAR:
         grammar = self._parse(getattr(lesson, "grammar_json", None), [])
         homework = self._parse(getattr(lesson, "homework_json", None), [])
         title = self._safe(getattr(lesson, "title", ""))
+        lesson_blocks = self._lesson_blocks_payload(lesson)
 
         if not homework:
             homework = {
                 "instruction": "Evaluate based on lesson vocabulary and grammar.",
-                "allowed_vocabulary": [w.get("zh","") for w in vocab[:8] if isinstance(w,dict)],
+                "allowed_vocabulary": [w.get("en","") for w in vocab[:8] if isinstance(w,dict)],
             }
 
         payload = {
             "lesson_title": title,
             "homework": homework,
-            "allowed_vocabulary": vocab[:8],
-            "allowed_grammar": grammar[:3],
+            "lesson_blocks": lesson_blocks,
+            "allowed_vocabulary": vocab,
+            "allowed_grammar": grammar,
             "student_submission": submission_text,
         }
 
-        return f"""You are evaluating a student's homework for an HSK lesson.
+        return f"""You are evaluating a student's homework for an English lesson.
 
 DATA:
 {json.dumps(payload, ensure_ascii=False, indent=2)}
 
 RULES:
 - Evaluate ONLY against the homework and lesson content above
+- If lesson_blocks contain mini_homework, use those block-level tasks as the primary homework context
+- If student_submission is JSON from Mini App, inspect the answer fields and compare them with lesson_blocks, block_vocabulary, and grammar_points
 - Give score 0-100
 - decided passed = true if score >= 60
 - feedback_text must be in {user_language}, short and clear

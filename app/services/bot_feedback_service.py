@@ -12,14 +12,18 @@ from app.bot.keyboards.feedback import (
 from app.bot.utils.i18n import t
 from app.db.models.bot_feedback import BotFeedback
 from app.db.models.user import User
-from app.repositories.bot_feedback_repo import BotFeedbackRepository
+from app.repositories.bot_feedback_repo import (
+    FEEDBACK_DISCOUNT_OFFER_CODES,
+    BotFeedbackRepository,
+)
 from app.repositories.user_repo import UserRepository
 
 
 FEEDBACK_PERIOD_DAYS = 30
 FEEDBACK_JOIN_DELAY = timedelta(days=1)
+FEEDBACK_LIMIT_REACHED_DELAY = timedelta(minutes=5)
 FEEDBACK_RETRY_AFTER = timedelta(hours=24)
-FEEDBACK_REWARD_DAYS = 1
+FEEDBACK_REWARD_DURATION = timedelta(minutes=30)
 FEEDBACK_PRICE_OFFER_DELAY = timedelta(minutes=5)
 
 
@@ -58,10 +62,13 @@ class BotFeedbackService:
     async def send_due_feedback_requests(self, bot: Bot) -> int:
         now = datetime.now(timezone.utc)
         oldest_join_time = now - FEEDBACK_JOIN_DELAY
+        oldest_limit_reached_time = now - FEEDBACK_LIMIT_REACHED_DELAY
 
         result = await self.session.execute(
             select(User)
             .where(User.created_at <= oldest_join_time)
+            .where(User.daily_limit_offer_sent_at.is_not(None))
+            .where(User.daily_limit_offer_sent_at <= oldest_limit_reached_time)
             .where(User.status != "blocked")
             .order_by(User.created_at.asc())
         )
@@ -114,9 +121,8 @@ class BotFeedbackService:
             user.start_date = now
 
         user.status = "active"
-        user.end_date = base_end + timedelta(days=FEEDBACK_REWARD_DAYS)
+        user.end_date = base_end + FEEDBACK_REWARD_DURATION
         user.questions_used = 0
-        user.bonus_questions_used = 0
         user.last_limit_reset_at = now
         user.expiry_reminder_sent_at = None
         user.selected_plan_type = None
@@ -131,7 +137,10 @@ class BotFeedbackService:
         user: User,
     ) -> None:
         await self.feedback_repo.complete(feedback)
-        if feedback.disliked_code == "price" and not feedback.price_offer_due_at:
+        if (
+            feedback.disliked_code in FEEDBACK_DISCOUNT_OFFER_CODES
+            and not feedback.price_offer_due_at
+        ):
             await self.feedback_repo.schedule_price_offer(
                 feedback,
                 datetime.now(timezone.utc) + FEEDBACK_PRICE_OFFER_DELAY,
@@ -150,10 +159,15 @@ class BotFeedbackService:
                 continue
 
             lang = user.language if user.language else feedback.language or "ru"
+            text_key = (
+                "feedback_limits_offer_text"
+                if feedback.disliked_code == "limits"
+                else "feedback_price_offer_text"
+            )
             try:
                 await bot.send_message(
                     chat_id=user.telegram_id,
-                    text=t("feedback_price_offer_text", lang),
+                    text=t(text_key, lang),
                     reply_markup=feedback_price_offer_keyboard(feedback.id, lang),
                     parse_mode="HTML",
                 )

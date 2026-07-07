@@ -22,21 +22,11 @@ class AIService:
         self.client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
         self.prompt_path = Path("app/prompts/qa_system.txt")
 
-    def _normalize_english_level(self, user_level: str) -> str:
-        normalized = (user_level or "beginner").strip().lower()
-        legacy_map = {
-            "hsk1": "a1",
-            "hsk2": "a2",
-            "hsk3": "b1",
-            "hsk4": "b2",
-        }
-        return legacy_map.get(normalized, normalized)
-
     def _build_system_prompt(self, user_language: str, user_level: str) -> str:
         template = self.prompt_path.read_text(encoding="utf-8")
         return template.format(
             user_language=user_language,
-            user_level=self._normalize_english_level(user_level),
+            user_level=user_level,
         )
 
     def _usage_value(self, usage, *names: str) -> int:
@@ -91,8 +81,15 @@ class AIService:
 
         if history:
             for msg in history:
-                if msg.get("role") in ("user", "assistant"):
-                    messages.append(msg)
+                role = msg.get("role")
+                content = msg.get("content")
+                if role in ("system", "user", "assistant") and content:
+                    messages.append(
+                        {
+                            "role": role,
+                            "content": content,
+                        }
+                    )
 
         messages.append(
             {
@@ -199,10 +196,9 @@ class AIService:
             "ru": "Russian",
         }
         primary_lang = lang_labels.get(user_language, "Russian")
-        english_level = self._normalize_english_level(user_level)
         prompt = (
             "Transcribe this Telegram voice message. Do not translate it. "
-            f"The user's interface language is {primary_lang}, and their English level is {english_level}. "
+            f"The user's interface language is {primary_lang}, and their English level is {user_level}. "
             "The audio is likely in the user's interface language or English. "
             "Preserve English words, names, numbers, and short mixed-language phrases carefully. "
             "If speech is unclear, transcribe only what you can hear."
@@ -253,6 +249,10 @@ class AIService:
         }
         target_lang = lang_labels.get(user_language, "Russian")
         model = "gpt-4o-mini"
+        direction = (
+            f"If the latest transcript is English, translate only the latest transcript into {target_lang}. "
+            "If it is in the user's interface language or another language, translate it into natural English."
+        )
 
         messages = [
             {
@@ -260,8 +260,7 @@ class AIService:
                 "content": (
                     "You are a context-aware English conversation interpreter for real-life dialogue. "
                     f"The user's interface language is {target_lang}. "
-                    "If the latest transcript is English, translate only the latest transcript into the user's interface language. "
-                    "If the latest transcript is not English, translate only the latest transcript into natural English. "
+                    f"{direction} "
                     "Use recent context only to resolve pronouns, tone, missing objects, and situation. "
                     "Never answer the speaker's question, never continue the chat, and never translate older messages. "
                     "Return only the translation text. Do not add labels, markdown, alternatives, explanations, or quotes. "

@@ -10,6 +10,9 @@ from .portfolio import PortfolioTransaction
 from .bot_setting import BotSetting
 from .required_channel import RequiredChannel
 from .subscription_price import SubscriptionPrice
+from .payment_qr_code import PaymentQrCode
+from .partner import Partner, PartnerReferral, PartnerCredit, PartnerPayout
+from .onboarding_tip_event import OnboardingTipEvent
 
 from .course_lessons import CourseLesson
 from .course_attempts import CourseAttempt

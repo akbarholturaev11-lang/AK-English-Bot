@@ -1,4 +1,5 @@
 from app.db.session import async_session_maker
+from app.bot.middlewares.cleanup import CommandCleanupMiddleware
 from app.bot.middlewares.db import DBSessionMiddleware
 from app.bot.middlewares.required_channel import RequiredChannelMiddleware
 from aiogram import Bot, Dispatcher
@@ -23,6 +24,8 @@ from app.bot.handlers.messages import router as messages_router
 from app.bot.handlers.course import router as course_router
 from app.bot.handlers.admin import router as admin_router
 from app.bot.handlers.admin_audio import router as admin_audio_router
+from app.bot.handlers.partner import router as partner_router
+from app.bot.handlers.admin_partner import router as admin_partner_router
 from app.config import COURSE_MODE_ENABLED
 
 
@@ -33,6 +36,7 @@ def create_bot(settings):
     )
     dp = Dispatcher(storage=MemoryStorage())
 
+    dp.message.outer_middleware(CommandCleanupMiddleware())
     dp.message.middleware(DBSessionMiddleware(async_session_maker))
     dp.callback_query.middleware(DBSessionMiddleware(async_session_maker))
     dp.message.middleware(RequiredChannelMiddleware(async_session_maker))
@@ -45,7 +49,9 @@ def create_bot(settings):
     dp.include_router(admin_broadcast_router)
     dp.include_router(admin_ads_router)
     dp.include_router(admin_audio_router)   # admin FSM flows must stay before generic text/photo handlers
+    dp.include_router(admin_partner_router)
     dp.include_router(feedback_router)
+    dp.include_router(partner_router)
     dp.include_router(referral_router)
     dp.include_router(subscription_router)
     dp.include_router(menu_router)

@@ -9,6 +9,7 @@ from app.services.access_service import AccessService
 from app.services.ai_usage_budget_service import AIUsageBudgetService
 from app.services.image_analyzer_service import ImageAnalyzerService
 from app.services.image_explainer_service import ImageExplainerService
+from app.services.referral_service import ReferralService
 
 
 class ImageQAService:
@@ -19,6 +20,7 @@ class ImageQAService:
         self.access_service = AccessService(session)
         self.image_analyzer_service = ImageAnalyzerService()
         self.image_explainer_service = ImageExplainerService()
+        self.referral_service = ReferralService(session)
         self.last_budget_record = None
 
     async def _download_image_bytes(
@@ -37,6 +39,7 @@ class ImageQAService:
         telegram_id: int,
         file_id: str,
         mime_type: str,
+        user_text: Optional[str] = None,
         telegram_message_id: Optional[int] = None,
     ) -> str:
         can_use, message_key = await self.access_service.can_use_image_ai(telegram_id)
@@ -47,10 +50,15 @@ class ImageQAService:
         if not user:
             return "access_start_first"
 
+        cleaned_user_text = (user_text or "").strip()
+        image_message_content = f"file_id: {file_id}"
+        if cleaned_user_text:
+            image_message_content = f"{image_message_content}\ncaption: {cleaned_user_text}"
+
         await self.message_repo.create(
             user_id=user.id,
             role="user",
-            content=file_id,
+            content=image_message_content,
             content_type="image",
             telegram_message_id=telegram_message_id,
         )
@@ -67,9 +75,14 @@ class ImageQAService:
 
         assistant_reply = await self.image_explainer_service.explain_analysis(
             analyzer_result=analyzer_result,
+            user_command=cleaned_user_text,
             user_language=user.language,
             user_level=user.level,
         )
+        assistant_reply = (assistant_reply or "").strip()
+        if not assistant_reply:
+            return "ai_empty_response"
+
         budget_service = AIUsageBudgetService(self.session)
         analyzer_record = await budget_service.record_usage(
             telegram_id=telegram_id,
@@ -83,9 +96,9 @@ class ImageQAService:
         )
         self.last_budget_record = (
             explainer_record
-            if explainer_record.cooldown_started
+            if explainer_record.cooldown_started or explainer_record.budget_depleted
             else analyzer_record
-            if analyzer_record.cooldown_started
+            if analyzer_record.cooldown_started or analyzer_record.budget_depleted
             else explainer_record
         )
 
@@ -98,6 +111,7 @@ class ImageQAService:
 
         image_context = (
             "LAST_IMAGE_LESSON_CONTEXT\n"
+            f"User command/caption:\n{cleaned_user_text or 'None'}\n\n"
             f"Analyzer result:\n{analyzer_result}\n\n"
             f"Final lesson reply:\n{assistant_reply}\n\n"
             "User may ask follow-up questions about this image lesson."
@@ -111,5 +125,10 @@ class ImageQAService:
         )
 
         await self.access_service.consume_one_question(telegram_id)
+        await self.referral_service.activate_referral_if_eligible(
+            bot=bot,
+            invited_user_telegram_id=telegram_id,
+        )
+        await self.access_service.downgrade_non_paid_active_if_budget_depleted(telegram_id)
         await self.session.commit()
         return assistant_reply

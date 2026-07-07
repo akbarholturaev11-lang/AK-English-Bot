@@ -25,6 +25,13 @@ _BOOTSTRAP_COLUMNS: dict[str, dict[str, str]] = {
         "pending_checkout_msg_id": "INTEGER",
         "voice_mode": "VARCHAR(20) DEFAULT 'none' NOT NULL",
         "username": "VARCHAR(64)",
+        "referral_trial_count_started_at": "TIMESTAMP WITH TIME ZONE",
+        "trial_course_lesson_id": "INTEGER",
+        "trial_course_started_at": "TIMESTAMP WITH TIME ZONE",
+        "trial_course_completed_at": "TIMESTAMP WITH TIME ZONE",
+        "trial_quiz_explanation_used_at": "TIMESTAMP WITH TIME ZONE",
+        "trial_voice_used_at": "TIMESTAMP WITH TIME ZONE",
+        "force_sub_required_at": "TIMESTAMP WITH TIME ZONE",
     },
     "payments": {
         "checkout_msg_id": "INTEGER",
@@ -37,6 +44,10 @@ _BOOTSTRAP_COLUMNS: dict[str, dict[str, str]] = {
         "discount_campaign_id": "INTEGER",
         "discount_title": "VARCHAR(120)",
         "discount_details": "TEXT",
+        "card_country": "VARCHAR(16)",
+        "local_amount": "VARCHAR(32)",
+        "local_currency": "VARCHAR(16)",
+        "exchange_rate": "VARCHAR(80)",
     },
     "discount_campaigns": {
         "title_tj": "VARCHAR(180)",
@@ -47,6 +58,12 @@ _BOOTSTRAP_COLUMNS: dict[str, dict[str, str]] = {
         "reason_ru": "VARCHAR(700)",
         "reason_uz": "VARCHAR(700)",
         "target_telegram_id": "BIGINT",
+        "notify_enabled": "BOOLEAN DEFAULT false NOT NULL",
+        "notify_media_type": "VARCHAR(16)",
+        "notify_media_file_id": "VARCHAR(512)",
+        "notification_sent_at": "TIMESTAMP WITH TIME ZONE",
+        "notification_sent_count": "INTEGER DEFAULT 0 NOT NULL",
+        "notification_failed_count": "INTEGER DEFAULT 0 NOT NULL",
     },
     "bot_feedbacks": {
         "price_offer_due_at": "TIMESTAMP WITH TIME ZONE",
@@ -100,6 +117,15 @@ _BOOTSTRAP_COLUMNS: dict[str, dict[str, str]] = {
         "note": "TEXT",
         "created_at": "TIMESTAMP WITH TIME ZONE",
     },
+    "partners": {
+        "signup_bonus_granted_at": "TIMESTAMP WITH TIME ZONE",
+    },
+    "partner_payouts": {
+        "recipient_qr_code_file_id": "VARCHAR(512)",
+        "local_currency": "VARCHAR(8) DEFAULT 'TJS' NOT NULL",
+        "processing_by_telegram_id": "BIGINT",
+        "processing_started_at": "TIMESTAMP WITH TIME ZONE",
+    },
 }
 
 
@@ -125,7 +151,20 @@ async def _ensure_bootstrap_columns(conn) -> None:
                     raise
 
 
+async def _ensure_bootstrap_indexes(conn) -> None:
+    await conn.execute(
+        text(
+            """
+            CREATE UNIQUE INDEX IF NOT EXISTS uq_partner_payouts_one_open_per_partner
+            ON partner_payouts (partner_id)
+            WHERE status IN ('pending', 'deadline_set', 'processing')
+            """
+        )
+    )
+
+
 async def init_db():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
         await _ensure_bootstrap_columns(conn)
+        await _ensure_bootstrap_indexes(conn)

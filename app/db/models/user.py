@@ -49,6 +49,13 @@ class User(Base):
     discount_referral_count: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     discount_eligible: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     discount_used: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+
+    referral_trial_count_started_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    referral_trial_progress_chat_id: Mapped[Optional[int]] = mapped_column(BigInteger, nullable=True)
+    referral_trial_progress_message_id: Mapped[Optional[int]] = mapped_column(BigInteger, nullable=True)
       
     last_limit_reset_at: Mapped[Optional[datetime]] = mapped_column(
         DateTime(timezone=True),
@@ -71,6 +78,28 @@ class User(Base):
     referrer_id: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
 
     course_promo_sent: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+
+    trial_course_lesson_id: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    trial_course_started_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    trial_course_completed_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    trial_quiz_explanation_used_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    trial_voice_used_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    force_sub_required_at: Mapped[Optional[datetime]] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),

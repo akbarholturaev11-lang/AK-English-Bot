@@ -5,11 +5,18 @@ from aiogram import Router, F
 from aiogram.types import CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton, FSInputFile
 
 from app.config import settings
+from app.repositories.bot_setting_repo import BotSettingRepository
 from app.repositories.payment_repo import PaymentRepository
 from app.repositories.bot_feedback_repo import BotFeedbackRepository
 from app.repositories.user_repo import UserRepository
 from app.services.discount_service import DiscountService
+from app.services.subscription_miniapp_service import PAYMENT_DETAILS_KEY
+from app.services.payment_qr_code_service import PaymentQrCodeService
 from app.services.payment_service import PaymentService
+from app.services.subscription_currency_service import (
+    SubscriptionCurrencyService,
+    format_subscription_price,
+)
 from app.services.subscription_price_service import SubscriptionPriceService
 from app.bot.utils.discount_formatter import build_admin_discount_block, build_discount_plan_line
 from app.bot.utils.i18n import t
@@ -21,6 +28,8 @@ from app.bot.keyboards.subscription import (
     feedback_discount_plan_keyboard,
     subscription_discount_progress_keyboard,
     subscription_discount_ready_keyboard,
+    subscription_miniapp_button,
+    subscription_miniapp_keyboard,
     payment_method_keyboard,
 )
 from app.bot.keyboards.checkout import checkout_keyboard
@@ -29,6 +38,7 @@ from app.bot.keyboards.checkout import checkout_keyboard
 router = Router()
 PAYMENT_METHODS = ("visa", "alipay", "wechat")
 PLANS = ("10_days", "1_month")
+_BOT_USERNAME_CACHE = None
 
 # subscription.py → bot/handlers/ → bot/ → app/ → project root → app/static/payments/
 _STATIC_PAYMENTS = Path(__file__).parent.parent.parent / "static" / "payments"
@@ -45,6 +55,73 @@ QR_PHOTO_PATHS = {
     "alipay_admin_discount":    str(_STATIC_PAYMENTS / "alipay_admin_discount.jpg"),
     "wechat_admin_discount":    str(_STATIC_PAYMENTS / "wechat_admin_discount.jpg"),
 }
+
+
+def _static_qr_key_for_checkout(user, plan: str, checkout_info: dict) -> str | None:
+    payment_method = getattr(user, "payment_method", None)
+    if not PaymentQrCodeService.is_qr_method(payment_method):
+        return None
+
+    discount_source = checkout_info.get("discount_source") or "none"
+    if discount_source == "admin_campaign":
+        return None
+
+    amount = int(checkout_info["final_amount"])
+    currency = checkout_info["currency"]
+    if checkout_info.get("discount_applied"):
+        discount_percent = int(checkout_info.get("discount_percent") or 0)
+        if discount_source not in {"referral", "feedback_price_offer"} or discount_percent != 20:
+            return None
+        if PaymentQrCodeService.is_default_subscription_amount(
+            payment_method=payment_method,
+            plan_type=plan,
+            amount=amount,
+            currency=currency,
+            discount_percent=20,
+        ):
+            return f"{payment_method}_{plan}_discount"
+        return None
+
+    if PaymentQrCodeService.is_default_subscription_amount(
+        payment_method=payment_method,
+        plan_type=plan,
+        amount=amount,
+        currency=currency,
+    ):
+        return f"{payment_method}_{plan}"
+    return None
+
+
+async def _uploaded_qr_file_id(session, user, plan: str, checkout_info: dict) -> str | None:
+    payment_method = getattr(user, "payment_method", None)
+    if not PaymentQrCodeService.is_qr_method(payment_method):
+        return None
+
+    scope = PaymentQrCodeService.checkout_scope(
+        discount_source=checkout_info.get("discount_source") or "none",
+        discount_percent=int(checkout_info.get("discount_percent") or 0),
+        discount_campaign_id=checkout_info.get("discount_campaign_id"),
+    )
+    if not scope:
+        return None
+
+    return await PaymentQrCodeService(session).get_file_id(
+        scope=scope,
+        payment_method=payment_method,
+        plan_type=plan,
+        amount=int(checkout_info["final_amount"]),
+        currency=checkout_info["currency"],
+    )
+
+
+async def _checkout_qr_photo(session, user, plan: str, checkout_info: dict):
+    static_key = _static_qr_key_for_checkout(user, plan, checkout_info)
+    if static_key:
+        photo_path = QR_PHOTO_PATHS.get(static_key)
+        if photo_path and Path(photo_path).exists():
+            return FSInputFile(photo_path)
+
+    return await _uploaded_qr_file_id(session, user, plan, checkout_info)
 
 
 def _parse_campaign_id(value: str | None) -> int | None:
@@ -67,7 +144,189 @@ async def _plan_price(session, plan_type: str, payment_method: str | None) -> tu
         return price.amount, price.currency
     if payment_method in ("alipay", "wechat"):
         return (66 if plan_type == "1_month" else 29), "¥"
-    return (89 if plan_type == "1_month" else 29), "somoni"
+    return (89 if plan_type == "1_month" else 29), "TJS"
+
+
+async def _visa_local_hint(session, amount: int, currency: str) -> str:
+    return ""
+
+
+def _is_card_currency(currency: str) -> bool:
+    return (currency or "").strip().lower() in {"tjs", "somoni", "сомони"}
+
+
+def _card_payment_note(lang: str) -> str:
+    notes = {
+        "tj": "💳 Бо ҳар гуна корти бонкӣ метавонед пардохт кунед.",
+        "ru": (
+            "💳 Можно оплатить любой банковской картой.\n"
+            "Если ваша карта не в TJS, оплатите эквивалент суммы в TJS по курсу вашего банка на эту карту."
+        ),
+        "uz": (
+            "💳 Istalgan bank kartasi orqali to'lov qilishingiz mumkin.\n"
+            "Agar kartangiz TJSda bo'lmasa, bankingiz kursi bo'yicha TJS ekvivalentini shu kartaga yuboring."
+        ),
+    }
+    return notes.get(lang, notes["ru"])
+
+
+def _card_texts(lang: str) -> dict[str, str]:
+    texts = {
+        "tj": {
+            "main_title": "💎 <b>Тарифҳои обуна</b>",
+            "benefits": "Обуна гиред ва аз бот бе лимит истифода баред.",
+            "card_note_short": "💳 Бо ҳар гуна корти бонкӣ метавонед пардохт кунед.",
+            "card_note_full": (
+                "Агар корти шумо корти Тоҷикистон набошад, маблағро бо қурби бонки худ "
+                "дар TJS ҳисоб карда ба ҳамин корт фиристед."
+            ),
+            "referral_hint": "🎁 3 дӯсти нав даъват кунед ва 20% тахфиф гиред.",
+            "choose": "👇 <b>Тарифро интихоб кунед:</b>",
+            "checkout_title": "💳 Шумо обунаро интихоб кардед",
+            "plan_label": "Тариф",
+            "price_label": "Нарх",
+            "bank_label": "Бонк",
+            "bank_name": "DC city",
+            "payment_details_label": "Реквизити пардохт",
+            "send_screenshot": "Пас аз пардохт скриншотро фиристед.",
+        },
+        "ru": {
+            "main_title": "💎 <b>Тарифы подписки</b>",
+            "benefits": "Оформите подписку и пользуйтесь ботом без ограничений.",
+            "card_note_short": "💳 Можно оплатить любой банковской картой.",
+            "card_note_full": (
+                "Если ваша карта не таджикская, рассчитайте сумму в TJS по курсу вашего банка "
+                "и отправьте на эту карту."
+            ),
+            "referral_hint": "🎁 Пригласите 3 новых друзей и получите скидку 20%.",
+            "choose": "👇 <b>Выберите тариф:</b>",
+            "checkout_title": "💳 Вы выбрали подписку",
+            "plan_label": "Тариф",
+            "price_label": "Цена",
+            "bank_label": "Банк",
+            "bank_name": "DC city",
+            "payment_details_label": "Реквизиты для оплаты",
+            "send_screenshot": "После оплаты отправьте скриншот.",
+        },
+        "uz": {
+            "main_title": "💎 <b>Obuna tariflari</b>",
+            "benefits": "Obuna oling va botdan limitsiz foydalaning.",
+            "card_note_short": "💳 Istalgan bank kartasi orqali to'lov qilishingiz mumkin.",
+            "card_note_full": (
+                "Agar kartangiz Tojikiston kartasi bo'lmasa, o'z bankingiz kursi bo'yicha "
+                "TJS valyutasida hisoblab shu kartaga yuboring."
+            ),
+            "referral_hint": "🎁 3 ta yangi do'st taklif qiling va 20% chegirma oling.",
+            "choose": "👇 <b>Tarifni tanlang:</b>",
+            "checkout_title": "💳 Siz obunani tanladingiz",
+            "plan_label": "Tarif",
+            "price_label": "Narx",
+            "bank_label": "Bank",
+            "bank_name": "DC city",
+            "payment_details_label": "To'lov rekviziti",
+            "send_screenshot": "To'lovdan keyin skrinshot yuboring.",
+        },
+    }
+    return texts.get(lang, texts["ru"])
+
+
+def _card_plan_label(plan_type: str, lang: str) -> str:
+    labels = {
+        "tj": {"10_days": "10 рӯз", "1_month": "1 моҳ"},
+        "ru": {"10_days": "10 дней", "1_month": "1 месяц"},
+        "uz": {"10_days": "10 kunlik", "1_month": "1 oylik"},
+    }
+    return labels.get(lang, labels["ru"]).get(plan_type, plan_type)
+
+
+def _card_main_price(amount: int) -> str:
+    return f"💸 {amount} TJS 🇹🇯"
+
+
+def _card_checkout_price(amount: int) -> str:
+    return f"💸 {amount} TJS"
+
+
+def _card_main_plan_line(plan_type: str, lang: str, amount: int) -> str:
+    return f"🗓️ {_card_plan_label(plan_type, lang)} — {_card_main_price(amount)}"
+
+
+def _card_main_text(
+    lang: str,
+    price_10: tuple[int, str],
+    price_1m: tuple[int, str],
+    *,
+    show_discount_hint: bool,
+) -> str:
+    texts = _card_texts(lang)
+    plan_lines = "\n".join([
+        _card_main_plan_line("10_days", lang, price_10[0]),
+        _card_main_plan_line("1_month", lang, price_1m[0]),
+        "",
+        texts["card_note_short"],
+    ])
+    base = (
+        f"{texts['main_title']}\n\n"
+        f"{texts['benefits']}\n\n"
+        f"<blockquote>{plan_lines}</blockquote>"
+    )
+    if show_discount_hint:
+        base += f"\n\n{texts['referral_hint']}"
+    return f"{base}\n\n{texts['choose']}"
+
+
+async def _payment_details_text(session) -> str:
+    stored = await BotSettingRepository(session).get(PAYMENT_DETAILS_KEY)
+    return (stored or settings.PAYMENT_DETAILS or "").strip()
+
+
+async def _card_checkout_text(session, lang: str, checkout_info: dict) -> str:
+    texts = _card_texts(lang)
+    plan_type = checkout_info["plan_type"]
+    price = _card_checkout_price(checkout_info["final_amount"])
+    details = await _payment_details_text(session)
+    lines = [
+        texts["checkout_title"],
+        "",
+        "<blockquote>"
+        f"{texts['plan_label']}: 🗓️ {_card_plan_label(plan_type, lang)}\n"
+        f"{texts['price_label']}: {price}\n"
+        f"{texts['card_note_full']}"
+        "</blockquote>",
+        "",
+        f"{texts['bank_label']}: 🏦 {texts['bank_name']}",
+        f"{texts['payment_details_label']}:",
+    ]
+    if details:
+        lines.append(details)
+    lines.extend([
+        "",
+        texts["send_screenshot"],
+    ])
+    return "\n".join(lines)
+
+
+async def _discount_plan_line(
+    session,
+    *,
+    lang: str,
+    plan: str,
+    base: int,
+    currency: str,
+    percent: int = 0,
+) -> str:
+    final = int(round(base * (100 - percent) / 100)) if percent > 0 else base
+    local_equivalents = ""
+    if (currency or "").strip().lower() in {"usd", "$"}:
+        local_equivalents = await SubscriptionCurrencyService(session).format_local_equivalents(final)
+    return build_discount_plan_line(
+        lang=lang,
+        plan=plan,
+        base=base,
+        currency=currency,
+        percent=percent,
+        local_equivalents=local_equivalents,
+    )
 
 
 async def _admin_discount_choices(session, user):
@@ -127,7 +386,8 @@ async def _admin_discount_offer(session, user, lang: str, *, as_window: bool = F
         choice = plan_choices.get(plan)
         percent = choice.percent if choice else 0
         lines.append(
-            build_discount_plan_line(
+            await _discount_plan_line(
+                session,
                 lang=lang,
                 plan=plan,
                 base=base,
@@ -159,21 +419,107 @@ def _plan_label(plan_type: str, lang: str) -> str:
     return labels.get(lang, labels["ru"]).get(plan_type, plan_type)
 
 
+def _discount_price_detail_line(
+    *,
+    lang: str,
+    plan: str,
+    base: int,
+    final: int,
+    currency: str,
+    percent: int,
+    icon: str = "📅",
+) -> str:
+    return "\n".join([
+        f"{icon} <b>{_plan_label(plan, lang)}</b>",
+        f"💰 {t('subscription_original_price_label', lang)}: "
+        f"<s>{format_subscription_price(base, currency)}</s>",
+        f"💎 {t('subscription_discounted_price_label', lang)}: "
+        f"<b>{format_subscription_price(final, currency)}</b> (-{percent}%)",
+    ])
+
+
+def _discount_plan_card(
+    *,
+    lang: str,
+    plan: str,
+    base: int,
+    final: int,
+    currency: str,
+    percent: int,
+    icon: str,
+) -> str:
+    detail = _discount_price_detail_line(
+        lang=lang,
+        plan=plan,
+        base=base,
+        final=final,
+        currency=currency,
+        percent=percent,
+        icon=icon,
+    )
+    return (
+        "<blockquote>"
+        f"{detail}"
+        "</blockquote>"
+    )
+
+
+async def _visa_plan_line(session, plan_type: str, lang: str, amount: int, currency: str) -> str:
+    price = format_subscription_price(amount, currency)
+    return f"{_plan_label(plan_type, lang)} — {price}"
+
+
+def _compact_plan_line(plan_type: str, lang: str, amount: int, currency: str) -> str:
+    return f"🗓️ {_plan_label(plan_type, lang)} - {format_subscription_price(amount, currency)}"
+
+
 async def build_subscription_main_text_for_user(session, user, lang: str) -> str:
     price_10 = await _plan_price(session, "10_days", getattr(user, "payment_method", None))
     price_1m = await _plan_price(session, "1_month", getattr(user, "payment_method", None))
 
-    base = (
-        f"{t('subscription_main_title', lang)}\n\n"
-        f"{_plan_label('10_days', lang)} — {price_10[0]} {price_10[1]}\n"
-        f"{_plan_label('1_month', lang)} — {price_1m[0]} {price_1m[1]}"
+    is_card_payment = all(
+        _is_card_currency(currency)
+        for _, currency in (price_10, price_1m)
     )
+    if is_card_payment:
+        return _card_main_text(lang, price_10, price_1m, show_discount_hint=not user.discount_used)
+    else:
+        plan_lines = "\n".join([
+            _compact_plan_line("10_days", lang, price_10[0], price_10[1]),
+            _compact_plan_line("1_month", lang, price_1m[0], price_1m[1]),
+        ])
+        base = (
+            f"{t('subscription_main_title', lang)}\n\n"
+            f"🚀 {t('subscription_main_visa_benefits', lang)}\n\n"
+            f"{plan_lines}"
+        )
+        if not user.discount_used:
+            base += f"\n\n{t('subscription_referral_hint', lang)}"
+        return f"{base}\n\n{t('subscription_main_choose', lang)}"
 
-    # Show discount hint only if user hasn't used it yet
-    if not user.discount_used:
-        base += f"\n\n{t('subscription_referral_hint', lang)}"
 
-    return base
+async def _bot_username(bot) -> str:
+    global _BOT_USERNAME_CACHE
+    if _BOT_USERNAME_CACHE:
+        return _BOT_USERNAME_CACHE
+    try:
+        me = await bot.get_me()
+        username = (getattr(me, "username", None) or "").strip().lstrip("@")
+        if username:
+            _BOT_USERNAME_CACHE = username
+            return username
+    except Exception:
+        pass
+    username = (settings.BOT_USERNAME or "").strip().lstrip("@")
+    _BOT_USERNAME_CACHE = username
+    return username
+
+
+async def _referral_link(bot, referral_code: str | None) -> str:
+    username = await _bot_username(bot)
+    if not username or not referral_code:
+        return ""
+    return f"https://t.me/{username}?start={referral_code}"
 
 
 async def build_subscription_discount_progress_text(
@@ -197,11 +543,29 @@ async def build_subscription_discount_progress_text(
         price_1m = await _plan_price(session, "1_month", payment_method)
         discount_10 = int(round(price_10[0] * 0.8))
         discount_1m = int(round(price_1m[0] * 0.8))
+        card_10 = _discount_plan_card(
+            lang=lang,
+            plan="10_days",
+            base=price_10[0],
+            final=discount_10,
+            currency=price_10[1],
+            percent=20,
+            icon="📦",
+        )
+        card_1m = _discount_plan_card(
+            lang=lang,
+            plan="1_month",
+            base=price_1m[0],
+            final=discount_1m,
+            currency=price_1m[1],
+            percent=20,
+            icon="🌟",
+        )
 
         base += (
             f"\n\n{t('subscription_discount_ready', lang)}\n\n"
-            f"{_plan_label('10_days', lang)} — {discount_10} {price_10[1]}\n"
-            f"{_plan_label('1_month', lang)} — {discount_1m} {price_1m[1]}"
+            f"{card_10}\n\n"
+            f"{card_1m}"
         )
 
     return base
@@ -210,27 +574,37 @@ async def build_subscription_discount_progress_text(
 def build_subscription_main_keyboard_for_user(user, lang: str, show_referral: bool = True) -> InlineKeyboardMarkup:
     rows = [
         [
-            InlineKeyboardButton(
+            subscription_miniapp_button(
+                lang,
+                source="legacy_subscription_main",
+                mode="subscription",
                 text=t("subscription_button_10_days", lang),
-                callback_data="subscription:plan:10_days",
+                plan="10_days",
             ),
-            InlineKeyboardButton(
+            subscription_miniapp_button(
+                lang,
+                source="legacy_subscription_main",
+                mode="subscription",
                 text=t("subscription_button_1_month", lang),
-                callback_data="subscription:plan:1_month",
+                plan="1_month",
             ),
         ],
     ]
     if show_referral and not user.discount_used:
         rows.append([
-            InlineKeyboardButton(
+            subscription_miniapp_button(
+                lang,
+                source="legacy_subscription_main_referral",
+                mode="referral_discount",
                 text=t("subscription_referral_discount_button", lang),
-                callback_data="subscription:referral_discount",
             )
         ])
     rows.append([
-        InlineKeyboardButton(
+        subscription_miniapp_button(
+            lang,
+            source="legacy_subscription_main_back",
+            mode="subscription",
             text=t("payment_back", lang),
-            callback_data="subscription:change_payment_method",
         ),
     ])
     return InlineKeyboardMarkup(inline_keyboard=rows)
@@ -302,7 +676,8 @@ async def build_admin_discount_plan_view(
         choice = choices[(payment_method, plan)]
         base, currency = await _plan_price(session, plan, payment_method)
         lines.append(
-            build_discount_plan_line(
+            await _discount_plan_line(
+                session,
                 lang=lang,
                 plan=plan,
                 base=base,
@@ -364,11 +739,13 @@ async def build_feedback_discount_plan_view(
     lines = []
     for plan in PLANS:
         base, currency = await _plan_price(session, plan, payment_method)
+        final = int(round(base * 0.8))
         lines.append(
-            build_discount_plan_line(
+            _discount_price_detail_line(
                 lang=lang,
                 plan=plan,
                 base=base,
+                final=final,
                 currency=currency,
                 percent=20,
             )
@@ -412,7 +789,59 @@ async def _replace_with_text(
     )
 
 
-def build_checkout_text(lang: str, checkout_info: dict) -> str:
+async def _replace_with_expired_offer(callback: CallbackQuery, lang: str, key: str) -> None:
+    try:
+        await callback.answer()
+    except Exception:
+        pass
+    await _replace_with_text(
+        callback,
+        t(key, lang),
+        parse_mode="HTML",
+        disable_web_page_preview=True,
+    )
+
+
+def _miniapp_button_text(lang: str, mode: str) -> str:
+    if mode == "admin_discount":
+        return t("subscription_admin_discount_button", lang)
+    if mode == "feedback_discount":
+        return t("feedback_price_offer_button", lang)
+    if mode == "referral_discount":
+        return t("subscription_referral_discount_button", lang)
+    return t("subscription_miniapp_open_button", lang)
+
+
+async def _replace_with_miniapp_entry(
+    callback: CallbackQuery,
+    lang: str,
+    *,
+    source: str,
+    mode: str = "subscription",
+    campaign_id: int | None = None,
+    feedback_id: int | None = None,
+    plan: str | None = None,
+    method: str | None = None,
+) -> None:
+    await _replace_with_text(
+        callback,
+        t("subscription_miniapp_entry_text", lang),
+        reply_markup=subscription_miniapp_keyboard(
+            lang,
+            source=source,
+            mode=mode,
+            campaign_id=campaign_id,
+            feedback_id=feedback_id,
+            plan=plan,
+            method=method,
+            text=_miniapp_button_text(lang, mode),
+        ),
+        parse_mode="HTML",
+        disable_web_page_preview=True,
+    )
+
+
+async def build_checkout_text(session, lang: str, checkout_info: dict, *, qr_available: bool = True) -> str:
     plan_type = checkout_info["plan_type"]
     base_amount = checkout_info["base_amount"]
     final_amount = checkout_info["final_amount"]
@@ -420,42 +849,78 @@ def build_checkout_text(lang: str, checkout_info: dict) -> str:
     currency = checkout_info["currency"]
     is_qr = (currency == "¥")
 
+    if _is_card_currency(currency):
+        return await _card_checkout_text(session, lang, checkout_info)
+
     if lang == "tj":
         plan_label = "10 рӯз" if plan_type == "10_days" else "1 моҳ"
-        plan_line = f"Тариф: {plan_label}"
+        plan_line = f"📦 Тариф: <b>{plan_label}</b>"
     elif lang == "uz":
         plan_label = "10 kunlik" if plan_type == "10_days" else "1 oylik"
-        plan_line = f"Tarif: {plan_label}"
+        plan_line = f"📦 Tarif: <b>{plan_label}</b>"
     else:
         plan_label = "10 дней" if plan_type == "10_days" else "1 месяц"
-        plan_line = f"Тариф: {plan_label}"
+        plan_line = f"📦 Тариф: <b>{plan_label}</b>"
 
     title_key = "checkout_title_qr" if is_qr else "checkout_title_visa"
+    local_hint = await _visa_local_hint(session, final_amount, currency)
+    card_note = _card_payment_note(lang) if not is_qr else ""
+
+    if not is_qr and not discount_applied:
+        details = await _payment_details_text(session)
+        return "\n".join([
+            t(title_key, lang),
+            "",
+            f"<blockquote>{plan_line} — 💵 {t('subscription_price_label', lang)}: "
+            f"<b>{format_subscription_price(final_amount, currency)}</b>{local_hint}</blockquote>",
+            "",
+            card_note,
+            "",
+            f"{t('payment_details_label', lang)}: {details}",
+            "",
+            t("payment_send_screenshot", lang),
+        ])
 
     lines = [
         t(title_key, lang),
+        "",
         plan_line,
         "",
     ]
 
     if discount_applied:
-        lines.append(f"{t('subscription_original_price_label', lang)}: {base_amount} {currency}")
+        lines.append(
+            f"💰 {t('subscription_original_price_label', lang)}: "
+            f"<s>{format_subscription_price(base_amount, currency)}</s>"
+        )
         percent = checkout_info.get("discount_percent", 20)
-        lines.append(f"💎 {t('subscription_discounted_price_label', lang)}: {final_amount} {currency} (-{percent}%)")
+        lines.append(
+            f"💎 {t('subscription_discounted_price_label', lang)}: "
+            f"<b>{format_subscription_price(final_amount, currency)}</b> (-{percent}%)"
+        )
     else:
-        lines.append(f"{t('subscription_price_label', lang)}: {final_amount} {currency}")
+        lines.append(
+            f"💵 {t('subscription_price_label', lang)}: "
+            f"<b>{format_subscription_price(final_amount, currency)}</b>"
+        )
+    if local_hint:
+        lines.append(local_hint.lstrip())
 
     lines.append("")
 
     if is_qr:
-        lines.append(t("checkout_qr_scan", lang))
+        lines.append(t("checkout_qr_scan" if qr_available else "checkout_qr_missing", lang))
     else:
-        lines.append(f"{t('payment_details_label', lang)}: {settings.PAYMENT_DETAILS}")
+        details = await _payment_details_text(session)
+        lines.append(card_note)
+        lines.append("")
+        lines.append(f"{t('payment_details_label', lang)}: {details}")
 
-    lines.extend([
-        "",
-        t("payment_send_screenshot", lang),
-    ])
+    if not is_qr or qr_available:
+        lines.extend([
+            "",
+            t("payment_send_screenshot", lang),
+        ])
 
     return "\n".join(lines)
 
@@ -472,10 +937,11 @@ async def subscription_open_handler(callback: CallbackQuery, session):
     lang = user.language if user.language else "ru"
 
     await callback.answer()
-    await callback.message.edit_text(
-        t("payment_method_choose", lang),
-        reply_markup=payment_method_keyboard(lang),
-        parse_mode="HTML"
+    await _replace_with_miniapp_entry(
+        callback,
+        lang,
+        source="subscription_open",
+        mode="subscription",
     )
 
 
@@ -492,19 +958,12 @@ async def discount_offer_open_handler(callback: CallbackQuery, session):
     parts = callback.data.split(":")
     campaign_id = _parse_campaign_id(parts[2] if len(parts) > 2 else None)
     await callback.answer()
-
-    view = await build_admin_discount_payment_view(session, user, lang, campaign_id=campaign_id)
-    if not view:
-        await callback.answer(t("subscription_admin_discount_expired", lang), show_alert=True)
-        return
-
-    text, keyboard = view
-    await _replace_with_text(
+    await _replace_with_miniapp_entry(
         callback,
-        text,
-        reply_markup=keyboard,
-        parse_mode="HTML",
-        disable_web_page_preview=True,
+        lang,
+        source="legacy_admin_discount_open",
+        mode="admin_discount",
+        campaign_id=campaign_id,
     )
 
 
@@ -518,19 +977,13 @@ async def feedback_discount_open_handler(callback: CallbackQuery, session):
 
     lang = user.language or "ru"
     feedback_id = int(callback.data.split(":")[2])
-    view = await build_feedback_discount_payment_view(session, user, lang, feedback_id)
-    if not view:
-        await callback.answer(t("feedback_price_offer_expired", lang), show_alert=True)
-        return
-
     await callback.answer()
-    text, keyboard = view
-    await _replace_with_text(
+    await _replace_with_miniapp_entry(
         callback,
-        text,
-        reply_markup=keyboard,
-        parse_mode="HTML",
-        disable_web_page_preview=True,
+        lang,
+        source="legacy_feedback_discount_open",
+        mode="feedback_discount",
+        feedback_id=feedback_id,
     )
 
 
@@ -548,31 +1001,18 @@ async def feedback_discount_method_handler(callback: CallbackQuery, session):
     lang = user.language or "ru"
 
     if payment_method not in PAYMENT_METHODS:
-        await callback.answer(t("feedback_price_offer_expired", lang), show_alert=True)
-        return
-
-    user.payment_method = payment_method
-    await session.flush()
-
-    view = await build_feedback_discount_plan_view(
-        session,
-        user,
-        lang,
-        feedback_id,
-        payment_method,
-    )
-    if not view:
-        await callback.answer(t("feedback_price_offer_expired", lang), show_alert=True)
+        await callback.answer()
+        await _replace_with_expired_offer(callback, lang, "feedback_price_offer_expired")
         return
 
     await callback.answer()
-    text, keyboard = view
-    await _replace_with_text(
+    await _replace_with_miniapp_entry(
         callback,
-        text,
-        reply_markup=keyboard,
-        parse_mode="HTML",
-        disable_web_page_preview=True,
+        lang,
+        source="legacy_feedback_discount_method",
+        mode="feedback_discount",
+        feedback_id=feedback_id,
+        method=payment_method,
     )
 
 
@@ -591,33 +1031,20 @@ async def feedback_discount_plan_handler(callback: CallbackQuery, session):
     lang = user.language or "ru"
 
     if payment_method not in PAYMENT_METHODS or plan not in PLANS:
-        await callback.answer(t("feedback_price_offer_expired", lang), show_alert=True)
+        await callback.answer()
+        await _replace_with_expired_offer(callback, lang, "feedback_price_offer_expired")
         return
 
-    feedback = await _get_available_feedback_offer(session, user, feedback_id)
-    if not feedback:
-        await callback.answer(t("feedback_price_offer_expired", lang), show_alert=True)
-        return
-
-    user.payment_method = payment_method
-    await session.flush()
-
-    payment_service = PaymentService(session)
-    payment, checkout_info, error_key = await payment_service.create_checkout_draft(
-        telegram_id=callback.from_user.id,
-        plan_type=plan,
-        force_feedback_discount=True,
-        feedback_id=feedback.id,
-    )
-
-    if not payment or not checkout_info or checkout_info.get("discount_source") != "feedback_price_offer":
-        await callback.answer(t("feedback_price_offer_expired", lang), show_alert=True)
-        return
-
-    await user_repo.set_selected_plan_type(user, plan)
-    await _show_checkout(callback, user_repo, user, lang, plan, checkout_info)
-    await session.commit()
     await callback.answer()
+    await _replace_with_miniapp_entry(
+        callback,
+        lang,
+        source="legacy_feedback_discount_plan",
+        mode="feedback_discount",
+        feedback_id=feedback_id,
+        method=payment_method,
+        plan=plan,
+    )
 
 
 @router.callback_query(F.data.startswith("discount_offer:method:"))
@@ -638,36 +1065,19 @@ async def discount_offer_method_handler(callback: CallbackQuery, session):
         payment_method = parts[2]
 
     if payment_method not in PAYMENT_METHODS:
-        await callback.answer(t("subscription_admin_discount_expired", user.language or "ru"), show_alert=True)
+        await callback.answer()
+        await _replace_with_expired_offer(callback, user.language or "ru", "subscription_admin_discount_expired")
         return
-
-    user.payment_method = payment_method
-    await session.commit()
 
     lang = user.language or "ru"
-    view = await build_admin_discount_plan_view(
-        session,
-        user,
-        lang,
-        user.payment_method,
-        campaign_id=campaign_id,
-    )
     await callback.answer()
-    if not view:
-        await _replace_with_text(
-            callback,
-            t("subscription_admin_discount_expired", lang),
-            parse_mode="HTML",
-        )
-        return
-
-    text, keyboard = view
-    await _replace_with_text(
+    await _replace_with_miniapp_entry(
         callback,
-        text,
-        reply_markup=keyboard,
-        parse_mode="HTML",
-        disable_web_page_preview=True,
+        lang,
+        source="legacy_admin_discount_method",
+        mode="admin_discount",
+        campaign_id=campaign_id,
+        method=payment_method,
     )
 
 
@@ -681,16 +1091,12 @@ async def discount_offer_change_payment_handler(callback: CallbackQuery, session
     parts = callback.data.split(":")
     campaign_id = _parse_campaign_id(parts[2] if len(parts) > 2 else None)
     await callback.answer()
-    view = await build_admin_discount_payment_view(session, user, lang, campaign_id=campaign_id)
-    if not view:
-        await callback.answer(t("subscription_admin_discount_expired", lang), show_alert=True)
-        return
-    text, keyboard = view
-    await _replace_with_text(
+    await _replace_with_miniapp_entry(
         callback,
-        text,
-        reply_markup=keyboard,
-        parse_mode="HTML",
+        lang,
+        source="legacy_admin_discount_change_payment",
+        mode="admin_discount",
+        campaign_id=campaign_id,
     )
 
 
@@ -703,17 +1109,13 @@ async def discount_offer_back_entry_handler(callback: CallbackQuery, session):
     lang = user.language or "ru"
     parts = callback.data.split(":")
     campaign_id = _parse_campaign_id(parts[2] if len(parts) > 2 else None)
-    view = await build_admin_discount_entry_view(session, user, lang, campaign_id=campaign_id)
     await callback.answer()
-    if not view:
-        await callback.answer(t("subscription_admin_discount_expired", lang), show_alert=True)
-        return
-    text, keyboard = view
-    await _replace_with_text(
+    await _replace_with_miniapp_entry(
         callback,
-        text,
-        reply_markup=keyboard,
-        parse_mode="HTML",
+        lang,
+        source="legacy_admin_discount_back_entry",
+        mode="admin_discount",
+        campaign_id=campaign_id,
     )
 
 
@@ -726,17 +1128,13 @@ async def discount_offer_back_payment_handler(callback: CallbackQuery, session):
     lang = user.language or "ru"
     parts = callback.data.split(":")
     campaign_id = _parse_campaign_id(parts[2] if len(parts) > 2 else None)
-    view = await build_admin_discount_payment_view(session, user, lang, campaign_id=campaign_id)
     await callback.answer()
-    if not view:
-        await callback.answer(t("subscription_admin_discount_expired", lang), show_alert=True)
-        return
-    text, keyboard = view
-    await _replace_with_text(
+    await _replace_with_miniapp_entry(
         callback,
-        text,
-        reply_markup=keyboard,
-        parse_mode="HTML",
+        lang,
+        source="legacy_admin_discount_back_payment",
+        mode="admin_discount",
+        campaign_id=campaign_id,
     )
 
 
@@ -761,36 +1159,14 @@ async def subscription_referral_discount_handler(callback: CallbackQuery, sessio
         await user_repo.start_discount_offer(user)
 
     await session.flush()
+    await DiscountService(session).sync_referral_discount_progress(user)
 
     lang = user.language if user.language else "ru"
-    referral_link = f"https://t.me/{settings.BOT_USERNAME}?start={user.referral_code}"
-    count = user.discount_referral_count
-
-    text = await build_subscription_discount_progress_text(
-        session,
+    await _replace_with_miniapp_entry(
+        callback,
         lang,
-        referral_link,
-        count,
-        discount_eligible=user.discount_eligible,
-        discount_used=user.discount_used,
-        payment_method=user.payment_method,
-    )
-    keyboard = (
-        subscription_discount_ready_keyboard(lang)
-        if user.discount_eligible and not user.discount_used
-        else subscription_discount_progress_keyboard(lang)
-    )
-
-    await callback.message.edit_text(
-        text,
-        reply_markup=keyboard,
-        disable_web_page_preview=True,
-    )
-
-    await user_repo.set_discount_progress_message(
-        user=user,
-        chat_id=callback.message.chat.id,
-        message_id=callback.message.message_id,
+        source="legacy_referral_discount",
+        mode="referral_discount",
     )
     await session.commit()
     await callback.answer()
@@ -806,17 +1182,16 @@ async def subscription_back_to_main_handler(callback: CallbackQuery, session):
         return
 
     lang = user.language if user.language else "ru"
-    text, keyboard = await build_subscription_main_view(session, user, lang)
-
-    await callback.message.edit_text(
-        text,
-        reply_markup=keyboard,
-        parse_mode="HTML",
-        disable_web_page_preview=True,
+    await _replace_with_miniapp_entry(
+        callback,
+        lang,
+        source="legacy_subscription_back",
+        mode="subscription",
     )
 
     await user_repo.clear_discount_progress_message(user)
     await session.commit()
+    await callback.answer()
 
 
 @router.callback_query(F.data == "payment:visa")
@@ -829,16 +1204,13 @@ async def payment_visa_handler(callback: CallbackQuery, session):
     if not user:
         return
 
-    user.payment_method = "visa"
-    await session.commit()
-
     lang = user.language if user.language else "ru"
-    text, keyboard = await build_subscription_main_view(session, user, lang)
-
-    await callback.message.edit_text(
-        text,
-        reply_markup=keyboard,
-        parse_mode="HTML",
+    await _replace_with_miniapp_entry(
+        callback,
+        lang,
+        source="legacy_payment_visa",
+        mode="subscription",
+        method="visa",
     )
 
 
@@ -852,16 +1224,13 @@ async def payment_alipay_handler(callback: CallbackQuery, session):
     if not user:
         return
 
-    user.payment_method = "alipay"
-    await session.commit()
-
     lang = user.language if user.language else "ru"
-    text, keyboard = await build_subscription_main_view(session, user, lang)
-
-    await callback.message.edit_text(
-        text,
-        reply_markup=keyboard,
-        parse_mode="HTML",
+    await _replace_with_miniapp_entry(
+        callback,
+        lang,
+        source="legacy_payment_alipay",
+        mode="subscription",
+        method="alipay",
     )
 
 
@@ -875,16 +1244,13 @@ async def payment_wechat_handler(callback: CallbackQuery, session):
     if not user:
         return
 
-    user.payment_method = "wechat"
-    await session.commit()
-
     lang = user.language if user.language else "ru"
-    text, keyboard = await build_subscription_main_view(session, user, lang)
-
-    await callback.message.edit_text(
-        text,
-        reply_markup=keyboard,
-        parse_mode="HTML",
+    await _replace_with_miniapp_entry(
+        callback,
+        lang,
+        source="legacy_payment_wechat",
+        mode="subscription",
+        method="wechat",
     )
 
 
@@ -903,92 +1269,41 @@ async def checkout_change_plan_handler(callback: CallbackQuery, session):
     await user_repo.set_selected_plan_type(user, None)
     await session.commit()
 
+    mode = "subscription"
+    campaign_id = None
+    feedback_id = None
     if draft and draft.discount_source == "admin_campaign":
-        view = await build_admin_discount_plan_view(
-            session,
-            user,
-            lang,
-            draft.payment_method or user.payment_method or "visa",
-            campaign_id=draft.discount_campaign_id,
-        )
-        if not view:
-            await callback.answer(t("subscription_admin_discount_expired", lang), show_alert=True)
-            return
-        text, keyboard = view
-        await _replace_with_text(
-            callback,
-            text,
-            reply_markup=keyboard,
-            parse_mode="HTML",
-            disable_web_page_preview=True,
-        )
-        await callback.answer()
-        return
-
-    if draft and draft.discount_source == "feedback_price_offer":
+        mode = "admin_discount"
+        campaign_id = draft.discount_campaign_id
+    elif draft and draft.discount_source == "feedback_price_offer":
+        mode = "feedback_discount"
         feedback = await BotFeedbackRepository(session).get_latest_available_price_offer(callback.from_user.id)
-        if not feedback:
-            await callback.answer(t("feedback_price_offer_expired", lang), show_alert=True)
-            return
-        view = await build_feedback_discount_plan_view(
-            session,
-            user,
-            lang,
-            feedback.id,
-            draft.payment_method or user.payment_method or "visa",
-        )
-        if not view:
-            await callback.answer(t("feedback_price_offer_expired", lang), show_alert=True)
-            return
-        text, keyboard = view
-        await _replace_with_text(
-            callback,
-            text,
-            reply_markup=keyboard,
-            parse_mode="HTML",
-            disable_web_page_preview=True,
-        )
-        await callback.answer()
-        return
+        feedback_id = feedback.id if feedback else None
+    elif draft and draft.discount_source == "referral":
+        mode = "referral_discount"
 
-    text, keyboard = await build_subscription_main_view(session, user, lang)
-
-    try:
-        await callback.message.edit_text(
-            text,
-            reply_markup=keyboard,
-            parse_mode="HTML",
-            disable_web_page_preview=True,
-        )
-    except Exception:
-        # message is a photo (QR checkout) — delete and send new text message
-        await callback.message.delete()
-        await callback.message.answer(
-            text,
-            reply_markup=keyboard,
-            parse_mode="HTML",
-            disable_web_page_preview=True,
-        )
-
+    await _replace_with_miniapp_entry(
+        callback,
+        lang,
+        source="legacy_checkout_change_plan",
+        mode=mode,
+        campaign_id=campaign_id,
+        feedback_id=feedback_id,
+        method=(draft.payment_method if draft else None) or user.payment_method,
+    )
     await callback.answer()
+    return
 
 
 async def _show_checkout(callback: CallbackQuery, user_repo: UserRepository, user, lang: str, plan: str, checkout_info: dict):
-    text = build_checkout_text(lang, checkout_info)
     keyboard = checkout_keyboard(lang)
 
     checkout_msg_id: int | None = None
 
     if checkout_info["currency"] == "¥":
-        if checkout_info.get("discount_source") == "admin_campaign":
-            qr_key = f"{user.payment_method}_admin_discount"
-        else:
-            qr_key = f"{user.payment_method}_{plan}"
-            if checkout_info.get("discount_applied"):
-                qr_key += "_discount"
-        photo_path = QR_PHOTO_PATHS.get(qr_key)
-        if photo_path:
-            photo = FSInputFile(photo_path)
+        photo = await _checkout_qr_photo(user_repo.session, user, plan, checkout_info)
+        text = await build_checkout_text(user_repo.session, lang, checkout_info, qr_available=bool(photo))
+        if photo:
             try:
                 await callback.message.delete()
             except Exception:
@@ -997,20 +1312,37 @@ async def _show_checkout(callback: CallbackQuery, user_repo: UserRepository, use
                 photo,
                 caption=text,
                 reply_markup=keyboard,
+                parse_mode="HTML",
             )
             checkout_msg_id = sent.message_id
         else:
-            sent = await callback.message.edit_text(
-                text,
-                reply_markup=keyboard,
-                disable_web_page_preview=True,
-            )
-            checkout_msg_id = callback.message.message_id
+            try:
+                await callback.message.edit_text(
+                    text,
+                    reply_markup=keyboard,
+                    parse_mode="HTML",
+                    disable_web_page_preview=True,
+                )
+                checkout_msg_id = callback.message.message_id
+            except Exception:
+                try:
+                    await callback.message.delete()
+                except Exception:
+                    pass
+                sent = await callback.message.answer(
+                    text,
+                    reply_markup=keyboard,
+                    parse_mode="HTML",
+                    disable_web_page_preview=True,
+                )
+                checkout_msg_id = sent.message_id
     else:
+        text = await build_checkout_text(user_repo.session, lang, checkout_info)
         try:
             await callback.message.edit_text(
                 text,
                 reply_markup=keyboard,
+                parse_mode="HTML",
                 disable_web_page_preview=True,
             )
             checkout_msg_id = callback.message.message_id
@@ -1019,6 +1351,7 @@ async def _show_checkout(callback: CallbackQuery, user_repo: UserRepository, use
             sent = await callback.message.answer(
                 text,
                 reply_markup=keyboard,
+                parse_mode="HTML",
                 disable_web_page_preview=True,
             )
             checkout_msg_id = sent.message_id
@@ -1057,46 +1390,18 @@ async def discount_offer_plan_handler(callback: CallbackQuery, session):
         payment_method = None
 
     if plan not in PLANS:
-        await callback.answer(t("subscription_admin_discount_expired", lang), show_alert=True)
+        await _replace_with_expired_offer(callback, lang, "subscription_admin_discount_expired")
         return
 
-    if not payment_method:
-        view = await build_admin_discount_payment_view(session, user, lang, campaign_id=campaign_id)
-        if not view:
-            await callback.answer(t("subscription_admin_discount_expired", lang), show_alert=True)
-            return
-        text, keyboard = view
-        await _replace_with_text(
-            callback,
-            text,
-            reply_markup=keyboard,
-            parse_mode="HTML",
-        )
-        return
-
-    user.payment_method = payment_method
-    await session.flush()
-
-    payment_service = PaymentService(session)
-    payment, checkout_info, error_key = await payment_service.create_checkout_draft(
-        telegram_id=callback.from_user.id,
-        plan_type=plan,
-        force_admin_discount=True,
-        admin_discount_campaign_id=campaign_id,
+    await _replace_with_miniapp_entry(
+        callback,
+        lang,
+        source="legacy_admin_discount_plan",
+        mode="admin_discount",
+        campaign_id=campaign_id,
+        method=payment_method,
+        plan=plan,
     )
-
-    if (
-        not payment
-        or not checkout_info
-        or checkout_info.get("discount_source") != "admin_campaign"
-        or (campaign_id and checkout_info.get("discount_campaign_id") != campaign_id)
-    ):
-        await callback.answer(t("subscription_admin_discount_expired", lang), show_alert=True)
-        return
-
-    await user_repo.set_selected_plan_type(user, plan)
-    await _show_checkout(callback, user_repo, user, lang, plan, checkout_info)
-    await session.commit()
 
 
 @router.callback_query(F.data.startswith("subscription:plan:"))
@@ -1111,30 +1416,15 @@ async def subscription_plan_handler(callback: CallbackQuery, session):
 
     lang = user.language or "ru"
 
-    if not user.payment_method:
-        await callback.message.edit_text(
-            t("payment_method_choose", lang),
-            reply_markup=payment_method_keyboard(lang),
-            parse_mode="HTML",
-        )
-        return
-
     plan = callback.data.split(":")[-1]
-
-    payment_service = PaymentService(session)
-    payment, checkout_info, error_key = await payment_service.create_checkout_draft(
-        telegram_id=callback.from_user.id,
-        plan_type=plan,
+    await _replace_with_miniapp_entry(
+        callback,
+        lang,
+        source="legacy_subscription_plan",
+        mode="subscription",
+        plan=plan,
+        method=user.payment_method,
     )
-
-    if not payment or not checkout_info:
-        if error_key:
-            await callback.message.answer(t(error_key, lang))
-        return
-
-    await user_repo.set_selected_plan_type(user, plan)
-    await _show_checkout(callback, user_repo, user, lang, plan, checkout_info)
-    await session.commit()
 
 
 @router.callback_query(F.data == "payment:back")
@@ -1157,12 +1447,12 @@ async def payment_retry_handler(callback: CallbackQuery, session):
         return
 
     lang = user.language if user.language else "ru"
-    text, keyboard = await build_subscription_main_view(session, user, lang)
     await callback.answer()
-    await callback.message.answer(
-        text,
-        reply_markup=keyboard,
-        parse_mode="HTML",
+    await _replace_with_miniapp_entry(
+        callback,
+        lang,
+        source="legacy_payment_retry",
+        mode="subscription",
     )
 
 
@@ -1178,8 +1468,9 @@ async def subscription_change_payment_method_handler(callback: CallbackQuery, se
 
     lang = user.language if user.language else "ru"
 
-    await callback.message.edit_text(
-        t("payment_method_choose", lang),
-        reply_markup=payment_method_keyboard(lang),
-        parse_mode="HTML",
+    await _replace_with_miniapp_entry(
+        callback,
+        lang,
+        source="legacy_change_payment_method",
+        mode="subscription",
     )

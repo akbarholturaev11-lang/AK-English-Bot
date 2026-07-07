@@ -1,6 +1,7 @@
 import json
 
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, KeyboardButton
+from app.bot.utils.i18n import t
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
@@ -10,14 +11,14 @@ HSK4_PART_LOWER = "lower"
 
 
 def _parse_title(raw: str) -> str:
-    """lesson.title oddiy string yoki JSON bo'lishi mumkin — xitoycha qismini qaytaradi."""
+    """Return the most English-friendly lesson title available."""
     if not raw:
         return ""
     if raw.strip().startswith("{"):
         try:
             d = json.loads(raw)
             if isinstance(d, dict):
-                return d.get("zh") or d.get("uz") or raw
+                return d.get("en") or d.get("uz") or d.get("ru") or d.get("tj") or d.get("zh") or raw
         except Exception:
             pass
     return raw
@@ -40,8 +41,8 @@ def filter_hsk4_lessons_by_part(lessons: list, part: str | None) -> list:
 
 def hsk4_part_selection_keyboard() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(inline_keyboard=[[
-        InlineKeyboardButton(text="上", callback_data=f"course:hsk4_part:{HSK4_PART_UPPER}"),
-        InlineKeyboardButton(text="下", callback_data=f"course:hsk4_part:{HSK4_PART_LOWER}"),
+        InlineKeyboardButton(text="Part 1", callback_data=f"course:hsk4_part:{HSK4_PART_UPPER}"),
+        InlineKeyboardButton(text="Part 2", callback_data=f"course:hsk4_part:{HSK4_PART_LOWER}"),
     ]])
 
 
@@ -244,7 +245,7 @@ def course_reminder_timezone_keyboard() -> InlineKeyboardMarkup:
     builder.button(text="UTC+3 🇷🇺 Москва",   callback_data="course:set_tz:3")
     builder.button(text="UTC+5 🇺🇿 Тошкент",  callback_data="course:set_tz:5")
     builder.button(text="UTC+5 🇹🇯 Душанбе",  callback_data="course:set_tz:5")
-    builder.button(text="UTC+8 🇨🇳 Пекин",    callback_data="course:set_tz:8")
+    builder.button(text="UTC+8 Asia",         callback_data="course:set_tz:8")
     builder.adjust(2)
     return builder.as_markup()
 
@@ -285,17 +286,24 @@ def next_study_time_inline_keyboard(lang: str) -> InlineKeyboardMarkup:
     ])
 
 
-def reminder_time_keyboard(lang: str) -> ReplyKeyboardMarkup:
+def reminder_time_keyboard(lang: str) -> InlineKeyboardMarkup:
     cancel_map = {
         "uz": "❌ Bekor qilish",
         "ru": "❌ Отмена",
         "tj": "❌ Бекор кардан",
     }
-    return ReplyKeyboardMarkup(
-        keyboard=[
-            [KeyboardButton(text="08:00"), KeyboardButton(text="14:00"), KeyboardButton(text="20:00")],
-            [KeyboardButton(text=cancel_map.get(lang, "❌ Отмена"))],
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text="08:00", callback_data="course:reminder_time:08:00"),
+                InlineKeyboardButton(text="14:00", callback_data="course:reminder_time:14:00"),
+                InlineKeyboardButton(text="20:00", callback_data="course:reminder_time:20:00"),
+            ],
+            [
+                InlineKeyboardButton(
+                    text=cancel_map.get(lang, "❌ Отмена"),
+                    callback_data="course:reminder_cancel",
+                ),
+            ],
         ],
-        resize_keyboard=True,
-        one_time_keyboard=True,
     )

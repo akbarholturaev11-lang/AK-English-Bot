@@ -1,9 +1,10 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
+from app.bot.keyboards.subscription import subscription_miniapp_button
 from app.bot.utils.i18n import t
 
 
-LIKED_OPTIONS = ("answers", "photo", "practice", "other")
+LIKED_OPTIONS = ("course", "answers", "photo", "practice", "other")
 DISLIKED_OPTIONS = ("price", "limits", "unclear", "pace", "other")
 
 
@@ -60,9 +61,12 @@ def feedback_price_offer_keyboard(feedback_id: int, lang: str) -> InlineKeyboard
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                InlineKeyboardButton(
+                subscription_miniapp_button(
+                    lang,
+                    source="feedback_price_offer",
+                    mode="feedback_discount",
+                    feedback_id=feedback_id,
                     text=t("feedback_price_offer_button", lang),
-                    callback_data=f"feedback_discount:open:{feedback_id}",
                 )
             ]
         ]

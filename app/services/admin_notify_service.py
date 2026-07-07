@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 from html import escape
 
 from aiogram import Bot
+from aiogram.types import BufferedInputFile
 
 from app.config import settings
 from app.bot.keyboards.admin_review import admin_payment_review_keyboard
@@ -43,6 +44,10 @@ class AdminNotifyService:
         discount_details: str = None,
         ai_result: dict = None,
         pending_count: int = 0,
+        card_country: str = None,
+        local_amount: str = None,
+        local_currency: str = None,
+        exchange_rate: str = None,
     ) -> str:
         plan_label = "10 kunlik" if plan_type == "10_days" else "1 oylik"
         method_labels = {
@@ -59,6 +64,22 @@ class AdminNotifyService:
             f"🏦 To'lov turi: {method_labels.get(payment_method, payment_method or '-')}",
             f"🆔 To'lov ID: #{payment_id}",
         ]
+
+        if local_amount and local_currency:
+            country_label = {
+                "tj": "Tojikiston kartasi",
+                "uz": "O'zbekiston kartasi",
+                "ru": "Rossiya kartasi",
+                "other": "Boshqa davlat kartasi",
+            }.get(card_country or "", card_country or "-")
+            lines.extend(
+                [
+                    f"💵 To'lanadigan summa: {local_amount} {local_currency}",
+                    f"🌍 Karta davlati: {country_label}",
+                ]
+            )
+            if exchange_rate:
+                lines.append(f"💱 Kurs: {exchange_rate}")
 
         if discount_percent > 0:
             source_label = {
@@ -119,9 +140,14 @@ class AdminNotifyService:
         user,
         ai_result: dict = None,
         pending_count: int = 1,
-    ) -> None:
+        screenshot_bytes: bytes | None = None,
+        screenshot_filename: str = "payment.jpg",
+        require_delivery: bool = False,
+    ) -> str | None:
         if not self.admin_ids:
-            return
+            if require_delivery:
+                raise RuntimeError("admin_ids_not_configured")
+            return None
 
         text = self.build_payment_review_text(
             lang="uz",
@@ -139,13 +165,35 @@ class AdminNotifyService:
             discount_details=payment.discount_details,
             ai_result=ai_result,
             pending_count=pending_count,
+            card_country=getattr(payment, "card_country", None),
+            local_amount=getattr(payment, "local_amount", None),
+            local_currency=getattr(payment, "local_currency", None),
+            exchange_rate=getattr(payment, "exchange_rate", None),
         )
 
         keyboard = admin_payment_review_keyboard(payment.id, "uz")
+        first_file_id = None
+        sent_count = 0
 
         for admin_id in self.admin_ids:
             try:
-                if payment.screenshot_file_id:
+                if screenshot_bytes:
+                    sent = await bot.send_photo(
+                        chat_id=admin_id,
+                        photo=BufferedInputFile(screenshot_bytes, filename=screenshot_filename),
+                        caption=text if len(text) <= 1000 else None,
+                        reply_markup=keyboard if len(text) <= 1000 else None,
+                    )
+                    if not first_file_id and sent.photo:
+                        first_file_id = sent.photo[-1].file_id
+                    if len(text) > 1000:
+                        await bot.send_message(
+                            chat_id=admin_id,
+                            text=text,
+                            reply_markup=keyboard,
+                        )
+                    sent_count += 1
+                elif payment.screenshot_file_id:
                     if len(text) <= 1000:
                         await bot.send_photo(
                             chat_id=admin_id,
@@ -163,14 +211,19 @@ class AdminNotifyService:
                             text=text,
                             reply_markup=keyboard,
                         )
+                    sent_count += 1
                 else:
                     await bot.send_message(
                         chat_id=admin_id,
                         text=text,
                         reply_markup=keyboard,
                     )
+                    sent_count += 1
             except Exception:
                 pass
+        if require_delivery and sent_count == 0:
+            raise RuntimeError("admin_notification_failed")
+        return first_file_id
 
     def _feedback_user_age(self, user) -> str:
         created_at = getattr(user, "created_at", None)
@@ -186,15 +239,15 @@ class AdminNotifyService:
     def _feedback_level_label(self, user) -> str:
         level = str(getattr(user, "level", None) or "-")
         return {
-            "beginner": "0 dan",
-            "a1": "A1",
-            "a2": "A2",
-            "b1": "B1",
-            "b2": "B2",
-            "hsk1": "A1",
-            "hsk2": "A2",
-            "hsk3": "B1",
-            "hsk4": "B2",
+            "beginner": "Beginner",
+            "a1": "Beginner",
+            "a2": "Elementary",
+            "b1": "Intermediate",
+            "b2": "Advanced",
+            "hsk1": "Beginner",
+            "hsk2": "Elementary",
+            "hsk3": "Intermediate",
+            "hsk4": "Advanced",
         }.get(level, level)
 
     def _feedback_mode_label(self, user) -> str:

@@ -6,11 +6,14 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from sqlalchemy import select, func
 from datetime import datetime, timezone, timedelta
+from decimal import Decimal, InvalidOperation
 from html import escape
+from math import isfinite
 
 from app.bot.fsm.admin_portfolio import AdminPortfolioStates
-from app.bot.fsm.admin_management import AdminPriceStates, AdminRequiredChannelStates
+from app.bot.fsm.admin_management import AdminPriceStates, AdminRequiredChannelStates, AdminUserStates
 from app.config import settings
+from app.repositories.bot_setting_repo import BotSettingRepository
 from app.repositories.user_repo import UserRepository
 from app.repositories.course_audio_repo import CourseAudioRepository
 from app.db.models.user import User
@@ -19,18 +22,42 @@ from app.db.models.course_progress import CourseProgress
 from app.db.models.referral import Referral
 from app.services.ai_usage_budget_service import USD_TO_SOMONI, USD_TO_YUAN
 from app.services.portfolio_service import PortfolioService
+from app.services.payment_qr_code_service import (
+    PaymentQrCodeService,
+    SUBSCRIPTION_DISCOUNT_20_QR_SCOPE,
+    SUBSCRIPTION_QR_SCOPE,
+)
 from app.services.required_channel_service import (
     MAIN_CHANNEL_USERNAME,
     RequiredChannelService,
     is_main_channel,
     normalize_channel_username,
 )
+from app.services.subscription_currency_service import (
+    SUBSCRIPTION_USD_RATE_KEYS,
+    SubscriptionCurrencyService,
+    format_subscription_price,
+)
 from app.services.subscription_price_service import PAYMENT_METHODS, PLANS, SubscriptionPriceService
+from app.services.subscription_miniapp_service import PAYMENT_DETAILS_KEY
+from app.services.support_contact_service import (
+    ADMIN_CONTACT_KEY,
+    admin_contact_url,
+    get_admin_contact,
+    normalize_admin_contact,
+)
 from app.bot.handlers.admin_broadcast import open_broadcast_panel_for_callback
+from app.bot.utils.workflow_message import (
+    delete_message_safely,
+    edit_callback_workflow_message,
+    edit_stored_workflow_message,
+)
 
 router = Router()
 
 ADMIN_MENU_TEXT = "<b>🛠 Admin panel</b>\n\nQuyidagi amallardan birini tanlang:"
+_ADMIN_FLOW_CHAT_ID = "admin_flow_chat_id"
+_ADMIN_FLOW_MSG_ID = "admin_flow_msg_id"
 
 
 def _is_admin(user_id: int) -> bool:
@@ -38,10 +65,14 @@ def _is_admin(user_id: int) -> bool:
     return user_id in admin_ids
 
 
+def _pct(part: int, total: int) -> float:
+    return round(part / total * 100, 1) if total > 0 else 0.0
+
+
 def admin_menu_keyboard() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="📊 Statistika", callback_data="adm:stats")],
-        [InlineKeyboardButton(text="🔎 User qidirish", callback_data="adm:user_search_info")],
+        [InlineKeyboardButton(text="🔎 Foydalanuvchi qidirish", callback_data="adm:user_search_info")],
         [InlineKeyboardButton(text="💼 Portfel", callback_data="adm:portfolio")],
         [InlineKeyboardButton(text="💳 Obuna narxlari", callback_data="adm:prices")],
         [InlineKeyboardButton(text="📣 Majburiy kanal obunasi", callback_data="adm:channels")],
@@ -49,6 +80,8 @@ def admin_menu_keyboard() -> InlineKeyboardMarkup:
         [InlineKeyboardButton(text="📢 Broadcast xabar", callback_data="adm:broadcast_info")],
         [InlineKeyboardButton(text="📣 Reklama kampaniyasi", callback_data="adm:ads_panel")],
         [InlineKeyboardButton(text="🎁 Chegirma boshqaruv", callback_data="adm:discount_panel")],
+        [InlineKeyboardButton(text="🤝 Hamkorlar", callback_data="adm:partners")],
+        [InlineKeyboardButton(text="🆘 Yordam kontakti", callback_data="adm:support_contact")],
         [InlineKeyboardButton(text="✅ Obuna berish", callback_data="adm:giveaccess_info")],
         [InlineKeyboardButton(text="🎵 Audio boshqaruv", callback_data="adm:audio_panel")],
     ])
@@ -71,8 +104,35 @@ def portfolio_keyboard() -> InlineKeyboardMarkup:
     ])
 
 
-def portfolio_history_keyboard() -> InlineKeyboardMarkup:
+def portfolio_history_keyboard(rows) -> InlineKeyboardMarkup:
+    buttons = []
+    for row in rows:
+        if row.source not in PortfolioService.MANUAL_SOURCES:
+            continue
+        icon = _portfolio_type_icon(row.transaction_type)
+        buttons.append([
+            InlineKeyboardButton(
+                text=f"✏️ #{row.id} {icon} {_usd(row.amount_usd)}",
+                callback_data=f"adm:portfolio_edit:{row.id}",
+            )
+        ])
+    buttons.append([InlineKeyboardButton(text="⬅️ Portfel", callback_data="adm:portfolio")])
+    return InlineKeyboardMarkup(inline_keyboard=buttons)
+
+
+def portfolio_edit_type_keyboard(transaction_id: int) -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(inline_keyboard=[
+        [
+            InlineKeyboardButton(
+                text="➕ Foyda",
+                callback_data=f"adm:portfolio_edit_type:{transaction_id}:profit",
+            ),
+            InlineKeyboardButton(
+                text="➖ Rasxod",
+                callback_data=f"adm:portfolio_edit_type:{transaction_id}:expense",
+            ),
+        ],
+        [InlineKeyboardButton(text="❌ Bekor qilish", callback_data="adm:portfolio_cancel")],
         [InlineKeyboardButton(text="⬅️ Portfel", callback_data="adm:portfolio")],
     ])
 
@@ -136,6 +196,40 @@ async def _edit_message_by_id(
         return False
 
 
+async def _edit_admin_flow_callback(
+    callback: CallbackQuery,
+    state: FSMContext,
+    text: str,
+    *,
+    reply_markup: InlineKeyboardMarkup | None = None,
+) -> None:
+    await edit_callback_workflow_message(
+        callback,
+        state,
+        text,
+        chat_id_key=_ADMIN_FLOW_CHAT_ID,
+        message_id_key=_ADMIN_FLOW_MSG_ID,
+        reply_markup=reply_markup,
+    )
+
+
+async def _edit_admin_flow_message(
+    message: Message,
+    state: FSMContext,
+    text: str,
+    *,
+    reply_markup: InlineKeyboardMarkup | None = None,
+) -> None:
+    await edit_stored_workflow_message(
+        message,
+        state,
+        text,
+        chat_id_key=_ADMIN_FLOW_CHAT_ID,
+        message_id_key=_ADMIN_FLOW_MSG_ID,
+        reply_markup=reply_markup,
+    )
+
+
 async def _send_or_edit_portfolio_prompt(
     *,
     state: FSMContext,
@@ -191,14 +285,14 @@ def _parse_amount_currency(text: str) -> tuple[float, str] | None:
         amount = float(parts[0].replace(",", "."))
     except ValueError:
         return None
-    if amount <= 0:
+    if not isfinite(amount) or amount <= 0:
         return None
     return amount, parts[1]
 
 
 def _method_label(method: str) -> str:
     return {
-        "visa": "Visa/somoni",
+        "visa": "Visa/Card TJS",
         "alipay": "Alipay/¥",
         "wechat": "WeChat/¥",
     }.get(method, method)
@@ -208,17 +302,88 @@ def _plan_label_admin(plan: str) -> str:
     return {"10_days": "10 kun", "1_month": "1 oy"}.get(plan, plan)
 
 
+def _price_qr_items(method: str, plan: str, amount: int) -> list[dict]:
+    discount_amount = int(round(amount * 0.8))
+    return [
+        {
+            "scope": SUBSCRIPTION_QR_SCOPE,
+            "payment_method": method,
+            "plan_type": plan,
+            "amount": amount,
+            "currency": "¥",
+            "label": "asosiy narx",
+        },
+        {
+            "scope": SUBSCRIPTION_DISCOUNT_20_QR_SCOPE,
+            "payment_method": method,
+            "plan_type": plan,
+            "amount": discount_amount,
+            "currency": "¥",
+            "label": "20% chegirma narxi",
+        },
+    ]
+
+
+def _qr_item_prompt(item: dict, index: int, total: int) -> str:
+    return (
+        f"📱 <b>QR kod yuklash</b> ({index + 1}/{total})\n\n"
+        f"Usul: <b>{PaymentQrCodeService.method_label(item['payment_method'])}</b>\n"
+        f"Tarif: <b>{_plan_label_admin(item['plan_type'])}</b>\n"
+        f"Narx: <b>{format_subscription_price(int(item['amount']), item['currency'])}</b>\n"
+        f"Turi: <b>{escape(str(item['label']))}</b>\n\n"
+        "Shu narxga mos QR kod rasmini yuboring."
+    )
+
+
+async def _edit_price_qr_prompt(message: Message, state: FSMContext) -> None:
+    data = await state.get_data()
+    items = data.get("price_qr_items") or []
+    index = int(data.get("price_qr_index") or 0)
+    if not items or index >= len(items):
+        await _edit_admin_flow_message(message, state, "❌ QR navbati topilmadi.", reply_markup=prices_keyboard())
+        return
+    await _edit_admin_flow_message(
+        message,
+        state,
+        _qr_item_prompt(items[index], index, len(items)),
+        reply_markup=admin_back_keyboard(),
+    )
+
+
 async def _prices_text(session) -> str:
     prices = await SubscriptionPriceService(session).all_prices()
+    currency_service = SubscriptionCurrencyService(session)
+    auto_rates = await currency_service.is_auto_rate_enabled()
+    rates, rate_source = await currency_service.effective_rates()
+    rate_mode = "AUTO real kurs" if auto_rates and rate_source == "auto" else "AUTO fallback: MANUAL kurs" if auto_rates else "MANUAL admin kurs"
     lines = ["💳 <b>Obuna narxlari</b>", ""]
     for price in prices:
         lines.append(
             f"{_method_label(price.payment_method)} · {_plan_label_admin(price.plan_type)}: "
-            f"<b>{price.amount} {price.currency}</b>"
+            f"<b>{format_subscription_price(price.amount, price.currency)}</b>"
         )
+    lines.extend(
+        [
+            "",
+            "💱 <b>Obuna fallback kurslari</b>",
+            f"Rejim: <b>{rate_mode}</b>",
+            f"1 USD = <code>{SubscriptionCurrencyService.format_rate('tjs', rates['tjs'])}</code> TJS",
+            f"1 USD = <code>{SubscriptionCurrencyService.format_rate('uzs', rates['uzs'])}</code> UZS",
+            f"1 USD = <code>{SubscriptionCurrencyService.format_rate('rub', rates['rub'])}</code> RUB",
+            f"1 USD = <code>{SubscriptionCurrencyService.format_rate('cny', rates['cny'])}</code> CNY",
+        ]
+    )
+    details = await BotSettingRepository(session).get(PAYMENT_DETAILS_KEY)
+    details = (details or settings.PAYMENT_DETAILS or "").strip()
+    short = (details[:60] + "…") if len(details) > 60 else (details or "—")
     lines.extend([
         "",
-        "Narxni o'zgartirish uchun pastdagi tarifni tanlang.",
+        "💳 <b>Karta rekviziti (mini app)</b>",
+        f"<code>{escape(short)}</code>",
+        "",
+        "<i>Visa/Card obuna narxi faqat TJSda yuradi. Alipay/WeChat narxlari ¥ bo'lib qoladi.</i>",
+        "",
+        "Narxni o'zgartirish uchun pastdagi tugmani tanlang.",
     ])
     return "\n".join(lines)
 
@@ -236,6 +401,19 @@ def prices_keyboard() -> InlineKeyboardMarkup:
                 callback_data=f"adm:price_set:{method}:1_month",
             ),
         ])
+    rows.append([
+        InlineKeyboardButton(text="💱 TJS kurs", callback_data="adm:visa_rate_set:tjs"),
+        InlineKeyboardButton(text="💱 UZS kurs", callback_data="adm:visa_rate_set:uzs"),
+        InlineKeyboardButton(text="💱 RUB kurs", callback_data="adm:visa_rate_set:rub"),
+    ])
+    rows.append([
+        InlineKeyboardButton(text="💴 CNY kurs", callback_data="adm:visa_rate_set:cny"),
+    ])
+    rows.append([
+        InlineKeyboardButton(text="🔄 AUTO kurs ON", callback_data="adm:visa_rate_auto:on"),
+        InlineKeyboardButton(text="✋ AUTO kurs OFF", callback_data="adm:visa_rate_auto:off"),
+    ])
+    rows.append([InlineKeyboardButton(text="💳 Karta rekviziti", callback_data="adm:payment_details")])
     rows.append([InlineKeyboardButton(text="⬅️ Admin panel", callback_data="adm:menu")])
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
@@ -278,6 +456,7 @@ async def _channel_panel_text(session) -> tuple[str, InlineKeyboardMarkup]:
         "",
         f"Rejim: <b>{'ON' if enabled else 'OFF'}</b>",
         f"Aktiv kanallar: <b>{active_count}</b>",
+        "Ishlash joyi: <b>course 2-qism yangi so'zlar checkpointidan keyin</b>",
         "",
         "Kanal qo'shish oson:",
         "1) Kanaldan bitta postni forward qiling",
@@ -387,12 +566,68 @@ def _fmt_dt(value) -> str:
         return str(value)
 
 
-async def _admin_user_info_text(session, user: User) -> str:
-    fields = []
-    for column in User.__table__.columns:
-        value = getattr(user, column.name, None)
-        fields.append(f"{column.name}: {value}")
+def _admin_label(value, labels: dict[str, str]) -> str:
+    raw = str(value or "—")
+    return labels.get(raw, raw.replace("_", " "))
 
+
+def _yes_no(value) -> str:
+    return "Ha" if value else "Yo'q"
+
+
+def _enabled_label(value) -> str:
+    return "Yoqilgan" if value else "O'chirilgan"
+
+
+def _payment_total_text(rows) -> str:
+    totals = [
+        format_subscription_price(int(row.total_sum or 0), row.currency)
+        for row in rows
+        if row.total_sum
+    ]
+    return " · ".join(totals) if totals else "—"
+
+
+def _course_step_label(value: str | None) -> str:
+    step = str(value or "—")
+    exact_labels = {
+        "intro": "Kirish",
+        "vocab": "So'zlar",
+        "dialogue": "Dialog",
+        "grammar": "Grammatika",
+        "exercise": "Test",
+        "satisfaction_check": "Dars bahosi",
+        "homework": "Uyga vazifa",
+        "completed": "Tugatilgan",
+    }
+    if step in exact_labels:
+        return exact_labels[step]
+
+    prefix_labels = {
+        "block_vocab_": "blok: so'zlar",
+        "block_grammar_": "blok: grammatika",
+        "block_quiz_": "blok: test",
+        "vocab_": "qism: so'zlar",
+        "dialogue_": "dialog",
+    }
+    for prefix, label in prefix_labels.items():
+        if step.startswith(prefix):
+            return f"{step.removeprefix(prefix)}-{label}"
+    return step.replace("_", " ")
+
+
+def _homework_status_label(value: str | None) -> str:
+    return _admin_label(
+        value,
+        {
+            "none": "Boshlanmagan",
+            "assigned": "Berilgan",
+            "completed": "Tugatilgan",
+        },
+    )
+
+
+async def _admin_user_info_text(session, user: User) -> str:
     payment_rows = await session.execute(
         select(Payment)
         .where(Payment.user_telegram_id == user.telegram_id)
@@ -403,12 +638,12 @@ async def _admin_user_info_text(session, user: User) -> str:
     payment_count = (await session.execute(
         select(func.count()).select_from(Payment).where(Payment.user_telegram_id == user.telegram_id)
     )).scalar() or 0
-    approved_sum = (await session.execute(
-        select(func.sum(Payment.amount)).where(
+    approved_totals = (await session.execute(
+        select(Payment.currency, func.sum(Payment.amount).label("total_sum")).where(
             Payment.user_telegram_id == user.telegram_id,
             Payment.payment_status == "approved",
-        )
-    )).scalar() or 0
+        ).group_by(Payment.currency)
+    )).fetchall()
 
     referral_rows = await session.execute(
         select(Referral.status, func.count().label("cnt"))
@@ -427,48 +662,93 @@ async def _admin_user_info_text(session, user: User) -> str:
     )
     progress = progress_result.scalar_one_or_none()
 
+    status_labels = {
+        "active": "Faol",
+        "trial": "Sinov rejimi",
+        "expired": "Muddati tugagan",
+        "blocked": "Bloklangan",
+        "free": "Bepul",
+    }
+    payment_status_labels = {
+        "none": "To'lov qilinmagan",
+        "draft": "Tarif tanlangan",
+        "pending": "Tekshiruv kutilmoqda",
+        "approved": "Tasdiqlangan",
+        "rejected": "Rad etilgan",
+    }
+    learning_mode_labels = {"qa": "Savol-javob", "course": "Kurs"}
+    language_labels = {"tj": "Tojikcha", "uz": "O'zbekcha", "ru": "Ruscha"}
+    plan_labels = {"10_days": "10 kunlik", "1_month": "1 oylik"}
+    bonus_balance = max((user.bonus_questions or 0) - (user.bonus_questions_used or 0), 0)
+
     lines = [
-        "🔎 <b>User to'liq ma'lumoti</b>",
+        "🔎 <b>Foydalanuvchi ma'lumoti</b>",
         "",
+        "👤 <b>Asosiy ma'lumotlar</b>",
+        f"Ism: <b>{escape(user.full_name or '—')}</b>",
         f"Telegram ID: <code>{user.telegram_id}</code>",
         f"Username: <b>@{escape(user.username)}</b>" if user.username else "Username: —",
-        f"Full name: <b>{escape(user.full_name or '—')}</b>",
+        f"Til: <b>{_admin_label(user.language, language_labels)}</b>",
+        f"Daraja: <b>{escape(user.level or '—')}</b>",
+        f"Ro'yxatdan o'tgan: <code>{_fmt_dt(user.created_at)}</code>",
+        f"Oxirgi faollik: <code>{_fmt_dt(user.last_active_at)}</code>",
         "",
-        "<b>User model:</b>",
-        "<blockquote>",
-        escape("\n".join(fields[:60])),
-        "</blockquote>",
+        "🔐 <b>Kirish va obuna</b>",
+        f"Holat: <b>{_admin_label(user.status, status_labels)}</b>",
+        f"O'qish rejimi: <b>{_admin_label(user.learning_mode, learning_mode_labels)}</b>",
+        f"To'lov holati: <b>{_admin_label(user.payment_status, payment_status_labels)}</b>",
+        f"To'lov usuli: <b>{escape(_method_label(user.payment_method)) if user.payment_method else '—'}</b>",
+        f"Tanlangan tarif: <b>{_admin_label(user.selected_plan_type, plan_labels)}</b>",
+        f"Obuna boshlangan: <code>{_fmt_dt(user.start_date)}</code>",
+        f"Obuna tugaydi: <code>{_fmt_dt(user.end_date)}</code>",
+        f"Savollar: <b>{user.questions_used}/{user.question_limit}</b>",
+        f"Bonus savollar qoldig'i: <b>{bonus_balance}</b>",
+        f"Trial dars ID: <b>{user.trial_course_lesson_id or '—'}</b>",
+        f"Trial dars boshlandi: <code>{_fmt_dt(user.trial_course_started_at)}</code>",
+        f"Trial dars tugadi: <code>{_fmt_dt(user.trial_course_completed_at)}</code>",
+        f"Trial AI xato tahlili: <code>{_fmt_dt(user.trial_quiz_explanation_used_at)}</code>",
+        f"Kanal checkpoint: <code>{_fmt_dt(user.force_sub_required_at)}</code>",
         "",
-        "<b>Referallar:</b>",
+        "🎁 <b>Referallar va chegirma</b>",
         f"Chaqirganlari jami: <b>{referral_total}</b>",
-        f"Statuslar: <code>{escape(str(referral_counts))}</code>",
-        f"Discount counter: <b>{user.discount_referral_count}</b>",
-        f"Taklif qilgan user: <code>{invited_ref.referrer_telegram_id if invited_ref else '—'}</code>",
+        f"Faollashgan: <b>{referral_counts.get('active', 0)}</b>",
+        f"Kutilmoqda: <b>{referral_counts.get('pending', 0)}</b>",
+        f"Chegirma hisobi: <b>{user.discount_referral_count}/3</b>",
+        f"Chegirmaga tayyor: <b>{_yes_no(user.discount_eligible)}</b>",
+        f"Chegirma ishlatilgan: <b>{_yes_no(user.discount_used)}</b>",
+        f"Taklif qilgan foydalanuvchi: <code>{invited_ref.referrer_telegram_id if invited_ref else '—'}</code>",
         "",
-        "<b>To'lovlar:</b>",
-        f"Jami payment: <b>{payment_count}</b>",
-        f"Tasdiqlangan summa: <b>{approved_sum or 0}</b>",
+        "💳 <b>To'lovlar</b>",
+        f"Jami arizalar: <b>{payment_count}</b>",
+        f"Tasdiqlangan tushum: <b>{_payment_total_text(approved_totals)}</b>",
     ]
-    for payment in payments:
-        lines.append(
-            f"#{payment.id} {payment.payment_status} · {payment.plan_type} · "
-            f"{payment.amount} {payment.currency} · {payment.payment_method or '-'} · {_fmt_dt(payment.submitted_at)}"
-        )
+    if payments:
+        lines.append("<b>Oxirgi 5 ta ariza:</b>")
+        for payment in payments:
+            lines.append(
+                f"#{payment.id} · {_admin_label(payment.payment_status, payment_status_labels)}\n"
+                f"  {_admin_label(payment.plan_type, plan_labels)} · "
+                f"{escape(_method_label(payment.payment_method)) if payment.payment_method else '—'} · "
+                f"{format_subscription_price(payment.amount, payment.currency)}\n"
+                f"  <code>{_fmt_dt(payment.submitted_at)}</code>"
+            )
+    else:
+        lines.append("Hali to'lov arizasi yo'q.")
 
-    lines.extend(["", "<b>Kurs progress:</b>"])
+    lines.extend(["", "📚 <b>Kurs natijalari</b>"])
     if progress:
         lines.extend([
-            f"Level: <b>{escape(progress.level)}</b>",
-            f"Current lesson id: <code>{progress.current_lesson_id}</code>",
-            f"Current step: <code>{escape(progress.current_step)}</code>",
-            f"Completed lessons: <b>{progress.completed_lessons_count}</b>",
-            f"Homework: <code>{escape(progress.homework_status)}</code>",
-            f"Reminder: <b>{progress.reminder_enabled}</b> · {progress.reminder_time or '—'}",
-            f"Last opened: <code>{_fmt_dt(progress.last_opened_at)}</code>",
-            f"Last completed: <code>{_fmt_dt(progress.last_completed_at)}</code>",
+            f"Daraja: <b>{escape((progress.level or '—').upper())}</b>",
+            f"Joriy dars ID: <code>{progress.current_lesson_id or '—'}</code>",
+            f"Joriy bosqich: <b>{escape(_course_step_label(progress.current_step))}</b>",
+            f"Tugatilgan darslar: <b>{progress.completed_lessons_count}</b>",
+            f"Uyga vazifa: <b>{escape(_homework_status_label(progress.homework_status))}</b>",
+            f"Eslatma: <b>{_enabled_label(progress.reminder_enabled)}</b> · {progress.reminder_time or '—'}",
+            f"Oxirgi ochilgan: <code>{_fmt_dt(progress.last_opened_at)}</code>",
+            f"Oxirgi tugatilgan: <code>{_fmt_dt(progress.last_completed_at)}</code>",
         ])
     else:
-        lines.append("Kurs progress yo'q.")
+        lines.append("Kurs hali boshlanmagan.")
 
     return "\n".join(lines)
 
@@ -611,7 +891,7 @@ def _portfolio_history_text(rows) -> str:
         if row.original_amount is not None and row.original_currency:
             original = f" · {row.original_amount:g} {escape(row.original_currency)}"
         lines.append(
-            f"{icon} <code>{date_text}</code> {sign}{_usd(row.amount_usd)}"
+            f"{icon} <code>#{row.id}</code> · <code>{date_text}</code> {sign}{_usd(row.amount_usd)}"
             f"{original}\n"
             f"  <b>{source}</b>{f' — {note}' if note else ''}"
         )
@@ -670,9 +950,9 @@ async def admin_user_search_info(callback: CallbackQuery, session):
     await callback.answer()
     await _edit_callback_message(
         callback,
-        "🔎 <b>User qidirish</b>\n\n"
+        "🔎 <b>Foydalanuvchi qidirish</b>\n\n"
         "Buyruq: <code>/user TELEGRAM_ID</code> yoki <code>/user @username</code>\n\n"
-        "Natijada user modeli, to'lovlar, referallar va kurs progress chiqadi.",
+        "Natijada asosiy ma'lumotlar, obuna, referallar, to'lovlar va kurs natijalari tartibli ko'rinadi.",
         reply_markup=admin_back_keyboard(),
         parse_mode="HTML",
     )
@@ -697,7 +977,7 @@ async def admin_user_search_command(message: Message, session):
         return
 
     if len(users) > 1:
-        lines = ["Bir nechta user topildi. Aniq ID bilan qayta qidiring:", ""]
+        lines = ["Bir nechta foydalanuvchi topildi. Aniq ID bilan qayta qidiring:", ""]
         for item in users:
             username = f"@{item.username}" if item.username else "—"
             lines.append(f"<code>{item.telegram_id}</code> · {escape(item.full_name or '—')} · {escape(username)}")
@@ -736,14 +1016,19 @@ async def admin_price_set_callback(callback: CallbackQuery, state: FSMContext, s
     await state.update_data(price_method=method, price_plan=plan)
     await state.set_state(AdminPriceStates.waiting_amount)
     await callback.answer()
-    await _edit_callback_message(
+    currency_label = "TJS" if method == "visa" else "¥"
+    example_amount = 89 if method == "visa" and plan == "1_month" else 29
+    if method in {"alipay", "wechat"} and plan == "1_month":
+        example_amount = 66
+    await _edit_admin_flow_callback(
         callback,
+        state,
         f"💳 <b>Narx o'zgartirish</b>\n\n"
         f"Usul: <b>{_method_label(method)}</b>\n"
         f"Tarif: <b>{_plan_label_admin(plan)}</b>\n\n"
-        "Yangi narxni raqam bilan yuboring. Masalan: <code>99</code>",
+        f"Yangi narxni <b>{currency_label}</b> bo'yicha raqam bilan yuboring. "
+        f"Masalan: <code>{example_amount}</code>",
         reply_markup=admin_back_keyboard(),
-        parse_mode="HTML",
     )
 
 
@@ -754,15 +1039,43 @@ async def admin_price_amount_handler(message: Message, state: FSMContext, sessio
     try:
         amount = int((message.text or "").strip())
     except ValueError:
-        await message.answer("❌ Narx raqam bo'lishi kerak. Masalan: <code>99</code>", parse_mode="HTML")
+        await delete_message_safely(message)
+        await _edit_admin_flow_message(
+            message,
+            state,
+            "❌ Narx raqam bo'lishi kerak. Masalan: <code>99</code>",
+        )
         return
     if amount <= 0 or amount > 1_000_000:
-        await message.answer("❌ Narx 1 dan 1 000 000 gacha bo'lsin.")
+        await delete_message_safely(message)
+        await _edit_admin_flow_message(message, state, "❌ Narx 1 dan 1 000 000 gacha bo'lsin.")
         return
 
     data = await state.get_data()
     method = data.get("price_method")
     plan = data.get("price_plan")
+    if PaymentQrCodeService.is_qr_method(method) and not PaymentQrCodeService.is_default_subscription_amount(
+        payment_method=method,
+        plan_type=plan,
+        amount=amount,
+        currency="¥",
+    ):
+        items = _price_qr_items(method, plan, amount)
+        await state.update_data(
+            price_amount=amount,
+            price_qr_items=items,
+            price_qr_index=0,
+        )
+        await state.set_state(AdminPriceStates.waiting_qr_code)
+        await delete_message_safely(message)
+        await _edit_admin_flow_message(
+            message,
+            state,
+            _qr_item_prompt(items[0], 0, len(items)),
+            reply_markup=admin_back_keyboard(),
+        )
+        return
+
     price = await SubscriptionPriceService(session).set_price(
         payment_method=method,
         plan_type=plan,
@@ -770,16 +1083,278 @@ async def admin_price_amount_handler(message: Message, state: FSMContext, sessio
         updated_by_telegram_id=message.from_user.id,
     )
     if not price:
-        await message.answer("❌ Narx saqlanmadi. Tarif noto'g'ri.")
+        await delete_message_safely(message)
+        await _edit_admin_flow_message(message, state, "❌ Narx saqlanmadi. Tarif noto'g'ri.")
         return
     await session.commit()
-    await state.clear()
-    await message.answer(
+    await delete_message_safely(message)
+    await _edit_admin_flow_message(
+        message,
+        state,
         f"✅ Narx yangilandi: <b>{_method_label(price.payment_method)} · "
-        f"{_plan_label_admin(price.plan_type)} = {price.amount} {price.currency}</b>",
-        parse_mode="HTML",
+        f"{_plan_label_admin(price.plan_type)} = "
+        f"{format_subscription_price(price.amount, price.currency)}</b>",
         reply_markup=prices_keyboard(),
     )
+    await state.clear()
+
+
+@router.message(StateFilter(AdminPriceStates.waiting_qr_code), F.photo)
+async def admin_price_qr_photo_handler(message: Message, state: FSMContext, session):
+    if not _is_admin(message.from_user.id):
+        return
+
+    data = await state.get_data()
+    items = data.get("price_qr_items") or []
+    index = int(data.get("price_qr_index") or 0)
+    if not items or index >= len(items):
+        await delete_message_safely(message)
+        await _edit_admin_flow_message(message, state, "❌ QR navbati topilmadi.", reply_markup=prices_keyboard())
+        await state.clear()
+        return
+
+    items[index]["file_id"] = message.photo[-1].file_id
+    index += 1
+    await delete_message_safely(message)
+
+    if index < len(items):
+        await state.update_data(price_qr_items=items, price_qr_index=index)
+        await _edit_price_qr_prompt(message, state)
+        return
+
+    method = data.get("price_method")
+    plan = data.get("price_plan")
+    amount = int(data.get("price_amount") or 0)
+    price = await SubscriptionPriceService(session).set_price(
+        payment_method=method,
+        plan_type=plan,
+        amount=amount,
+        updated_by_telegram_id=message.from_user.id,
+    )
+    if not price:
+        await _edit_admin_flow_message(message, state, "❌ Narx saqlanmadi. Tarif noto'g'ri.")
+        await state.clear()
+        return
+
+    await PaymentQrCodeService(session).save_qr_codes(
+        items,
+        created_by_telegram_id=message.from_user.id,
+    )
+    await session.commit()
+    await _edit_admin_flow_message(
+        message,
+        state,
+        f"✅ Narx va QR kodlar yangilandi: <b>{_method_label(price.payment_method)} · "
+        f"{_plan_label_admin(price.plan_type)} = "
+        f"{format_subscription_price(price.amount, price.currency)}</b>",
+        reply_markup=prices_keyboard(),
+    )
+    await state.clear()
+
+
+@router.message(StateFilter(AdminPriceStates.waiting_qr_code))
+async def admin_price_qr_only_handler(message: Message, state: FSMContext):
+    if not _is_admin(message.from_user.id):
+        return
+    await delete_message_safely(message)
+    await _edit_price_qr_prompt(message, state)
+
+
+@router.callback_query(F.data.startswith("adm:visa_rate_auto:"))
+async def admin_visa_rate_auto_callback(callback: CallbackQuery, state: FSMContext, session):
+    if not _is_admin(callback.from_user.id):
+        await callback.answer()
+        return
+    enabled = callback.data.split(":")[-1] == "on"
+    await SubscriptionCurrencyService(session).set_auto_rate_enabled(enabled)
+    await session.commit()
+    await state.clear()
+    await callback.answer("AUTO kurs yoqildi" if enabled else "AUTO kurs o'chirildi", show_alert=True)
+    await _edit_callback_message(
+        callback,
+        await _prices_text(session),
+        reply_markup=prices_keyboard(),
+        parse_mode="HTML",
+    )
+
+
+@router.callback_query(F.data.startswith("adm:visa_rate_set:"))
+async def admin_visa_rate_set_callback(callback: CallbackQuery, state: FSMContext, session):
+    if not _is_admin(callback.from_user.id):
+        await callback.answer()
+        return
+    currency_code = callback.data.split(":")[-1]
+    if currency_code not in SUBSCRIPTION_USD_RATE_KEYS:
+        await callback.answer("Noto'g'ri valyuta", show_alert=True)
+        return
+    await state.update_data(visa_rate_currency=currency_code)
+    await state.set_state(AdminPriceStates.waiting_rate)
+    label = SubscriptionCurrencyService.rate_label(currency_code)
+    current_rate = await SubscriptionCurrencyService(session).get_rate(currency_code)
+    formatted_rate = SubscriptionCurrencyService.format_rate(currency_code, current_rate)
+    await callback.answer()
+    await _edit_admin_flow_callback(
+        callback,
+        state,
+        f"💱 <b>Obuna fallback kursini o'zgartirish</b>\n\n"
+        f"Valyuta: <b>{label}</b>\n\n"
+        f"Joriy kurs: <code>1 USD = {formatted_rate} {label}</code>\n\n"
+        f"1 USD uchun yangi {label} kursini yuboring.\n"
+        f"Masalan: <code>{formatted_rate}</code>",
+        reply_markup=admin_back_keyboard(),
+    )
+
+
+@router.message(StateFilter(AdminPriceStates.waiting_rate))
+async def admin_visa_rate_amount_handler(message: Message, state: FSMContext, session):
+    if not _is_admin(message.from_user.id):
+        return
+    try:
+        value = Decimal((message.text or "").strip().replace(",", "."))
+    except InvalidOperation:
+        await delete_message_safely(message)
+        await _edit_admin_flow_message(
+            message,
+            state,
+            "❌ Kurs raqam bo'lishi kerak. Masalan: <code>9.2464</code>",
+        )
+        return
+    if not value.is_finite() or value <= 0 or value > Decimal("1000000000"):
+        await delete_message_safely(message)
+        await _edit_admin_flow_message(message, state, "❌ Kurs 0 dan katta bo'lishi kerak.")
+        return
+
+    data = await state.get_data()
+    currency_code = data.get("visa_rate_currency")
+    service = SubscriptionCurrencyService(session)
+    if not await service.set_rate(currency_code, value):
+        await delete_message_safely(message)
+        await _edit_admin_flow_message(message, state, "❌ Kurs saqlanmadi. Valyuta noto'g'ri.")
+        return
+    await session.commit()
+
+    label = service.rate_label(currency_code)
+    formatted = service.format_rate(currency_code, value)
+    await delete_message_safely(message)
+    await _edit_admin_flow_message(
+        message,
+        state,
+        f"✅ Obuna fallback kursi yangilandi: <b>1 USD = {formatted} {label}</b>",
+        reply_markup=prices_keyboard(),
+    )
+    await state.clear()
+
+
+@router.callback_query(F.data == "adm:payment_details")
+async def admin_payment_details_callback(callback: CallbackQuery, state: FSMContext, session):
+    if not _is_admin(callback.from_user.id):
+        await callback.answer()
+        return
+    current = await BotSettingRepository(session).get(PAYMENT_DETAILS_KEY)
+    current = (current or settings.PAYMENT_DETAILS or "").strip()
+    await state.set_state(AdminPriceStates.waiting_payment_details)
+    await callback.answer()
+    await _edit_admin_flow_callback(
+        callback,
+        state,
+        "💳 <b>Bank karta rekviziti</b>\n\n"
+        "Bu matn mini appda VISA/karta to'lovida foydalanuvchiga ko'rsatiladi.\n\n"
+        f"Joriy:\n<code>{escape(current or '—')}</code>\n\n"
+        "Yangi rekvizit matnini yuboring (ism, karta raqami va boshqalar).",
+        reply_markup=admin_back_keyboard(),
+    )
+
+
+@router.message(StateFilter(AdminPriceStates.waiting_payment_details))
+async def admin_payment_details_handler(message: Message, state: FSMContext, session):
+    if not _is_admin(message.from_user.id):
+        return
+    text_value = (message.text or "").strip()
+    if not text_value:
+        await delete_message_safely(message)
+        await _edit_admin_flow_message(message, state, "❌ Rekvizit matni bo'sh bo'lmasin.")
+        return
+    if len(text_value) > 1500:
+        await delete_message_safely(message)
+        await _edit_admin_flow_message(message, state, "❌ Matn juda uzun (1500 belgidan kam bo'lsin).")
+        return
+    await BotSettingRepository(session).set(PAYMENT_DETAILS_KEY, text_value)
+    await session.commit()
+    await delete_message_safely(message)
+    await _edit_admin_flow_message(
+        message,
+        state,
+        "✅ Karta rekviziti yangilandi. Mini appda darhol ko'rinadi.",
+        reply_markup=prices_keyboard(),
+    )
+    await state.clear()
+
+
+@router.callback_query(F.data == "adm:support_contact")
+async def admin_support_contact_callback(callback: CallbackQuery, state: FSMContext, session):
+    if not _is_admin(callback.from_user.id):
+        await callback.answer()
+        return
+    current = await get_admin_contact(session)
+    await state.set_state(AdminPriceStates.waiting_admin_contact)
+    await callback.answer()
+    await _edit_admin_flow_callback(
+        callback,
+        state,
+        "🆘 <b>Yordam kontakti</b>\n\n"
+        "Bu kontakt /help va menyudagi Yordam blokida inline tugma sifatida chiqadi.\n\n"
+        f"Joriy:\n<code>{escape(current)}</code>\n\n"
+        "Yangi kontaktni yuboring. Masalan: <code>@username</code> yoki "
+        "<code>https://t.me/username</code>.",
+        reply_markup=admin_back_keyboard(),
+    )
+
+
+@router.message(StateFilter(AdminPriceStates.waiting_admin_contact))
+async def admin_support_contact_handler(message: Message, state: FSMContext, session):
+    if not _is_admin(message.from_user.id):
+        return
+    raw_contact = (message.text or "").strip()
+    if not raw_contact:
+        await delete_message_safely(message)
+        await _edit_admin_flow_message(
+            message,
+            state,
+            "❌ Kontakt bo'sh bo'lmasin.",
+            reply_markup=admin_back_keyboard(),
+        )
+        return
+    contact = normalize_admin_contact(raw_contact)
+    if not admin_contact_url(contact):
+        await delete_message_safely(message)
+        await _edit_admin_flow_message(
+            message,
+            state,
+            "❌ Kontakt noto'g'ri. <code>@username</code> yoki "
+            "<code>https://t.me/username</code> formatida yuboring.",
+            reply_markup=admin_back_keyboard(),
+        )
+        return
+    if len(contact) > 200:
+        await delete_message_safely(message)
+        await _edit_admin_flow_message(
+            message,
+            state,
+            "❌ Kontakt 200 belgidan oshmasin.",
+            reply_markup=admin_back_keyboard(),
+        )
+        return
+
+    await BotSettingRepository(session).set(ADMIN_CONTACT_KEY, contact)
+    await session.commit()
+    await delete_message_safely(message)
+    await _edit_admin_flow_message(
+        message,
+        state,
+        "✅ Yordam kontakti yangilandi.",
+        reply_markup=admin_menu_keyboard(),
+    )
+    await state.clear()
 
 
 @router.callback_query(F.data == "adm:channels")
@@ -814,8 +1389,9 @@ async def admin_channel_add_callback(callback: CallbackQuery, state: FSMContext,
         return
     await state.set_state(AdminRequiredChannelStates.waiting_channel)
     await callback.answer()
-    await _edit_callback_message(
+    await _edit_admin_flow_callback(
         callback,
+        state,
         "➕ <b>Kanal qo'shish</b>\n\n"
         "Eng oson yo'l: kanaldan bitta postni shu yerga forward qiling.\n\n"
         "Yoki public kanal uchun shunchaki yuboring:\n"
@@ -823,7 +1399,6 @@ async def admin_channel_add_callback(callback: CallbackQuery, state: FSMContext,
         "<code>https://t.me/channel</code>\n\n"
         "Private kanal bo'lsa, botni kanalga admin qilib qo'ying va post forward qiling.",
         reply_markup=admin_back_keyboard(),
-        parse_mode="HTML",
     )
 
 
@@ -833,10 +1408,12 @@ async def admin_channel_add_message(message: Message, state: FSMContext, session
         return
     parsed = await _extract_channel_input(message)
     if not parsed:
-        await message.answer(
+        await delete_message_safely(message)
+        await _edit_admin_flow_message(
+            message,
+            state,
             "❌ Kanalni aniqlay olmadim.\n\n"
             "Kanaldan post forward qiling yoki <code>@channel</code> / <code>t.me/channel</code> yuboring.",
-            parse_mode="HTML",
         )
         return
     chat_id, invite_link, title = parsed
@@ -849,9 +1426,10 @@ async def admin_channel_add_message(message: Message, state: FSMContext, session
         created_by_telegram_id=message.from_user.id,
     )
     await session.commit()
-    await state.clear()
     text, keyboard = await _channel_panel_text(session)
-    await message.answer(f"✅ Kanal saqlandi.\n\n{text}", reply_markup=keyboard, parse_mode="HTML")
+    await delete_message_safely(message)
+    await _edit_admin_flow_message(message, state, f"✅ Kanal saqlandi.\n\n{text}", reply_markup=keyboard)
+    await state.clear()
 
 
 @router.callback_query(F.data.startswith("adm:channel_toggle:"))
@@ -901,9 +1479,93 @@ async def admin_portfolio_history_callback(callback: CallbackQuery, session):
     await _edit_callback_message(
         callback,
         _portfolio_history_text(rows),
-        reply_markup=portfolio_history_keyboard(),
+        reply_markup=portfolio_history_keyboard(rows),
         parse_mode="HTML",
     )
+
+
+@router.callback_query(F.data.startswith("adm:portfolio_edit:"))
+async def admin_portfolio_edit_callback(callback: CallbackQuery, state: FSMContext, session):
+    if not _is_admin(callback.from_user.id):
+        await callback.answer()
+        return
+
+    try:
+        transaction_id = int(callback.data.split(":")[2])
+    except (AttributeError, IndexError, ValueError):
+        await callback.answer("Transaction noto'g'ri", show_alert=True)
+        return
+
+    transaction = await PortfolioService(session).get_manual_transaction(transaction_id)
+    if not transaction:
+        await callback.answer("Faqat qo'lda qo'shilgan transaction edit qilinadi", show_alert=True)
+        return
+
+    await state.clear()
+    await state.update_data(portfolio_edit_transaction_id=transaction.id)
+    await callback.answer()
+    edited = await _edit_callback_message(
+        callback,
+        f"✏️ <b>Portfel yozuvini edit qilish</b>\n\n"
+        f"Transaction: <code>#{transaction.id}</code>\n"
+        f"Joriy tur: <b>{_portfolio_type_label(transaction.transaction_type)}</b>\n"
+        f"Joriy summa: <b>{_usd(transaction.amount_usd)}</b>\n"
+        f"Sabab: <b>{escape(transaction.note or '—')}</b>\n\n"
+        "To'g'ri turini tanlang:",
+        reply_markup=portfolio_edit_type_keyboard(transaction.id),
+        parse_mode="HTML",
+    )
+    if edited:
+        await state.update_data(
+            portfolio_prompt_chat_id=edited.chat.id,
+            portfolio_prompt_message_id=edited.message_id,
+        )
+
+
+@router.callback_query(F.data.startswith("adm:portfolio_edit_type:"))
+async def admin_portfolio_edit_type_callback(callback: CallbackQuery, state: FSMContext, session):
+    if not _is_admin(callback.from_user.id):
+        await callback.answer()
+        return
+
+    try:
+        _, _, transaction_id_text, transaction_type = callback.data.split(":")
+        transaction_id = int(transaction_id_text)
+    except (AttributeError, ValueError):
+        await callback.answer("Transaction noto'g'ri", show_alert=True)
+        return
+    if transaction_type not in {"profit", "expense"}:
+        await callback.answer("Transaction turi noto'g'ri", show_alert=True)
+        return
+
+    transaction = await PortfolioService(session).get_manual_transaction(transaction_id)
+    if not transaction:
+        await callback.answer("Transaction topilmadi", show_alert=True)
+        return
+
+    await state.update_data(
+        portfolio_edit_transaction_id=transaction.id,
+        portfolio_transaction_type=transaction_type,
+    )
+    await state.set_state(AdminPortfolioStates.waiting_amount)
+    await callback.answer()
+    icon = _portfolio_type_icon(transaction_type)
+    label = _portfolio_type_label(transaction_type)
+    edited = await _edit_callback_message(
+        callback,
+        f"{icon} <b>#{transaction.id} {label} summasini edit qilish</b>\n\n"
+        "Yangi summa va currency yuboring:\n"
+        "<code>50 usd</code>\n"
+        "<code>120 somoni</code>\n"
+        "<code>200 ¥</code>",
+        reply_markup=portfolio_cancel_keyboard(),
+        parse_mode="HTML",
+    )
+    if edited:
+        await state.update_data(
+            portfolio_prompt_chat_id=edited.chat.id,
+            portfolio_prompt_message_id=edited.message_id,
+        )
 
 
 @router.callback_query(F.data == "adm:portfolio_expense_info")
@@ -982,12 +1644,18 @@ async def admin_portfolio_amount_handler(message: Message, state: FSMContext, se
     data = await state.get_data()
     transaction_type = data.get("portfolio_transaction_type")
     if transaction_type not in {"profit", "expense"}:
+        await delete_message_safely(message)
+        await _send_or_edit_portfolio_prompt(
+            state=state,
+            message=message,
+            text="❌ Portfel flow buzildi. Qaytadan boshlang.",
+        )
         await state.clear()
-        await message.answer("❌ Portfel flow buzildi. Qaytadan boshlang.")
         return
 
     parsed = _parse_amount_currency(message.text or "")
     if not parsed:
+        await delete_message_safely(message)
         await _send_or_edit_portfolio_prompt(
             state=state,
             message=message,
@@ -1000,6 +1668,7 @@ async def admin_portfolio_amount_handler(message: Message, state: FSMContext, se
         return
 
     amount, currency = parsed
+    await delete_message_safely(message)
     await _ask_portfolio_reason(
         state=state,
         message=message,
@@ -1015,6 +1684,7 @@ async def admin_portfolio_reason_handler(message: Message, state: FSMContext, se
         return
 
     note = (message.text or "").strip()
+    await delete_message_safely(message)
     if len(note) < 2:
         await _send_or_edit_portfolio_prompt(
             state=state,
@@ -1032,20 +1702,39 @@ async def admin_portfolio_reason_handler(message: Message, state: FSMContext, se
     amount = data.get("portfolio_amount")
     currency = data.get("portfolio_currency")
     if transaction_type not in {"profit", "expense"} or amount is None or not currency:
+        await _send_or_edit_portfolio_prompt(
+            state=state,
+            message=message,
+            text="❌ Portfel flow buzildi. Qaytadan boshlang.",
+        )
         await state.clear()
-        await message.answer("❌ Portfel flow buzildi. Qaytadan boshlang.")
         return
 
-    transaction = await PortfolioService(session).add_manual_transaction(
-        transaction_type=transaction_type,
-        admin_telegram_id=message.from_user.id,
-        amount=float(amount),
-        currency=str(currency),
-        note=note,
-    )
+    portfolio_service = PortfolioService(session)
+    edit_transaction_id = data.get("portfolio_edit_transaction_id")
+    if edit_transaction_id:
+        transaction = await portfolio_service.update_manual_transaction(
+            transaction_id=int(edit_transaction_id),
+            transaction_type=transaction_type,
+            amount=float(amount),
+            currency=str(currency),
+            note=note,
+        )
+    else:
+        transaction = await portfolio_service.add_manual_transaction(
+            transaction_type=transaction_type,
+            admin_telegram_id=message.from_user.id,
+            amount=float(amount),
+            currency=str(currency),
+            note=note,
+        )
     if not transaction:
+        await _send_or_edit_portfolio_prompt(
+            state=state,
+            message=message,
+            text="❌ Transaction saqlanmadi. Qaytadan boshlang.",
+        )
         await state.clear()
-        await message.answer("❌ Currency noto'g'ri. Qaytadan boshlang.")
         return
 
     await session.commit()
@@ -1053,12 +1742,13 @@ async def admin_portfolio_reason_handler(message: Message, state: FSMContext, se
     await session.commit()
     await state.clear()
     label = "Foyda" if transaction_type == "profit" else "Rasxod"
+    action = "yangilandi" if edit_transaction_id else "qo'shildi"
     edited = await _edit_message_by_id(
         message,
         chat_id=data.get("portfolio_prompt_chat_id"),
         message_id=data.get("portfolio_prompt_message_id"),
         text=(
-            f"✅ {label} qo'shildi: <b>{_usd(transaction.amount_usd)}</b>\n"
+            f"✅ {label} {action}: <b>{_usd(transaction.amount_usd)}</b>\n"
             f"📝 Sabab: {escape(note)}\n\n"
             f"{_portfolio_summary_text(summary)}"
         ),
@@ -1066,7 +1756,7 @@ async def admin_portfolio_reason_handler(message: Message, state: FSMContext, se
     )
     if not edited:
         await message.answer(
-            f"✅ {label} qo'shildi: <b>{_usd(transaction.amount_usd)}</b>\n"
+            f"✅ {label} {action}: <b>{_usd(transaction.amount_usd)}</b>\n"
             f"📝 Sabab: {escape(note)}\n\n"
             f"{_portfolio_summary_text(summary)}",
             reply_markup=portfolio_keyboard(),
@@ -1162,13 +1852,96 @@ async def admin_stats_callback(callback: CallbackQuery, session):
         select(func.count()).select_from(CourseProgress)
         .where(CourseProgress.reminder_enabled == True)  # noqa: E712
     )).scalar() or 0
+    trial_course_started = (await session.execute(
+        select(func.count()).select_from(User).where(User.trial_course_started_at.is_not(None))
+    )).scalar() or 0
+    trial_course_completed = (await session.execute(
+        select(func.count()).select_from(User).where(User.trial_course_completed_at.is_not(None))
+    )).scalar() or 0
+    trial_quiz_explained = (await session.execute(
+        select(func.count()).select_from(User).where(User.trial_quiz_explanation_used_at.is_not(None))
+    )).scalar() or 0
+    force_sub_checkpoint = (await session.execute(
+        select(func.count()).select_from(User).where(User.force_sub_required_at.is_not(None))
+    )).scalar() or 0
+    checkpoint_completed = (await session.execute(
+        select(func.count()).select_from(User).where(
+            User.force_sub_required_at.is_not(None),
+            User.trial_course_completed_at.is_not(None),
+            User.trial_course_completed_at >= User.force_sub_required_at,
+        )
+    )).scalar() or 0
+    trial_paid_after_start = (await session.execute(
+        select(func.count(func.distinct(Payment.user_telegram_id)))
+        .select_from(Payment)
+        .join(User, User.telegram_id == Payment.user_telegram_id)
+        .where(
+            Payment.payment_status == "approved",
+            Payment.reviewed_at.is_not(None),
+            User.trial_course_started_at.is_not(None),
+            Payment.reviewed_at >= User.trial_course_started_at,
+        )
+    )).scalar() or 0
+    trial_revenue_after_start = (await session.execute(
+        select(func.sum(Payment.amount))
+        .select_from(Payment)
+        .join(User, User.telegram_id == Payment.user_telegram_id)
+        .where(
+            Payment.payment_status == "approved",
+            Payment.reviewed_at.is_not(None),
+            User.trial_course_started_at.is_not(None),
+            Payment.reviewed_at >= User.trial_course_started_at,
+        )
+    )).scalar() or 0
+    checkpoint_paid_after = (await session.execute(
+        select(func.count(func.distinct(Payment.user_telegram_id)))
+        .select_from(Payment)
+        .join(User, User.telegram_id == Payment.user_telegram_id)
+        .where(
+            Payment.payment_status == "approved",
+            Payment.reviewed_at.is_not(None),
+            User.force_sub_required_at.is_not(None),
+            Payment.reviewed_at >= User.force_sub_required_at,
+        )
+    )).scalar() or 0
+    completed_paid_after = (await session.execute(
+        select(func.count(func.distinct(Payment.user_telegram_id)))
+        .select_from(Payment)
+        .join(User, User.telegram_id == Payment.user_telegram_id)
+        .where(
+            Payment.payment_status == "approved",
+            Payment.reviewed_at.is_not(None),
+            User.trial_course_completed_at.is_not(None),
+            Payment.reviewed_at >= User.trial_course_completed_at,
+        )
+    )).scalar() or 0
+    trial_started_today = (await session.execute(
+        select(func.count()).select_from(User).where(User.trial_course_started_at >= today_start)
+    )).scalar() or 0
+    trial_started_week = (await session.execute(
+        select(func.count()).select_from(User).where(User.trial_course_started_at >= week_ago)
+    )).scalar() or 0
+    trial_completed_week = (await session.execute(
+        select(func.count()).select_from(User).where(User.trial_course_completed_at >= week_ago)
+    )).scalar() or 0
+    trial_paid_week = (await session.execute(
+        select(func.count(func.distinct(Payment.user_telegram_id)))
+        .select_from(Payment)
+        .join(User, User.telegram_id == Payment.user_telegram_id)
+        .where(
+            Payment.payment_status == "approved",
+            Payment.reviewed_at >= week_ago,
+            User.trial_course_started_at.is_not(None),
+            Payment.reviewed_at >= User.trial_course_started_at,
+        )
+    )).scalar() or 0
 
     # --- Referallar ---
     ref_total = (await session.execute(
         select(func.count()).select_from(Referral)
     )).scalar() or 0
     ref_activated = (await session.execute(
-        select(func.count()).select_from(Referral).where(Referral.status == "activated")
+        select(func.count()).select_from(Referral).where(Referral.status == "active")
     )).scalar() or 0
     ref_bonus = (await session.execute(
         select(func.count()).select_from(Referral).where(Referral.bonus_granted == True)  # noqa: E712
@@ -1190,15 +1963,24 @@ async def admin_stats_callback(callback: CallbackQuery, session):
     pending_cnt,  _            = pay_by_status.get("pending",  (0, 0))
     approved_cnt, approved_sum = pay_by_status.get("approved", (0, 0))
     rejected_cnt, _            = pay_by_status.get("rejected", (0, 0))
+    paid_user_cnt = (await session.execute(
+        select(func.count()).select_from(User).where(User.payment_status == "approved")
+    )).scalar() or 0
 
-    conversion  = round(active_cnt / total * 100, 1) if total > 0 else 0
+    conversion  = _pct(paid_user_cnt, total)
     qa_users    = (await session.execute(
         select(func.count()).select_from(User).where(User.questions_used > 0)
     )).scalar() or 0
-    engagement  = round(qa_users / total * 100, 1) if total > 0 else 0
+    engagement  = _pct(qa_users, total)
     avg_lessons = round(course_lessons_sum / course_with_lessons, 1) if course_with_lessons > 0 else 0
+    trial_complete_rate = _pct(trial_course_completed, trial_course_started)
+    trial_ai_rate = _pct(trial_quiz_explained, trial_course_started)
+    trial_paid_rate = _pct(trial_paid_after_start, trial_course_started)
+    completed_paid_rate = _pct(completed_paid_after, trial_course_completed)
+    checkpoint_complete_rate = _pct(checkpoint_completed, force_sub_checkpoint)
+    checkpoint_paid_rate = _pct(checkpoint_paid_after, force_sub_checkpoint)
 
-    level_order = ["beginner", "a1", "a2", "b1", "b2"]
+    level_order = ["beginner", "hsk1", "hsk2", "hsk3", "hsk4"]
     level_str   = "  " + "   ".join(
         f"{l.upper()}: {level_counts.get(l, 0)}" for l in level_order
     )
@@ -1211,7 +1993,8 @@ async def admin_stats_callback(callback: CallbackQuery, session):
 
         f"<b>👥 FOYDALANUVCHILAR  [{total}]</b>\n"
         f"  Free: <b>{free_cnt}</b>   Trial: <b>{trial_cnt}</b>\n"
-        f"  Aktiv: <b>{active_cnt}</b>   Tugagan: <b>{expired_cnt}</b>   Bloklangan: <b>{blocked_cnt}</b>\n\n"
+        f"  Active status: <b>{active_cnt}</b>   Paid: <b>{paid_user_cnt}</b>\n"
+        f"  Tugagan: <b>{expired_cnt}</b>   Bloklangan: <b>{blocked_cnt}</b>\n\n"
 
         f"<b>📅 FAOLLIK</b>\n"
         f"  Yangi:  bugun <b>+{new_today}</b>  |  hafta <b>+{new_week}</b>  |  oy <b>+{new_month}</b>\n"
@@ -1236,12 +2019,25 @@ async def admin_stats_callback(callback: CallbackQuery, session):
         f"  Jami tugatilgan darslar: <b>{course_lessons_sum}</b>   O'rtacha: <b>{avg_lessons}</b>\n"
         f"  Eslatma yoqilgan: <b>{course_reminders}</b>\n\n"
 
+        f"<b>🧪 TRIAL FUNNEL</b>\n"
+        f"  Start: <b>{trial_course_started}</b>   Bugun: <b>+{trial_started_today}</b>   7 kun: <b>+{trial_started_week}</b>\n"
+        f"  Tugatdi: <b>{trial_course_completed}</b> (<b>{trial_complete_rate}%</b>)   7 kun: <b>+{trial_completed_week}</b>\n"
+        f"  AI xato tahlili: <b>{trial_quiz_explained}</b> (<b>{trial_ai_rate}%</b>)\n"
+        f"  Kanal checkpoint: <b>{force_sub_checkpoint}</b>\n"
+        f"  Checkpoint → tugatdi: <b>{checkpoint_completed}</b> (<b>{checkpoint_complete_rate}%</b>)\n\n"
+
+        f"<b>💰 TRIAL → PAYMENT</b>\n"
+        f"  Trialdan keyin paid: <b>{trial_paid_after_start}</b> (<b>{trial_paid_rate}%</b>)   7 kun: <b>+{trial_paid_week}</b>\n"
+        f"  Completed → paid: <b>{completed_paid_after}</b> (<b>{completed_paid_rate}%</b>)\n"
+        f"  Checkpoint → paid: <b>{checkpoint_paid_after}</b> (<b>{checkpoint_paid_rate}%</b>)\n"
+        f"  Trialdan keyingi tushum: <b>{int(trial_revenue_after_start):,}</b> so'm\n\n"
+
         f"<b>🎁 REFERALLAR</b>\n"
         f"  Jami: <b>{ref_total}</b>   Faollashgan: <b>{ref_activated}</b>   Bonus: <b>{ref_bonus}</b>\n"
         f"  Chegirma eligible: <b>{discount_eligible}</b>   Ishlatilgan: <b>{discount_used_cnt}</b>\n\n"
 
         f"<b>📈 KONVERSIYA</b>\n"
-        f"  Free → Aktiv: <b>{conversion}%</b>\n"
+        f"  User → Paid: <b>{conversion}%</b>\n"
         f"  Savol berganlar: <b>{qa_users}</b> (<b>{engagement}%</b>)"
     )
 
@@ -1255,19 +2051,87 @@ async def admin_stats_callback(callback: CallbackQuery, session):
 
 
 @router.callback_query(F.data == "adm:deleteuser_info")
-async def admin_deleteuser_info(callback: CallbackQuery, session):
+async def admin_deleteuser_info(callback: CallbackQuery, state: FSMContext, session):
     if not _is_admin(callback.from_user.id):
         await callback.answer()
         return
+    await state.set_state(AdminUserStates.waiting_delete_user_id)
     await callback.answer()
-    await _edit_callback_message(
+    await _edit_admin_flow_callback(
         callback,
+        state,
         "🗑 <b>Foydalanuvchini o'chirish</b>\n\n"
-        "Buyruq: <code>/deleteuser TELEGRAM_ID</code>\n\n"
-        "Misol: <code>/deleteuser 123456789</code>",
+        "Telegram ID yuboring. Masalan:\n"
+        "<code>123456789</code>",
         reply_markup=admin_back_keyboard(),
-        parse_mode="HTML",
     )
+
+
+def _parse_delete_user_id(text: str | None) -> int | None:
+    value = (text or "").strip()
+    if not value:
+        return None
+    if value.startswith("/deleteuser"):
+        parts = value.split(maxsplit=1)
+        value = parts[1].strip() if len(parts) == 2 else ""
+    if not value.isdigit():
+        return None
+    return int(value)
+
+
+async def _delete_user_by_telegram_id(session, target_id: int) -> bool:
+    user_repo = UserRepository(session)
+    deleted = await user_repo.delete_by_telegram_id(target_id)
+    await session.commit()
+    return deleted
+
+
+@router.message(StateFilter(AdminUserStates.waiting_delete_user_id))
+async def admin_deleteuser_waiting_id_handler(message: Message, state: FSMContext, session):
+    if not _is_admin(message.from_user.id):
+        return
+
+    target_id = _parse_delete_user_id(message.text)
+    await delete_message_safely(message)
+    if target_id is None:
+        await _edit_admin_flow_message(
+            message,
+            state,
+            "❌ Telegram ID faqat raqam bo'lishi kerak.\n\n"
+            "Masalan: <code>123456789</code>",
+            reply_markup=admin_back_keyboard(),
+        )
+        return
+
+    try:
+        deleted = await _delete_user_by_telegram_id(session, target_id)
+    except Exception:
+        await session.rollback()
+        await _edit_admin_flow_message(
+            message,
+            state,
+            "❌ User o'chirishda DB xato chiqdi. IDni tekshirib qayta yuboring.",
+            reply_markup=admin_back_keyboard(),
+        )
+        return
+
+    if not deleted:
+        await _edit_admin_flow_message(
+            message,
+            state,
+            f"❌ User <code>{target_id}</code> topilmadi.\n\n"
+            "Boshqa Telegram ID yuboring.",
+            reply_markup=admin_back_keyboard(),
+        )
+        return
+
+    await _edit_admin_flow_message(
+        message,
+        state,
+        f"✅ User <code>{target_id}</code> o'chirildi.",
+        reply_markup=admin_back_keyboard(),
+    )
+    await state.clear()
 
 
 @router.message(Command("deleteuser"))
@@ -1275,26 +2139,21 @@ async def admin_deleteuser_handler(message: Message, session):
     if not _is_admin(message.from_user.id):
         return
 
-    parts = message.text.strip().split()
-    if len(parts) < 2:
+    target_id = _parse_delete_user_id(message.text)
+    if target_id is None:
         await message.answer("Foydalanish: <code>/deleteuser TELEGRAM_ID</code>", parse_mode="HTML")
         return
 
     try:
-        target_id = int(parts[1])
-    except ValueError:
-        await message.answer("❌ Noto'g'ri ID format")
+        deleted = await _delete_user_by_telegram_id(session, target_id)
+    except Exception:
+        await session.rollback()
+        await message.answer("❌ User o'chirishda DB xato chiqdi.")
         return
-
-    user_repo = UserRepository(session)
-    user = await user_repo.get_by_telegram_id(target_id)
-    if not user:
-        await message.answer(f"❌ Foydalanuvchi topilmadi: {target_id}")
-        return
-
-    await session.delete(user)
-    await session.commit()
-    await message.answer(f"✅ Foydalanuvchi {target_id} o'chirildi")
+    if deleted:
+        await message.answer(f"✅ User <code>{target_id}</code> o'chirildi.", parse_mode="HTML")
+    else:
+        await message.answer(f"❌ User <code>{target_id}</code> topilmadi.", parse_mode="HTML")
 
 
 @router.callback_query(F.data == "adm:broadcast_info")
@@ -1389,7 +2248,7 @@ async def admin_upload_audio_handler(message: Message, session):
 
     Caption (podpis) ga yozing:  hsk1 1 dialogue_1
     Format:  {level} {lesson_order} {audio_type}
-    audio_type:  vocab | dialogue_1 | dialogue_2 | dialogue_3 | dialogue_4
+    audio_type:  vocab | dialogue_1 | dialogue_2 | ...
 
     Misol caption:
       hsk1 1 vocab

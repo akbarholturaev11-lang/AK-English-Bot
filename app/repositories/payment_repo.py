@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from typing import Optional, List
 
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.models.payment import Payment
@@ -26,6 +26,10 @@ class PaymentRepository:
         discount_campaign_id: Optional[int] = None,
         discount_title: Optional[str] = None,
         discount_details: Optional[str] = None,
+        card_country: Optional[str] = None,
+        local_amount: Optional[str] = None,
+        local_currency: Optional[str] = None,
+        exchange_rate: Optional[str] = None,
     ) -> Payment:
         payment = Payment(
             user_telegram_id=user_telegram_id,
@@ -41,6 +45,10 @@ class PaymentRepository:
             discount_campaign_id=discount_campaign_id,
             discount_title=discount_title,
             discount_details=discount_details,
+            card_country=card_country,
+            local_amount=local_amount,
+            local_currency=local_currency,
+            exchange_rate=exchange_rate,
             submitted_at=datetime.now(timezone.utc),
         )
         self.session.add(payment)
@@ -82,6 +90,10 @@ class PaymentRepository:
         discount_campaign_id: Optional[int] = None,
         discount_title: Optional[str] = None,
         discount_details: Optional[str] = None,
+        card_country: Optional[str] = None,
+        local_amount: Optional[str] = None,
+        local_currency: Optional[str] = None,
+        exchange_rate: Optional[str] = None,
     ) -> None:
         payment.plan_type = plan_type
         payment.payment_method = payment_method
@@ -93,6 +105,10 @@ class PaymentRepository:
         payment.discount_campaign_id = discount_campaign_id
         payment.discount_title = discount_title
         payment.discount_details = discount_details
+        payment.card_country = card_country
+        payment.local_amount = local_amount
+        payment.local_currency = local_currency
+        payment.exchange_rate = exchange_rate
         if payment_status:
             payment.payment_status = payment_status
         if screenshot_file_id:
@@ -152,21 +168,41 @@ class PaymentRepository:
         self,
         payment: Payment,
         admin_comment: Optional[str] = None,
-    ) -> None:
-        payment.payment_status = "approved"
-        payment.admin_comment = admin_comment
-        payment.reviewed_at = datetime.now(timezone.utc)
+    ) -> bool:
+        result = await self.session.execute(
+            update(Payment)
+            .where(Payment.id == payment.id)
+            .where(Payment.payment_status == "pending")
+            .values(
+                payment_status="approved",
+                admin_comment=admin_comment,
+                reviewed_at=datetime.now(timezone.utc),
+            )
+            .returning(Payment.id)
+            .execution_options(synchronize_session="fetch")
+        )
         await self.session.flush()
+        return result.scalar_one_or_none() is not None
 
     async def reject(
         self,
         payment: Payment,
         admin_comment: Optional[str] = None,
-    ) -> None:
-        payment.payment_status = "rejected"
-        payment.admin_comment = admin_comment
-        payment.reviewed_at = datetime.now(timezone.utc)
+    ) -> bool:
+        result = await self.session.execute(
+            update(Payment)
+            .where(Payment.id == payment.id)
+            .where(Payment.payment_status == "pending")
+            .values(
+                payment_status="rejected",
+                admin_comment=admin_comment,
+                reviewed_at=datetime.now(timezone.utc),
+            )
+            .returning(Payment.id)
+            .execution_options(synchronize_session="fetch")
+        )
         await self.session.flush()
+        return result.scalar_one_or_none() is not None
 
     async def count_pending(self) -> int:
         from sqlalchemy import func

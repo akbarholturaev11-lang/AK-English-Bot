@@ -1,10 +1,12 @@
 from typing import Optional, Tuple
 
+from aiogram import Bot
 from sqlalchemy.exc import IntegrityError
 
 from app.repositories.user_repo import UserRepository
 from app.db.models.user import User
 from app.services.referral_service import ReferralService
+from app.services.partner_service import PARTNER_LINK_PREFIX, PartnerService
 
 
 class OnboardingService:
@@ -19,6 +21,7 @@ class OnboardingService:
         full_name: Optional[str] = None,
         username: Optional[str] = None,
         referral_code: Optional[str] = None,
+        bot: Optional[Bot] = None,
     ) -> Tuple[User, bool]:
         user = await self.user_repo.get_by_telegram_id(telegram_id)
         if user:
@@ -46,10 +49,18 @@ class OnboardingService:
             user = await self.user_repo.get_by_telegram_id(telegram_id)
             return user, False
 
-        await self.referral_service.attach_referral_if_needed(
-            invited_user_telegram_id=telegram_id,
-            referral_code=referral_code,
-        )
+        if referral_code and referral_code.startswith(PARTNER_LINK_PREFIX):
+            await PartnerService(self.session).attach_referral_if_needed(
+                invited_user_telegram_id=telegram_id,
+                referral_code=referral_code,
+            )
+            await self.session.commit()
+        else:
+            await self.referral_service.attach_referral_if_needed(
+                invited_user_telegram_id=telegram_id,
+                referral_code=referral_code,
+                bot=bot,
+            )
 
         user = await self.user_repo.get_by_telegram_id(telegram_id)
         return user, True
