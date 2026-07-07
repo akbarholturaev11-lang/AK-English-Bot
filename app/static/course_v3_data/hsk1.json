@@ -69,12 +69,12 @@
         },
         {
           "n": 5,
-          "zh": "她女儿今年二十岁",
-          "py": "tā nǚ'ér jīnnián èr shí suì",
+          "zh": "Food & drink",
+          "py": "/fuːd/",
           "tr": {
-            "uz": "Yosh va oila a'zolari haqida gapirish, 100 gacha raqamlarni o'rganing",
-            "ru": "Говорить о возрасте и членах семьи, выучить числа до 100",
-            "tj": "Дар бораи синну сол ва аъзоёни оила гап задан, рақамҳоро то 100 омӯхтан"
+            "uz": "Ovqat, ichimlik va I want",
+            "ru": "Еда, напитки и I want",
+            "tj": "Хӯрок, нӯшокӣ ва I want"
           },
           "status": "locked",
           "content": "lesson_05",
