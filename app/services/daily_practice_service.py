@@ -151,9 +151,9 @@ class DailyPracticeService:
 
         level_payloads = {
             "beginner": {
-                "words": [("Hello", "nǐ hǎo", meaning["hello"]), ("Thanks", "xièxie", meaning["thanks"]), ("再见", "zàijiàn", meaning["goodbye"])],
+                "words": [("Hello", "/həˈloʊ/", meaning["hello"]), ("Thanks", "/θæŋks/", meaning["thanks"]), ("Goodbye", "/ɡʊdˈbaɪ/", meaning["goodbye"])],
                 "quiz": [("Hello = ?", meaning["hello"]), ("Thanks = ?", meaning["thanks"])],
-                "sentence": "Hello，我学习中文。",
+                "sentence": "Hello, I study English.",
                 "sentence_meaning": {
                     "uz": "Salom, men ingliz tilini o'rganyapman.",
                     "ru": "Привет, я учу английский.",
@@ -161,9 +161,9 @@ class DailyPracticeService:
                 }.get(lang, "Привет, я учу английский."),
             },
             "hsk1": {
-                "words": [("今天", "jīntiān", meaning["today"]), ("学习", "xuéxí", meaning["study"]), ("朋友", "péngyou", meaning["friend"])],
-                "quiz": [("今天 = ?", meaning["today"]), ("朋友 = ?", meaning["friend"])],
-                "sentence": "我今天学习中文。",
+                "words": [("Today", "/təˈdeɪ/", meaning["today"]), ("Study", "/ˈstʌdi/", meaning["study"]), ("Friend", "/frend/", meaning["friend"])],
+                "quiz": [("Today = ?", meaning["today"]), ("Friend = ?", meaning["friend"])],
+                "sentence": "I study English today.",
                 "sentence_meaning": {
                     "uz": "Men bugun ingliz tilini o'qiyman.",
                     "ru": "Я сегодня учу английский.",
@@ -171,9 +171,9 @@ class DailyPracticeService:
                 }.get(lang, "Я сегодня учу английский."),
             },
             "hsk2": {
-                "words": [("今天", "jīntiān", meaning["today"]), ("学习", "xuéxí", meaning["study"]), ("朋友", "péngyou", meaning["friend"])],
-                "quiz": [("学习 = ?", meaning["study"]), ("朋友 = ?", meaning["friend"])],
-                "sentence": "我和朋友一起学习中文。",
+                "words": [("Today", "/təˈdeɪ/", meaning["today"]), ("Study", "/ˈstʌdi/", meaning["study"]), ("Friend", "/frend/", meaning["friend"])],
+                "quiz": [("Study = ?", meaning["study"]), ("Friend = ?", meaning["friend"])],
+                "sentence": "I study English with a friend.",
                 "sentence_meaning": {
                     "uz": "Men do'stim bilan ingliz tilini o'qiyman.",
                     "ru": "Я учу английский вместе с другом.",
@@ -181,9 +181,9 @@ class DailyPracticeService:
                 }.get(lang, "Я учу английский вместе с другом."),
             },
             "hsk3": {
-                "words": [("重要", "zhòngyào", meaning["important"]), ("习惯", "xíguàn", meaning["habit"]), ("影响", "yǐngxiǎng", meaning["influence"])],
-                "quiz": [("重要 = ?", meaning["important"]), ("习惯 = ?", meaning["habit"])],
-                "sentence": "好习惯很重要。",
+                "words": [("Important", "/ɪmˈpɔːrtnt/", meaning["important"]), ("Habit", "/ˈhæbɪt/", meaning["habit"]), ("Influence", "/ˈɪnfluəns/", meaning["influence"])],
+                "quiz": [("Important = ?", meaning["important"]), ("Habit = ?", meaning["habit"])],
+                "sentence": "A good habit is very important.",
                 "sentence_meaning": {
                     "uz": "Yaxshi odat juda muhim.",
                     "ru": "Хорошая привычка очень важна.",
@@ -191,9 +191,9 @@ class DailyPracticeService:
                 }.get(lang, "Хорошая привычка очень важна."),
             },
             "hsk4": {
-                "words": [("虽然", "suīrán", meaning["although"]), ("但是", "dànshì", meaning["but"]), ("解决", "jiějué", meaning["solve"])],
-                "quiz": [("虽然 = ?", meaning["although"]), ("解决 = ?", meaning["solve"])],
-                "sentence": "虽然很难，但是我会解决。",
+                "words": [("Although", "/ɔːlˈðoʊ/", meaning["although"]), ("But", "/bʌt/", meaning["but"]), ("Solve", "/sɒlv/", meaning["solve"])],
+                "quiz": [("Although = ?", meaning["although"]), ("Solve = ?", meaning["solve"])],
+                "sentence": "Although it is hard, I will solve it.",
                 "sentence_meaning": {
                     "uz": "Qiyin bo'lsa ham, men hal qilaman.",
                     "ru": "Хотя это сложно, я решу.",

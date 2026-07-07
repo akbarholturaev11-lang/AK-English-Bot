@@ -221,7 +221,7 @@ SO'ZLAR MA'LUMOTI:
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
 - Inglizcha so'z uchun <b>...</b>, talaffuz uchun <code>...</code>
-- O'xshash so'zlar bo'lsa (masalan 我/你, 大/小), ularni yonma-yon solishtir
+- O'xshash so'zlar bo'lsa (masalan I/you, big/small), ularni yonma-yon solishtir
 - Maksimal 8 ta so'zni tushuntir
 {_VOCAB_BLOCK_RULE}
 {_EXPLANATION_RULE}"""

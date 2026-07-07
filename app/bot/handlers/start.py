@@ -374,33 +374,33 @@ def _get_demo_lesson(level: str, lang: str) -> tuple:
             "tj": (
                 "🎮 <b>Омода-ед? Бозӣ мекунем!</b>\n\n"
                 "Ман ба шумо 3 калима медиҳам:\n\n"
-                "✨ <b>Hello</b> · <b>Thanks</b> · <b>再见</b>\n\n"
+                "✨ <b>Hello</b> · <b>Thanks</b> · <b>Goodbye</b>\n\n"
                 "Агар хоҳед, аз ин калимаҳо як ҷумла созед. Нависед — бот месанҷад; нахоҳед, саволи худро диҳед 😄",
                 _challenge_context(
-                    "The user just started learning Chinese (beginner level). "
-                    "You offered an optional mini-challenge: make a sentence using Hello, Thanks, 再见. "
+                    "The user just started learning English (beginner level). "
+                    "You offered an optional mini-challenge: make a sentence using Hello, Thanks, Goodbye. "
                     "Encourage them, correct gently, and explain the words when they attempt it."
                 )
             ),
             "uz": (
                 "🎮 <b>Tayyor bo'ldingizmi? O'yin boshlanadi!</b>\n\n"
                 "Sizga 3 ta so'z beraman:\n\n"
-                "✨ <b>Hello</b> · <b>Thanks</b> · <b>再见</b>\n\n"
+                "✨ <b>Hello</b> · <b>Thanks</b> · <b>Goodbye</b>\n\n"
                 "Xohlasangiz, shu so'zlardan bitta gap tuzing. Yozsangiz, bot tekshiradi; xohlamasangiz, oddiy savol bering 😄",
                 _challenge_context(
-                    "The user just started learning Chinese (beginner level). "
-                    "You offered an optional mini-challenge: make a sentence using Hello, Thanks, 再见. "
+                    "The user just started learning English (beginner level). "
+                    "You offered an optional mini-challenge: make a sentence using Hello, Thanks, Goodbye. "
                     "Encourage them, correct gently, and explain the words when they attempt it."
                 )
             ),
             "ru": (
                 "🎮 <b>Готовы? Начинаем игру!</b>\n\n"
                 "Даю вам 3 слова:\n\n"
-                "✨ <b>Hello</b> · <b>Thanks</b> · <b>再见</b>\n\n"
+                "✨ <b>Hello</b> · <b>Thanks</b> · <b>Goodbye</b>\n\n"
                 "Если хотите, составьте из них одно предложение. Напишете — бот проверит; не хотите — задайте любой вопрос 😄",
                 _challenge_context(
-                    "The user just started learning Chinese (beginner level). "
-                    "You offered an optional mini-challenge: make a sentence using Hello, Thanks, 再见. "
+                    "The user just started learning English (beginner level). "
+                    "You offered an optional mini-challenge: make a sentence using Hello, Thanks, Goodbye. "
                     "Encourage them, correct gently, and explain the words when they attempt it."
                 )
             ),
@@ -409,33 +409,33 @@ def _get_demo_lesson(level: str, lang: str) -> tuple:
             "tj": (
                 "🎯 <b>Beginner — Мушкилӣ дорад!</b>\n\n"
                 "Ин 3 рақамро хонед:\n\n"
-                "🔢 <b>三</b> · <b>十</b> · <b>百</b>\n\n"
+                "🔢 <b>three</b> · <b>ten</b> · <b>hundred</b>\n\n"
                 "Агар хоҳед, бо рақамҳо як ҷумла бисозед — масалан синнатон ё шумораи чизе. Нависед — месанҷам 🕵️",
                 _challenge_context(
                     "The user is Beginner level. You offered an optional mini-challenge: "
-                    "make a sentence using Chinese numbers 三(3), 十(10), 百(100). "
+                    "make a sentence using English words three(3), ten(10), hundred(100). "
                     "Correct and encourage when they attempt it."
                 )
             ),
             "uz": (
                 "🎯 <b>Beginner — Qiyin emas!</b>\n\n"
                 "Bu 3 raqamni o'qing:\n\n"
-                "🔢 <b>三</b> · <b>十</b> · <b>百</b>\n\n"
+                "🔢 <b>three</b> · <b>ten</b> · <b>hundred</b>\n\n"
                 "Xohlasangiz, raqamlar bilan gap tuzing — masalan yoshingiz yoki biror narsa soni. Yozsangiz, tekshiraman 🕵️",
                 _challenge_context(
                     "The user is Beginner level. You offered an optional mini-challenge: "
-                    "make a sentence using Chinese numbers 三(3), 十(10), 百(100). "
+                    "make a sentence using English words three(3), ten(10), hundred(100). "
                     "Correct and encourage when they attempt it."
                 )
             ),
             "ru": (
                 "🎯 <b>Beginner — Это несложно!</b>\n\n"
                 "Прочитайте эти 3 числа:\n\n"
-                "🔢 <b>三</b> · <b>十</b> · <b>百</b>\n\n"
+                "🔢 <b>three</b> · <b>ten</b> · <b>hundred</b>\n\n"
                 "Если хотите, составьте предложение с числами — например ваш возраст или количество чего-то. Напишете — проверю 🕵️",
                 _challenge_context(
                     "The user is Beginner level. You offered an optional mini-challenge: "
-                    "make a sentence using Chinese numbers 三(3), 十(10), 百(100). "
+                    "make a sentence using English words three(3), ten(10), hundred(100). "
                     "Correct and encourage when they attempt it."
                 )
             ),
@@ -444,34 +444,34 @@ def _get_demo_lesson(level: str, lang: str) -> tuple:
             "tj": (
                 "🕵️ <b>Elementary — Сир нигоҳ доред!</b>\n\n"
                 "Дар ин ҷумла як иборае пинҳон аст:\n\n"
-                "🇨🇳 <b>高兴 · 认识 · 你</b>\n\n"
+                "🇬🇧 <b>happy · meet · you</b>\n\n"
                 "Агар хоҳед, онҳоро дар як ҷумла ҷамъ кунед — шояд ибораи машҳур пайдо шавад. Нависед — месанҷам 😏",
                 _challenge_context(
                     "The user is Elementary level. You offered an optional mini-challenge: "
-                    "combine 高兴(happy), 认识(meet/know), 你(you) into a sentence. "
-                    "The hidden phrase is 很高兴认识你. Reveal it if they get close, explain it warmly."
+                    "combine happy(happy), meet(meet/know), you(you) into a sentence. "
+                    "The hidden phrase is Nice to meet you. Reveal it if they get close, explain it warmly."
                 )
             ),
             "uz": (
                 "🕵️ <b>Elementary — Sir saqlang!</b>\n\n"
                 "Bu so'zlarda mashhur ibora yashiringan:\n\n"
-                "🇨🇳 <b>高兴 · 认识 · 你</b>\n\n"
+                "🇬🇧 <b>happy · meet · you</b>\n\n"
                 "Xohlasangiz, ulardan gap tuzing — nima hosil bo'lishini ko'ramiz. Yozsangiz, tekshiraman 😏",
                 _challenge_context(
                     "The user is Elementary level. You offered an optional mini-challenge: "
-                    "combine 高兴(happy), 认识(meet/know), 你(you) into a sentence. "
-                    "The hidden phrase is 很高兴认识你. Reveal it if they get close, explain it warmly."
+                    "combine happy(happy), meet(meet/know), you(you) into a sentence. "
+                    "The hidden phrase is Nice to meet you. Reveal it if they get close, explain it warmly."
                 )
             ),
             "ru": (
                 "🕵️ <b>Elementary — Держите в тайне!</b>\n\n"
                 "В этих словах спрятана знаменитая фраза:\n\n"
-                "🇨🇳 <b>高兴 · 认识 · 你</b>\n\n"
+                "🇬🇧 <b>happy · meet · you</b>\n\n"
                 "Если хотите, составьте из них предложение — посмотрим, что получится. Напишете — проверю 😏",
                 _challenge_context(
                     "The user is Elementary level. You offered an optional mini-challenge: "
-                    "combine 高兴(happy), 认识(meet/know), 你(you) into a sentence. "
-                    "The hidden phrase is 很高兴认识你. Reveal it if they get close, explain it warmly."
+                    "combine happy(happy), meet(meet/know), you(you) into a sentence. "
+                    "The hidden phrase is Nice to meet you. Reveal it if they get close, explain it warmly."
                 )
             ),
         },
@@ -479,34 +479,34 @@ def _get_demo_lesson(level: str, lang: str) -> tuple:
             "tj": (
                 "🔥 <b>Intermediate — Имтиҳони зудӣ!</b>\n\n"
                 "Ин ҷумларо тарҷума кунед:\n\n"
-                "🇨🇳 <b>你今天心情怎么样？</b>\n\n"
+                "🇬🇧 <b>How are you feeling today？</b>\n\n"
                 "Агар хоҳед, ҷавобро ба англисӣ нависед. Нависед — ман месанҷам ва беҳтар мекунам 😤",
                 _challenge_context(
                     "The user is Intermediate level. You offered an optional mini-challenge: "
-                    "translate 你今天心情怎么样 (How are you feeling today?) and answer in Chinese. "
-                    "Evaluate their Chinese, correct errors, and praise effort when they attempt it."
+                    "translate How are you feeling today (How are you feeling today?) and answer in English. "
+                    "Evaluate their English, correct errors, and praise effort when they attempt it."
                 )
             ),
             "uz": (
                 "🔥 <b>Intermediate — Tezkor imtihon!</b>\n\n"
                 "Bu jumlani tarjima qiling:\n\n"
-                "🇨🇳 <b>你今天心情怎么样？</b>\n\n"
+                "🇬🇧 <b>How are you feeling today？</b>\n\n"
                 "Xohlasangiz, javobni inglizcha yozing. Yozsangiz, tekshiraman va yaxshilab beraman 😤",
                 _challenge_context(
                     "The user is Intermediate level. You offered an optional mini-challenge: "
-                    "translate 你今天心情怎么样 (How are you feeling today?) and answer in Chinese. "
-                    "Evaluate their Chinese, correct errors, and praise effort when they attempt it."
+                    "translate How are you feeling today (How are you feeling today?) and answer in English. "
+                    "Evaluate their English, correct errors, and praise effort when they attempt it."
                 )
             ),
             "ru": (
                 "🔥 <b>Intermediate — Быстрый тест!</b>\n\n"
                 "Переведите это предложение:\n\n"
-                "🇨🇳 <b>你今天心情怎么样？</b>\n\n"
+                "🇬🇧 <b>How are you feeling today？</b>\n\n"
                 "Если хотите, ответьте по-английски. Напишете — проверю и улучшу ответ 😤",
                 _challenge_context(
                     "The user is Intermediate level. You offered an optional mini-challenge: "
-                    "translate 你今天心情怎么样 (How are you feeling today?) and answer in Chinese. "
-                    "Evaluate their Chinese, correct errors, and praise effort when they attempt it."
+                    "translate How are you feeling today (How are you feeling today?) and answer in English. "
+                    "Evaluate their English, correct errors, and praise effort when they attempt it."
                 )
             ),
         },
@@ -514,33 +514,33 @@ def _get_demo_lesson(level: str, lang: str) -> tuple:
             "tj": (
                 "⚡ <b>Advanced — Устодро санҷем!</b>\n\n"
                 "Ин ибораро дар як ҷумлаи мураккаб истифода баред:\n\n"
-                "🇨🇳 <b>虽然...但是...</b>\n\n"
+                "🇬🇧 <b>although...but...</b>\n\n"
                 "Агар хоҳед, онро дар як ҷумла аз ҳаёти худ истифода баред. Нависед — грамматикаро таҳлил мекунам 🎓",
                 _challenge_context(
                     "The user is Advanced level. You offered an optional mini-challenge: "
-                    "use the grammar pattern 虽然...但是... (although...but...) in a complex sentence about their life. "
+                    "use the grammar pattern although...but... (although...but...) in a complex sentence about their life. "
                     "Analyze grammar deeply and suggest improvements when they attempt it."
                 )
             ),
             "uz": (
                 "⚡ <b>Advanced — Ustani sinaylik!</b>\n\n"
                 "Bu grammatik konstruktsiyani murakkab gapda ishlating:\n\n"
-                "🇨🇳 <b>虽然...但是...</b>\n\n"
+                "🇬🇧 <b>although...but...</b>\n\n"
                 "Xohlasangiz, uni o'z hayotingizdan bitta gapda ishlating. Yozsangiz, grammatikasini tahlil qilaman 🎓",
                 _challenge_context(
                     "The user is Advanced level. You offered an optional mini-challenge: "
-                    "use the grammar pattern 虽然...但是... (although...but...) in a complex sentence about their life. "
+                    "use the grammar pattern although...but... (although...but...) in a complex sentence about their life. "
                     "Analyze grammar deeply and suggest improvements when they attempt it."
                 )
             ),
             "ru": (
                 "⚡ <b>Advanced — Проверим мастера!</b>\n\n"
                 "Используйте эту конструкцию в сложном предложении:\n\n"
-                "🇨🇳 <b>虽然...但是...</b>\n\n"
+                "🇬🇧 <b>although...but...</b>\n\n"
                 "Если хотите, используйте её в одном предложении из своей жизни. Напишете — разберу грамматику 🎓",
                 _challenge_context(
                     "The user is Advanced level. You offered an optional mini-challenge: "
-                    "use the grammar pattern 虽然...但是... (although...but...) in a complex sentence about their life. "
+                    "use the grammar pattern although...but... (although...but...) in a complex sentence about their life. "
                     "Analyze grammar deeply and suggest improvements when they attempt it."
                 )
             ),
