@@ -115,7 +115,7 @@ class CourseMiniAppLessonFlowService:
                 "active_word": "Калимаи нави фаъол",
                 "meaning_guess": "Маънои дурустро интихоб кунед",
                 "listening_choice": "Гӯш кунед ва ҷавобро интихоб кунед",
-                "pinyin_choice": "Pinyin-и дурустро интихоб кунед",
+                "pinyin_choice": "Талаффузи дурустро интихоб кунед",
                 "hanzi_choice": "Иероглифи дурустро интихоб кунед",
                 "gap_fill": "Ҷои холиро пур кунед",
                 "character_recognition": "Иероглифро шиносед",
@@ -430,7 +430,7 @@ class CourseMiniAppLessonFlowService:
             "hsk4a": "Advanced (Part 1)",
             "hsk4b": "Advanced (Part 2)",
         }
-        return labels.get(normalized, normalized.upper() or "HSK")
+        return labels.get(normalized, normalized.upper() or "English")
 
     @staticmethod
     def _next_requested_level(level: str | None, next_lesson_order: int | str | None = None) -> str | None:

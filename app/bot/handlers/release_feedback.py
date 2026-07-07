@@ -166,7 +166,7 @@ def _panel_text(data: dict) -> str:
             "expired": "Tugagan",
             "blocked": "Blok",
         },
-        "level": {"beginner": "Boshlang'ich", "hsk1": "HSK1", "hsk2": "HSK2", "hsk3": "HSK3", "hsk4": "HSK4"},
+        "level": {"beginner": "Boshlang'ich", "hsk1": "Beginner", "hsk2": "Elementary", "hsk3": "Intermediate", "hsk4": "Advanced"},
         "mode": {"qa": "Savol-javob", "course": "Kurs"},
         "payment_status": {"none": "Yo'q", "pending": "Kutilmoqda", "approved": "Tasdiqlangan", "rejected": "Rad"},
         "payment_method": {"visa": "Visa", "alipay": "Alipay", "wechat": "WeChat"},
@@ -231,8 +231,8 @@ def _filter_keyboard(data: dict) -> InlineKeyboardMarkup:
     elif section == "level":
         current = data.get("level_filter")
         rows = [
-            [option("level", current, None, "Hammasi"), option("level", current, "beginner", "Boshlang'ich"), option("level", current, "hsk1", "HSK1")],
-            [option("level", current, "hsk2", "HSK2"), option("level", current, "hsk3", "HSK3"), option("level", current, "hsk4", "HSK4")],
+            [option("level", current, None, "Hammasi"), option("level", current, "beginner", "Boshlang'ich"), option("level", current, "hsk1", "Beginner")],
+            [option("level", current, "hsk2", "Elementary"), option("level", current, "hsk3", "Intermediate"), option("level", current, "hsk4", "Advanced")],
         ]
     elif section == "mode":
         current = data.get("mode_filter")

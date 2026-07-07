@@ -151,34 +151,34 @@ class DailyPracticeService:
 
         level_payloads = {
             "beginner": {
-                "words": [("你好", "nǐ hǎo", meaning["hello"]), ("谢谢", "xièxie", meaning["thanks"]), ("再见", "zàijiàn", meaning["goodbye"])],
-                "quiz": [("你好 = ?", meaning["hello"]), ("谢谢 = ?", meaning["thanks"])],
-                "sentence": "你好，我学习中文。",
+                "words": [("Hello", "nǐ hǎo", meaning["hello"]), ("Thanks", "xièxie", meaning["thanks"]), ("再见", "zàijiàn", meaning["goodbye"])],
+                "quiz": [("Hello = ?", meaning["hello"]), ("Thanks = ?", meaning["thanks"])],
+                "sentence": "Hello，我学习中文。",
                 "sentence_meaning": {
-                    "uz": "Salom, men xitoy tilini o'rganyapman.",
-                    "ru": "Привет, я учу китайский.",
-                    "tj": "Салом, ман забони чиниро меомӯзам.",
-                }.get(lang, "Привет, я учу китайский."),
+                    "uz": "Salom, men ingliz tilini o'rganyapman.",
+                    "ru": "Привет, я учу английский.",
+                    "tj": "Салом, ман забони англисиро меомӯзам.",
+                }.get(lang, "Привет, я учу английский."),
             },
             "hsk1": {
                 "words": [("今天", "jīntiān", meaning["today"]), ("学习", "xuéxí", meaning["study"]), ("朋友", "péngyou", meaning["friend"])],
                 "quiz": [("今天 = ?", meaning["today"]), ("朋友 = ?", meaning["friend"])],
                 "sentence": "我今天学习中文。",
                 "sentence_meaning": {
-                    "uz": "Men bugun xitoy tilini o'qiyman.",
-                    "ru": "Я сегодня учу китайский.",
-                    "tj": "Ман имрӯз забони чиниро мехонам.",
-                }.get(lang, "Я сегодня учу китайский."),
+                    "uz": "Men bugun ingliz tilini o'qiyman.",
+                    "ru": "Я сегодня учу английский.",
+                    "tj": "Ман имрӯз забони англисиро мехонам.",
+                }.get(lang, "Я сегодня учу английский."),
             },
             "hsk2": {
                 "words": [("今天", "jīntiān", meaning["today"]), ("学习", "xuéxí", meaning["study"]), ("朋友", "péngyou", meaning["friend"])],
                 "quiz": [("学习 = ?", meaning["study"]), ("朋友 = ?", meaning["friend"])],
                 "sentence": "我和朋友一起学习中文。",
                 "sentence_meaning": {
-                    "uz": "Men do'stim bilan xitoy tilini o'qiyman.",
-                    "ru": "Я учу китайский вместе с другом.",
-                    "tj": "Ман бо дӯстам забони чиниро мехонам.",
-                }.get(lang, "Я учу китайский вместе с другом."),
+                    "uz": "Men do'stim bilan ingliz tilini o'qiyman.",
+                    "ru": "Я учу английский вместе с другом.",
+                    "tj": "Ман бо дӯстам забони англисиро мехонам.",
+                }.get(lang, "Я учу английский вместе с другом."),
             },
             "hsk3": {
                 "words": [("重要", "zhòngyào", meaning["important"]), ("习惯", "xíguàn", meaning["habit"]), ("影响", "yǐngxiǎng", meaning["influence"])],

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-  <title>HSK AI — Admin panel</title>
+  <title>English AI — Admin panel</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root{
@@ -237,7 +237,7 @@
     <aside class="topbar">
       <div class="topbar-inner">
         <div class="brand">
-          <div class="brand-mark">HSK</div>
+          <div class="brand-mark">English</div>
           <div>
             <h1>Admin panel</h1>
             <p id="brandSub">Bot · foydalanuvchi · obuna · pul markazi</p>
@@ -845,7 +845,7 @@
         <div class="mcard"><h3>Majburiy obuna holati</h3><p>Hozir: ${ch.enabled?"yoqilgan":"o'chirilgan"}</p>
           <button class="btn ${ch.enabled?"sec":""}" data-chmode="${ch.enabled?"0":"1"}">${ch.enabled?"O'chirish":"Yoqish"}</button></div>
         <div class="mcard"><h3>Kanal qo'shish</h3>
-          <div class="frow"><label>Kanal nomi</label><input id="chTitle" class="input" placeholder="HSK AI kanal"></div>
+          <div class="frow"><label>Kanal nomi</label><input id="chTitle" class="input" placeholder="English AI kanal"></div>
           <div class="frow"><label>@username yoki chat_id</label><input id="chId" class="input" placeholder="@channel yoki -100..."></div>
           <div class="frow"><label>Taklif linki</label><input id="chInvite" class="input" placeholder="https://t.me/..."></div>
           <button class="btn" data-chadd>Kanalni saqlash</button></div>
@@ -881,7 +881,7 @@
     const BC_LANGS=[["tj","TJ"],["uz","UZ"],["ru","RU"]];
     const BC_FILTERS=[
       ["status","👤 Status",[["","Hammasi"],["free","Bepul"],["trial","Sinov"],["active","Faol"],["expired","Tugagan"],["blocked","Blok"]]],
-      ["level","📚 Daraja",[["","Hammasi"],["beginner","Boshlang'ich"],["hsk1","HSK1"],["hsk2","HSK2"],["hsk3","HSK3"],["hsk4","HSK4"]]],
+      ["level","📚 Daraja",[["","Hammasi"],["beginner","Boshlang'ich"],["hsk1","Beginner"],["hsk2","Elementary"],["hsk3","Intermediate"],["hsk4","Advanced"]]],
       ["mode","🎯 Rejim",[["","Hammasi"],["qa","Savol-javob"],["course","Kurs"]]],
       ["payment_status","💳 To'lov statusi",[["","Hammasi"],["none","Yo'q"],["pending","Kutilmoqda"],["approved","Tasdiqlangan"],["rejected","Rad etilgan"]]],
       ["payment_method","🏦 To'lov usuli",[["","Hammasi"],["visa","Visa"],["alipay","Alipay"],["wechat","WeChat"]]],
@@ -1018,7 +1018,7 @@
             <div><label>Davomiyligi (soat)</label><input id="cmHours" class="input" type="number" min="1" max="720" value="24"></div></div>
           ${sel("cm_status","👤 Auditoriya status",[["","Hammasi"],["free","Bepul"],["trial","Sinov"],["active","Faol"],["expired","Tugagan"]])}
           ${sel("cm_language","🌐 Til",[["","Hammasi"],["tj","TJ"],["uz","UZ"],["ru","RU"]])}
-          ${sel("cm_level","📚 Daraja",[["","Hammasi"],["beginner","Boshlang'ich"],["hsk1","HSK1"],["hsk2","HSK2"],["hsk3","HSK3"],["hsk4","HSK4"]])}
+          ${sel("cm_level","📚 Daraja",[["","Hammasi"],["beginner","Boshlang'ich"],["hsk1","Beginner"],["hsk2","Elementary"],["hsk3","Intermediate"],["hsk4","Advanced"]])}
           ${sel("cm_payment_method","🏦 To'lov usuli",[["","Hammasi"],["visa","Visa"],["alipay","Alipay"],["wechat","WeChat"]])}
           ${sel("cm_plan","📦 Tarif",[["","Hammasi"],["10_days","10 kun"],["1_month","1 oy"]])}
           <div class="frow"><label>Kvota (0 = cheksiz)</label><input id="cmQuota" class="input" type="number" min="0" value="0"></div>`;
@@ -1122,7 +1122,7 @@
       const rows=d.audio||[];
       openDrawer("🎵 Audio boshqaruvi","Audio ro'yxatini tekshirish",`<div class="panel">
         <div class="mcard"><h3>Qamrov</h3><p>${rows.map(r=>`${r.level}: ${r.lessons} dars`).join(" · ")}</p></div>
-        <div class="mcard"><div class="frow two"><div><label>Daraja</label><select id="auLevel" class="select"><option value="hsk1">HSK1</option><option value="hsk2">HSK2</option><option value="hsk3">HSK3</option><option value="hsk4">HSK4</option></select></div>
+        <div class="mcard"><div class="frow two"><div><label>Daraja</label><select id="auLevel" class="select"><option value="hsk1">Beginner</option><option value="hsk2">Elementary</option><option value="hsk3">Intermediate</option><option value="hsk4">Advanced</option></select></div>
           <div><label>Dars</label><input id="auLesson" class="input" type="number" min="1" value="1"></div></div>
           <button class="btn" data-aulist>Ro'yxatni ko'rish</button></div>
         <div id="auResult" class="panel"></div></div>`);

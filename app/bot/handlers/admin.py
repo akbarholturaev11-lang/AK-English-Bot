@@ -2584,7 +2584,7 @@ async def admin_upload_audio_handler(message: Message, session):
             "<code>hsk1 1 vocab</code> — 1-dars so'zlar\n"
             "<code>hsk1 1 dialogue_1</code> — 1-dars 1-dialog\n"
             "<code>hsk1 1 dialogue_2</code> — 1-dars 2-dialog\n"
-            "<code>hsk2 3 dialogue_1</code> — HSK2 3-dars 1-dialog",
+            "<code>hsk2 3 dialogue_1</code> — Elementary 3-dars 1-dialog",
             parse_mode="HTML",
         )
         return

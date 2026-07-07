@@ -9,7 +9,7 @@ from app.repositories.course_attempt_repo import CourseAttemptRepository
 from app.services.course_tutor_service import CourseTutorService
 
 
-# ─── V1: eski format (HSK1 va grammar_notes si yo'q darslar) ───────────────
+# ─── V1: eski format (Beginner va grammar_notes si yo'q darslar) ───────────────
 COURSE_STEP_ORDER_V1 = [
     "intro",
     "vocab",

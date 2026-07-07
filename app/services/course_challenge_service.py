@@ -44,7 +44,7 @@ class CourseChallengeService:
         return {
             "id": int(user.id),
             "telegram_id": int(user.telegram_id),
-            "name": str(user.full_name or user.username or "HSK Student").strip()[:40],
+            "name": str(user.full_name or user.username or "English Student").strip()[:40],
             "username": str(user.username or "").strip().lstrip("@")[:32],
         }
 
@@ -78,7 +78,7 @@ class CourseChallengeService:
         return data.get(role) or data.get("challenger") or []
 
     async def _generate_questions_for(self, user: User) -> list[dict]:
-        """Generate a fresh practice set matched to this user's own HSK level."""
+        """Generate a fresh practice set matched to this user's own English level."""
         level = self._level(getattr(user, "level", None))
         lang = normalize_miniapp_lang(getattr(user, "language", None))
         questions = await CourseMiniAppPracticeService(self.session)._questions(
@@ -489,15 +489,15 @@ class CourseChallengeService:
 
     @staticmethod
     def _level_label(level: str) -> str:
-        return str(level or "hsk1").upper().replace("HSK", "HSK ")
+        return str(level or "hsk1").upper().replace("English", "English ")
 
     @staticmethod
     def invite_text(challenge: CourseChallenge, challenger: User, lang: str) -> str:
-        name = challenger.full_name or challenger.username or "HSK Student"
+        name = challenger.full_name or challenger.username or "English Student"
         title = {
-            "uz": f"⚔️ {name} sizni HSK jangiga chaqirdi!",
-            "ru": f"⚔️ {name} бросает вам вызов на HSK-дуэль!",
-            "tj": f"⚔️ {name} шуморо ба дуэли HSK даъват мекунад!",
+            "uz": f"⚔️ {name} sizni English jangiga chaqirdi!",
+            "ru": f"⚔️ {name} бросает вам вызов на English-дуэль!",
+            "tj": f"⚔️ {name} шуморо ба дуэли English даъват мекунад!",
         }.get(lang)
         body = {
             "uz": (

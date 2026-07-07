@@ -812,7 +812,7 @@ async def course_hsk4_part_handler(callback: CallbackQuery, session):
         await callback.answer(t("course_no_lessons_available", lang), show_alert=True)
         return
 
-    text = f"HSK4 {_hsk4_part_label(hsk4_part)}. {t('course_choose_lesson', lang)}"
+    text = f"Advanced {_hsk4_part_label(hsk4_part)}. {t('course_choose_lesson', lang)}"
 
     await callback.answer()
     await callback.message.edit_text(
@@ -1112,7 +1112,7 @@ async def run_course_entry_flow(
             await respond(t("course_no_lessons_available", lang))
             return
 
-        level_label = resolved_level.upper() if resolved_level else "HSK"
+        level_label = resolved_level.upper() if resolved_level else "English"
         await respond(
             f"{level_label}. {t('course_choose_lesson', lang)}",
             reply_markup=_lesson_selection_markup(lessons, resolved_level, lang),

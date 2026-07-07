@@ -30,7 +30,7 @@ class CourseMiniAppPracticeService:
         if level in {"hsk4a", "hsk4b"}:
             return "hsk4"
         if level not in {"hsk1", "hsk2", "hsk3", "hsk4"}:
-            raise ValueError("Unknown HSK level")
+            raise ValueError("Unknown English level")
         return level
 
     @staticmethod

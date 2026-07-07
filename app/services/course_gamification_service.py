@@ -248,7 +248,7 @@ class CourseGamificationService:
                 ranked.append(
                     {
                         "rank": index,
-                        "name": str(full_name or "HSK Student").strip()[:40],
+                        "name": str(full_name or "English Student").strip()[:40],
                         "telegram_id": int(telegram_id) if telegram_id else None,
                         "username": str(username or "").strip().lstrip("@")[:32],
                         "xp": int(weekly_xp or 0),

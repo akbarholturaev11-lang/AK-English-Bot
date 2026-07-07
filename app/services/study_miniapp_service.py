@@ -128,8 +128,8 @@ class StudyMiniAppService:
                 CourseMistake.wrong_count > CourseMistake.resolved_count,
             )
         )
-        display_name = str(getattr(user, "full_name", None) or getattr(user, "username", None) or "HSK Student").strip()
-        initials = "".join(part[:1] for part in display_name.split()[:2]).upper() or "HSK"
+        display_name = str(getattr(user, "full_name", None) or getattr(user, "username", None) or "English Student").strip()
+        initials = "".join(part[:1] for part in display_name.split()[:2]).upper() or "English"
         return {
             "ok": True,
             "support_url": support_url,

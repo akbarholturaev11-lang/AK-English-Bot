@@ -6,9 +6,9 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
-HSK4_UPPER_MAX_ORDER = 10
-HSK4_PART_UPPER = "upper"
-HSK4_PART_LOWER = "lower"
+Advanced_UPPER_MAX_ORDER = 10
+Advanced_PART_UPPER = "upper"
+Advanced_PART_LOWER = "lower"
 _MINIAPP_LABELS = {
     "uz": "📚 Mini Appda ochish",
     "ru": "📚 Открыть в Mini App",
@@ -26,7 +26,7 @@ def _with_miniapp(rows: list[list[InlineKeyboardButton]], lang: str) -> InlineKe
 
 
 def _parse_title(raw: str) -> str:
-    """lesson.title oddiy string yoki JSON bo'lishi mumkin — xitoycha qismini qaytaradi."""
+    """lesson.title oddiy string yoki JSON bo'lishi mumkin — inglizcha qismini qaytaradi."""
     if not raw:
         return ""
     if raw.strip().startswith("{"):
@@ -40,24 +40,24 @@ def _parse_title(raw: str) -> str:
 
 
 def normalize_hsk4_part(part: str | None) -> str | None:
-    if part in {HSK4_PART_UPPER, HSK4_PART_LOWER}:
+    if part in {Advanced_PART_UPPER, Advanced_PART_LOWER}:
         return part
     return None
 
 
 def filter_hsk4_lessons_by_part(lessons: list, part: str | None) -> list:
     normalized_part = normalize_hsk4_part(part)
-    if normalized_part == HSK4_PART_UPPER:
-        return [lesson for lesson in lessons if lesson.lesson_order <= HSK4_UPPER_MAX_ORDER]
-    if normalized_part == HSK4_PART_LOWER:
-        return [lesson for lesson in lessons if lesson.lesson_order > HSK4_UPPER_MAX_ORDER]
+    if normalized_part == Advanced_PART_UPPER:
+        return [lesson for lesson in lessons if lesson.lesson_order <= Advanced_UPPER_MAX_ORDER]
+    if normalized_part == Advanced_PART_LOWER:
+        return [lesson for lesson in lessons if lesson.lesson_order > Advanced_UPPER_MAX_ORDER]
     return lessons
 
 
 def hsk4_part_selection_keyboard() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(inline_keyboard=[[
-        InlineKeyboardButton(text="上", callback_data=f"course:hsk4_part:{HSK4_PART_UPPER}"),
-        InlineKeyboardButton(text="下", callback_data=f"course:hsk4_part:{HSK4_PART_LOWER}"),
+        InlineKeyboardButton(text="上", callback_data=f"course:hsk4_part:{Advanced_PART_UPPER}"),
+        InlineKeyboardButton(text="下", callback_data=f"course:hsk4_part:{Advanced_PART_LOWER}"),
     ]])
 
 

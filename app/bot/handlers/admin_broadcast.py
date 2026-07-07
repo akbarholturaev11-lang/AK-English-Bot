@@ -69,7 +69,7 @@ def _panel_text(
             "expired": "Tugagan",
             "blocked": "Blok",
         },
-        "level": {"beginner": "Boshlang'ich", "hsk1": "HSK1", "hsk2": "HSK2", "hsk3": "HSK3", "hsk4": "HSK4"},
+        "level": {"beginner": "Boshlang'ich", "hsk1": "Beginner", "hsk2": "Elementary", "hsk3": "Intermediate", "hsk4": "Advanced"},
         "mode": {"qa": "Savol-javob", "course": "Kurs"},
         "payment_status": {"none": "Yo'q", "pending": "Kutilmoqda", "approved": "Tasdiqlangan", "rejected": "Rad etilgan"},
         "payment_method": {"visa": "Visa", "alipay": "Alipay", "wechat": "WeChat"},

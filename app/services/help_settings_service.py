@@ -21,7 +21,7 @@ class HelpVideoField:
 
 
 HELP_VIDEO_FIELDS = (
-    HelpVideoField("course_hsk", "HSK kurs video linki", "📚"),
+    HelpVideoField("course_hsk", "English kurs video linki", "📚"),
     HelpVideoField("qa_mode", "Oddiy rejim video link", "💬"),
     HelpVideoField("voice_translator", "Ovoz / tarjimon video linki", "🎙"),
     HelpVideoField("subscription", "Obuna imkoniyatlari video link", "💳"),
@@ -34,7 +34,7 @@ HELP_TEXT = {
         "click": "инҷоро пахш кунед",
         "admin": "ADMIN",
         "admin_line": "⚠️ Агар муаммо бошад, ба {admin} нависед.",
-        "course_hsk": "Барои дидани тарзи кори Курси HSK",
+        "course_hsk": "Барои дидани тарзи кори Курси English",
         "qa_mode": "Барои фаҳмидани Реҷаи одӣ",
         "voice_translator": "Барои дидани Voice ва тарҷумон",
         "subscription": "Барои фаҳмидани имкониятҳои обуна",
@@ -44,7 +44,7 @@ HELP_TEXT = {
         "click": "нажмите здесь",
         "admin": "ADMIN",
         "admin_line": "⚠️ Если возникла проблема, напишите {admin}.",
-        "course_hsk": "Чтобы посмотреть, как работает Курс HSK",
+        "course_hsk": "Чтобы посмотреть, как работает Курс English",
         "qa_mode": "Чтобы понять Обычный режим",
         "voice_translator": "Чтобы посмотреть Voice и переводчик",
         "subscription": "Чтобы узнать возможности подписки",
@@ -54,7 +54,7 @@ HELP_TEXT = {
         "click": "bu yerga bosing",
         "admin": "ADMIN",
         "admin_line": "⚠️ Muammo bo‘lsa, {admin}ga yozing.",
-        "course_hsk": "HSK kursi qanday ishlashini ko‘rish uchun",
+        "course_hsk": "English kursi qanday ishlashini ko‘rish uchun",
         "qa_mode": "Oddiy rejimni tushunish uchun",
         "voice_translator": "Voice va tarjimonni ko‘rish uchun",
         "subscription": "Obuna imkoniyatlarini tushunish uchun",

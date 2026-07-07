@@ -424,7 +424,7 @@ async def rich_test_command(message: Message, bot: Bot):
         word="学习",
         pinyin="xuéxí",
         translation="O'qish, o'rganish",
-        examples=["我喜欢学习汉语 (Men xitoy tilini o'rganishni yoqtiraman)"],
+        examples=["我喜欢学习汉语 (Men ingliz tilini o'rganishni yoqtiraman)"],
         mistakes="xuéxí ni 'o'qituvchi' deb ishlatmang."
     )
     await message.answer("🧪 <b>Test 1: Vocabulary Rich Message</b>", parse_mode="HTML")

@@ -15,7 +15,7 @@ def _parse(value: Any, default: Any = None):
 
 def _parse_title(raw: str) -> str:
     """lesson.title oddiy string yoki JSON bo'lishi mumkin.
-    JSON bo'lsa — xitoycha (zh) qismini, yo'q bo'lsa uz ni qaytaradi."""
+    JSON bo'lsa — inglizcha (zh) qismini, yo'q bo'lsa uz ni qaytaradi."""
     if not raw:
         return ""
     if raw.strip().startswith("{"):
@@ -157,7 +157,7 @@ def _lesson_code(lesson) -> str:
 
 
 def _is_hsk4_lesson(lesson) -> bool:
-    return _lesson_level(lesson) == "hsk4" or _lesson_code(lesson).startswith("HSK4")
+    return _lesson_level(lesson) == "hsk4" or _lesson_code(lesson).startswith("Advanced")
 
 
 def _grammar_title(item: dict, lang: str) -> str:
@@ -225,9 +225,9 @@ def _hsk4_grammar_analysis(title_zh: str, lang: str) -> str:
             "tj": "Маъно танҳо дар феъл нест, балки дар қисми баъди феъл ҳам ҳаст; натиҷа, самт ё ҳолатро санҷед.",
         },
         "generic": {
-            "uz": "Avval gapdagi mantiqiy munosabatni toping, keyin xitoycha qolipni shu joyga qo'ying.",
-            "ru": "Сначала найдите логическую связь в предложении, затем поставьте китайский шаблон в это место.",
-            "tj": "Аввал робитаи мантиқии ҷумларо ёбед, баъд қолаби чиниро ба ҳамон ҷо гузоред.",
+            "uz": "Avval gapdagi mantiqiy munosabatni toping, keyin inglizcha qolipni shu joyga qo'ying.",
+            "ru": "Сначала найдите логическую связь в предложении, затем поставьте английский шаблон в это место.",
+            "tj": "Аввал робитаи мантиқии ҷумларо ёбед, баъд қолаби англисиро ба ҳамон ҷо гузоред.",
         },
     }
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>HSK Lug'at · Yangi so'zlar</title>
+<title>English Lug'at · Yangi so'zlar</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 :root{
@@ -169,7 +169,7 @@ html.theme-light .hero{padding-bottom:10px;}
       <div class="hero-top">
         <button class="list-back-btn" id="list-back-btn" aria-label="Orqaga">←</button>
         <div class="hero-copy">
-          <div class="eyebrow" id="hero-eyebrow">汉字 · HSK 1–4</div>
+          <div class="eyebrow" id="hero-eyebrow">汉字 · Beginner–Advanced</div>
           <div class="hero-title" id="hero-title">Yangi so'zlar lug'ati</div>
         </div>
       </div>
@@ -264,8 +264,8 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
 <script>
 (function(){
   var params = new URLSearchParams(location.search || '');
-  window.HSK_FAST_WRITER = params.get('fast') === '1';
-  if(!window.HSK_FAST_WRITER){
+  window.English_FAST_WRITER = params.get('fast') === '1';
+  if(!window.English_FAST_WRITER){
     document.write('<script src="hsk-data.js?v=20260625"><\/script>');
   }
 })();
@@ -274,7 +274,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
 (function(){
   var validLangs = ['uz', 'ru', 'tj'];
   var params = new URLSearchParams(location.search || '');
-  if(window.HSK_FAST_WRITER){ initFastWriter(params); return; }
+  if(window.English_FAST_WRITER){ initFastWriter(params); return; }
   var UI = {
     uz: {
       title: "Yangi so'zlar lug'ati",
@@ -311,13 +311,13 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
     }
   };
   var levelLabels = {
-    all: 'HSK 1-4',
-    hsk1: 'HSK 1',
-    hsk2: 'HSK 2',
-    hsk3: 'HSK 3',
-    hsk4: 'HSK 4',
-    hsk4a: 'HSK 4 上',
-    hsk4b: 'HSK 4 下'
+    all: 'Beginner–Advanced',
+    hsk1: 'Beginner',
+    hsk2: 'Elementary',
+    hsk3: 'Intermediate',
+    hsk4: 'Advanced',
+    hsk4a: 'Advanced (Part 1)',
+    hsk4b: 'Advanced (Part 2)'
   };
 
   var practiceLabels = {
@@ -397,7 +397,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
     }
     app.innerHTML =
       '<div class="view" style="display:flex">'+
-        '<div class="detail-header"><button class="back-btn" id="fast-close">×</button><div class="detail-level">'+e(chars.length>1?'1 / '+chars.length:'HSK AI')+'</div></div>'+
+        '<div class="detail-header"><button class="back-btn" id="fast-close">×</button><div class="detail-level">'+e(chars.length>1?'1 / '+chars.length:'English AI')+'</div></div>'+
         '<div class="detail-body">'+
           '<div class="writer-card">'+
             '<div class="writer-toolbar">'+
@@ -436,7 +436,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
       pos.classList.toggle('hidden', chars.length <= 1);
       prev.disabled = idx === 0;
       next.disabled = idx === chars.length - 1;
-      document.querySelector('.detail-level').textContent = chars.length > 1 ? (idx + 1) + ' / ' + chars.length : 'HSK AI';
+      document.querySelector('.detail-level').textContent = chars.length > 1 ? (idx + 1) + ' / ' + chars.length : 'English AI';
       document.getElementById('fast-pinyin').textContent = pinyin;
       document.getElementById('fast-meaning').textContent = meaning;
       strokes.textContent = '';
@@ -498,11 +498,11 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
   }
   function grammarFor(word){
     if(!String(word.lv || '').toLowerCase().startsWith('hsk4')) return null;
-    if(typeof HSK4_GRAMMAR === 'undefined' || !Array.isArray(HSK4_GRAMMAR)) return null;
+    if(typeof Advanced_GRAMMAR === 'undefined' || !Array.isArray(Advanced_GRAMMAR)) return null;
     var h = String(word.h || '');
-    return HSK4_GRAMMAR.find(function(g){ return g.t === h; }) ||
-      HSK4_GRAMMAR.find(function(g){ return h.length > 1 && String(g.t || '').indexOf(h) !== -1; }) ||
-      HSK4_GRAMMAR.find(function(g){ return h.length === 1 && String(g.t || '') === h; });
+    return Advanced_GRAMMAR.find(function(g){ return g.t === h; }) ||
+      Advanced_GRAMMAR.find(function(g){ return h.length > 1 && String(g.t || '').indexOf(h) !== -1; }) ||
+      Advanced_GRAMMAR.find(function(g){ return h.length === 1 && String(g.t || '') === h; });
   }
 
   WORDS.forEach(function(w,i){

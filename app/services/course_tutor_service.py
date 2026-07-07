@@ -50,7 +50,7 @@ Misollar:
 _LEVEL_CEILING_RULE = """
 DARAJA CHEGARASI (JUDA MUHIM):
 - Hech qachon foydalanuvchi darajasidan yuqori misol, grammatika, so'z, ibora yoki tushuntirish bermaysan
-- Faqat foydalanuvchi darajasi yoki undan past darajadagi xitoycha materialdan foydalan
+- Faqat foydalanuvchi darajasi yoki undan past darajadagi inglizcha materialdan foydalan
 - Agar yuqori darajadagi narsa foydalanuvchi xabari yoki dars kontekstida kelgan bo'lsa, uni sodda qilib tushuntir va yuqori daraja ekanini ayt
 - Misollar yangi murakkab grammatika kiritmasin
 - Ikkilanib qolsang, doim soddaroq misol tanla
@@ -191,14 +191,14 @@ class CourseTutorService:
             "dialogue_preview": dialogue[:1],
         }
 
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Talabani bu darsga iliq kutib ol.
+        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Talabani bu darsga iliq kutib ol.
 
 DARS MA'LUMOTLARI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasiga moslashtirilgan
-- Xitoy belgilari uchun <b>...</b>, pinyin uchun <code>...</code> ishlatilsin
+- Ingliz belgilari uchun <b>...</b>, pinyin uchun <code>...</code> ishlatilsin
 - Jami 4 qatordan oshmasin
 - 2-3 ta so'z va asosiy grammatika mavzusini qiziqarli tarzda tanishtir
 - Hali o'qitma — faqat tanishtir
@@ -213,14 +213,14 @@ QOIDALAR:
 
         data = {"lesson_title": title, "vocabulary": vocab}
 
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Bu darsning so'zlarini qiziqarli tarzda o'rgat.
+        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Bu darsning so'zlarini qiziqarli tarzda o'rgat.
 
 SO'ZLAR MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Xitoy belgilari uchun <b>...</b>, pinyin uchun <code>...</code>
+- Ingliz belgilari uchun <b>...</b>, pinyin uchun <code>...</code>
 - O'xshash so'zlar bo'lsa (masalan 我/你, 大/小), ularni yonma-yon solishtir
 - Maksimal 8 ta so'zni tushuntir
 {_VOCAB_BLOCK_RULE}
@@ -234,15 +234,15 @@ QOIDALAR:
 
         data = {"lesson_title": title, "dialogue": dialogue}
 
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Bu dialogni qadamma-qadam o'rgat.
+        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Bu dialogni qadamma-qadam o'rgat.
 
 DIALOG MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Xitoy: <b>...</b>, pinyin: <code>...</code>
-- Har bir qator: <b>Xitoycha</b> [<code>pinyin</code>] — {user_language}dagi ma'nosi
+- Ingliz: <b>...</b>, pinyin: <code>...</code>
+- Har bir qator: <b>Inglizcha</b> [<code>pinyin</code>] — {user_language}dagi ma'nosi
 - Taqdimotdan keyin kontekstni qisqacha tushuntir (bu suhbat qayerda/qachon bo'ladi)
 - Dialogdan 1-2 ta foydali iboralarni amaliy hayot bilan solishtirgan holda tushuntir
 - Jami 12 qatordan oshmasin
@@ -262,14 +262,14 @@ QOIDALAR:
             "lesson_vocabulary": vocab[:5],
         }
 
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisan. Grammatika qoidalarini qisqa, tushunarli va amaliy tushuntir.
+        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisan. Grammatika qoidalarini qisqa, tushunarli va amaliy tushuntir.
 
 GRAMMATIKA MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Xitoy: <b>...</b>, pinyin: <code>...</code>
+- Ingliz: <b>...</b>, pinyin: <code>...</code>
 - Har bir grammatika nuqtasi 4-5 qatordan oshmasin
 - Format: qolip → qachon ishlatiladi → 1 aniq misol → bitta foydali ehtiyot nuqtasi
 - Misol dars lug'ati yoki darsdagi gaplardan bo'lsin
@@ -302,13 +302,13 @@ QOIDALAR:
             "allowed_grammar": grammar[:3],
         }
 
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Foydalanuvchi mashq javoblarini tekshir.
+        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Foydalanuvchi mashq javoblarini tekshir.
 
 MASHQ MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 ASOSIY VAZIFA — JAVOBNI MAZMUN BO'YICHA TEKSHIR (FORMAT BO'YICHA EMAS):
-- Foydalanuvchi xitoy belgilari, pinyin yoki ma'no yozishi mumkin — BARCHASI QABUL QILINADI
+- Foydalanuvchi ingliz belgilari, pinyin yoki ma'no yozishi mumkin — BARCHASI QABUL QILINADI
 - HTML teglari (<b>, <code>) talab qilinmaydi — foydalanuvchi oddiy matn yozadi
 - Har bir javobni FAQAT MAZMUN bo'yicha tekshir:
   * ✅ — ma'no/so'z to'g'ri bo'lsa
@@ -319,7 +319,7 @@ ASOSIY VAZIFA — JAVOBNI MAZMUN BO'YICHA TEKSHIR (FORMAT BO'YICHA EMAS):
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Bot o'z javobida xitoy: <b>...</b>, pinyin: <code>...</code> ishlatadi
+- Bot o'z javobida ingliz: <b>...</b>, pinyin: <code>...</code> ishlatadi
 - Jami 10 qatordan oshmasin
 - Keyingi bo'limga o'tish haqida HECH NARSA dema — tizim o'zi o'tkazadi"""
 
@@ -336,14 +336,14 @@ QOIDALAR:
             "test_grammar": grammar[:3],
         }
 
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Foydalanuvchiga TEST savollarini ber.
+        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Foydalanuvchiga TEST savollarini ber.
 
 TEST MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Xitoy: <b>...</b>, pinyin: <code>...</code>
+- Ingliz: <b>...</b>, pinyin: <code>...</code>
 - BIRINCHI CHAQIRUVDA (foydalanuvchi xabari yo'q bo'lsa):
   * FAQAT 3-4 ta TEST SAVOLI ber — raqamlangan (1, 2, 3, 4)
   * Savol turlari: ko'p tanlovli (A/B/C/D) YOKI bo'sh to'ldirish
@@ -363,7 +363,7 @@ QOIDALAR:
         title = self._safe(getattr(lesson, "title", ""))
         data = {"lesson_title": title}
 
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Talaba bu darsni tushunganini tekshir.
+        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Talaba bu darsni tushunganini tekshir.
 
 DARS: {title}
 
@@ -388,7 +388,7 @@ QOIDALAR:
             "lesson_blocks": self._lesson_blocks_payload(lesson),
         }
 
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Talaba darsni tushunmagan joyini qayta tushuntir.
+        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Talaba darsni tushunmagan joyini qayta tushuntir.
 
 DARS MA'LUMOTLARI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
@@ -400,7 +400,7 @@ QOIDALAR:
 - Homework answers/feedback bo'lsa: talabaning javobidagi xatoni aniq tuzat
 - Lesson_blocks yangi format: har bir block ichida dialogue, vocabulary, grammar_points, mini_quiz, mini_homework bor
 - Javobda aynan xato qilingan block/dialog/vocabulary/grammar bilan bog'lab tushuntir
-- Xitoy: <b>...</b>, pinyin: <code>...</code>
+- Ingliz: <b>...</b>, pinyin: <code>...</code>
 - Yangi test, mashq yoki homework berma
 - Maksimal 10 qator
 - Oxirida qo'shimcha savol yozma
@@ -430,7 +430,7 @@ QOIDALAR:
             "allowed_grammar": grammar,
         }
 
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Uy vazifasini baholash.
+        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Uy vazifasini baholash.
 
 UY VAZIFASI MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
@@ -444,7 +444,7 @@ ASOSIY VAZIFA — FOYDALANUVCHI JAVOBINI TEKSHIR:
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Xitoy: <b>...</b>, pinyin: <code>...</code>
+- Ingliz: <b>...</b>, pinyin: <code>...</code>
 - Yangi block formatdagi mini_homework mavjud bo'lsa, aynan shu topshiriqlarga tayan
 - Maksimal 8 qator"""
 
@@ -456,14 +456,14 @@ QOIDALAR:
         vocab_page = vocab[:8]
         title = self._safe(getattr(lesson, "title", ""))
         data = {"lesson_title": title, "vocabulary": vocab_page}
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Bu darsning birinchi qismidagi so'zlarni qiziqarli tarzda o'rgat.
+        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Bu darsning birinchi qismidagi so'zlarni qiziqarli tarzda o'rgat.
 
 SO'ZLAR (1–8):
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Xitoy belgilari uchun <b>...</b>, pinyin uchun <code>...</code>
+- Ingliz belgilari uchun <b>...</b>, pinyin uchun <code>...</code>
 - Maksimal 8 ta so'zni tushuntir
 {_VOCAB_BLOCK_RULE}
 {_EXPLANATION_RULE}"""
@@ -475,14 +475,14 @@ QOIDALAR:
         vocab_page = vocab[8:]
         title = self._safe(getattr(lesson, "title", ""))
         data = {"lesson_title": title, "vocabulary": vocab_page}
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Bu darsning ikkinchi qismidagi so'zlarni o'rgat.
+        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Bu darsning ikkinchi qismidagi so'zlarni o'rgat.
 
 SO'ZLAR (9+):
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Xitoy belgilari uchun <b>...</b>, pinyin uchun <code>...</code>
+- Ingliz belgilari uchun <b>...</b>, pinyin uchun <code>...</code>
 - Maksimal 8 ta so'zni tushuntir
 {_VOCAB_BLOCK_RULE}
 {_EXPLANATION_RULE}"""
@@ -502,15 +502,15 @@ QOIDALAR:
             "mini_quiz": block.get("mini_quiz") or [],
             "mini_homework": block.get("mini_homework") or {},
         }
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisан. Bu dialogni va unga bog'liq grammatikani qisqa tushuntir.
+        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisан. Bu dialogni va unga bog'liq grammatikani qisqa tushuntir.
 
 DIALOG MA'LUMOTI (YANGI BLOCK FORMAT):
 {_json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Xitoy: <b>...</b>, pinyin: <code>...</code>
-- Har bir qator: <b>Xitoycha</b> [<code>pinyin</code>] — tarjima
+- Ingliz: <b>...</b>, pinyin: <code>...</code>
+- Har bir qator: <b>Inglizcha</b> [<code>pinyin</code>] — tarjima
 - Faqat dialogue_block, block_vocabulary va grammar_points dan foydalan
 - Dialogdan 1-2 ta foydali ibora va grammar_points ni qisqa tushuntir
 - Jami 12 qatordan oshmasin
@@ -527,14 +527,14 @@ QOIDALAR:
             "dialogue_block": block,
             "vocabulary": vocab_page,
         }
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisan. Faqat shu dialogdagi yangi so'zlarni tushuntir.
+        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisan. Faqat shu dialogdagi yangi so'zlarni tushuntir.
 
 SO'ZLAR:
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Xitoy belgilari uchun <b>...</b>, pinyin uchun <code>...</code>
+- Ingliz belgilari uchun <b>...</b>, pinyin uchun <code>...</code>
 - Faqat shu qism so'zlaridan foydalan
 {_VOCAB_BLOCK_RULE}
 {_EXPLANATION_RULE}"""
@@ -551,14 +551,14 @@ QOIDALAR:
             "grammar_points": self._block_grammar(lesson, block),
             "block_vocabulary": self._block_words(lesson, block),
         }
-        prompt = f"""Sen do'stona HSK xitoy tili o'qituvchisisan. Shu dialogdan keyingi grammatikani qisqa, tushunarli va foydali blok qilib tushuntir.
+        prompt = f"""Sen do'stona HSK ingliz tili o'qituvchisisan. Shu dialogdan keyingi grammatikani qisqa, tushunarli va foydali blok qilib tushuntir.
 
 GRAMMATIKA MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Xitoy: <b>...</b>, pinyin: <code>...</code>
+- Ingliz: <b>...</b>, pinyin: <code>...</code>
 - Har bir qoida 5-7 qatordan oshmasin
 - Format: qolip → oddiy ma'no → shu dialogda nima vazifa bajaryapti → 1 misol → bitta ehtiyot nuqtasi
 - Uzun nazariya, kitobcha uslub va keraksiz umumiy gaplar yozma

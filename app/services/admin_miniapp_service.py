@@ -121,10 +121,10 @@ def _ago(value: datetime | None, *, now: datetime) -> str:
 def _level_label(value: str | None) -> str:
     labels = {
         "beginner": "Бошловчи",
-        "hsk1": "HSK1",
-        "hsk2": "HSK2",
-        "hsk3": "HSK3",
-        "hsk4": "HSK4",
+        "hsk1": "Beginner",
+        "hsk2": "Elementary",
+        "hsk3": "Intermediate",
+        "hsk4": "Advanced",
     }
     return labels.get(str(value or "").lower(), value or "—")
 
@@ -1360,7 +1360,7 @@ class AdminMiniAppService:
             {"key": "portfolio", "icon": "💼", "title": "Портфель", "note": "Тушум, харажат ва соф фойдани бошқариш", "section": "settings", "callback": "adm:portfolio"},
             {"key": "prices", "icon": "💳", "title": "Обуна нархлари", "note": "Visa/карта, Alipay, WeChat нархларини таҳрирлаш", "section": "settings", "callback": "adm:prices"},
             {"key": "channels", "icon": "📣", "title": "Мажбурий канал обунаси", "note": "Канал линки, ёқиш/ўчириш ва рўйхат", "section": "settings", "callback": "adm:channels"},
-            {"key": "delete_user", "icon": "🗑", "title": "Фойдаланувчини ўчириш", "note": "Хавфли амал, ID билан тасдиқланади", "section": "users", "callback": "adm:deleteuser_info"},
+            {"key": "delete_user", "icon": "🗑", "title": "Фойдалануванглиси ўчириш", "note": "Хавфли амал, ID билан тасдиқланади", "section": "users", "callback": "adm:deleteuser_info"},
             {"key": "broadcast", "icon": "📢", "title": "Оммавий хабар", "note": "Сегмент танлаб матн юбориш", "section": "settings", "callback": "adm:broadcast_info"},
             {"key": "ads", "icon": "📣", "title": "Реклама кампанияси", "note": "Матнли реклама яратиш ва ҳолатни кўриш", "section": "settings", "callback": "adm:ads_panel"},
             {"key": "release_feedback", "icon": "🆕", "title": "Янгилик фикри", "note": "Янгилик фикри кампаниясини режалаш", "section": "settings", "callback": "adm:release_feedback"},

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
-<title>HSK AI</title>
+<title>English AI</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.30.0/tabler-icons.min.css" rel="stylesheet">
 <style>
@@ -53,9 +53,9 @@ html,body{background:var(--paper);color:var(--ink);font-family:-apple-system,"SF
 <script>
 var params=new URLSearchParams(location.search||"");
 var LANG=(params.get("lang")||"ru");if(["uz","ru","tj"].indexOf(LANG)<0)LANG="ru";
-var L={ru:{boot:"HSK 1 с нуля — учите китайский каждый день по несколько минут с пандой 阿宝.",ask:"С какого уровня начнём? Не знаешь — начни с HSK 1.",placement:"Не знаете уровень? Короткий тест",start:"Начать",cont:"Продолжить",ready:"Готово!",readySub:"Начнём с первого урока.",first:"Начать первый урок",rec:"Рекомендуем"},
-  uz:{boot:"HSK 1 noldan — har kuni bir necha daqiqada panda 阿宝 bilan xitoy tilini o'rganing.",ask:"Qaysi darajadan boshlaymiz? Bilmasang — HSK 1 dan ket.",placement:"Darajangni bilmaysanmi? Qisqa test",start:"Boshlash",cont:"Davom etish",ready:"Tayyor!",readySub:"Birinchi darsdan boshlaymiz.",first:"Birinchi darsni boshlash",rec:"Tavsiya"},
-  tj:{boot:"HSK 1 аз сифр — ҳар рӯз чанд дақиқа бо панда 阿宝 хитоиро омӯзед.",ask:"Аз кадом сатҳ оғоз кунем? Намедонӣ — аз HSK 1.",placement:"Сатҳро намедонед? Тести кӯтоҳ",start:"Оғоз",cont:"Идома",ready:"Тайёр!",readySub:"Аз дарси аввал оғоз мекунем.",first:"Оғози дарси аввал",rec:"Тавсия"}}[LANG];
+var L={ru:{boot:"Beginner с нуля — учите английский каждый день по несколько минут с пандой Alex.",ask:"С какого уровня начнём? Не знаешь — начни с Beginner.",placement:"Не знаете уровень? Короткий тест",start:"Начать",cont:"Продолжить",ready:"Готово!",readySub:"Начнём с первого урока.",first:"Начать первый урок",rec:"Рекомендуем"},
+  uz:{boot:"Beginner noldan — har kuni bir necha daqiqada panda Alex bilan ingliz tilini o'rganing.",ask:"Qaysi darajadan boshlaymiz? Bilmasang — Beginner dan ket.",placement:"Darajangni bilmaysanmi? Qisqa test",start:"Boshlash",cont:"Davom etish",ready:"Tayyor!",readySub:"Birinchi darsdan boshlaymiz.",first:"Birinchi darsni boshlash",rec:"Tavsiya"},
+  tj:{boot:"Beginner аз сифр — ҳар рӯз чанд дақиқа бо панда Alex англисиро омӯзед.",ask:"Аз кадом сатҳ оғоз кунем? Намедонӣ — аз Beginner.",placement:"Сатҳро намедонед? Тести кӯтоҳ",start:"Оғоз",cont:"Идома",ready:"Тайёр!",readySub:"Аз дарси аввал оғоз мекунем.",first:"Оғози дарси аввал",rec:"Тавсия"}}[LANG];
 var tg=window.Telegram&&window.Telegram.WebApp;if(tg){try{tg.ready();tg.expand()}catch(e){}}
 function panda(m){
   var eyes='<circle cx="36" cy="37" r="3.3" fill="#fff"/><circle cx="54" cy="37" r="3.3" fill="#fff"/><circle cx="36" cy="37" r="1.8" fill="#211D17"/><circle cx="54" cy="37" r="1.8" fill="#211D17"/><rect class="pd-blink" x="32" y="31" width="8" height="9" rx="3" fill="#211D17"/><rect class="pd-blink" x="50" y="31" width="8" height="9" rx="3" fill="#211D17"/>';
@@ -80,16 +80,16 @@ function panda(m){
     +eyes+'<ellipse cx="45" cy="44" rx="3.4" ry="2.4" fill="#211D17"/>'+mouth+decor
     +'</g></svg>';
 }
-var LV=[{k:"hsk1",g:"你好",hd:"HSK 1",s:{ru:"С нуля · самый лёгкий",uz:"Noldan · eng oson",tj:"Аз сифр · осонтарин"},rec:1},
-  {k:"hsk2",g:"谢谢",hd:"HSK 2",s:{ru:"Базовое общение",uz:"Asosiy suhbat",tj:"Муоширати асосӣ"}},
-  {k:"hsk3",g:"明白",hd:"HSK 3",s:{ru:"Повседневное общение",uz:"Kundalik muloqot",tj:"Муоширати ҳаррӯза"}},
-  {k:"hsk4",g:"流利",hd:"HSK 4",s:{ru:"Свободное общение",uz:"Erkin muloqot",tj:"Муоширати озод"}}];
+var LV=[{k:"hsk1",g:"Hello",hd:"Beginner",s:{ru:"С нуля · самый лёгкий",uz:"Noldan · eng oson",tj:"Аз сифр · осонтарин"},rec:1},
+  {k:"hsk2",g:"Thanks",hd:"Elementary",s:{ru:"Базовое общение",uz:"Asosiy suhbat",tj:"Муоширати асосӣ"}},
+  {k:"hsk3",g:"OK",hd:"Intermediate",s:{ru:"Повседневное общение",uz:"Kundalik muloqot",tj:"Муоширати ҳаррӯза"}},
+  {k:"hsk4",g:"Fluent",hd:"Advanced",s:{ru:"Свободное общение",uz:"Erkin muloqot",tj:"Муоширати озод"}}];
 var step=0,sel="hsk1";
 function trv(o){return typeof o==="string"?o:(o[LANG]||o.ru)}
 function render(){
   var st=document.getElementById("stage"),cta=document.getElementById("cta");
   document.getElementById("top").style.display=step===0?"none":"flex";
-  if(step===0){st.innerHTML='<div class="welcome"><div class="big">'+panda("cheer")+'</div><h1 class="han">HSK AI</h1><p>'+L.boot+'</p></div>';cta.textContent=L.start;return;}
+  if(step===0){st.innerHTML='<div class="welcome"><div class="big">'+panda("cheer")+'</div><h1 class="han">English AI</h1><p>'+L.boot+'</p></div>';cta.textContent=L.start;return;}
   if(step===1){document.getElementById("prog").style.width="50%";
     var rows=LV.map(function(l){return '<button class="lv'+(sel===l.k?" sel":"")+'" onclick="pick(\''+l.k+'\')"><span class="glyph han">'+l.g+'</span><span class="ot"><span class="hd">'+l.hd+(l.rec?' <span class="tag">'+L.rec+'</span>':"")+'</span><small>'+trv(l.s)+'</small></span><span class="chk"><i class="ti ti-check"></i></span></button>'}).join("");
     st.innerHTML='<div class="guide"><div class="panda">'+panda("happy")+'</div><div class="bub">'+L.ask+'</div></div><div class="body">'+rows+'<div class="hint"><a>'+L.placement+'</a></div></div>';cta.textContent=L.cont;return;}

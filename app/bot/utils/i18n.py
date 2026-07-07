@@ -13,7 +13,7 @@ TEXTS = {
         "user_not_found": "Лутфан, аввал /start ро пахш кунед.",
         "onboarding_special_welcome": "🌟 Шумо <b>{user_num}</b>-умин корбари мо шудед!\n\n<blockquote>🎁 Ба шумо як дарси курс пурра ройгон кушода мешавад. Матн ва фото бо лимити рӯзона кор мекунанд.</blockquote>",
         "trial_24h_info": "🎁 <b>Дастрасии ройгон кушода шуд!</b>\n\n<blockquote>Як дарси интихобшудаи курсро пурра месанҷед.\n\nМатн ва фото бо лимити рӯзона кор мекунанд.</blockquote>",
-        "send_first_message": "Акнун калима, ҷумла ё саволи хитоии худро фиристед — дарсро аз ҳамон ҷо оғоз мекунем.",
+        "send_first_message": "Акнун калима, ҷумла ё саволи англисии худро фиристед — дарсро аз ҳамон ҷо оғоз мекунем.",
         "level_beginner": "Аз 0",
 
         "menu_start_lesson": "📘 Оғози дарс",
@@ -161,7 +161,7 @@ TEXTS = {
         "admin_reject_button": "❌ Рад кардан",
         "image_invalid_format": "Ин формат дастгирӣ намешавад. Лутфан суратро ҳамчун фото ё файли image фиристед.",
 
-        "course_promo_caption": "📚 <b>Режими курс</b> — омӯзиши зеҳноний забони чинигӣ!\n\nДарсҳои қадам ба қадам, картҳои калима, машқҳои грамматикӣ ва муҳовара бо AI.",
+        "course_promo_caption": "📚 <b>Режими курс</b> — омӯзиши зеҳноний забони англисӣ!\n\nДарсҳои қадам ба қадам, картҳои калима, машқҳои грамматикӣ ва муҳовара бо AI.",
         "course_promo_button": "📚 Режими курсро оғоз кардан",
     },
     "ru": {
@@ -178,7 +178,7 @@ TEXTS = {
         "user_not_found": "Пожалуйста, сначала нажмите /start.",
         "onboarding_special_welcome": "🌟 Вы стали нашим <b>{user_num}-м</b> пользователем!\n\n<blockquote>🎁 Вам открыт один полный урок курса бесплатно. Текст и фото работают с дневными лимитами.</blockquote>",
         "trial_24h_info": "🎁 <b>Бесплатный доступ открыт!</b>\n\n<blockquote>Вы полностью попробуете один выбранный урок курса.\n\nТекст и фото работают с дневными лимитами.</blockquote>",
-        "send_first_message": "Теперь отправьте китайское слово, фразу или свой вопрос — и начнём урок с этого.",
+        "send_first_message": "Теперь отправьте английское слово, фразу или свой вопрос — и начнём урок с этого.",
         "level_beginner": "С нуля",
 
         "menu_start_lesson": "📘 Начать урок",
@@ -287,7 +287,7 @@ TEXTS = {
 
         "image_invalid_format": "Этот формат не поддерживается. Пожалуйста, отправьте изображение как фото или image-файл.",
 
-        "course_promo_caption": "📚 <b>Режим курса</b> — учите китайский с умным ботом!\n\nПошаговые уроки, карточки слов, грамматические упражнения и диалоги с AI.",
+        "course_promo_caption": "📚 <b>Режим курса</b> — учите английский с умным ботом!\n\nПошаговые уроки, карточки слов, грамматические упражнения и диалоги с AI.",
         "course_promo_button": "📚 Начать режим курса",
         "subscription_discount_plan_10_days": "10 дней — $2",
         "subscription_discount_plan_1_month": "1 месяц — $8",
@@ -339,7 +339,7 @@ TEXTS = {
         "user_not_found": "Iltimos, avval /start ni bosing.",
         "onboarding_special_welcome": "🌟 Siz bizning <b>{user_num}-chi</b> foydalanuvchimiz bo’ldingiz!\n\n<blockquote>🎁 Sizga bitta kurs darsi to‘liq bepul ochiladi. Matn va rasm kunlik limit bilan ishlaydi.</blockquote>",
         "trial_24h_info": "🎁 <b>Bepul kirish ochildi!</b>\n\n<blockquote>Bitta tanlangan kurs darsini to‘liq sinab ko‘rasiz.\n\nMatn va rasm kunlik limit bilan ishlaydi.</blockquote>",
-        "send_first_message": "Endi xitoycha so’z, gap yoki savolingizni yuboring — darsni o’sha yerdan boshlaymiz.",
+        "send_first_message": "Endi inglizcha so’z, gap yoki savolingizni yuboring — darsni o’sha yerdan boshlaymiz.",
         "level_beginner": "0 dan",
 
         "menu_start_lesson": "📘 Darsni boshlash",
@@ -436,7 +436,7 @@ TEXTS = {
 
         "image_invalid_format": "Bu format qo’llanmaydi. Iltimos, rasmni foto yoki image-fayl sifatida yuboring.",
 
-        "course_promo_caption": "📚 <b>Kurs rejimi</b> — xitoy tilini aqlli bot bilan o’rganing!\n\nBosqichma-bosqich darslar, so’z kartochkalari, grammatika mashqlari va AI bilan suhbat.",
+        "course_promo_caption": "📚 <b>Kurs rejimi</b> — ingliz tilini aqlli bot bilan o’rganing!\n\nBosqichma-bosqich darslar, so’z kartochkalari, grammatika mashqlari va AI bilan suhbat.",
         "course_promo_button": "📚 Kurs rejimini boshlash",
         "checkout_change_plan_button": "🔄 Boshqa tarifni tanlash",
         "payment_send_screenshot_only": "Iltimos, faqat to‘lov skrinshotini yuboring.",
@@ -514,16 +514,16 @@ def t(key: str, lang: str = "ru", **kwargs) -> str:
     return text
 COURSE_I18N = {
     "tj": {
-        "course_locked_title": "📚 Курси HSK танҳо барои обуначиён",
+        "course_locked_title": "📚 Курси English танҳо барои обуначиён",
         "course_locked_text": "Режими курс танҳо барои корбарони фаъол кушода аст. Бо обуна ба дарсҳои пайдарпай, тест ва вазифаи хонагӣ дастрасӣ мегиред.",
-        "course_mode_subscription_benefit": "Бо обуна режими Курси HSK низ кушода мешавад.",
+        "course_mode_subscription_benefit": "Бо обуна режими Курси English низ кушода мешавад.",
         "course_start_button": "📚 Оғози курс",
         "course_continue_button": "📖 Давом додани дарс",
         "course_settings_button": "⚙️ Танзимот",
         "course_settings_choose_lesson": "📋 Дарсе интихоб кунед:",
         "course_back_to_qa_button": "↩️ Реҷаи одӣ",
 
-        "course_menu_title": "📚 Режими Курси HSK",
+        "course_menu_title": "📚 Режими Курси English",
         "course_continue": "📖 Давом додани дарс",
         "course_review_last": "🔁 Боздиди дарси охирин",
         "course_retry_test": "📝 Аз нав супоридани тест",
@@ -567,7 +567,7 @@ COURSE_I18N = {
 
         "course_choose_lesson": "Аз кадом дарс мехоҳед оғоз кунед?",
         "course_no_lessons_available": "Дарсҳо барои ин сатҳ ҳоло дастрас нестанд.",
-        "choose_mode_after_level": "<b>🤖 Шумо мехоҳед хитоиро бо кадом усул омӯзед?</b>\n\n<blockquote>💬 <b>Реҷаи одӣ</b> — ҷавобҳои зуд\n📸 <b>Кор бо сурат</b> — матн ва иероглифҳоро мефаҳмонам\n🗣 <b>Муоширати озод</b> — саволҳои оддӣ ва машқ</blockquote>\n\n<blockquote>📚 <b>Режими курс</b> — дарс ба дарс\n📝 <b>Машқ ва тест</b> — мустаҳкамкунӣ\n🎯 <b>Пешрафти пайдарпай</b> — омӯзиши тартибнок</blockquote>\n\n👇 <b>Режимро интихоб кунед</b>",
+        "choose_mode_after_level": "<b>🤖 Шумо мехоҳед англисиро бо кадом усул омӯзед?</b>\n\n<blockquote>💬 <b>Реҷаи одӣ</b> — ҷавобҳои зуд\n📸 <b>Кор бо сурат</b> — матн ва словоҳоро мефаҳмонам\n🗣 <b>Муоширати озод</b> — саволҳои оддӣ ва машқ</blockquote>\n\n<blockquote>📚 <b>Режими курс</b> — дарс ба дарс\n📝 <b>Машқ ва тест</b> — мустаҳкамкунӣ\n🎯 <b>Пешрафти пайдарпай</b> — омӯзиши тартибнок</blockquote>\n\n👇 <b>Режимро интихоб кунед</b>",
         "course_lesson_satisfaction_question": "Мо ин дарсро пурра анҷом додем. Аз дарс қонеъ шудед?",
         "course_lesson_satisfied_yes": "✅ Ҳа",
         "course_lesson_satisfied_no": "❌ Не",
@@ -615,7 +615,7 @@ COURSE_I18N = {
         "course_level_upgraded": "✅ Сатҳи шумо ба <b>{level}</b> боло шуд. Дарси 1-ро оғоз мекунем.",
         "course_level_upgrade_declined": "Хуб. Рӯйхати дарсҳои <b>{level}</b>:",
         "course_no_next_level_available": "Сатҳи навбатӣ ҳоло дастрас нест.",
-        "course_all_levels_completed": "🏆 Шумо ҳамаи курсҳои дастраси HSK-ро анҷом додед.",
+        "course_all_levels_completed": "🏆 Шумо ҳамаи курсҳои дастраси English-ро анҷом додед.",
         "course_reminder_enabled": "✅ Ёдраскунак фаъол шуд.",
         "course_reminder_disabled": "❌ Ёдраскунак хомӯш шуд.",
         "course_reminder_choose_time": "⏰ Вақти ёдраскунакро интихоб кунед.",
@@ -657,16 +657,16 @@ COURSE_I18N = {
     },
 
     "ru": {
-        "course_locked_title": "📚 Курс HSK только для подписчиков",
+        "course_locked_title": "📚 Курс English только для подписчиков",
         "course_locked_text": "Режим курса открыт только для активных пользователей. С подпиской вы получите доступ к пошаговым урокам, тестам и домашним заданиям.",
-        "course_mode_subscription_benefit": "С подпиской также открывается режим Курса HSK.",
+        "course_mode_subscription_benefit": "С подпиской также открывается режим Курса English.",
         "course_start_button": "📚 Начать курс",
         "course_continue_button": "📖 Продолжить урок",
         "course_settings_button": "⚙️ Настройки",
         "course_settings_choose_lesson": "📋 Выберите урок:",
         "course_back_to_qa_button": "↩️ Обычный режим",
 
-        "course_menu_title": "📚 Режим курса HSK",
+        "course_menu_title": "📚 Режим курса English",
         "course_continue": "📖 Продолжить урок",
         "course_review_last": "🔁 Повторить последний урок",
         "course_retry_test": "📝 Пересдать тест",
@@ -701,7 +701,7 @@ COURSE_I18N = {
 
         "course_choose_lesson": "С какого урока хотите начать?",
         "course_no_lessons_available": "Для этого уровня пока нет доступных уроков.",
-        "choose_mode_after_level": "<b>🤖 Как вы хотите изучать китайский язык?</b>\n\n<blockquote>💬 <b>Обычный режим</b> — быстрые ответы\n📸 <b>Работа с фото</b> — разбор текста и иероглифов\n🗣 <b>Свободное общение</b> — простые вопросы и практика</blockquote>\n\n<blockquote>📚 <b>Режим курса</b> — пошаговые уроки\n📝 <b>Упражнения и тесты</b> — закрепление материала\n🎯 <b>Последовательный прогресс</b> — системное обучение</blockquote>\n\n👇 <b>Выберите режим</b>",
+        "choose_mode_after_level": "<b>🤖 Как вы хотите изучать английский язык?</b>\n\n<blockquote>💬 <b>Обычный режим</b> — быстрые ответы\n📸 <b>Работа с фото</b> — разбор текста и слов\n🗣 <b>Свободное общение</b> — простые вопросы и практика</blockquote>\n\n<blockquote>📚 <b>Режим курса</b> — пошаговые уроки\n📝 <b>Упражнения и тесты</b> — закрепление материала\n🎯 <b>Последовательный прогресс</b> — системное обучение</blockquote>\n\n👇 <b>Выберите режим</b>",
         "course_lesson_satisfaction_question": "Мы полностью завершили этот урок. Вы довольны уроком?",
         "course_lesson_satisfied_yes": "✅ Да",
         "course_lesson_satisfied_no": "❌ Нет",
@@ -758,7 +758,7 @@ COURSE_I18N = {
         "course_level_upgraded": "✅ Ваш уровень повышен до <b>{level}</b>. Начинаем 1-й урок.",
         "course_level_upgrade_declined": "Хорошо. Список уроков <b>{level}</b>:",
         "course_no_next_level_available": "Следующий уровень пока недоступен.",
-        "course_all_levels_completed": "🏆 Вы завершили все доступные курсы HSK.",
+        "course_all_levels_completed": "🏆 Вы завершили все доступные курсы English.",
         "course_reminder_enabled": "✅ Напоминание включено.",
         "course_reminder_disabled": "❌ Напоминание выключено.",
         "course_reminder_choose_time": "⏰ Выберите время напоминания.",
@@ -800,16 +800,16 @@ COURSE_I18N = {
     },
 
     "uz": {
-        "course_locked_title": "📚 HSK kursi faqat obunachilar uchun",
+        "course_locked_title": "📚 English kursi faqat obunachilar uchun",
         "course_locked_text": "Kurs rejimi faqat active foydalanuvchilar uchun ochiq. Obuna bilan siz bosqichma-bosqich darslar, testlar va uyga vazifalarga kirish olasiz.",
-        "course_mode_subscription_benefit": "Obuna bilan HSK Kurs rejimi ham ochiladi.",
+        "course_mode_subscription_benefit": "Obuna bilan English Kurs rejimi ham ochiladi.",
         "course_start_button": "📚 Kursni boshlash",
         "course_continue_button": "📖 Darsni davom ettirish",
         "course_settings_button": "⚙️ Sozlamalar",
         "course_settings_choose_lesson": "📋 Darsni tanlang:",
         "course_back_to_qa_button": "↩️ Oddiy rejim",
 
-        "course_menu_title": "📚 HSK Kurs rejimi",
+        "course_menu_title": "📚 English Kurs rejimi",
         "course_continue": "📖 Darsni davom ettirish",
         "course_review_last": "🔁 Oxirgi darsni qayta ko‘rish",
         "course_retry_test": "📝 Testni qayta topshirish",
@@ -898,7 +898,7 @@ COURSE_I18N = {
         "course_level_upgraded": "✅ Darajangiz <b>{level}</b> ga ko’tarildi. 1-darsni boshlaymiz.",
         "course_level_upgrade_declined": "Mayli. <b>{level}</b> darslari ro’yxati:",
         "course_no_next_level_available": "Keyingi daraja hozircha mavjud emas.",
-        "course_all_levels_completed": "🏆 Barcha mavjud HSK kurslarini tugatdingiz.",
+        "course_all_levels_completed": "🏆 Barcha mavjud English kurslarini tugatdingiz.",
         "course_reminder_enabled": "✅ Eslatma yoqildi.",
         "course_reminder_disabled": "❌ Eslatma o’chirildi.",
         "course_reminder_choose_time": "⏰ Eslatma vaqtini tanlang.",
@@ -908,7 +908,7 @@ COURSE_I18N = {
 
         "course_choose_lesson": "Qaysi darsdan boshlamoqchisiz?",
         "course_no_lessons_available": "Bu daraja uchun hozircha darslar mavjud emas.",
-        "choose_mode_after_level": "<b>🤖 Xitoy tilini qaysi usulda o‘rganmoqchisiz?</b>\n\n<blockquote>💬 <b>Oddiy rejim</b> — tez javoblar\n📸 <b>Foto bilan ishlash</b> — matn va ierogliflarni tushuntiraman\n🗣 <b>Erkin muloqot</b> — oddiy savollar va practice</blockquote>\n\n<blockquote>📚 <b>Kurs rejimi</b> — darsma-dars\n📝 <b>Mashq va testlar</b> — mustahkamlash\n🎯 <b>Izchil progress</b> — tartibli o‘rganish</blockquote>\n\n👇 <b>Rejimni tanlang</b>",
+        "choose_mode_after_level": "<b>🤖 Ingliz tilini qaysi usulda o‘rganmoqchisiz?</b>\n\n<blockquote>💬 <b>Oddiy rejim</b> — tez javoblar\n📸 <b>Foto bilan ishlash</b> — matn va so'zlarni tushuntiraman\n🗣 <b>Erkin muloqot</b> — oddiy savollar va practice</blockquote>\n\n<blockquote>📚 <b>Kurs rejimi</b> — darsma-dars\n📝 <b>Mashq va testlar</b> — mustahkamlash\n🎯 <b>Izchil progress</b> — tartibli o‘rganish</blockquote>\n\n👇 <b>Rejimni tanlang</b>",
         "course_no_lesson_found": "Dars topilmadi.",
         "course_lesson_not_unlocked": "Bu dars hali ochilmagan.",
         "course_step_completed": "✅ Qism tugadi.",
@@ -993,7 +993,7 @@ FEEDBACK_I18N = {
         "feedback_price_offer_expired": "Ин пешниҳоди махсус дигар дастрас нест.",
         "feedback_like_course": "📚 Режими курс қулай аст",
         "feedback_like_answers": "💬 Ҷавобҳо зуд ва фаҳмоанд",
-        "feedback_like_photo": "📸 Кор бо сурат/иероглиф қулай аст",
+        "feedback_like_photo": "📸 Кор бо сурат/слово қулай аст",
         "feedback_like_practice": "🎯 Ҳар рӯз машқ кардан осон мешавад",
         "feedback_like_other": "✍️ Дигар",
         "feedback_dislike_price": "💳 Нархи обуна баланд аст",
@@ -1050,7 +1050,7 @@ FEEDBACK_I18N = {
         "feedback_price_offer_expired": "Это специальное предложение больше недоступно.",
         "feedback_like_course": "📚 Удобный режим курса",
         "feedback_like_answers": "💬 Быстрые и понятные ответы",
-        "feedback_like_photo": "📸 Удобная работа с фото/иероглифами",
+        "feedback_like_photo": "📸 Удобная работа с фото/словами",
         "feedback_like_practice": "🎯 Легко заниматься каждый день",
         "feedback_like_other": "✍️ Другое",
         "feedback_dislike_price": "💳 Цена подписки высокая",
@@ -1107,7 +1107,7 @@ FEEDBACK_I18N = {
         "feedback_price_offer_expired": "Bu maxsus taklif endi mavjud emas.",
         "feedback_like_course": "📚 Kurs rejimi qulay",
         "feedback_like_answers": "💬 Javoblar tez va tushunarli",
-        "feedback_like_photo": "📸 Foto/ieroglif bilan ishlash qulay",
+        "feedback_like_photo": "📸 Foto/so'z bilan ishlash qulay",
         "feedback_like_practice": "🎯 Har kuni mashq qilish osonlashadi",
         "feedback_like_other": "✍️ Boshqa",
         "feedback_dislike_price": "💳 Obuna narxi baland",
@@ -1517,10 +1517,10 @@ ONBOARDING_TIP_I18N = {
         "voice_trial_daily_limit_reached": "🎙 <b>Bugungi bepul voice sinovi ishlatildi</b>\n\n<blockquote>Ertaga yana 1 marta sinab ko'rishingiz mumkin. Voice'dan limitsiz foydalanish uchun obuna oling.</blockquote>",
         "onboarding_tip_course_vocab": (
             "🧠 <b>Yangi so'zlarni tezroq eslab qolishni xohlaysizmi?</b>\n\n"
-            "<blockquote>Ieroglifni daftarga 3 qatordan yozing. Yozayotgan paytda baland ovozda o'qing.\n\n"
+            "<blockquote>So'zni daftarga 3 qatordan yozing. Yozayotgan paytda baland ovozda o'qing.\n\n"
             "Keyin har bir yangi so'z bilan kamida 3 ta gap tuzing. Iloji bo'lsa, gaplarni o'z hayotingizga bog'lang.\n\n"
             "Har kuni darsni boshlashdan oldin bir marta takrorlang.</blockquote>\n\n"
-            "Ieroglif yozilish tartibini ko'rish uchun yuqoridagi 🀄 tugmasini bosing. Takrorlash uchun klaviatura yonidagi HSK ⭐ tugmasidan foydalaning."
+            "So'z yozilish tartibini ko'rish uchun yuqoridagi 🀄 tugmasini bosing. Takrorlash uchun klaviatura yonidagi English ⭐ tugmasidan foydalaning."
         ),
         "onboarding_tip_course_dialogue": (
             "💬 <b>Dialog bo'limi bo'yicha maslahat</b>\n\n"
@@ -1532,9 +1532,9 @@ ONBOARDING_TIP_I18N = {
             "<blockquote>Agar qoida tushunarsiz bo'lsa yoki yana misollar bilan tushuntirishni xohlasangiz, shunchaki chatga yozing. AI aynan shu dars bo'yicha tushuntiradi.</blockquote>"
         ),
         "onboarding_tip_normal_photo": (
-            "📸 <b>Kitob, ieroglif yoki dialog rasmini yuborib ko'ring</b>\n\n"
-            "<blockquote>Bot rasmni o'qib tushuntiradi: xitoychada nima deyilishi, pinyin, tarjima va misollar bilan javob beradi.\n\n"
-            "Hozir biror kitob sahifasi, daftar yoki ieroglif rasmini yuborib sinab ko'rishingiz mumkin.</blockquote>"
+            "📸 <b>Kitob, so'z yoki dialog rasmini yuborib ko'ring</b>\n\n"
+            "<blockquote>Bot rasmni o'qib tushuntiradi: inglizchada nima deyilishi, talaffuz, tarjima va misollar bilan javob beradi.\n\n"
+            "Hozir biror kitob sahifasi, daftar yoki so'z rasmini yuborib sinab ko'rishingiz mumkin.</blockquote>"
         ),
         "onboarding_tip_normal_voice": (
             "🎙 <b>Voice rejim ham bor</b>\n\n"
@@ -1551,10 +1551,10 @@ ONBOARDING_TIP_I18N = {
         "voice_trial_daily_limit_reached": "🎙 <b>Бесплатный voice на сегодня уже использован</b>\n\n<blockquote>Завтра можно попробовать ещё 1 раз. Для voice без лимита оформите подписку.</blockquote>",
         "onboarding_tip_course_vocab": (
             "🧠 <b>Хотите быстрее запоминать новые слова?</b>\n\n"
-            "<blockquote>Запишите иероглиф в тетради по 3 строки. Пока пишете, произносите его вслух.\n\n"
+            "<blockquote>Запишите слово в тетради по 3 строки. Пока пишете, произносите его вслух.\n\n"
             "Затем составьте минимум 3 предложения с каждым новым словом. По возможности связывайте примеры со своей жизнью.\n\n"
             "Перед началом каждого урока повторяйте один раз.</blockquote>\n\n"
-            "Чтобы посмотреть порядок написания иероглифа, нажмите кнопку 🀄 сверху. Для повторения используйте кнопку HSK ⭐ рядом с клавиатурой."
+            "Чтобы посмотреть порядок написания слова, нажмите кнопку 🀄 сверху. Для повторения используйте кнопку English ⭐ рядом с клавиатурой."
         ),
         "onboarding_tip_course_dialogue": (
             "💬 <b>Совет по разделу диалога</b>\n\n"
@@ -1566,9 +1566,9 @@ ONBOARDING_TIP_I18N = {
             "<blockquote>Если правило непонятно или хотите ещё примеры, просто напишите в чат. AI объяснит именно по этому уроку.</blockquote>"
         ),
         "onboarding_tip_normal_photo": (
-            "📸 <b>Попробуйте отправить фото книги, иероглифа или диалога</b>\n\n"
-            "<blockquote>Бот прочитает фото и объяснит: как это будет по-китайски, pinyin, перевод и примеры.\n\n"
-            "Можете прямо сейчас отправить страницу книги, тетрадь или иероглиф.</blockquote>"
+            "📸 <b>Попробуйте отправить фото книги, слова или диалога</b>\n\n"
+            "<blockquote>Бот прочитает фото и объяснит: как это будет по-английски, talaffuz, перевод и примеры.\n\n"
+            "Можете прямо сейчас отправить страницу книги, тетрадь или слово.</blockquote>"
         ),
         "onboarding_tip_normal_voice": (
             "🎙 <b>Есть ещё voice-режим</b>\n\n"
@@ -1588,7 +1588,7 @@ ONBOARDING_TIP_I18N = {
             "<blockquote>Иероглифро дар дафтар 3 қатор нависед. Ҳангоми навиштан онро бо овози баланд хонед.\n\n"
             "Баъд бо ҳар калимаи нав камаш 3 ҷумла созед. Агар шавад, ҷумлаҳоро ба ҳаёти худ пайваст кунед.\n\n"
             "Ҳар рӯз пеш аз оғози дарс як бор такрор кунед.</blockquote>\n\n"
-            "Барои дидани тартиби навишти иероглиф тугмаи 🀄-ро аз боло пахш кунед. Барои такрор аз тугмаи HSK ⭐ назди клавиатура истифода баред."
+            "Барои дидани тартиби навишти слово тугмаи 🀄-ро аз боло пахш кунед. Барои такрор аз тугмаи English ⭐ назди клавиатура истифода баред."
         ),
         "onboarding_tip_course_dialogue": (
             "💬 <b>Маслиҳат барои қисми диалог</b>\n\n"
@@ -1600,9 +1600,9 @@ ONBOARDING_TIP_I18N = {
             "<blockquote>Агар қоида нофаҳмо бошад ё хоҳед бо мисолҳои бештар фаҳмонда шавад, танҳо ба чат нависед. AI аз рӯи ҳамин дарс мефаҳмонад.</blockquote>"
         ),
         "onboarding_tip_normal_photo": (
-            "📸 <b>Сурати китоб, иероглиф ё диалогро фиристода бинед</b>\n\n"
-            "<blockquote>Бот суратро хонда мефаҳмонад: ба чинӣ чӣ мешавад, pinyin, тарҷума ва мисолҳо медиҳад.\n\n"
-            "Ҳозир метавонед саҳифаи китоб, дафтар ё иероглифро фиристода санҷед.</blockquote>"
+            "📸 <b>Сурати китоб, слово ё диалогро фиристода бинед</b>\n\n"
+            "<blockquote>Бот суратро хонда мефаҳмонад: ба англисӣ чӣ мешавад, talaffuz, тарҷума ва мисолҳо медиҳад.\n\n"
+            "Ҳозир метавонед саҳифаи китоб, дафтар ё словоро фиристода санҷед.</blockquote>"
         ),
         "onboarding_tip_normal_voice": (
             "🎙 <b>Voice-режим ҳам ҳаст</b>\n\n"

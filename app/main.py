@@ -910,7 +910,7 @@ def _course_v3_level(value: str | None) -> str:
     return normalized if normalized in _COURSE_V3_LEVELS else "hsk1"
 
 
-# Band tugaganda keyingi HSK bandiga avtomatik o'tish (user.level yangilanadi).
+# Band tugaganda keyingi English bandiga avtomatik o'tish (user.level yangilanadi).
 _COURSE_V3_NEXT_BAND = {"hsk1": "hsk2", "hsk2": "hsk3", "hsk3": "hsk4"}
 
 
@@ -1024,7 +1024,7 @@ async def course_v3_tour_audio(lang: str, key: str):
 
 
 # --- Server-side Chinese TTS (edge-tts) with on-disk cache -------------------
-# Android WebView (Telegram) ko'pincha xitoy (zh-CN) speechSynthesis ovoziga ega
+# Android WebView (Telegram) ko'pincha ingliz (zh-CN) speechSynthesis ovoziga ega
 # emas -> jimlik. Shuning uchun ovozni serverда generatsiya qilib, mp3 sifatida
 # beramiz. Har bir ibora birinchi so'rovда yaratilib diskка cache bo'ladi.
 TTS_VOICE = "zh-CN-XiaoxiaoNeural"
@@ -1038,7 +1038,7 @@ async def v3_tts(text: str, rate: str = "-10%"):
     import re
 
     text = (text or "").strip()
-    # Faqat xitoycha iboralar: kamida bitta CJK belgisi bo'lishi shart va
+    # Faqat inglizcha iboralar: kamida bitta CJK belgisi bo'lishi shart va
     # uzunlik cheklangan (abuse/disk to'lishining oldini olish uchun).
     if not text or len(text) > 240 or not re.search(r"[一-鿿]", text):
         return JSONResponse(status_code=400, content={"error": "bad_text"})
@@ -1133,7 +1133,7 @@ async def v3_course_map(request: Request, lang: str = "uz", level: str | None = 
                 waiting_for="none",
             )
         elif _course_v3_level(progress.level) != target_band:
-            # Foydalanuvchi HSK bandini o'zgartirdi (botda darajani almashtirdi yoki
+            # Foydalanuvchi English bandini o'zgartirdi (botda darajani almashtirdi yoki
             # avvalgi bandni tugatdi). Progress har bir band uchun alohida, shuning
             # uchun yangi bandni noldan boshlaymiz.
             progress.level = target_band
@@ -1170,7 +1170,7 @@ async def v3_course_map(request: Request, lang: str = "uz", level: str | None = 
 
         completed = int(getattr(progress, "completed_lessons_count", 0) or 0)
         display_name = str(
-            getattr(user, "full_name", None) or getattr(user, "username", None) or "HSK Student"
+            getattr(user, "full_name", None) or getattr(user, "username", None) or "English Student"
         ).strip()[:60]
         initials = "".join(p[:1].upper() for p in display_name.split()[:2]) or "阿"
 
@@ -1245,10 +1245,10 @@ async def v3_invite_payload(request: Request, lang: str = "uz"):
         full_lang, full_text = await service.build_trial_progress_text(user)
 
         share = {
-            "ru": "Привет! Я учу китайский в English AI. Заходи, тебе тоже будет полезно:",
-            "uz": "Salom! Men English AI bilan xitoy tilini o'rganyapman. Kirib ko'r, senga ham foydali bo'ladi:",
-            "tj": "Салом! Ман бо English AI чинӣ меомӯзам. Дароед, барои шумо ҳам муфид мешавад:",
-        }.get(resolved_lang, "Salom! Men English AI bilan xitoy tilini o'rganyapman. Kirib ko'r:")
+            "ru": "Привет! Я учу английский в English AI. Заходи, тебе тоже будет полезно:",
+            "uz": "Salom! Men English AI bilan ingliz tilini o'rganyapman. Kirib ko'r, senga ham foydali bo'ladi:",
+            "tj": "Салом! Ман бо English AI англисӣ меомӯзам. Дароед, барои шумо ҳам муфид мешавад:",
+        }.get(resolved_lang, "Salom! Men English AI bilan ingliz tilini o'rganyapman. Kirib ko'r:")
 
         await session.commit()
         return JSONResponse(content={
@@ -1711,7 +1711,7 @@ async def v3_course_lesson_complete(request: Request):
 
         next_lesson = await lesson_repo.get_next_lesson(resolved_level, lesson_order)
         if next_lesson is None:
-            # Joriy band to'liq tugadi: keyingi HSK bandiga o'tamiz va user.level ni
+            # Joriy band to'liq tugadi: keyingi English bandiga o'tamiz va user.level ni
             # yangilaymiz, shunda QA rejim ham yangi bandda bo'ladi (sinxron qoladi).
             # Progress keyingi map ochilganda yangi banddan noldan boshlanadi.
             next_band = _COURSE_V3_NEXT_BAND.get(resolved_level)

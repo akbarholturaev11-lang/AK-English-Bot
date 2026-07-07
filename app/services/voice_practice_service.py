@@ -92,12 +92,12 @@ LANGUAGE_NAMES = {"ru": "Russian", "tj": "Tajik", "uz": "Uzbek"}
 OPENING_MESSAGES = {
     "friend": [
         {
-            "chinese_reply": "你好！我来了，别害羞，先跟我说一句中文吧。",
+            "chinese_reply": "Hello！我来了，别害羞，先跟我说一句中文吧。",
             "pinyin": "Nǐ hǎo! Wǒ lái le, bié hàixiū, xiān gēn wǒ shuō yí jù Zhōngwén ba.",
             "translations": {
-                "uz": "Ni hao! Keldim, uyalmang, avval menga xitoycha bitta gap ayting.",
-                "ru": "Нихао! Я здесь, не стесняйтесь, скажите мне сначала одну фразу по-китайски.",
-                "tj": "Ниҳао! Ман омадам, шарм накунед, аввал ба ман як ҷумлаи чинӣ гӯед.",
+                "uz": "Ni hao! Keldim, uyalmang, avval menga inglizcha bitta gap ayting.",
+                "ru": "Нихао! Я здесь, не стесняйтесь, скажите мне сначала одну фразу по-английски.",
+                "tj": "Ниҳао! Ман омадам, шарм накунед, аввал ба ман як ҷумлаи англисӣ гӯед.",
             },
         },
         {
@@ -139,7 +139,7 @@ OPENING_MESSAGES = {
             },
         },
         {
-            "chinese_reply": "你好呀，今天心情怎么样？",
+            "chinese_reply": "Hello呀，今天心情怎么样？",
             "pinyin": "Nǐ hǎo ya, jīntiān xīnqíng zěnme yàng?",
             "translations": {
                 "uz": "Salom, bugun kayfiyatingiz qanday?",
