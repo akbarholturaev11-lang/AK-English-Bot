@@ -11,19 +11,103 @@
   "intro_prebuilt": true,
   "grammar_prebuilt": true,
   "active_words": [
-    {"no": 1, "zh": "water", "pinyin": "/ˈwɔːtər/", "pos": "n.", "meaning": {"uz": "suv", "ru": "вода", "tj": "об"}},
-    {"no": 2, "zh": "tea", "pinyin": "/tiː/", "pos": "n.", "meaning": {"uz": "choy", "ru": "чай", "tj": "чой"}},
-    {"no": 3, "zh": "coffee", "pinyin": "/ˈkɒfi/", "pos": "n.", "meaning": {"uz": "kofe", "ru": "кофе", "tj": "қаҳва"}},
-    {"no": 4, "zh": "food", "pinyin": "/fuːd/", "pos": "n.", "meaning": {"uz": "ovqat", "ru": "еда", "tj": "хӯрок"}},
-    {"no": 5, "zh": "bread", "pinyin": "/bred/", "pos": "n.", "meaning": {"uz": "non", "ru": "хлеб", "tj": "нон"}},
-    {"no": 6, "zh": "eat", "pinyin": "/iːt/", "pos": "v.", "meaning": {"uz": "yemoq", "ru": "есть, кушать", "tj": "хӯрдан"}},
-    {"no": 7, "zh": "drink", "pinyin": "/drɪŋk/", "pos": "v.", "meaning": {"uz": "ichmoq", "ru": "пить", "tj": "нӯшидан"}},
-    {"no": 8, "zh": "I want", "pinyin": "/aɪ wɒnt/", "pos": "expr.", "meaning": {"uz": "men xohlayman", "ru": "я хочу", "tj": "ман мехоҳам"}}
+    {
+      "no": 1,
+      "zh": "water",
+      "pinyin": "WAW-tur",
+      "pos": "n.",
+      "meaning": {
+        "uz": "suv",
+        "ru": "вода",
+        "tj": "об"
+      }
+    },
+    {
+      "no": 2,
+      "zh": "tea",
+      "pinyin": "TEE",
+      "pos": "n.",
+      "meaning": {
+        "uz": "choy",
+        "ru": "чай",
+        "tj": "чой"
+      }
+    },
+    {
+      "no": 3,
+      "zh": "coffee",
+      "pinyin": "KOF-ee",
+      "pos": "n.",
+      "meaning": {
+        "uz": "kofe",
+        "ru": "кофе",
+        "tj": "қаҳва"
+      }
+    },
+    {
+      "no": 4,
+      "zh": "food",
+      "pinyin": "FOOD",
+      "pos": "n.",
+      "meaning": {
+        "uz": "ovqat",
+        "ru": "еда",
+        "tj": "хӯрок"
+      }
+    },
+    {
+      "no": 5,
+      "zh": "bread",
+      "pinyin": "BRED",
+      "pos": "n.",
+      "meaning": {
+        "uz": "non",
+        "ru": "хлеб",
+        "tj": "нон"
+      }
+    },
+    {
+      "no": 6,
+      "zh": "eat",
+      "pinyin": "EET",
+      "pos": "v.",
+      "meaning": {
+        "uz": "yemoq",
+        "ru": "есть, кушать",
+        "tj": "хӯрдан"
+      }
+    },
+    {
+      "no": 7,
+      "zh": "drink",
+      "pinyin": "DRINK",
+      "pos": "v.",
+      "meaning": {
+        "uz": "ichmoq",
+        "ru": "пить",
+        "tj": "нӯшидан"
+      }
+    },
+    {
+      "no": 8,
+      "zh": "I want",
+      "pinyin": "eye-WONT",
+      "pos": "expr.",
+      "meaning": {
+        "uz": "men xohlayman",
+        "ru": "я хочу",
+        "tj": "ман мехоҳам"
+      }
+    }
   ],
   "grammar": [
     {
       "no": 1,
-      "title": {"uz": "I want + so'z", "ru": "I want + слово", "tj": "I want + калима"},
+      "title": {
+        "uz": "I want + so'z",
+        "ru": "I want + слово",
+        "tj": "I want + калима"
+      },
       "title_zh": "I want",
       "rule": {
         "uz": "I want — men xohlayman.\nOtdan oldin: I want water. I want bread.\nXushmuomala: I want tea, please.",
@@ -33,7 +117,11 @@
     },
     {
       "no": 2,
-      "title": {"uz": "eat va drink fe'llari", "ru": "Глаголы eat и drink", "tj": "Феълҳои eat ва drink"},
+      "title": {
+        "uz": "eat va drink fe'llari",
+        "ru": "Глаголы eat и drink",
+        "tj": "Феълҳои eat ва drink"
+      },
       "title_zh": "eat and drink",
       "rule": {
         "uz": "eat — qattiq ovqat uchun: eat bread, eat food.\ndrink — suyuqlik uchun: drink water, drink tea.\nMisol: I eat bread. I drink water.",
@@ -44,77 +132,632 @@
   ],
   "dialogues": [
     {
-      "scene": {"uz": "Kafeda buyurtma", "ru": "Заказ в кафе", "tj": "Фармоиш дар кафе"},
+      "scene": {
+        "uz": "Kafeda buyurtma",
+        "ru": "Заказ в кафе",
+        "tj": "Фармоиш дар кафе"
+      },
       "dialogue": [
-        {"speaker": "A", "zh": "I want tea, please.", "pinyin": "/aɪ wɒnt tiː pliːz/", "text": {"uz": "Menga choy, iltimos.", "ru": "Я хочу чай, пожалуйста.", "tj": "Ба ман чой, лутфан."}},
-        {"speaker": "B", "zh": "Here you are!", "pinyin": "/hɪr juː ɑːr/", "text": {"uz": "Mana, marhamat!", "ru": "Вот, пожалуйста!", "tj": "Мана, марҳамат!"}}
+        {
+          "speaker": "A",
+          "zh": "I want tea, please.",
+          "pinyin": "",
+          "text": {
+            "uz": "Menga choy, iltimos.",
+            "ru": "Я хочу чай, пожалуйста.",
+            "tj": "Ба ман чой, лутфан."
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "Here you are!",
+          "pinyin": "",
+          "text": {
+            "uz": "Mana, marhamat!",
+            "ru": "Вот, пожалуйста!",
+            "tj": "Мана, марҳамат!"
+          }
+        }
       ]
     },
     {
-      "scene": {"uz": "Nima ichasiz?", "ru": "Что будете пить?", "tj": "Чӣ менӯшед?"},
+      "scene": {
+        "uz": "Nima ichasiz?",
+        "ru": "Что будете пить?",
+        "tj": "Чӣ менӯшед?"
+      },
       "dialogue": [
-        {"speaker": "A", "zh": "Coffee or tea?", "pinyin": "/ˈkɒfi ɔːr tiː/", "text": {"uz": "Kofe yoki choy?", "ru": "Кофе или чай?", "tj": "Қаҳва ё чой?"}},
-        {"speaker": "B", "zh": "I want coffee.", "pinyin": "/aɪ wɒnt ˈkɒfi/", "text": {"uz": "Men kofe xohlayman.", "ru": "Я хочу кофе.", "tj": "Ман қаҳва мехоҳам."}}
+        {
+          "speaker": "A",
+          "zh": "Coffee or tea?",
+          "pinyin": "",
+          "text": {
+            "uz": "Kofe yoki choy?",
+            "ru": "Кофе или чай?",
+            "tj": "Қаҳва ё чой?"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "I want coffee.",
+          "pinyin": "",
+          "text": {
+            "uz": "Men kofe xohlayman.",
+            "ru": "Я хочу кофе.",
+            "tj": "Ман қаҳва мехоҳам."
+          }
+        }
       ]
     },
     {
-      "scene": {"uz": "Ovqat vaqti", "ru": "Время еды", "tj": "Вақти хӯрок"},
+      "scene": {
+        "uz": "Ovqat vaqti",
+        "ru": "Время еды",
+        "tj": "Вақти хӯрок"
+      },
       "dialogue": [
-        {"speaker": "A", "zh": "Let's eat!", "pinyin": "/lets iːt/", "text": {"uz": "Keling, ovqatlanamiz!", "ru": "Давайте есть!", "tj": "Биёед хӯрок хӯрем!"}},
-        {"speaker": "B", "zh": "I want bread.", "pinyin": "/aɪ wɒnt bred/", "text": {"uz": "Men non xohlayman.", "ru": "Я хочу хлеб.", "tj": "Ман нон мехоҳам."}}
+        {
+          "speaker": "A",
+          "zh": "Let's eat!",
+          "pinyin": "",
+          "text": {
+            "uz": "Keling, ovqatlanamiz!",
+            "ru": "Давайте есть!",
+            "tj": "Биёед хӯрок хӯрем!"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "I want bread.",
+          "pinyin": "",
+          "text": {
+            "uz": "Men non xohlayman.",
+            "ru": "Я хочу хлеб.",
+            "tj": "Ман нон мехоҳам."
+          }
+        }
       ]
     }
   ],
   "sections": [
     {
       "section_no": 1,
-      "section_title": {"uz": "Yangi so'zlar", "ru": "Новые слова", "tj": "Калимаҳои нав"},
+      "section_title": {
+        "uz": "Yangi so'zlar",
+        "ru": "Новые слова",
+        "tj": "Калимаҳои нав"
+      },
       "section_purpose": "intro",
       "cards": [
-        {"type": "active_word", "word": {"no": 1, "zh": "water", "pinyin": "/ˈwɔːtər/", "pos": "n.", "meaning": {"uz": "suv", "ru": "вода", "tj": "об"}}},
-        {"type": "active_word", "word": {"no": 2, "zh": "tea", "pinyin": "/tiː/", "pos": "n.", "meaning": {"uz": "choy", "ru": "чай", "tj": "чой"}}},
-        {"type": "meaning_guess", "prompt": {"uz": "«coffee» ma'nosini tanlang:", "ru": "Выберите значение «coffee»:", "tj": "Маънои «coffee»-ро интихоб кунед:"}, "title": {"uz": "Ma'nosi nima?", "ru": "Что означает?", "tj": "Маъно чист?"}, "options": [{"uz": "kofe", "ru": "кофе", "tj": "қаҳва"}, {"uz": "choy", "ru": "чай", "tj": "чой"}, {"uz": "suv", "ru": "вода", "tj": "об"}, {"uz": "non", "ru": "хлеб", "tj": "нон"}], "correct_index": 0},
-        {"type": "active_word", "word": {"no": 3, "zh": "coffee", "pinyin": "/ˈkɒfi/", "pos": "n.", "meaning": {"uz": "kofe", "ru": "кофе", "tj": "қаҳва"}}},
-        {"type": "active_word", "word": {"no": 4, "zh": "food", "pinyin": "/fuːd/", "pos": "n.", "meaning": {"uz": "ovqat", "ru": "еда", "tj": "хӯрок"}}},
-        {"type": "hanzi_choice", "prompt": {"uz": "«/bred/» qaysi so'z?", "ru": "Какое слово читается «/bred/»?", "tj": "«/bred/» кадом калима аст?"}, "title": {"uz": "So'zni tanlang", "ru": "Выберите слово", "tj": "Калимаро интихоб кунед"}, "options": ["food", "bread", "water", "tea"], "correct_index": 1},
-        {"type": "active_word", "word": {"no": 5, "zh": "bread", "pinyin": "/bred/", "pos": "n.", "meaning": {"uz": "non", "ru": "хлеб", "tj": "нон"}}},
-        {"type": "active_word", "word": {"no": 6, "zh": "eat", "pinyin": "/iːt/", "pos": "v.", "meaning": {"uz": "yemoq", "ru": "есть", "tj": "хӯрдан"}}},
-        {"type": "pinyin_choice", "prompt": {"uz": "«water» talaffuzini tanlang:", "ru": "Выберите произношение «water»:", "tj": "Талаффузи «water»-ро интихоб кунед:"}, "title": {"uz": "Qanday o'qiladi?", "ru": "Как читается?", "tj": "Чӣ хел хонда мешавад?"}, "options": ["/ˈwɔːtər/", "/tiː/", "/drɪŋk/", "/fuːd/"], "correct_index": 0},
-        {"type": "match_pairs", "pairs": [["water", {"uz": "suv", "ru": "вода", "tj": "об"}], ["tea", {"uz": "choy", "ru": "чай", "tj": "чой"}], ["eat", {"uz": "yemoq", "ru": "есть", "tj": "хӯрдан"}], ["drink", {"uz": "ichmoq", "ru": "пить", "tj": "нӯшидан"}]]}
+        {
+          "type": "active_word",
+          "word": {
+            "no": 1,
+            "zh": "water",
+            "pinyin": "WAW-tur",
+            "pos": "n.",
+            "meaning": {
+              "uz": "suv",
+              "ru": "вода",
+              "tj": "об"
+            }
+          }
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 2,
+            "zh": "tea",
+            "pinyin": "TEE",
+            "pos": "n.",
+            "meaning": {
+              "uz": "choy",
+              "ru": "чай",
+              "tj": "чой"
+            }
+          }
+        },
+        {
+          "type": "meaning_guess",
+          "prompt": {
+            "uz": "«coffee» ma'nosini tanlang:",
+            "ru": "Выберите значение «coffee»:",
+            "tj": "Маънои «coffee»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Ma'nosi nima?",
+            "ru": "Что означает?",
+            "tj": "Маъно чист?"
+          },
+          "options": [
+            {
+              "uz": "kofe",
+              "ru": "кофе",
+              "tj": "қаҳва"
+            },
+            {
+              "uz": "choy",
+              "ru": "чай",
+              "tj": "чой"
+            },
+            {
+              "uz": "suv",
+              "ru": "вода",
+              "tj": "об"
+            },
+            {
+              "uz": "non",
+              "ru": "хлеб",
+              "tj": "нон"
+            }
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 3,
+            "zh": "coffee",
+            "pinyin": "KOF-ee",
+            "pos": "n.",
+            "meaning": {
+              "uz": "kofe",
+              "ru": "кофе",
+              "tj": "қаҳва"
+            }
+          }
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 4,
+            "zh": "food",
+            "pinyin": "FOOD",
+            "pos": "n.",
+            "meaning": {
+              "uz": "ovqat",
+              "ru": "еда",
+              "tj": "хӯрок"
+            }
+          }
+        },
+        {
+          "type": "hanzi_choice",
+          "prompt": {
+            "uz": "«BRED» qaysi so'z?",
+            "ru": "Какое слово читается «BRED»?",
+            "tj": "«BRED» кадом калима аст?"
+          },
+          "title": {
+            "uz": "So'zni tanlang",
+            "ru": "Выберите слово",
+            "tj": "Калимаро интихоб кунед"
+          },
+          "options": [
+            "food",
+            "bread",
+            "water",
+            "tea"
+          ],
+          "correct_index": 1
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 5,
+            "zh": "bread",
+            "pinyin": "BRED",
+            "pos": "n.",
+            "meaning": {
+              "uz": "non",
+              "ru": "хлеб",
+              "tj": "нон"
+            }
+          }
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 6,
+            "zh": "eat",
+            "pinyin": "EET",
+            "pos": "v.",
+            "meaning": {
+              "uz": "yemoq",
+              "ru": "есть",
+              "tj": "хӯрдан"
+            }
+          }
+        },
+        {
+          "type": "pinyin_choice",
+          "prompt": {
+            "uz": "«water» talaffuzini tanlang:",
+            "ru": "Выберите произношение «water»:",
+            "tj": "Талаффузи «water»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Qanday o'qiladi?",
+            "ru": "Как читается?",
+            "tj": "Чӣ хел хонда мешавад?"
+          },
+          "options": [
+            "WAW-tur",
+            "TEE",
+            "DRINK",
+            "FOOD"
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "match_pairs",
+          "pairs": [
+            [
+              "water",
+              {
+                "uz": "suv",
+                "ru": "вода",
+                "tj": "об"
+              }
+            ],
+            [
+              "tea",
+              {
+                "uz": "choy",
+                "ru": "чай",
+                "tj": "чой"
+              }
+            ],
+            [
+              "eat",
+              {
+                "uz": "yemoq",
+                "ru": "есть",
+                "tj": "хӯрдан"
+              }
+            ],
+            [
+              "drink",
+              {
+                "uz": "ichmoq",
+                "ru": "пить",
+                "tj": "нӯшидан"
+              }
+            ]
+          ]
+        }
       ]
     },
     {
       "section_no": 2,
-      "section_title": {"uz": "Grammatika", "ru": "Грамматика", "tj": "Грамматика"},
+      "section_title": {
+        "uz": "Grammatika",
+        "ru": "Грамматика",
+        "tj": "Грамматика"
+      },
       "section_purpose": "grammar",
       "cards": [
-        {"type": "_grammar", "g": {"no": 1, "title": {"uz": "I want + so'z", "ru": "I want + слово", "tj": "I want + калима"}, "title_zh": "I want", "rule": {"uz": "I want water. I want bread.\nXushmuomala: I want tea, please.", "ru": "I want water. I want bread.\nВежливо: I want tea, please.", "tj": "I want water. I want bread.\nХушмуомила: I want tea, please."}}},
-        {"type": "_grammar", "g": {"no": 2, "title": {"uz": "eat va drink", "ru": "eat и drink", "tj": "eat ва drink"}, "title_zh": "eat and drink", "rule": {"uz": "eat — qattiq: eat bread.\ndrink — suyuqlik: drink water.", "ru": "eat — твёрдое: eat bread.\ndrink — жидкое: drink water.", "tj": "eat — сахт: eat bread.\ndrink — моеъ: drink water."}}},
-        {"type": "sentence_builder", "sentence": {"uz": "«Men suv xohlayman.»", "ru": "«Я хочу воду.»", "tj": "«Ман об мехоҳам.»"}, "tokens": ["eat", "want", "water", "I", "drink"], "answer_tokens": ["I", "want", "water"], "explanation": {"uz": "I want ... — xohishni bildiradi.", "ru": "I want ... — желание.", "tj": "I want ... — хоҳиш."}},
-        {"type": "quick_quiz", "prompt": {"uz": "Suvni nima qilamiz?", "ru": "Что делаем с водой?", "tj": "Обро чӣ мекунем?"}, "title": {"uz": "To'g'ri fe'lni tanlang", "ru": "Выберите глагол", "tj": "Феълро интихоб кунед"}, "options": ["eat water", "drink water", "read water", "go water"], "correct_index": 1}
+        {
+          "type": "_grammar",
+          "g": {
+            "no": 1,
+            "title": {
+              "uz": "I want + so'z",
+              "ru": "I want + слово",
+              "tj": "I want + калима"
+            },
+            "title_zh": "I want",
+            "rule": {
+              "uz": "I want water. I want bread.\nXushmuomala: I want tea, please.",
+              "ru": "I want water. I want bread.\nВежливо: I want tea, please.",
+              "tj": "I want water. I want bread.\nХушмуомила: I want tea, please."
+            }
+          }
+        },
+        {
+          "type": "_grammar",
+          "g": {
+            "no": 2,
+            "title": {
+              "uz": "eat va drink",
+              "ru": "eat и drink",
+              "tj": "eat ва drink"
+            },
+            "title_zh": "eat and drink",
+            "rule": {
+              "uz": "eat — qattiq: eat bread.\ndrink — suyuqlik: drink water.",
+              "ru": "eat — твёрдое: eat bread.\ndrink — жидкое: drink water.",
+              "tj": "eat — сахт: eat bread.\ndrink — моеъ: drink water."
+            }
+          }
+        },
+        {
+          "type": "sentence_builder",
+          "sentence": {
+            "uz": "«Men suv xohlayman.»",
+            "ru": "«Я хочу воду.»",
+            "tj": "«Ман об мехоҳам.»"
+          },
+          "tokens": [
+            "eat",
+            "want",
+            "water",
+            "I",
+            "drink"
+          ],
+          "answer_tokens": [
+            "I",
+            "want",
+            "water"
+          ],
+          "explanation": {
+            "uz": "I want ... — xohishni bildiradi.",
+            "ru": "I want ... — желание.",
+            "tj": "I want ... — хоҳиш."
+          }
+        },
+        {
+          "type": "quick_quiz",
+          "prompt": {
+            "uz": "Suvni nima qilamiz?",
+            "ru": "Что делаем с водой?",
+            "tj": "Обро чӣ мекунем?"
+          },
+          "title": {
+            "uz": "To'g'ri fe'lni tanlang",
+            "ru": "Выберите глагол",
+            "tj": "Феълро интихоб кунед"
+          },
+          "options": [
+            "eat water",
+            "drink water",
+            "read water",
+            "go water"
+          ],
+          "correct_index": 1
+        }
       ]
     },
     {
       "section_no": 3,
-      "section_title": {"uz": "Mashq", "ru": "Практика", "tj": "Машқ"},
+      "section_title": {
+        "uz": "Mashq",
+        "ru": "Практика",
+        "tj": "Машқ"
+      },
       "section_purpose": "practice",
       "cards": [
-        {"type": "pinyin_choice", "prompt": {"uz": "«drink» talaffuzini tanlang:", "ru": "Выберите произношение «drink»:", "tj": "Талаффузи «drink»-ро интихоб кунед:"}, "title": {"uz": "Qanday o'qiladi?", "ru": "Как читается?", "tj": "Чӣ хел хонда мешавад?"}, "options": ["/drɪŋk/", "/iːt/", "/tiː/", "/bred/"], "correct_index": 0},
-        {"type": "meaning_guess", "prompt": {"uz": "«bread» ma'nosini tanlang:", "ru": "Выберите значение «bread»:", "tj": "Маънои «bread»-ро интихоб кунед:"}, "title": {"uz": "Ma'nosi nima?", "ru": "Что означает?", "tj": "Маъно чист?"}, "options": [{"uz": "non", "ru": "хлеб", "tj": "нон"}, {"uz": "suv", "ru": "вода", "tj": "об"}, {"uz": "choy", "ru": "чай", "tj": "чой"}, {"uz": "ovqat", "ru": "еда", "tj": "хӯрок"}], "correct_index": 0},
-        {"type": "listening_choice", "title": {"uz": "Eshitganingizni tanlang", "ru": "Выберите, что вы услышали", "tj": "Он чи шунидед, интихоб кунед"}, "audio_text": "I want coffee.", "pinyin": "/aɪ wɒnt ˈkɒfi/", "options": ["I want tea.", "I want coffee.", "Let's eat!", "Here you are!"], "correct_index": 1, "explanation": {"uz": "coffee = kofe.", "ru": "coffee = кофе.", "tj": "coffee = қаҳва."}},
-        {"type": "match_pairs", "pairs": [["coffee", {"uz": "kofe", "ru": "кофе", "tj": "қаҳва"}], ["food", {"uz": "ovqat", "ru": "еда", "tj": "хӯрок"}], ["bread", {"uz": "non", "ru": "хлеб", "tj": "нон"}], ["I want", {"uz": "xohlayman", "ru": "я хочу", "tj": "мехоҳам"}]]},
-        {"type": "pronunciation", "phrase": "I want water, please", "pinyin": "/aɪ wɒnt ˈwɔːtər pliːz/", "translation": {"uz": "Menga suv, iltimos", "ru": "Я хочу воду, пожалуйста", "tj": "Ба ман об, лутфан"}}
+        {
+          "type": "pinyin_choice",
+          "prompt": {
+            "uz": "«drink» talaffuzini tanlang:",
+            "ru": "Выберите произношение «drink»:",
+            "tj": "Талаффузи «drink»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Qanday o'qiladi?",
+            "ru": "Как читается?",
+            "tj": "Чӣ хел хонда мешавад?"
+          },
+          "options": [
+            "DRINK",
+            "EET",
+            "TEE",
+            "BRED"
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "meaning_guess",
+          "prompt": {
+            "uz": "«bread» ma'nosini tanlang:",
+            "ru": "Выберите значение «bread»:",
+            "tj": "Маънои «bread»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Ma'nosi nima?",
+            "ru": "Что означает?",
+            "tj": "Маъно чист?"
+          },
+          "options": [
+            {
+              "uz": "non",
+              "ru": "хлеб",
+              "tj": "нон"
+            },
+            {
+              "uz": "suv",
+              "ru": "вода",
+              "tj": "об"
+            },
+            {
+              "uz": "choy",
+              "ru": "чай",
+              "tj": "чой"
+            },
+            {
+              "uz": "ovqat",
+              "ru": "еда",
+              "tj": "хӯрок"
+            }
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "listening_choice",
+          "title": {
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
+          },
+          "audio_text": "I want coffee.",
+          "pinyin": "",
+          "options": [
+            "I want tea.",
+            "I want coffee.",
+            "Let's eat!",
+            "Here you are!"
+          ],
+          "correct_index": 1,
+          "explanation": {
+            "uz": "coffee = kofe.",
+            "ru": "coffee = кофе.",
+            "tj": "coffee = қаҳва."
+          }
+        },
+        {
+          "type": "match_pairs",
+          "pairs": [
+            [
+              "coffee",
+              {
+                "uz": "kofe",
+                "ru": "кофе",
+                "tj": "қаҳва"
+              }
+            ],
+            [
+              "food",
+              {
+                "uz": "ovqat",
+                "ru": "еда",
+                "tj": "хӯрок"
+              }
+            ],
+            [
+              "bread",
+              {
+                "uz": "non",
+                "ru": "хлеб",
+                "tj": "нон"
+              }
+            ],
+            [
+              "I want",
+              {
+                "uz": "xohlayman",
+                "ru": "я хочу",
+                "tj": "мехоҳам"
+              }
+            ]
+          ]
+        },
+        {
+          "type": "pronunciation",
+          "phrase": "I want water, please",
+          "pinyin": "",
+          "translation": {
+            "uz": "Menga suv, iltimos",
+            "ru": "Я хочу воду, пожалуйста",
+            "tj": "Ба ман об, лутфан"
+          }
+        }
       ]
     },
     {
       "section_no": 4,
-      "section_title": {"uz": "Dialog", "ru": "Диалог", "tj": "Муколама"},
+      "section_title": {
+        "uz": "Dialog",
+        "ru": "Диалог",
+        "tj": "Муколама"
+      },
       "section_purpose": "dialog",
       "cards": [
-        {"type": "listening_choice", "title": {"uz": "Eshitganingizni tanlang", "ru": "Выберите, что вы услышали", "tj": "Он чи шунидед, интихоб кунед"}, "audio_text": "Coffee or tea?", "pinyin": "/ˈkɒfi ɔːr tiː/", "options": ["Coffee or tea?", "Let's eat!", "I want bread.", "Here you are!"], "correct_index": 0, "explanation": {"uz": "«or» = yoki.", "ru": "«or» = или.", "tj": "«or» = ё."}},
-        {"type": "gap_fill", "sentence": "I ____ tea, please.", "prompt": {"uz": "Bo'sh joyga mos so'zni tanlang:", "ru": "Выберите подходящее слово:", "tj": "Калимаи мувофиқро интихоб кунед:"}, "options": ["am", "want", "is", "you"], "correct_index": 1, "explanation": {"uz": "I want ... — buyurtma berish.", "ru": "I want ... — сделать заказ.", "tj": "I want ... — фармоиш додан."}},
-        {"type": "dialog_cloze", "title": {"uz": "Dialogni to'ldiring", "ru": "Дополните диалог", "tj": "Муколамаро пурра кунед"}, "lines": [{"speaker": "A", "zh": "I want tea, please.", "blank": false}, {"speaker": "B", "zh": "", "blank": true}], "options": ["Here you are!", "How old are you?", "Goodbye!", "My name is Tom."], "correct_index": 0, "explanation": {"uz": "Berayotganda 'Here you are!' deyiladi.", "ru": "При передаче — 'Here you are!'.", "tj": "Ҳангоми додан — 'Here you are!'."}},
-        {"type": "quick_quiz", "prompt": {"uz": "Qaysi biri ichimlik emas?", "ru": "Что не напиток?", "tj": "Кадомаш нӯшокӣ нест?"}, "title": {"uz": "To'g'ri javobni tanlang", "ru": "Выберите правильный ответ", "tj": "Ҷавоби дурустро интихоб кунед"}, "options": ["water", "tea", "bread", "coffee"], "correct_index": 2}
+        {
+          "type": "listening_choice",
+          "title": {
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
+          },
+          "audio_text": "Coffee or tea?",
+          "pinyin": "",
+          "options": [
+            "Coffee or tea?",
+            "Let's eat!",
+            "I want bread.",
+            "Here you are!"
+          ],
+          "correct_index": 0,
+          "explanation": {
+            "uz": "«or» = yoki.",
+            "ru": "«or» = или.",
+            "tj": "«or» = ё."
+          }
+        },
+        {
+          "type": "gap_fill",
+          "sentence": "I ____ tea, please.",
+          "prompt": {
+            "uz": "Bo'sh joyga mos so'zni tanlang:",
+            "ru": "Выберите подходящее слово:",
+            "tj": "Калимаи мувофиқро интихоб кунед:"
+          },
+          "options": [
+            "am",
+            "want",
+            "is",
+            "you"
+          ],
+          "correct_index": 1,
+          "explanation": {
+            "uz": "I want ... — buyurtma berish.",
+            "ru": "I want ... — сделать заказ.",
+            "tj": "I want ... — фармоиш додан."
+          }
+        },
+        {
+          "type": "dialog_cloze",
+          "title": {
+            "uz": "Dialogni to'ldiring",
+            "ru": "Дополните диалог",
+            "tj": "Муколамаро пурра кунед"
+          },
+          "lines": [
+            {
+              "speaker": "A",
+              "zh": "I want tea, please.",
+              "blank": false
+            },
+            {
+              "speaker": "B",
+              "zh": "",
+              "blank": true
+            }
+          ],
+          "options": [
+            "Here you are!",
+            "How old are you?",
+            "Goodbye!",
+            "My name is Tom."
+          ],
+          "correct_index": 0,
+          "explanation": {
+            "uz": "Berayotganda 'Here you are!' deyiladi.",
+            "ru": "При передаче — 'Here you are!'.",
+            "tj": "Ҳангоми додан — 'Here you are!'."
+          }
+        },
+        {
+          "type": "quick_quiz",
+          "prompt": {
+            "uz": "Qaysi biri ichimlik emas?",
+            "ru": "Что не напиток?",
+            "tj": "Кадомаш нӯшокӣ нест?"
+          },
+          "title": {
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
+          },
+          "options": [
+            "water",
+            "tea",
+            "bread",
+            "coffee"
+          ],
+          "correct_index": 2
+        }
       ]
     }
   ]

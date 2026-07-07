@@ -196,16 +196,17 @@ class AIService:
             "uz": "Uzbek",
             "ru": "Russian",
         }
-        primary_lang = lang_labels.get(user_language, "Russian")
+        native_lang = lang_labels.get(user_language, "Russian")
         prompt = (
             "Transcribe only, do not translate. "
-            f"Likely {primary_lang} or Chinese, level {user_level}. "
-            "Keep Chinese, pinyin, names, numbers, and short mixed-language phrases."
+            f"The speaker is an English learner (level {user_level}); expect English or "
+            f"{native_lang}, and English may carry a {native_lang} accent. "
+            "Keep names, numbers, and short mixed-language phrases as spoken."
         )
         if speech_hint:
             prompt += (
                 f" Pronunciation target hint: {speech_hint[:180]}. "
-                "Use the hint only to resolve unclear Chinese sounds; do not copy it if it was not spoken."
+                "Use the hint only to resolve unclear English sounds; do not copy it if it was not spoken."
             )
 
         model = "gpt-4o-mini-transcribe"

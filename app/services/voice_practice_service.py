@@ -639,7 +639,10 @@ class VoicePracticeService:
                     heard_counts[ch] -= 1
                     matched += 1
             hanzi_score = int(round(matched / len(target_chars) * 100))
-        return max(hanzi_score, cls._pinyin_score(target_pinyin, heard))
+        # Inglizcha so'zlar uchun target CJK emas — STT eshitgan matnni so'zning
+        # o'zi bilan (va bo'lsa talaffuz ko'rsatkichi bilan) solishtiramiz.
+        text_score = cls._pinyin_score(target, heard)
+        return max(hanzi_score, text_score, cls._pinyin_score(target_pinyin, heard))
 
     async def score_pronunciation(
         self,
@@ -654,7 +657,7 @@ class VoicePracticeService:
     ) -> dict:
         if not settings.OPENAI_API_KEY:
             raise VoicePracticeError("AI_UNAVAILABLE", "Voice AI sozlanmagan.", 503)
-        if not self._cjk_chars(target):
+        if not str(target or "").strip():
             raise VoicePracticeError("INVALID_TARGET", "Talaffuz uchun so'z topilmadi.")
         if not audio_bytes:
             raise VoicePracticeError("EMPTY_AUDIO", "Audio bo'sh.")

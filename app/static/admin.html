@@ -817,7 +817,9 @@
           <h3>${esc(p.method_label)} · ${esc(p.plan_label)}</h3><p>Joriy: ${esc(p.text)}</p>
           <div class="row"><input class="input" data-pamount type="number" min="1" max="1000000" value="${p.amount}" style="max-width:170px"><button class="btn" data-psave>Saqlash</button></div>
           ${priceQrHtml(p)}</div>`).join("")}
-        <div class="mcard"><h3>Karta rekviziti</h3><textarea id="payDetails" class="textarea" maxlength="1500">${esc(d.payment_details||"")}</textarea><button class="btn" data-pdsave>Rekvizitni saqlash</button></div></div>`);
+        <div class="mcard"><h3>VISA / Xalqaro rekviziti</h3><p>O'zbek va rus kartalari uchun bitta rekvizit.</p><textarea id="payDetails" class="textarea" maxlength="1500">${esc(d.payment_details||"")}</textarea><button class="btn" data-pdsave="visa" data-pdinput="payDetails">Rekvizitni saqlash</button></div>
+        <div class="mcard"><h3>Dushanbe City rekviziti</h3><p>Tojikiston kartasi (TJS).</p><textarea id="payDetailsDushanbe" class="textarea" maxlength="1500">${esc(d.payment_details_dushanbe||"")}</textarea><button class="btn" data-pdsave="alipay" data-pdinput="payDetailsDushanbe">Rekvizitni saqlash</button></div>
+        <div class="mcard"><h3>Alif bank rekviziti</h3><p>Tojikiston kartasi (TJS).</p><textarea id="payDetailsAlif" class="textarea" maxlength="1500">${esc(d.payment_details_alif||"")}</textarea><button class="btn" data-pdsave="wechat" data-pdinput="payDetailsAlif">Rekvizitni saqlash</button></div></div>`);
       bindPriceQr();
     }
     function bindPriceQr(){
@@ -1245,7 +1247,7 @@
       if((el=T("[data-uaccess]"))) return grantAccess(el.dataset.uaccess,$("qaPlan").value).catch(x=>toast(apiErr(x,"Obuna berilmadi")));
       if((el=T("[data-user]"))) return openUser(el.dataset.user);
       if((el=T("[data-psave]"))){ const r=el.closest("[data-prow]"); el.disabled=true; return apiPost("/api/admin-miniapp/prices/save",{method:r.dataset.method,plan:r.dataset.plan,amount:Number(r.querySelector("[data-pamount]").value||0)}).then(()=>afterModule("Narx saqlandi")).catch(x=>{toast(apiErr(x,"Narx saqlanmadi"));el.disabled=false;}); }
-      if((el=T("[data-pdsave]"))){ el.disabled=true; return apiPost("/api/admin-miniapp/payment-details/save",{payment_details:$("payDetails").value}).then(()=>afterModule("Rekvizit saqlandi")).catch(x=>{toast(apiErr(x,"Rekvizit saqlanmadi"));el.disabled=false;}); }
+      if((el=T("[data-pdsave]"))){ const slot=el.dataset.pdsave||"visa"; const src=el.dataset.pdinput||"payDetails"; el.disabled=true; return apiPost("/api/admin-miniapp/payment-details/save",{slot:slot,payment_details:$(src).value}).then(()=>afterModule("Rekvizit saqlandi")).catch(x=>{toast(apiErr(x,"Rekvizit saqlanmadi"));el.disabled=false;}); }
       if((el=T("[data-chmode]"))) return saveChannel({action:"mode",enabled:el.dataset.chmode==="1"},el);
       if((el=T("[data-chadd]"))) return saveChannel({action:"add",title:$("chTitle").value,chat_id:$("chId").value,invite_link:$("chInvite").value},el);
       if((el=T("[data-chtoggle]"))) return saveChannel({action:"toggle",channel_id:Number(el.dataset.chtoggle),active:el.dataset.active==="1"},el);

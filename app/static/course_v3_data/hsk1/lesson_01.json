@@ -11,19 +11,103 @@
   "intro_prebuilt": true,
   "grammar_prebuilt": true,
   "active_words": [
-    {"no": 1, "zh": "Hello", "pinyin": "/həˈloʊ/", "pos": "interj.", "meaning": {"uz": "salom (umumiy)", "ru": "привет / здравствуйте", "tj": "салом (умумӣ)"}},
-    {"no": 2, "zh": "Hi", "pinyin": "/haɪ/", "pos": "interj.", "meaning": {"uz": "salom (norasmiy)", "ru": "привет (неформально)", "tj": "салом (ғайрирасмӣ)"}},
-    {"no": 3, "zh": "Good morning", "pinyin": "/ɡʊd ˈmɔːrnɪŋ/", "pos": "expr.", "meaning": {"uz": "xayrli tong", "ru": "доброе утро", "tj": "субҳ ба хайр"}},
-    {"no": 4, "zh": "Goodbye", "pinyin": "/ɡʊdˈbaɪ/", "pos": "interj.", "meaning": {"uz": "xayr", "ru": "до свидания", "tj": "хайр"}},
-    {"no": 5, "zh": "Please", "pinyin": "/pliːz/", "pos": "adv.", "meaning": {"uz": "iltimos", "ru": "пожалуйста (просьба)", "tj": "лутфан"}},
-    {"no": 6, "zh": "Thank you", "pinyin": "/ˈθæŋk juː/", "pos": "expr.", "meaning": {"uz": "rahmat", "ru": "спасибо", "tj": "ташаккур"}},
-    {"no": 7, "zh": "Sorry", "pinyin": "/ˈsɒri/", "pos": "interj.", "meaning": {"uz": "kechirasiz, uzr", "ru": "извините, простите", "tj": "бубахшед"}},
-    {"no": 8, "zh": "You're welcome", "pinyin": "/jʊr ˈwelkəm/", "pos": "expr.", "meaning": {"uz": "arzimaydi", "ru": "пожалуйста (в ответ)", "tj": "хоҳиш мекунам"}}
+    {
+      "no": 1,
+      "zh": "Hello",
+      "pinyin": "huh-LOH",
+      "pos": "interj.",
+      "meaning": {
+        "uz": "salom (umumiy)",
+        "ru": "привет / здравствуйте",
+        "tj": "салом (умумӣ)"
+      }
+    },
+    {
+      "no": 2,
+      "zh": "Hi",
+      "pinyin": "HY",
+      "pos": "interj.",
+      "meaning": {
+        "uz": "salom (norasmiy)",
+        "ru": "привет (неформально)",
+        "tj": "салом (ғайрирасмӣ)"
+      }
+    },
+    {
+      "no": 3,
+      "zh": "Good morning",
+      "pinyin": "gud-MOR-ning",
+      "pos": "expr.",
+      "meaning": {
+        "uz": "xayrli tong",
+        "ru": "доброе утро",
+        "tj": "субҳ ба хайр"
+      }
+    },
+    {
+      "no": 4,
+      "zh": "Goodbye",
+      "pinyin": "gud-BY",
+      "pos": "interj.",
+      "meaning": {
+        "uz": "xayr",
+        "ru": "до свидания",
+        "tj": "хайр"
+      }
+    },
+    {
+      "no": 5,
+      "zh": "Please",
+      "pinyin": "PLEEZ",
+      "pos": "adv.",
+      "meaning": {
+        "uz": "iltimos",
+        "ru": "пожалуйста (просьба)",
+        "tj": "лутфан"
+      }
+    },
+    {
+      "no": 6,
+      "zh": "Thank you",
+      "pinyin": "THANK-yoo",
+      "pos": "expr.",
+      "meaning": {
+        "uz": "rahmat",
+        "ru": "спасибо",
+        "tj": "ташаккур"
+      }
+    },
+    {
+      "no": 7,
+      "zh": "Sorry",
+      "pinyin": "SOR-ee",
+      "pos": "interj.",
+      "meaning": {
+        "uz": "kechirasiz, uzr",
+        "ru": "извините, простите",
+        "tj": "бубахшед"
+      }
+    },
+    {
+      "no": 8,
+      "zh": "You're welcome",
+      "pinyin": "yor-WEL-kum",
+      "pos": "expr.",
+      "meaning": {
+        "uz": "arzimaydi",
+        "ru": "пожалуйста (в ответ)",
+        "tj": "хоҳиш мекунам"
+      }
+    }
   ],
   "grammar": [
     {
       "no": 1,
-      "title": {"uz": "Rasmiy va norasmiy salomlashish", "ru": "Формальные и неформальные приветствия", "tj": "Салому алейки расмӣ ва ғайрирасмӣ"},
+      "title": {
+        "uz": "Rasmiy va norasmiy salomlashish",
+        "ru": "Формальные и неформальные приветствия",
+        "tj": "Салому алейки расмӣ ва ғайрирасмӣ"
+      },
       "title_zh": "Formal vs informal",
       "rule": {
         "uz": "Norasmiy: Hi / Hey — do'stlar bilan.\nUmumiy: Hello — deyarli har doim mos.\nRasmiy: Good morning / Good afternoon / Good evening.\nRasmiy vaziyatda 'Hi' emas, 'Hello' yoki 'Good morning' ishlatiladi.",
@@ -33,7 +117,11 @@
     },
     {
       "no": 2,
-      "title": {"uz": "'Thank you' ga javob", "ru": "Ответ на 'Thank you'", "tj": "Ҷавоб ба 'Thank you'"},
+      "title": {
+        "uz": "'Thank you' ga javob",
+        "ru": "Ответ на 'Thank you'",
+        "tj": "Ҷавоб ба 'Thank you'"
+      },
       "title_zh": "Responding to thanks",
       "rule": {
         "uz": "Kimdir 'Thank you' desa: You're welcome (xushmuomala) yoki No problem (norasmiy).\n'Sorry' ga esa 'No problem' yoki 'It's okay' deb javob beriladi.",
@@ -44,77 +132,631 @@
   ],
   "dialogues": [
     {
-      "scene": {"uz": "Ikki do'st uchrashadi", "ru": "Встречаются два друга", "tj": "Ду дӯст вомехӯранд"},
+      "scene": {
+        "uz": "Ikki do'st uchrashadi",
+        "ru": "Встречаются два друга",
+        "tj": "Ду дӯст вомехӯранд"
+      },
       "dialogue": [
-        {"speaker": "A", "zh": "Hello!", "pinyin": "/həˈloʊ/", "text": {"uz": "Salom!", "ru": "Привет!", "tj": "Салом!"}},
-        {"speaker": "B", "zh": "Hi! Good morning!", "pinyin": "/haɪ ɡʊd ˈmɔːrnɪŋ/", "text": {"uz": "Salom! Xayrli tong!", "ru": "Привет! Доброе утро!", "tj": "Салом! Субҳ ба хайр!"}}
+        {
+          "speaker": "A",
+          "zh": "Hello!",
+          "pinyin": "",
+          "text": {
+            "uz": "Salom!",
+            "ru": "Привет!",
+            "tj": "Салом!"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "Hi! Good morning!",
+          "pinyin": "",
+          "text": {
+            "uz": "Salom! Xayrli tong!",
+            "ru": "Привет! Доброе утро!",
+            "tj": "Салом! Субҳ ба хайр!"
+          }
+        }
       ]
     },
     {
-      "scene": {"uz": "Xushmuomala javob", "ru": "Вежливый ответ", "tj": "Ҷавоби хушмуомила"},
+      "scene": {
+        "uz": "Xushmuomala javob",
+        "ru": "Вежливый ответ",
+        "tj": "Ҷавоби хушмуомила"
+      },
       "dialogue": [
-        {"speaker": "A", "zh": "Thank you!", "pinyin": "/ˈθæŋk juː/", "text": {"uz": "Rahmat!", "ru": "Спасибо!", "tj": "Ташаккур!"}},
-        {"speaker": "B", "zh": "You're welcome!", "pinyin": "/jʊr ˈwelkəm/", "text": {"uz": "Arzimaydi!", "ru": "Пожалуйста!", "tj": "Хоҳиш мекунам!"}}
+        {
+          "speaker": "A",
+          "zh": "Thank you!",
+          "pinyin": "",
+          "text": {
+            "uz": "Rahmat!",
+            "ru": "Спасибо!",
+            "tj": "Ташаккур!"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "You're welcome!",
+          "pinyin": "",
+          "text": {
+            "uz": "Arzimaydi!",
+            "ru": "Пожалуйста!",
+            "tj": "Хоҳиш мекунам!"
+          }
+        }
       ]
     },
     {
-      "scene": {"uz": "Kechirim so'rash", "ru": "Извинение", "tj": "Узрпурсӣ"},
+      "scene": {
+        "uz": "Kechirim so'rash",
+        "ru": "Извинение",
+        "tj": "Узрпурсӣ"
+      },
       "dialogue": [
-        {"speaker": "A", "zh": "Sorry!", "pinyin": "/ˈsɒri/", "text": {"uz": "Kechirasiz!", "ru": "Извините!", "tj": "Бубахшед!"}},
-        {"speaker": "B", "zh": "No problem!", "pinyin": "/noʊ ˈprɒbləm/", "text": {"uz": "Muammo yo'q!", "ru": "Ничего страшного!", "tj": "Мушкиле нест!"}}
+        {
+          "speaker": "A",
+          "zh": "Sorry!",
+          "pinyin": "",
+          "text": {
+            "uz": "Kechirasiz!",
+            "ru": "Извините!",
+            "tj": "Бубахшед!"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "No problem!",
+          "pinyin": "",
+          "text": {
+            "uz": "Muammo yo'q!",
+            "ru": "Ничего страшного!",
+            "tj": "Мушкиле нест!"
+          }
+        }
       ]
     }
   ],
   "sections": [
     {
       "section_no": 1,
-      "section_title": {"uz": "Yangi so'zlar", "ru": "Новые слова", "tj": "Калимаҳои нав"},
+      "section_title": {
+        "uz": "Yangi so'zlar",
+        "ru": "Новые слова",
+        "tj": "Калимаҳои нав"
+      },
       "section_purpose": "intro",
       "cards": [
-        {"type": "active_word", "word": {"no": 1, "zh": "Hello", "pinyin": "/həˈloʊ/", "pos": "interj.", "meaning": {"uz": "salom (umumiy)", "ru": "привет / здравствуйте", "tj": "салом (умумӣ)"}}},
-        {"type": "active_word", "word": {"no": 2, "zh": "Hi", "pinyin": "/haɪ/", "pos": "interj.", "meaning": {"uz": "salom (norasmiy)", "ru": "привет (неформально)", "tj": "салом (ғайрирасмӣ)"}}},
-        {"type": "meaning_guess", "prompt": {"uz": "«Hello» so'zining ma'nosini tanlang:", "ru": "Выберите значение слова «Hello»:", "tj": "Маънои калимаи «Hello»-ро интихоб кунед:"}, "title": {"uz": "Ma'nosi nima?", "ru": "Что означает?", "tj": "Маъно чист?"}, "options": [{"uz": "salom", "ru": "привет", "tj": "салом"}, {"uz": "rahmat", "ru": "спасибо", "tj": "ташаккур"}, {"uz": "xayr", "ru": "до свидания", "tj": "хайр"}, {"uz": "kechirasiz", "ru": "извините", "tj": "бубахшед"}], "correct_index": 0},
-        {"type": "active_word", "word": {"no": 3, "zh": "Good morning", "pinyin": "/ɡʊd ˈmɔːrnɪŋ/", "pos": "expr.", "meaning": {"uz": "xayrli tong", "ru": "доброе утро", "tj": "субҳ ба хайр"}}},
-        {"type": "active_word", "word": {"no": 4, "zh": "Goodbye", "pinyin": "/ɡʊdˈbaɪ/", "pos": "interj.", "meaning": {"uz": "xayr", "ru": "до свидания", "tj": "хайр"}}},
-        {"type": "hanzi_choice", "prompt": {"uz": "«/ˈθæŋk juː/» qaysi so'z?", "ru": "Какое слово читается «/ˈθæŋk juː/»?", "tj": "«/ˈθæŋk juː/» кадом калима аст?"}, "title": {"uz": "So'zni tanlang", "ru": "Выберите слово", "tj": "Калимаро интихоб кунед"}, "options": ["Sorry", "Thank you", "Please", "Hello"], "correct_index": 1},
-        {"type": "active_word", "word": {"no": 5, "zh": "Please", "pinyin": "/pliːz/", "pos": "adv.", "meaning": {"uz": "iltimos", "ru": "пожалуйста (просьба)", "tj": "лутфан"}}},
-        {"type": "active_word", "word": {"no": 6, "zh": "Thank you", "pinyin": "/ˈθæŋk juː/", "pos": "expr.", "meaning": {"uz": "rahmat", "ru": "спасибо", "tj": "ташаккур"}}},
-        {"type": "pinyin_choice", "prompt": {"uz": "«Hello» talaffuzini tanlang:", "ru": "Выберите произношение «Hello»:", "tj": "Талаффузи «Hello»-ро интихоб кунед:"}, "title": {"uz": "Qanday o'qiladi?", "ru": "Как читается?", "tj": "Чӣ хел хонда мешавад?"}, "options": ["/haɪ/", "/həˈloʊ/", "/ˈsɒri/", "/pliːz/"], "correct_index": 1},
-        {"type": "match_pairs", "pairs": [["Hello", {"uz": "salom", "ru": "привет", "tj": "салом"}], ["Goodbye", {"uz": "xayr", "ru": "до свидания", "tj": "хайр"}], ["Thank you", {"uz": "rahmat", "ru": "спасибо", "tj": "ташаккур"}], ["Sorry", {"uz": "kechirasiz", "ru": "извините", "tj": "бубахшед"}]]}
+        {
+          "type": "active_word",
+          "word": {
+            "no": 1,
+            "zh": "Hello",
+            "pinyin": "huh-LOH",
+            "pos": "interj.",
+            "meaning": {
+              "uz": "salom (umumiy)",
+              "ru": "привет / здравствуйте",
+              "tj": "салом (умумӣ)"
+            }
+          }
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 2,
+            "zh": "Hi",
+            "pinyin": "HY",
+            "pos": "interj.",
+            "meaning": {
+              "uz": "salom (norasmiy)",
+              "ru": "привет (неформально)",
+              "tj": "салом (ғайрирасмӣ)"
+            }
+          }
+        },
+        {
+          "type": "meaning_guess",
+          "prompt": {
+            "uz": "«Hello» so'zining ma'nosini tanlang:",
+            "ru": "Выберите значение слова «Hello»:",
+            "tj": "Маънои калимаи «Hello»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Ma'nosi nima?",
+            "ru": "Что означает?",
+            "tj": "Маъно чист?"
+          },
+          "options": [
+            {
+              "uz": "salom",
+              "ru": "привет",
+              "tj": "салом"
+            },
+            {
+              "uz": "rahmat",
+              "ru": "спасибо",
+              "tj": "ташаккур"
+            },
+            {
+              "uz": "xayr",
+              "ru": "до свидания",
+              "tj": "хайр"
+            },
+            {
+              "uz": "kechirasiz",
+              "ru": "извините",
+              "tj": "бубахшед"
+            }
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 3,
+            "zh": "Good morning",
+            "pinyin": "gud-MOR-ning",
+            "pos": "expr.",
+            "meaning": {
+              "uz": "xayrli tong",
+              "ru": "доброе утро",
+              "tj": "субҳ ба хайр"
+            }
+          }
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 4,
+            "zh": "Goodbye",
+            "pinyin": "gud-BY",
+            "pos": "interj.",
+            "meaning": {
+              "uz": "xayr",
+              "ru": "до свидания",
+              "tj": "хайр"
+            }
+          }
+        },
+        {
+          "type": "hanzi_choice",
+          "prompt": {
+            "uz": "«THANK-yoo» qaysi so'z?",
+            "ru": "Какое слово читается «THANK-yoo»?",
+            "tj": "«THANK-yoo» кадом калима аст?"
+          },
+          "title": {
+            "uz": "So'zni tanlang",
+            "ru": "Выберите слово",
+            "tj": "Калимаро интихоб кунед"
+          },
+          "options": [
+            "Sorry",
+            "Thank you",
+            "Please",
+            "Hello"
+          ],
+          "correct_index": 1
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 5,
+            "zh": "Please",
+            "pinyin": "PLEEZ",
+            "pos": "adv.",
+            "meaning": {
+              "uz": "iltimos",
+              "ru": "пожалуйста (просьба)",
+              "tj": "лутфан"
+            }
+          }
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 6,
+            "zh": "Thank you",
+            "pinyin": "THANK-yoo",
+            "pos": "expr.",
+            "meaning": {
+              "uz": "rahmat",
+              "ru": "спасибо",
+              "tj": "ташаккур"
+            }
+          }
+        },
+        {
+          "type": "pinyin_choice",
+          "prompt": {
+            "uz": "«Hello» talaffuzini tanlang:",
+            "ru": "Выберите произношение «Hello»:",
+            "tj": "Талаффузи «Hello»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Qanday o'qiladi?",
+            "ru": "Как читается?",
+            "tj": "Чӣ хел хонда мешавад?"
+          },
+          "options": [
+            "HY",
+            "huh-LOH",
+            "SOR-ee",
+            "PLEEZ"
+          ],
+          "correct_index": 1
+        },
+        {
+          "type": "match_pairs",
+          "pairs": [
+            [
+              "Hello",
+              {
+                "uz": "salom",
+                "ru": "привет",
+                "tj": "салом"
+              }
+            ],
+            [
+              "Goodbye",
+              {
+                "uz": "xayr",
+                "ru": "до свидания",
+                "tj": "хайр"
+              }
+            ],
+            [
+              "Thank you",
+              {
+                "uz": "rahmat",
+                "ru": "спасибо",
+                "tj": "ташаккур"
+              }
+            ],
+            [
+              "Sorry",
+              {
+                "uz": "kechirasiz",
+                "ru": "извините",
+                "tj": "бубахшед"
+              }
+            ]
+          ]
+        }
       ]
     },
     {
       "section_no": 2,
-      "section_title": {"uz": "Grammatika", "ru": "Грамматика", "tj": "Грамматика"},
+      "section_title": {
+        "uz": "Grammatika",
+        "ru": "Грамматика",
+        "tj": "Грамматика"
+      },
       "section_purpose": "grammar",
       "cards": [
-        {"type": "_grammar", "g": {"no": 1, "title": {"uz": "Rasmiy va norasmiy salomlashish", "ru": "Формальные и неформальные приветствия", "tj": "Салому алейки расмӣ ва ғайрирасмӣ"}, "title_zh": "Formal vs informal", "rule": {"uz": "Norasmiy: Hi / Hey — do'stlar bilan.\nUmumiy: Hello — deyarli har doim mos.\nRasmiy: Good morning / Good evening.", "ru": "Неформально: Hi / Hey — с друзьями.\nНейтрально: Hello — почти всегда.\nФормально: Good morning / Good evening.", "tj": "Ғайрирасмӣ: Hi / Hey — бо дӯстон.\nУмумӣ: Hello — қариб ҳамеша.\nРасмӣ: Good morning / Good evening."}}},
-        {"type": "_grammar", "g": {"no": 2, "title": {"uz": "'Thank you' ga javob", "ru": "Ответ на 'Thank you'", "tj": "Ҷавоб ба 'Thank you'"}, "title_zh": "Responding to thanks", "rule": {"uz": "'Thank you' → 'You're welcome' yoki 'No problem'.\n'Sorry' → 'No problem' / 'It's okay'.", "ru": "'Thank you' → 'You're welcome' или 'No problem'.\n'Sorry' → 'No problem' / 'It's okay'.", "tj": "'Thank you' → 'You're welcome' ё 'No problem'.\n'Sorry' → 'No problem' / 'It's okay'."}}},
-        {"type": "sentence_builder", "sentence": {"uz": "«Rahmat!»", "ru": "«Спасибо!»", "tj": "«Ташаккур!»"}, "tokens": ["Sorry", "You're", "Thank", "welcome", "you"], "answer_tokens": ["Thank", "you"], "explanation": {"uz": "Thank you = rahmat.", "ru": "Thank you = спасибо.", "tj": "Thank you = ташаккур."}},
-        {"type": "quick_quiz", "prompt": {"uz": "«Rahmat» — inglizchada qaysi biri?", "ru": "«Спасибо» — как по-английски?", "tj": "«Ташаккур» — ба англисӣ кадом аст?"}, "title": {"uz": "To'g'ri javobni tanlang", "ru": "Выберите правильный ответ", "tj": "Ҷавоби дурустро интихоб кунед"}, "options": ["Goodbye", "Thank you", "Please", "Sorry"], "correct_index": 1}
+        {
+          "type": "_grammar",
+          "g": {
+            "no": 1,
+            "title": {
+              "uz": "Rasmiy va norasmiy salomlashish",
+              "ru": "Формальные и неформальные приветствия",
+              "tj": "Салому алейки расмӣ ва ғайрирасмӣ"
+            },
+            "title_zh": "Formal vs informal",
+            "rule": {
+              "uz": "Norasmiy: Hi / Hey — do'stlar bilan.\nUmumiy: Hello — deyarli har doim mos.\nRasmiy: Good morning / Good evening.",
+              "ru": "Неформально: Hi / Hey — с друзьями.\nНейтрально: Hello — почти всегда.\nФормально: Good morning / Good evening.",
+              "tj": "Ғайрирасмӣ: Hi / Hey — бо дӯстон.\nУмумӣ: Hello — қариб ҳамеша.\nРасмӣ: Good morning / Good evening."
+            }
+          }
+        },
+        {
+          "type": "_grammar",
+          "g": {
+            "no": 2,
+            "title": {
+              "uz": "'Thank you' ga javob",
+              "ru": "Ответ на 'Thank you'",
+              "tj": "Ҷавоб ба 'Thank you'"
+            },
+            "title_zh": "Responding to thanks",
+            "rule": {
+              "uz": "'Thank you' → 'You're welcome' yoki 'No problem'.\n'Sorry' → 'No problem' / 'It's okay'.",
+              "ru": "'Thank you' → 'You're welcome' или 'No problem'.\n'Sorry' → 'No problem' / 'It's okay'.",
+              "tj": "'Thank you' → 'You're welcome' ё 'No problem'.\n'Sorry' → 'No problem' / 'It's okay'."
+            }
+          }
+        },
+        {
+          "type": "sentence_builder",
+          "sentence": {
+            "uz": "«Rahmat!»",
+            "ru": "«Спасибо!»",
+            "tj": "«Ташаккур!»"
+          },
+          "tokens": [
+            "Sorry",
+            "You're",
+            "Thank",
+            "welcome",
+            "you"
+          ],
+          "answer_tokens": [
+            "Thank",
+            "you"
+          ],
+          "explanation": {
+            "uz": "Thank you = rahmat.",
+            "ru": "Thank you = спасибо.",
+            "tj": "Thank you = ташаккур."
+          }
+        },
+        {
+          "type": "quick_quiz",
+          "prompt": {
+            "uz": "«Rahmat» — inglizchada qaysi biri?",
+            "ru": "«Спасибо» — как по-английски?",
+            "tj": "«Ташаккур» — ба англисӣ кадом аст?"
+          },
+          "title": {
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
+          },
+          "options": [
+            "Goodbye",
+            "Thank you",
+            "Please",
+            "Sorry"
+          ],
+          "correct_index": 1
+        }
       ]
     },
     {
       "section_no": 3,
-      "section_title": {"uz": "Mashq", "ru": "Практика", "tj": "Машқ"},
+      "section_title": {
+        "uz": "Mashq",
+        "ru": "Практика",
+        "tj": "Машқ"
+      },
       "section_purpose": "practice",
       "cards": [
-        {"type": "pinyin_choice", "prompt": {"uz": "«Goodbye» talaffuzini tanlang:", "ru": "Выберите произношение «Goodbye»:", "tj": "Талаффузи «Goodbye»-ро интихоб кунед:"}, "title": {"uz": "Qanday o'qiladi?", "ru": "Как читается?", "tj": "Чӣ хел хонда мешавад?"}, "options": ["/ɡʊdˈbaɪ/", "/həˈloʊ/", "/pliːz/", "/ˈsɒri/"], "correct_index": 0},
-        {"type": "meaning_guess", "prompt": {"uz": "«Sorry» ma'nosini tanlang:", "ru": "Выберите значение «Sorry»:", "tj": "Маънои «Sorry»-ро интихоб кунед:"}, "title": {"uz": "Ma'nosi nima?", "ru": "Что означает?", "tj": "Маъно чист?"}, "options": [{"uz": "kechirasiz", "ru": "извините", "tj": "бубахшед"}, {"uz": "salom", "ru": "привет", "tj": "салом"}, {"uz": "iltimos", "ru": "пожалуйста", "tj": "лутфан"}, {"uz": "rahmat", "ru": "спасибо", "tj": "ташаккур"}], "correct_index": 0},
-        {"type": "listening_choice", "title": {"uz": "Eshitganingizni tanlang", "ru": "Выберите, что вы услышали", "tj": "Он чи шунидед, интихоб кунед"}, "audio_text": "Thank you!", "pinyin": "/ˈθæŋk juː/", "options": ["Sorry!", "Thank you!", "Goodbye!", "Hello!"], "correct_index": 1, "explanation": {"uz": "Thank you = rahmat.", "ru": "Thank you = спасибо.", "tj": "Thank you = ташаккур."}},
-        {"type": "match_pairs", "pairs": [["Please", {"uz": "iltimos", "ru": "пожалуйста", "tj": "лутфан"}], ["Hi", {"uz": "salom (norasmiy)", "ru": "привет", "tj": "салом"}], ["Good morning", {"uz": "xayrli tong", "ru": "доброе утро", "tj": "субҳ ба хайр"}], ["You're welcome", {"uz": "arzimaydi", "ru": "пожалуйста (в ответ)", "tj": "хоҳиш мекунам"}]]},
-        {"type": "pronunciation", "phrase": "Hello", "pinyin": "/həˈloʊ/", "translation": {"uz": "salom", "ru": "привет", "tj": "салом"}}
+        {
+          "type": "pinyin_choice",
+          "prompt": {
+            "uz": "«Goodbye» talaffuzini tanlang:",
+            "ru": "Выберите произношение «Goodbye»:",
+            "tj": "Талаффузи «Goodbye»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Qanday o'qiladi?",
+            "ru": "Как читается?",
+            "tj": "Чӣ хел хонда мешавад?"
+          },
+          "options": [
+            "gud-BY",
+            "huh-LOH",
+            "PLEEZ",
+            "SOR-ee"
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "meaning_guess",
+          "prompt": {
+            "uz": "«Sorry» ma'nosini tanlang:",
+            "ru": "Выберите значение «Sorry»:",
+            "tj": "Маънои «Sorry»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Ma'nosi nima?",
+            "ru": "Что означает?",
+            "tj": "Маъно чист?"
+          },
+          "options": [
+            {
+              "uz": "kechirasiz",
+              "ru": "извините",
+              "tj": "бубахшед"
+            },
+            {
+              "uz": "salom",
+              "ru": "привет",
+              "tj": "салом"
+            },
+            {
+              "uz": "iltimos",
+              "ru": "пожалуйста",
+              "tj": "лутфан"
+            },
+            {
+              "uz": "rahmat",
+              "ru": "спасибо",
+              "tj": "ташаккур"
+            }
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "listening_choice",
+          "title": {
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
+          },
+          "audio_text": "Thank you!",
+          "pinyin": "",
+          "options": [
+            "Sorry!",
+            "Thank you!",
+            "Goodbye!",
+            "Hello!"
+          ],
+          "correct_index": 1,
+          "explanation": {
+            "uz": "Thank you = rahmat.",
+            "ru": "Thank you = спасибо.",
+            "tj": "Thank you = ташаккур."
+          }
+        },
+        {
+          "type": "match_pairs",
+          "pairs": [
+            [
+              "Please",
+              {
+                "uz": "iltimos",
+                "ru": "пожалуйста",
+                "tj": "лутфан"
+              }
+            ],
+            [
+              "Hi",
+              {
+                "uz": "salom (norasmiy)",
+                "ru": "привет",
+                "tj": "салом"
+              }
+            ],
+            [
+              "Good morning",
+              {
+                "uz": "xayrli tong",
+                "ru": "доброе утро",
+                "tj": "субҳ ба хайр"
+              }
+            ],
+            [
+              "You're welcome",
+              {
+                "uz": "arzimaydi",
+                "ru": "пожалуйста (в ответ)",
+                "tj": "хоҳиш мекунам"
+              }
+            ]
+          ]
+        },
+        {
+          "type": "pronunciation",
+          "phrase": "Hello",
+          "pinyin": "huh-LOH",
+          "translation": {
+            "uz": "salom",
+            "ru": "привет",
+            "tj": "салом"
+          }
+        }
       ]
     },
     {
       "section_no": 4,
-      "section_title": {"uz": "Dialog", "ru": "Диалог", "tj": "Муколама"},
+      "section_title": {
+        "uz": "Dialog",
+        "ru": "Диалог",
+        "tj": "Муколама"
+      },
       "section_purpose": "dialog",
       "cards": [
-        {"type": "listening_choice", "title": {"uz": "Eshitganingizni tanlang", "ru": "Выберите, что вы услышали", "tj": "Он чи шунидед, интихоб кунед"}, "audio_text": "Good morning!", "pinyin": "/ɡʊd ˈmɔːrnɪŋ/", "options": ["Goodbye!", "Good morning!", "Hello!", "Thank you!"], "correct_index": 1, "explanation": {"uz": "Good morning = xayrli tong.", "ru": "Good morning = доброе утро.", "tj": "Good morning = субҳ ба хайр."}},
-        {"type": "gap_fill", "sentence": "Thank you! — You're ____!", "prompt": {"uz": "Bo'sh joyga mos so'zni tanlang:", "ru": "Выберите подходящее слово:", "tj": "Калимаи мувофиқро интихоб кунед:"}, "options": ["sorry", "welcome", "please", "hello"], "correct_index": 1, "explanation": {"uz": "You're welcome = arzimaydi.", "ru": "You're welcome = пожалуйста.", "tj": "You're welcome = хоҳиш мекунам."}},
-        {"type": "dialog_cloze", "title": {"uz": "Dialogni to'ldiring", "ru": "Дополните диалог", "tj": "Муколамаро пурра кунед"}, "lines": [{"speaker": "A", "zh": "Sorry!", "blank": false}, {"speaker": "B", "zh": "", "blank": true}], "options": ["No problem!", "Thank you!", "Hello!", "Good morning!"], "correct_index": 0, "explanation": {"uz": "'Sorry' ga 'No problem' javob beriladi.", "ru": "На 'Sorry' отвечают 'No problem'.", "tj": "Ба 'Sorry' 'No problem' ҷавоб медиҳанд."}},
-        {"type": "quick_quiz", "prompt": {"uz": "Rasmiy salomlashish qaysi?", "ru": "Какое приветствие формальное?", "tj": "Кадом салом расмӣ аст?"}, "title": {"uz": "To'g'ri javobni tanlang", "ru": "Выберите правильный ответ", "tj": "Ҷавоби дурустро интихоб кунед"}, "options": ["Hi", "Good morning", "Hey", "Yo"], "correct_index": 1}
+        {
+          "type": "listening_choice",
+          "title": {
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
+          },
+          "audio_text": "Good morning!",
+          "pinyin": "",
+          "options": [
+            "Goodbye!",
+            "Good morning!",
+            "Hello!",
+            "Thank you!"
+          ],
+          "correct_index": 1,
+          "explanation": {
+            "uz": "Good morning = xayrli tong.",
+            "ru": "Good morning = доброе утро.",
+            "tj": "Good morning = субҳ ба хайр."
+          }
+        },
+        {
+          "type": "gap_fill",
+          "sentence": "Thank you! — You're ____!",
+          "prompt": {
+            "uz": "Bo'sh joyga mos so'zni tanlang:",
+            "ru": "Выберите подходящее слово:",
+            "tj": "Калимаи мувофиқро интихоб кунед:"
+          },
+          "options": [
+            "sorry",
+            "welcome",
+            "please",
+            "hello"
+          ],
+          "correct_index": 1,
+          "explanation": {
+            "uz": "You're welcome = arzimaydi.",
+            "ru": "You're welcome = пожалуйста.",
+            "tj": "You're welcome = хоҳиш мекунам."
+          }
+        },
+        {
+          "type": "dialog_cloze",
+          "title": {
+            "uz": "Dialogni to'ldiring",
+            "ru": "Дополните диалог",
+            "tj": "Муколамаро пурра кунед"
+          },
+          "lines": [
+            {
+              "speaker": "A",
+              "zh": "Sorry!",
+              "blank": false
+            },
+            {
+              "speaker": "B",
+              "zh": "",
+              "blank": true
+            }
+          ],
+          "options": [
+            "No problem!",
+            "Thank you!",
+            "Hello!",
+            "Good morning!"
+          ],
+          "correct_index": 0,
+          "explanation": {
+            "uz": "'Sorry' ga 'No problem' javob beriladi.",
+            "ru": "На 'Sorry' отвечают 'No problem'.",
+            "tj": "Ба 'Sorry' 'No problem' ҷавоб медиҳанд."
+          }
+        },
+        {
+          "type": "quick_quiz",
+          "prompt": {
+            "uz": "Rasmiy salomlashish qaysi?",
+            "ru": "Какое приветствие формальное?",
+            "tj": "Кадом салом расмӣ аст?"
+          },
+          "title": {
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
+          },
+          "options": [
+            "Hi",
+            "Good morning",
+            "Hey",
+            "Yo"
+          ],
+          "correct_index": 1
+        }
       ]
     }
   ]

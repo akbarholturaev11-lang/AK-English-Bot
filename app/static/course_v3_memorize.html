@@ -10,7 +10,7 @@
 :root{--ink:#211D17;--ink2:#6E665B;--ink3:#A89E8E;--paper:#FBF7EF;--card:#FFFFFF;--line:#EAE2D4;--cin:#C2403A;--cin2:#9A2F2B;--cinbg:#FBEDEA;--gold:#C2962F;--jade:#2F7D5E;--jadebg:#E7F1EA;--redbg:#FBEDEA;--safe-t:env(safe-area-inset-top,0px);--safe-b:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{background:var(--paper);color:var(--ink);font-family:-apple-system,"SF Pro Text","Segoe UI",Roboto,sans-serif}
-.han{font-family:"Songti SC","STSong","Noto Serif SC",serif;font-weight:600}
+.han{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-weight:600}
 .wrap{max-width:480px;margin:0 auto;min-height:100vh;padding-top:var(--safe-t);display:flex;flex-direction:column}
 .top{display:flex;align-items:center;gap:11px;padding:16px 16px 8px}
 .ix{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink2);font-size:18px;display:flex;align-items:center;justify-content:center}
@@ -31,7 +31,7 @@ html,body{background:var(--paper);color:var(--ink);font-family:-apple-system,"SF
 .opt .s{font-size:12px;color:var(--ink3)}
 .opt.ok{border-color:var(--jade);background:var(--jadebg)}
 .opt.bad{border-color:var(--cin);background:var(--redbg)}
-.opt.han{font-family:"Songti SC","STSong","Noto Serif SC",serif}
+.opt.han{font-family:Georgia,"Iowan Old Style","Times New Roman",serif}
 .opt[disabled]{opacity:.55}
 .fb{min-height:20px;font-size:14px;text-align:center;margin-top:12px;line-height:1.45}
 .fb.ok{color:var(--jade)}.fb.bad{color:var(--cin2)}.fb.neu{color:var(--ink2)}
@@ -50,7 +50,7 @@ html,body{background:var(--paper);color:var(--ink);font-family:-apple-system,"SF
 .wlist{display:flex;flex-direction:column;gap:8px;margin-top:6px}
 .tiles,.slots{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px;min-height:50px}
 .slots{background:var(--paper);border:1.5px dashed var(--line);border-radius:14px;padding:10px}
-.tile{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;font-size:20px;font-family:"Songti SC","STSong","Noto Serif SC",serif;color:var(--ink)}
+.tile{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;font-size:20px;font-family:Georgia,"Iowan Old Style","Times New Roman",serif;color:var(--ink)}
 .tile.used{opacity:.3;pointer-events:none}
 .slots .tile{border-color:var(--cin);color:var(--cin2)}
 .done{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px 20px}
@@ -88,7 +88,7 @@ function goBack(){
 }
 var _ttsAudio=null;
 function clog(ev,msg,ex){try{var tg=window.Telegram&&window.Telegram.WebApp,c={ua:navigator.userAgent,plat:(tg&&tg.platform)||"",tgver:(tg&&tg.version)||"",page:location.pathname};if(ex)for(var k in ex)c[k]=ex[k];var b=JSON.stringify({event:ev,msg:msg||"",ctx:c});if(navigator.sendBeacon){navigator.sendBeacon("/api/v3/clientlog",new Blob([b],{type:"application/json"}))}else{fetch("/api/v3/clientlog",{method:"POST",headers:{"Content-Type":"application/json"},body:b,keepalive:true})}}catch(e){}}
-function _ttsFallback(s){try{clog("tts_fallback","",{t:(""+s).slice(0,16)})}catch(e){}try{window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(s);u.lang="zh-CN";u.rate=.8;window.speechSynthesis.speak(u)}catch(e){}}
+function _ttsFallback(s){try{clog("tts_fallback","",{t:(""+s).slice(0,16)})}catch(e){}try{window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(s);u.lang="en-GB";u.rate=.8;window.speechSynthesis.speak(u)}catch(e){}}
 function stopSpeak(){window._ttsTok=(window._ttsTok||0)+1;try{if(_ttsAudio){_ttsAudio.onplaying=null;_ttsAudio.onerror=null;_ttsAudio.pause();_ttsAudio=null}}catch(e){}try{window.speechSynthesis.cancel()}catch(e){}}
 function speak(s){if(!s)return;stopSpeak();var tok=window._ttsTok,st=0;try{var a=new Audio("/api/v3/tts?text="+encodeURIComponent(s));_ttsAudio=a;a.onplaying=function(){if(tok!==window._ttsTok){try{a.pause()}catch(e){}return}st=1};a.onerror=function(){if(tok!==window._ttsTok||st!==0)return;st=2;_ttsFallback(s)};var p=a.play();if(p&&p.catch)p.catch(function(){})}catch(e){if(tok===window._ttsTok&&st===0){st=2;_ttsFallback(s)}}}
 function haptic(ok){try{if(tg&&tg.isVersionAtLeast&&tg.isVersionAtLeast("6.1")&&tg.HapticFeedback)tg.HapticFeedback.notificationOccurred(ok?"success":"error")}catch(e){}}

@@ -20,10 +20,19 @@ from app.services.subscription_price_service import PLANS, SubscriptionPriceServ
 from app.services.support_contact_service import get_admin_contact_url
 
 
-CARD_COUNTRIES = {"tj", "uz", "ru", "other"}
+# VISA is the international card; the Tajik "tj" option lives in its own methods now.
+CARD_COUNTRIES = {"uz", "ru", "other"}
 MINIAPP_METHODS = {"visa", "alipay", "wechat"}
 MINIAPP_MODES = {"subscription", "referral_discount", "admin_discount", "feedback_discount"}
 PAYMENT_DETAILS_KEY = "subscription_payment_details"
+# The "alipay"/"wechat" method keys are repurposed as Tajik bank cards in the mini app
+# (Dushanbe City / Alif bank), each with its own separate requisite. VISA keeps the
+# single shared requisite for both Uzbek and Russian cards.
+PAYMENT_DETAILS_KEYS = {
+    "visa": PAYMENT_DETAILS_KEY,
+    "alipay": "subscription_payment_details_dushanbe",
+    "wechat": "subscription_payment_details_alif",
+}
 MAX_SCREENSHOT_BYTES = 8 * 1024 * 1024
 _STATIC_PAYMENTS = Path(__file__).parent.parent / "static" / "payments"
 _BOT_USERNAME_CACHE: str | None = None
@@ -58,10 +67,20 @@ class SubscriptionMiniAppService:
         self.setting_repo = BotSettingRepository(session)
 
     async def payment_details(self) -> str:
-        stored = await self.setting_repo.get(PAYMENT_DETAILS_KEY)
+        return await self.payment_details_for("visa")
+
+    async def payment_details_for(self, payment_method: str) -> str:
+        key = PAYMENT_DETAILS_KEYS.get(payment_method, PAYMENT_DETAILS_KEY)
+        stored = await self.setting_repo.get(key)
         if stored and stored.strip():
             return stored.strip()
-        return settings.PAYMENT_DETAILS.strip()
+        # Only VISA has a fallback default; the Tajik cards must be set in admin.
+        if key == PAYMENT_DETAILS_KEY:
+            return settings.PAYMENT_DETAILS.strip()
+        return ""
+
+    async def payment_details_map(self) -> dict[str, str]:
+        return {method: await self.payment_details_for(method) for method in MINIAPP_METHODS}
 
     async def overview(
         self,
@@ -87,8 +106,9 @@ class SubscriptionMiniAppService:
                 "offer": None,
                 "discount": None,
                 "prices": {},
-                "card_countries": ["tj", "uz", "ru", "other"],
+                "card_countries": ["uz", "ru", "other"],
                 "payment_details": "",
+                "payment_details_map": {},
                 "payment_details_configured": False,
             }
 
@@ -97,6 +117,7 @@ class SubscriptionMiniAppService:
         await discount_service.sync_referral_discount_progress(user)
         await self.session.commit()
         payment_details = await self.payment_details()
+        payment_details_map = await self.payment_details_map()
         prices = await self._prices_payload(
             user,
             mode=mode,
@@ -113,8 +134,9 @@ class SubscriptionMiniAppService:
             "offer": self._offer_payload(mode, prices),
             "discount": await self._discount_payload(user, bot=bot),
             "prices": prices,
-            "card_countries": ["tj", "uz", "ru", "other"],
+            "card_countries": ["uz", "ru", "other"],
             "payment_details": payment_details,
+            "payment_details_map": payment_details_map,
             "payment_details_configured": bool(payment_details),
         }
 
@@ -159,11 +181,11 @@ class SubscriptionMiniAppService:
         )
         if not checkout_info:
             return {"ok": False, "error": "payment_invalid_plan"}
-        payment_details = await self.payment_details() if payment_method == "visa" else ""
-        if payment_method == "visa" and not payment_details:
+        payment_details = await self.payment_details_for(payment_method)
+        if not payment_details:
             return {"ok": False, "error": "payment_details_missing"}
 
-        payload = {
+        return {
             "ok": True,
             "quote": await self._quote_payload(
                 user=user,
@@ -174,15 +196,6 @@ class SubscriptionMiniAppService:
                 payment_details=payment_details,
             ),
         }
-        if include_qr and PaymentQrCodeService.is_qr_method(payment_method):
-            payload["quote"]["qr"] = await self._qr_payload(
-                bot=bot,
-                user=user,
-                payment_method=payment_method,
-                plan_type=plan_type,
-                checkout_info=checkout_info,
-            )
-        return payload
 
     async def submit(
         self,
@@ -225,20 +238,9 @@ class SubscriptionMiniAppService:
         )
         if not checkout_info:
             return {"ok": False, "error": "payment_invalid_plan"}
-        payment_details = await self.payment_details() if payment_method == "visa" else ""
-        if payment_method == "visa" and not payment_details:
+        payment_details = await self.payment_details_for(payment_method)
+        if not payment_details:
             return {"ok": False, "error": "payment_details_missing"}
-
-        if PaymentQrCodeService.is_qr_method(payment_method):
-            qr_payload = await self._qr_payload(
-                bot=bot,
-                user=user,
-                payment_method=payment_method,
-                plan_type=plan_type,
-                checkout_info=checkout_info,
-            )
-            if not qr_payload.get("available"):
-                return {"ok": False, "error": "qr_not_ready"}
 
         quote = await self._quote_payload(
             user=user,
@@ -491,7 +493,7 @@ class SubscriptionMiniAppService:
         exchange_rate = ""
         normalized_country = None
         if payment_method == "visa":
-            normalized_country = card_country if card_country in CARD_COUNTRIES else "tj"
+            normalized_country = card_country if card_country in CARD_COUNTRIES else "uz"
             card_quote = await self.currency_service.quote_card_amount(
                 int(checkout_info["final_amount"]),
                 normalized_country,
@@ -526,7 +528,7 @@ class SubscriptionMiniAppService:
             "discount_applied": checkout_info["discount_applied"],
             "discount_percent": checkout_info["discount_percent"],
             "discount_source": checkout_info["discount_source"],
-            "payment_details": (payment_details or "") if payment_method == "visa" else "",
+            "payment_details": payment_details or "",
         }
 
     async def _bot_username(self, bot: Bot | None) -> str:

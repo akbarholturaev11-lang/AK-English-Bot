@@ -11,19 +11,103 @@
   "intro_prebuilt": true,
   "grammar_prebuilt": true,
   "active_words": [
-    {"no": 1, "zh": "day", "pinyin": "/deɪ/", "pos": "n.", "meaning": {"uz": "kun", "ru": "день", "tj": "рӯз"}},
-    {"no": 2, "zh": "week", "pinyin": "/wiːk/", "pos": "n.", "meaning": {"uz": "hafta", "ru": "неделя", "tj": "ҳафта"}},
-    {"no": 3, "zh": "today", "pinyin": "/təˈdeɪ/", "pos": "adv.", "meaning": {"uz": "bugun", "ru": "сегодня", "tj": "имрӯз"}},
-    {"no": 4, "zh": "tomorrow", "pinyin": "/təˈmɒroʊ/", "pos": "adv.", "meaning": {"uz": "ertaga", "ru": "завтра", "tj": "фардо"}},
-    {"no": 5, "zh": "yesterday", "pinyin": "/ˈjestərdeɪ/", "pos": "adv.", "meaning": {"uz": "kecha", "ru": "вчера", "tj": "дирӯз"}},
-    {"no": 6, "zh": "Monday", "pinyin": "/ˈmʌndeɪ/", "pos": "n.", "meaning": {"uz": "dushanba", "ru": "понедельник", "tj": "душанбе"}},
-    {"no": 7, "zh": "weekend", "pinyin": "/ˈwiːkend/", "pos": "n.", "meaning": {"uz": "dam olish kuni", "ru": "выходные", "tj": "рӯзи истироҳат"}},
-    {"no": 8, "zh": "morning", "pinyin": "/ˈmɔːrnɪŋ/", "pos": "n.", "meaning": {"uz": "ertalab", "ru": "утро", "tj": "субҳ"}}
+    {
+      "no": 1,
+      "zh": "day",
+      "pinyin": "DAY",
+      "pos": "n.",
+      "meaning": {
+        "uz": "kun",
+        "ru": "день",
+        "tj": "рӯз"
+      }
+    },
+    {
+      "no": 2,
+      "zh": "week",
+      "pinyin": "WEEK",
+      "pos": "n.",
+      "meaning": {
+        "uz": "hafta",
+        "ru": "неделя",
+        "tj": "ҳафта"
+      }
+    },
+    {
+      "no": 3,
+      "zh": "today",
+      "pinyin": "tu-DAY",
+      "pos": "adv.",
+      "meaning": {
+        "uz": "bugun",
+        "ru": "сегодня",
+        "tj": "имрӯз"
+      }
+    },
+    {
+      "no": 4,
+      "zh": "tomorrow",
+      "pinyin": "tu-MOR-oh",
+      "pos": "adv.",
+      "meaning": {
+        "uz": "ertaga",
+        "ru": "завтра",
+        "tj": "фардо"
+      }
+    },
+    {
+      "no": 5,
+      "zh": "yesterday",
+      "pinyin": "YES-tur-day",
+      "pos": "adv.",
+      "meaning": {
+        "uz": "kecha",
+        "ru": "вчера",
+        "tj": "дирӯз"
+      }
+    },
+    {
+      "no": 6,
+      "zh": "Monday",
+      "pinyin": "MUN-day",
+      "pos": "n.",
+      "meaning": {
+        "uz": "dushanba",
+        "ru": "понедельник",
+        "tj": "душанбе"
+      }
+    },
+    {
+      "no": 7,
+      "zh": "weekend",
+      "pinyin": "WEEK-end",
+      "pos": "n.",
+      "meaning": {
+        "uz": "dam olish kuni",
+        "ru": "выходные",
+        "tj": "рӯзи истироҳат"
+      }
+    },
+    {
+      "no": 8,
+      "zh": "morning",
+      "pinyin": "MOR-ning",
+      "pos": "n.",
+      "meaning": {
+        "uz": "ertalab",
+        "ru": "утро",
+        "tj": "субҳ"
+      }
+    }
   ],
   "grammar": [
     {
       "no": 1,
-      "title": {"uz": "Hafta kunlari", "ru": "Дни недели", "tj": "Рӯзҳои ҳафта"},
+      "title": {
+        "uz": "Hafta kunlari",
+        "ru": "Дни недели",
+        "tj": "Рӯзҳои ҳафта"
+      },
       "title_zh": "days of the week",
       "rule": {
         "uz": "Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday.\nKun nomlari doim katta harf bilan yoziladi.\n'on' ishlatiladi: on Monday.",
@@ -33,7 +117,11 @@
     },
     {
       "no": 2,
-      "title": {"uz": "today / tomorrow / yesterday", "ru": "today / tomorrow / yesterday", "tj": "today / tomorrow / yesterday"},
+      "title": {
+        "uz": "today / tomorrow / yesterday",
+        "ru": "today / tomorrow / yesterday",
+        "tj": "today / tomorrow / yesterday"
+      },
       "title_zh": "time words",
       "rule": {
         "uz": "today — bugun (hozir).\ntomorrow — ertaga (kelasi).\nyesterday — kecha (o'tgan).\nMisol: Today is Monday.",
@@ -44,77 +132,631 @@
   ],
   "dialogues": [
     {
-      "scene": {"uz": "Bugun qaysi kun?", "ru": "Какой сегодня день?", "tj": "Имрӯз кадом рӯз?"},
+      "scene": {
+        "uz": "Bugun qaysi kun?",
+        "ru": "Какой сегодня день?",
+        "tj": "Имрӯз кадом рӯз?"
+      },
       "dialogue": [
-        {"speaker": "A", "zh": "What day is it today?", "pinyin": "/wɒt deɪ ɪz ɪt təˈdeɪ/", "text": {"uz": "Bugun qaysi kun?", "ru": "Какой сегодня день?", "tj": "Имрӯз кадом рӯз?"}},
-        {"speaker": "B", "zh": "Today is Monday.", "pinyin": "/təˈdeɪ ɪz ˈmʌndeɪ/", "text": {"uz": "Bugun dushanba.", "ru": "Сегодня понедельник.", "tj": "Имрӯз душанбе."}}
+        {
+          "speaker": "A",
+          "zh": "What day is it today?",
+          "pinyin": "",
+          "text": {
+            "uz": "Bugun qaysi kun?",
+            "ru": "Какой сегодня день?",
+            "tj": "Имрӯз кадом рӯз?"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "Today is Monday.",
+          "pinyin": "",
+          "text": {
+            "uz": "Bugun dushanba.",
+            "ru": "Сегодня понедельник.",
+            "tj": "Имрӯз душанбе."
+          }
+        }
       ]
     },
     {
-      "scene": {"uz": "Rejalar", "ru": "Планы", "tj": "Нақшаҳо"},
+      "scene": {
+        "uz": "Rejalar",
+        "ru": "Планы",
+        "tj": "Нақшаҳо"
+      },
       "dialogue": [
-        {"speaker": "A", "zh": "See you tomorrow!", "pinyin": "/siː juː təˈmɒroʊ/", "text": {"uz": "Ertaga ko'rishguncha!", "ru": "До завтра!", "tj": "То фардо!"}},
-        {"speaker": "B", "zh": "Have a nice weekend!", "pinyin": "/hæv ə naɪs ˈwiːkend/", "text": {"uz": "Yaxshi dam oling!", "ru": "Хороших выходных!", "tj": "Истироҳати хуш!"}}
+        {
+          "speaker": "A",
+          "zh": "See you tomorrow!",
+          "pinyin": "",
+          "text": {
+            "uz": "Ertaga ko'rishguncha!",
+            "ru": "До завтра!",
+            "tj": "То фардо!"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "Have a nice weekend!",
+          "pinyin": "",
+          "text": {
+            "uz": "Yaxshi dam oling!",
+            "ru": "Хороших выходных!",
+            "tj": "Истироҳати хуш!"
+          }
+        }
       ]
     },
     {
-      "scene": {"uz": "Ertalab", "ru": "Утром", "tj": "Субҳ"},
+      "scene": {
+        "uz": "Ertalab",
+        "ru": "Утром",
+        "tj": "Субҳ"
+      },
       "dialogue": [
-        {"speaker": "A", "zh": "Good morning!", "pinyin": "/ɡʊd ˈmɔːrnɪŋ/", "text": {"uz": "Xayrli tong!", "ru": "Доброе утро!", "tj": "Субҳ ба хайр!"}},
-        {"speaker": "B", "zh": "Good morning! A new week!", "pinyin": "/ə njuː wiːk/", "text": {"uz": "Xayrli tong! Yangi hafta!", "ru": "Доброе утро! Новая неделя!", "tj": "Субҳ ба хайр! Ҳафтаи нав!"}}
+        {
+          "speaker": "A",
+          "zh": "Good morning!",
+          "pinyin": "",
+          "text": {
+            "uz": "Xayrli tong!",
+            "ru": "Доброе утро!",
+            "tj": "Субҳ ба хайр!"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "Good morning! A new week!",
+          "pinyin": "",
+          "text": {
+            "uz": "Xayrli tong! Yangi hafta!",
+            "ru": "Доброе утро! Новая неделя!",
+            "tj": "Субҳ ба хайр! Ҳафтаи нав!"
+          }
+        }
       ]
     }
   ],
   "sections": [
     {
       "section_no": 1,
-      "section_title": {"uz": "Yangi so'zlar", "ru": "Новые слова", "tj": "Калимаҳои нав"},
+      "section_title": {
+        "uz": "Yangi so'zlar",
+        "ru": "Новые слова",
+        "tj": "Калимаҳои нав"
+      },
       "section_purpose": "intro",
       "cards": [
-        {"type": "active_word", "word": {"no": 1, "zh": "day", "pinyin": "/deɪ/", "pos": "n.", "meaning": {"uz": "kun", "ru": "день", "tj": "рӯз"}}},
-        {"type": "active_word", "word": {"no": 2, "zh": "week", "pinyin": "/wiːk/", "pos": "n.", "meaning": {"uz": "hafta", "ru": "неделя", "tj": "ҳафта"}}},
-        {"type": "meaning_guess", "prompt": {"uz": "«today» ma'nosini tanlang:", "ru": "Выберите значение «today»:", "tj": "Маънои «today»-ро интихоб кунед:"}, "title": {"uz": "Ma'nosi nima?", "ru": "Что означает?", "tj": "Маъно чист?"}, "options": [{"uz": "bugun", "ru": "сегодня", "tj": "имрӯз"}, {"uz": "ertaga", "ru": "завтра", "tj": "фардо"}, {"uz": "kecha", "ru": "вчера", "tj": "дирӯз"}, {"uz": "hafta", "ru": "неделя", "tj": "ҳафта"}], "correct_index": 0},
-        {"type": "active_word", "word": {"no": 3, "zh": "today", "pinyin": "/təˈdeɪ/", "pos": "adv.", "meaning": {"uz": "bugun", "ru": "сегодня", "tj": "имрӯз"}}},
-        {"type": "active_word", "word": {"no": 4, "zh": "tomorrow", "pinyin": "/təˈmɒroʊ/", "pos": "adv.", "meaning": {"uz": "ertaga", "ru": "завтра", "tj": "фардо"}}},
-        {"type": "hanzi_choice", "prompt": {"uz": "«/ˈjestərdeɪ/» qaysi so'z?", "ru": "Какое слово читается «/ˈjestərdeɪ/»?", "tj": "«/ˈjestərdeɪ/» кадом калима аст?"}, "title": {"uz": "So'zni tanlang", "ru": "Выберите слово", "tj": "Калимаро интихоб кунед"}, "options": ["today", "yesterday", "tomorrow", "week"], "correct_index": 1},
-        {"type": "active_word", "word": {"no": 5, "zh": "yesterday", "pinyin": "/ˈjestərdeɪ/", "pos": "adv.", "meaning": {"uz": "kecha", "ru": "вчера", "tj": "дирӯз"}}},
-        {"type": "active_word", "word": {"no": 6, "zh": "Monday", "pinyin": "/ˈmʌndeɪ/", "pos": "n.", "meaning": {"uz": "dushanba", "ru": "понедельник", "tj": "душанбе"}}},
-        {"type": "pinyin_choice", "prompt": {"uz": "«week» talaffuzini tanlang:", "ru": "Выберите произношение «week»:", "tj": "Талаффузи «week»-ро интихоб кунед:"}, "title": {"uz": "Qanday o'qiladi?", "ru": "Как читается?", "tj": "Чӣ хел хонда мешавад?"}, "options": ["/wiːk/", "/deɪ/", "/təˈdeɪ/", "/ˈmɔːrnɪŋ/"], "correct_index": 0},
-        {"type": "match_pairs", "pairs": [["day", {"uz": "kun", "ru": "день", "tj": "рӯз"}], ["today", {"uz": "bugun", "ru": "сегодня", "tj": "имрӯз"}], ["tomorrow", {"uz": "ertaga", "ru": "завтра", "tj": "фардо"}], ["morning", {"uz": "ertalab", "ru": "утро", "tj": "субҳ"}]]}
+        {
+          "type": "active_word",
+          "word": {
+            "no": 1,
+            "zh": "day",
+            "pinyin": "DAY",
+            "pos": "n.",
+            "meaning": {
+              "uz": "kun",
+              "ru": "день",
+              "tj": "рӯз"
+            }
+          }
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 2,
+            "zh": "week",
+            "pinyin": "WEEK",
+            "pos": "n.",
+            "meaning": {
+              "uz": "hafta",
+              "ru": "неделя",
+              "tj": "ҳафта"
+            }
+          }
+        },
+        {
+          "type": "meaning_guess",
+          "prompt": {
+            "uz": "«today» ma'nosini tanlang:",
+            "ru": "Выберите значение «today»:",
+            "tj": "Маънои «today»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Ma'nosi nima?",
+            "ru": "Что означает?",
+            "tj": "Маъно чист?"
+          },
+          "options": [
+            {
+              "uz": "bugun",
+              "ru": "сегодня",
+              "tj": "имрӯз"
+            },
+            {
+              "uz": "ertaga",
+              "ru": "завтра",
+              "tj": "фардо"
+            },
+            {
+              "uz": "kecha",
+              "ru": "вчера",
+              "tj": "дирӯз"
+            },
+            {
+              "uz": "hafta",
+              "ru": "неделя",
+              "tj": "ҳафта"
+            }
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 3,
+            "zh": "today",
+            "pinyin": "tu-DAY",
+            "pos": "adv.",
+            "meaning": {
+              "uz": "bugun",
+              "ru": "сегодня",
+              "tj": "имрӯз"
+            }
+          }
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 4,
+            "zh": "tomorrow",
+            "pinyin": "tu-MOR-oh",
+            "pos": "adv.",
+            "meaning": {
+              "uz": "ertaga",
+              "ru": "завтра",
+              "tj": "фардо"
+            }
+          }
+        },
+        {
+          "type": "hanzi_choice",
+          "prompt": {
+            "uz": "«YES-tur-day» qaysi so'z?",
+            "ru": "Какое слово читается «YES-tur-day»?",
+            "tj": "«YES-tur-day» кадом калима аст?"
+          },
+          "title": {
+            "uz": "So'zni tanlang",
+            "ru": "Выберите слово",
+            "tj": "Калимаро интихоб кунед"
+          },
+          "options": [
+            "today",
+            "yesterday",
+            "tomorrow",
+            "week"
+          ],
+          "correct_index": 1
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 5,
+            "zh": "yesterday",
+            "pinyin": "YES-tur-day",
+            "pos": "adv.",
+            "meaning": {
+              "uz": "kecha",
+              "ru": "вчера",
+              "tj": "дирӯз"
+            }
+          }
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 6,
+            "zh": "Monday",
+            "pinyin": "MUN-day",
+            "pos": "n.",
+            "meaning": {
+              "uz": "dushanba",
+              "ru": "понедельник",
+              "tj": "душанбе"
+            }
+          }
+        },
+        {
+          "type": "pinyin_choice",
+          "prompt": {
+            "uz": "«week» talaffuzini tanlang:",
+            "ru": "Выберите произношение «week»:",
+            "tj": "Талаффузи «week»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Qanday o'qiladi?",
+            "ru": "Как читается?",
+            "tj": "Чӣ хел хонда мешавад?"
+          },
+          "options": [
+            "WEEK",
+            "DAY",
+            "tu-DAY",
+            "MOR-ning"
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "match_pairs",
+          "pairs": [
+            [
+              "day",
+              {
+                "uz": "kun",
+                "ru": "день",
+                "tj": "рӯз"
+              }
+            ],
+            [
+              "today",
+              {
+                "uz": "bugun",
+                "ru": "сегодня",
+                "tj": "имрӯз"
+              }
+            ],
+            [
+              "tomorrow",
+              {
+                "uz": "ertaga",
+                "ru": "завтра",
+                "tj": "фардо"
+              }
+            ],
+            [
+              "morning",
+              {
+                "uz": "ertalab",
+                "ru": "утро",
+                "tj": "субҳ"
+              }
+            ]
+          ]
+        }
       ]
     },
     {
       "section_no": 2,
-      "section_title": {"uz": "Grammatika", "ru": "Грамматика", "tj": "Грамматика"},
+      "section_title": {
+        "uz": "Grammatika",
+        "ru": "Грамматика",
+        "tj": "Грамматика"
+      },
       "section_purpose": "grammar",
       "cards": [
-        {"type": "_grammar", "g": {"no": 1, "title": {"uz": "Hafta kunlari", "ru": "Дни недели", "tj": "Рӯзҳои ҳафта"}, "title_zh": "days of the week", "rule": {"uz": "Monday ... Sunday.\nKatta harf bilan. on Monday.", "ru": "Monday ... Sunday.\nС большой буквы. on Monday.", "tj": "Monday ... Sunday.\nБо ҳарфи калон. on Monday."}}},
-        {"type": "_grammar", "g": {"no": 2, "title": {"uz": "today / tomorrow / yesterday", "ru": "today / tomorrow / yesterday", "tj": "today / tomorrow / yesterday"}, "title_zh": "time words", "rule": {"uz": "today — bugun, tomorrow — ertaga, yesterday — kecha.\nToday is Monday.", "ru": "today — сегодня, tomorrow — завтра, yesterday — вчера.\nToday is Monday.", "tj": "today — имрӯз, tomorrow — фардо, yesterday — дирӯз.\nToday is Monday."}}},
-        {"type": "sentence_builder", "sentence": {"uz": "«Bugun dushanba.»", "ru": "«Сегодня понедельник.»", "tj": "«Имрӯз душанбе.»"}, "tokens": ["is", "Today", "week", "Monday"], "answer_tokens": ["Today", "is", "Monday"], "explanation": {"uz": "Today is ... — bugungi kunni aytish.", "ru": "Today is ... — сказать день.", "tj": "Today is ... — гуфтани рӯз."}},
-        {"type": "quick_quiz", "prompt": {"uz": "«Ertaga» — inglizchada qaysi?", "ru": "«Завтра» — как по-английски?", "tj": "«Фардо» — ба англисӣ кадом?"}, "title": {"uz": "To'g'ri javobni tanlang", "ru": "Выберите правильный ответ", "tj": "Ҷавоби дурустро интихоб кунед"}, "options": ["today", "tomorrow", "yesterday", "week"], "correct_index": 1}
+        {
+          "type": "_grammar",
+          "g": {
+            "no": 1,
+            "title": {
+              "uz": "Hafta kunlari",
+              "ru": "Дни недели",
+              "tj": "Рӯзҳои ҳафта"
+            },
+            "title_zh": "days of the week",
+            "rule": {
+              "uz": "Monday ... Sunday.\nKatta harf bilan. on Monday.",
+              "ru": "Monday ... Sunday.\nС большой буквы. on Monday.",
+              "tj": "Monday ... Sunday.\nБо ҳарфи калон. on Monday."
+            }
+          }
+        },
+        {
+          "type": "_grammar",
+          "g": {
+            "no": 2,
+            "title": {
+              "uz": "today / tomorrow / yesterday",
+              "ru": "today / tomorrow / yesterday",
+              "tj": "today / tomorrow / yesterday"
+            },
+            "title_zh": "time words",
+            "rule": {
+              "uz": "today — bugun, tomorrow — ertaga, yesterday — kecha.\nToday is Monday.",
+              "ru": "today — сегодня, tomorrow — завтра, yesterday — вчера.\nToday is Monday.",
+              "tj": "today — имрӯз, tomorrow — фардо, yesterday — дирӯз.\nToday is Monday."
+            }
+          }
+        },
+        {
+          "type": "sentence_builder",
+          "sentence": {
+            "uz": "«Bugun dushanba.»",
+            "ru": "«Сегодня понедельник.»",
+            "tj": "«Имрӯз душанбе.»"
+          },
+          "tokens": [
+            "is",
+            "Today",
+            "week",
+            "Monday"
+          ],
+          "answer_tokens": [
+            "Today",
+            "is",
+            "Monday"
+          ],
+          "explanation": {
+            "uz": "Today is ... — bugungi kunni aytish.",
+            "ru": "Today is ... — сказать день.",
+            "tj": "Today is ... — гуфтани рӯз."
+          }
+        },
+        {
+          "type": "quick_quiz",
+          "prompt": {
+            "uz": "«Ertaga» — inglizchada qaysi?",
+            "ru": "«Завтра» — как по-английски?",
+            "tj": "«Фардо» — ба англисӣ кадом?"
+          },
+          "title": {
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
+          },
+          "options": [
+            "today",
+            "tomorrow",
+            "yesterday",
+            "week"
+          ],
+          "correct_index": 1
+        }
       ]
     },
     {
       "section_no": 3,
-      "section_title": {"uz": "Mashq", "ru": "Практика", "tj": "Машқ"},
+      "section_title": {
+        "uz": "Mashq",
+        "ru": "Практика",
+        "tj": "Машқ"
+      },
       "section_purpose": "practice",
       "cards": [
-        {"type": "pinyin_choice", "prompt": {"uz": "«Monday» talaffuzini tanlang:", "ru": "Выберите произношение «Monday»:", "tj": "Талаффузи «Monday»-ро интихоб кунед:"}, "title": {"uz": "Qanday o'qiladi?", "ru": "Как читается?", "tj": "Чӣ хел хонда мешавад?"}, "options": ["/ˈmʌndeɪ/", "/ˈwiːkend/", "/təˈdeɪ/", "/deɪ/"], "correct_index": 0},
-        {"type": "meaning_guess", "prompt": {"uz": "«weekend» ma'nosini tanlang:", "ru": "Выберите значение «weekend»:", "tj": "Маънои «weekend»-ро интихоб кунед:"}, "title": {"uz": "Ma'nosi nima?", "ru": "Что означает?", "tj": "Маъно чист?"}, "options": [{"uz": "dam olish kuni", "ru": "выходные", "tj": "рӯзи истироҳат"}, {"uz": "kun", "ru": "день", "tj": "рӯз"}, {"uz": "ertalab", "ru": "утро", "tj": "субҳ"}, {"uz": "hafta", "ru": "неделя", "tj": "ҳафта"}], "correct_index": 0},
-        {"type": "listening_choice", "title": {"uz": "Eshitganingizni tanlang", "ru": "Выберите, что вы услышали", "tj": "Он чи шунидед, интихоб кунед"}, "audio_text": "Today is Monday.", "pinyin": "/təˈdeɪ ɪz ˈmʌndeɪ/", "options": ["See you tomorrow!", "Today is Monday.", "Good morning!", "A new week!"], "correct_index": 1, "explanation": {"uz": "Today is Monday = bugun dushanba.", "ru": "Today is Monday = сегодня понедельник.", "tj": "Today is Monday = имрӯз душанбе."}},
-        {"type": "match_pairs", "pairs": [["week", {"uz": "hafta", "ru": "неделя", "tj": "ҳафта"}], ["yesterday", {"uz": "kecha", "ru": "вчера", "tj": "дирӯз"}], ["Monday", {"uz": "dushanba", "ru": "понедельник", "tj": "душанбе"}], ["weekend", {"uz": "dam olish", "ru": "выходные", "tj": "истироҳат"}]]},
-        {"type": "pronunciation", "phrase": "See you tomorrow", "pinyin": "/siː juː təˈmɒroʊ/", "translation": {"uz": "Ertaga ko'rishguncha", "ru": "До завтра", "tj": "То фардо"}}
+        {
+          "type": "pinyin_choice",
+          "prompt": {
+            "uz": "«Monday» talaffuzini tanlang:",
+            "ru": "Выберите произношение «Monday»:",
+            "tj": "Талаффузи «Monday»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Qanday o'qiladi?",
+            "ru": "Как читается?",
+            "tj": "Чӣ хел хонда мешавад?"
+          },
+          "options": [
+            "MUN-day",
+            "WEEK-end",
+            "tu-DAY",
+            "DAY"
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "meaning_guess",
+          "prompt": {
+            "uz": "«weekend» ma'nosini tanlang:",
+            "ru": "Выберите значение «weekend»:",
+            "tj": "Маънои «weekend»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Ma'nosi nima?",
+            "ru": "Что означает?",
+            "tj": "Маъно чист?"
+          },
+          "options": [
+            {
+              "uz": "dam olish kuni",
+              "ru": "выходные",
+              "tj": "рӯзи истироҳат"
+            },
+            {
+              "uz": "kun",
+              "ru": "день",
+              "tj": "рӯз"
+            },
+            {
+              "uz": "ertalab",
+              "ru": "утро",
+              "tj": "субҳ"
+            },
+            {
+              "uz": "hafta",
+              "ru": "неделя",
+              "tj": "ҳафта"
+            }
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "listening_choice",
+          "title": {
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
+          },
+          "audio_text": "Today is Monday.",
+          "pinyin": "",
+          "options": [
+            "See you tomorrow!",
+            "Today is Monday.",
+            "Good morning!",
+            "A new week!"
+          ],
+          "correct_index": 1,
+          "explanation": {
+            "uz": "Today is Monday = bugun dushanba.",
+            "ru": "Today is Monday = сегодня понедельник.",
+            "tj": "Today is Monday = имрӯз душанбе."
+          }
+        },
+        {
+          "type": "match_pairs",
+          "pairs": [
+            [
+              "week",
+              {
+                "uz": "hafta",
+                "ru": "неделя",
+                "tj": "ҳафта"
+              }
+            ],
+            [
+              "yesterday",
+              {
+                "uz": "kecha",
+                "ru": "вчера",
+                "tj": "дирӯз"
+              }
+            ],
+            [
+              "Monday",
+              {
+                "uz": "dushanba",
+                "ru": "понедельник",
+                "tj": "душанбе"
+              }
+            ],
+            [
+              "weekend",
+              {
+                "uz": "dam olish",
+                "ru": "выходные",
+                "tj": "истироҳат"
+              }
+            ]
+          ]
+        },
+        {
+          "type": "pronunciation",
+          "phrase": "See you tomorrow",
+          "pinyin": "",
+          "translation": {
+            "uz": "Ertaga ko'rishguncha",
+            "ru": "До завтра",
+            "tj": "То фардо"
+          }
+        }
       ]
     },
     {
       "section_no": 4,
-      "section_title": {"uz": "Dialog", "ru": "Диалог", "tj": "Муколама"},
+      "section_title": {
+        "uz": "Dialog",
+        "ru": "Диалог",
+        "tj": "Муколама"
+      },
       "section_purpose": "dialog",
       "cards": [
-        {"type": "listening_choice", "title": {"uz": "Eshitganingizni tanlang", "ru": "Выберите, что вы услышали", "tj": "Он чи шунидед, интихоб кунед"}, "audio_text": "Have a nice weekend!", "pinyin": "/hæv ə naɪs ˈwiːkend/", "options": ["Good morning!", "Have a nice weekend!", "What day is it?", "See you tomorrow!"], "correct_index": 1, "explanation": {"uz": "weekend = dam olish kuni.", "ru": "weekend = выходные.", "tj": "weekend = рӯзи истироҳат."}},
-        {"type": "gap_fill", "sentence": "Today ____ Monday.", "prompt": {"uz": "Bo'sh joyga mos so'zni tanlang:", "ru": "Выберите подходящее слово:", "tj": "Калимаи мувофиқро интихоб кунед:"}, "options": ["am", "is", "are", "day"], "correct_index": 1, "explanation": {"uz": "Today is ... — 'is' ishlatiladi.", "ru": "Today is ... — используется 'is'.", "tj": "Today is ... — 'is' истифода мешавад."}},
-        {"type": "dialog_cloze", "title": {"uz": "Dialogni to'ldiring", "ru": "Дополните диалог", "tj": "Муколамаро пурра кунед"}, "lines": [{"speaker": "A", "zh": "What day is it today?", "blank": false}, {"speaker": "B", "zh": "", "blank": true}], "options": ["Today is Monday.", "See you tomorrow!", "Good morning!", "My name is Tom."], "correct_index": 0, "explanation": {"uz": "Kunni 'Today is ...' bilan aytamiz.", "ru": "День — 'Today is ...'.", "tj": "Рӯзро бо 'Today is ...' мегӯем."}},
-        {"type": "quick_quiz", "prompt": {"uz": "Qaysi biri hafta kuni?", "ru": "Что является днём недели?", "tj": "Кадомаш рӯзи ҳафта аст?"}, "title": {"uz": "To'g'ri javobni tanlang", "ru": "Выберите правильный ответ", "tj": "Ҷавоби дурустро интихоб кунед"}, "options": ["morning", "Monday", "week", "today"], "correct_index": 1}
+        {
+          "type": "listening_choice",
+          "title": {
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
+          },
+          "audio_text": "Have a nice weekend!",
+          "pinyin": "",
+          "options": [
+            "Good morning!",
+            "Have a nice weekend!",
+            "What day is it?",
+            "See you tomorrow!"
+          ],
+          "correct_index": 1,
+          "explanation": {
+            "uz": "weekend = dam olish kuni.",
+            "ru": "weekend = выходные.",
+            "tj": "weekend = рӯзи истироҳат."
+          }
+        },
+        {
+          "type": "gap_fill",
+          "sentence": "Today ____ Monday.",
+          "prompt": {
+            "uz": "Bo'sh joyga mos so'zni tanlang:",
+            "ru": "Выберите подходящее слово:",
+            "tj": "Калимаи мувофиқро интихоб кунед:"
+          },
+          "options": [
+            "am",
+            "is",
+            "are",
+            "day"
+          ],
+          "correct_index": 1,
+          "explanation": {
+            "uz": "Today is ... — 'is' ishlatiladi.",
+            "ru": "Today is ... — используется 'is'.",
+            "tj": "Today is ... — 'is' истифода мешавад."
+          }
+        },
+        {
+          "type": "dialog_cloze",
+          "title": {
+            "uz": "Dialogni to'ldiring",
+            "ru": "Дополните диалог",
+            "tj": "Муколамаро пурра кунед"
+          },
+          "lines": [
+            {
+              "speaker": "A",
+              "zh": "What day is it today?",
+              "blank": false
+            },
+            {
+              "speaker": "B",
+              "zh": "",
+              "blank": true
+            }
+          ],
+          "options": [
+            "Today is Monday.",
+            "See you tomorrow!",
+            "Good morning!",
+            "My name is Tom."
+          ],
+          "correct_index": 0,
+          "explanation": {
+            "uz": "Kunni 'Today is ...' bilan aytamiz.",
+            "ru": "День — 'Today is ...'.",
+            "tj": "Рӯзро бо 'Today is ...' мегӯем."
+          }
+        },
+        {
+          "type": "quick_quiz",
+          "prompt": {
+            "uz": "Qaysi biri hafta kuni?",
+            "ru": "Что является днём недели?",
+            "tj": "Кадомаш рӯзи ҳафта аст?"
+          },
+          "title": {
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
+          },
+          "options": [
+            "morning",
+            "Monday",
+            "week",
+            "today"
+          ],
+          "correct_index": 1
+        }
       ]
     }
   ]

@@ -11,19 +11,103 @@
   "intro_prebuilt": true,
   "grammar_prebuilt": true,
   "active_words": [
-    {"no": 1, "zh": "name", "pinyin": "/neɪm/", "pos": "n.", "meaning": {"uz": "ism", "ru": "имя", "tj": "ном"}},
-    {"no": 2, "zh": "My name is", "pinyin": "/maɪ neɪm ɪz/", "pos": "expr.", "meaning": {"uz": "mening ismim", "ru": "меня зовут", "tj": "номи ман"}},
-    {"no": 3, "zh": "What is your name?", "pinyin": "/wɒts jɔːr neɪm/", "pos": "expr.", "meaning": {"uz": "ismingiz nima?", "ru": "как вас зовут?", "tj": "номи шумо чист?"}},
-    {"no": 4, "zh": "Nice to meet you", "pinyin": "/naɪs tə miːt juː/", "pos": "expr.", "meaning": {"uz": "tanishganimdan xursandman", "ru": "приятно познакомиться", "tj": "аз шиносоӣ шодам"}},
-    {"no": 5, "zh": "I am", "pinyin": "/aɪ æm/", "pos": "v.", "meaning": {"uz": "men ...man", "ru": "я есть", "tj": "ман ...ам"}},
-    {"no": 6, "zh": "you are", "pinyin": "/juː ɑːr/", "pos": "v.", "meaning": {"uz": "siz ...siz", "ru": "ты есть / вы есть", "tj": "шумо ...ед"}},
-    {"no": 7, "zh": "this is", "pinyin": "/ðɪs ɪz/", "pos": "expr.", "meaning": {"uz": "bu ...", "ru": "это ...", "tj": "ин ..."}},
-    {"no": 8, "zh": "friend", "pinyin": "/frend/", "pos": "n.", "meaning": {"uz": "do'st", "ru": "друг", "tj": "дӯст"}}
+    {
+      "no": 1,
+      "zh": "name",
+      "pinyin": "NAYM",
+      "pos": "n.",
+      "meaning": {
+        "uz": "ism",
+        "ru": "имя",
+        "tj": "ном"
+      }
+    },
+    {
+      "no": 2,
+      "zh": "My name is",
+      "pinyin": "MY-naym-iz",
+      "pos": "expr.",
+      "meaning": {
+        "uz": "mening ismim",
+        "ru": "меня зовут",
+        "tj": "номи ман"
+      }
+    },
+    {
+      "no": 3,
+      "zh": "What is your name?",
+      "pinyin": "wots-yor-NAYM",
+      "pos": "expr.",
+      "meaning": {
+        "uz": "ismingiz nima?",
+        "ru": "как вас зовут?",
+        "tj": "номи шумо чист?"
+      }
+    },
+    {
+      "no": 4,
+      "zh": "Nice to meet you",
+      "pinyin": "nys-tu-MEET-yoo",
+      "pos": "expr.",
+      "meaning": {
+        "uz": "tanishganimdan xursandman",
+        "ru": "приятно познакомиться",
+        "tj": "аз шиносоӣ шодам"
+      }
+    },
+    {
+      "no": 5,
+      "zh": "I am",
+      "pinyin": "eye-AM",
+      "pos": "v.",
+      "meaning": {
+        "uz": "men ...man",
+        "ru": "я есть",
+        "tj": "ман ...ам"
+      }
+    },
+    {
+      "no": 6,
+      "zh": "you are",
+      "pinyin": "yoo-AR",
+      "pos": "v.",
+      "meaning": {
+        "uz": "siz ...siz",
+        "ru": "ты есть / вы есть",
+        "tj": "шумо ...ед"
+      }
+    },
+    {
+      "no": 7,
+      "zh": "this is",
+      "pinyin": "THIS-iz",
+      "pos": "expr.",
+      "meaning": {
+        "uz": "bu ...",
+        "ru": "это ...",
+        "tj": "ин ..."
+      }
+    },
+    {
+      "no": 8,
+      "zh": "friend",
+      "pinyin": "FREND",
+      "pos": "n.",
+      "meaning": {
+        "uz": "do'st",
+        "ru": "друг",
+        "tj": "дӯст"
+      }
+    }
   ],
   "grammar": [
     {
       "no": 1,
-      "title": {"uz": "'to be' fe'li (am / is / are)", "ru": "Глагол 'to be' (am / is / are)", "tj": "Феъли 'to be' (am / is / are)"},
+      "title": {
+        "uz": "'to be' fe'li (am / is / are)",
+        "ru": "Глагол 'to be' (am / is / are)",
+        "tj": "Феъли 'to be' (am / is / are)"
+      },
       "title_zh": "verb to be",
       "rule": {
         "uz": "I am (I'm) — men.\nYou are (You're) — siz.\nHe / She / It is — u.\nMisol: I am a student. You are my friend.",
@@ -33,7 +117,11 @@
     },
     {
       "no": 2,
-      "title": {"uz": "O'zini tanishtirish", "ru": "Как представиться", "tj": "Худро муаррифӣ кардан"},
+      "title": {
+        "uz": "O'zini tanishtirish",
+        "ru": "Как представиться",
+        "tj": "Худро муаррифӣ кардан"
+      },
       "title_zh": "introducing",
       "rule": {
         "uz": "Ism aytish: My name is Tom. / I'm Tom.\nSo'rash: What is your name?\nJavobdan keyin: Nice to meet you!",
@@ -44,77 +132,633 @@
   ],
   "dialogues": [
     {
-      "scene": {"uz": "Ilk tanishuv", "ru": "Первое знакомство", "tj": "Шиносоии аввал"},
+      "scene": {
+        "uz": "Ilk tanishuv",
+        "ru": "Первое знакомство",
+        "tj": "Шиносоии аввал"
+      },
       "dialogue": [
-        {"speaker": "A", "zh": "Hello! What is your name?", "pinyin": "/wɒts jɔːr neɪm/", "text": {"uz": "Salom! Ismingiz nima?", "ru": "Привет! Как вас зовут?", "tj": "Салом! Номи шумо чист?"}},
-        {"speaker": "B", "zh": "My name is Anna.", "pinyin": "/maɪ neɪm ɪz ˈænə/", "text": {"uz": "Mening ismim Anna.", "ru": "Меня зовут Анна.", "tj": "Номи ман Анна."}}
+        {
+          "speaker": "A",
+          "zh": "Hello! What is your name?",
+          "pinyin": "",
+          "text": {
+            "uz": "Salom! Ismingiz nima?",
+            "ru": "Привет! Как вас зовут?",
+            "tj": "Салом! Номи шумо чист?"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "My name is Anna.",
+          "pinyin": "",
+          "text": {
+            "uz": "Mening ismim Anna.",
+            "ru": "Меня зовут Анна.",
+            "tj": "Номи ман Анна."
+          }
+        }
       ]
     },
     {
-      "scene": {"uz": "Xushmuomala javob", "ru": "Вежливый ответ", "tj": "Ҷавоби хушмуомила"},
+      "scene": {
+        "uz": "Xushmuomala javob",
+        "ru": "Вежливый ответ",
+        "tj": "Ҷавоби хушмуомила"
+      },
       "dialogue": [
-        {"speaker": "A", "zh": "I'm Tom. Nice to meet you!", "pinyin": "/naɪs tə miːt juː/", "text": {"uz": "Men Tom. Tanishganimdan xursandman!", "ru": "Я Том. Приятно познакомиться!", "tj": "Ман Том. Аз шиносоӣ шодам!"}},
-        {"speaker": "B", "zh": "Nice to meet you too!", "pinyin": "/naɪs tə miːt juː tuː/", "text": {"uz": "Men ham xursandman!", "ru": "Мне тоже приятно!", "tj": "Ман ҳам шодам!"}}
+        {
+          "speaker": "A",
+          "zh": "I'm Tom. Nice to meet you!",
+          "pinyin": "",
+          "text": {
+            "uz": "Men Tom. Tanishganimdan xursandman!",
+            "ru": "Я Том. Приятно познакомиться!",
+            "tj": "Ман Том. Аз шиносоӣ шодам!"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "Nice to meet you too!",
+          "pinyin": "",
+          "text": {
+            "uz": "Men ham xursandman!",
+            "ru": "Мне тоже приятно!",
+            "tj": "Ман ҳам шодам!"
+          }
+        }
       ]
     },
     {
-      "scene": {"uz": "Do'stni tanishtirish", "ru": "Представить друга", "tj": "Муаррифии дӯст"},
+      "scene": {
+        "uz": "Do'stni tanishtirish",
+        "ru": "Представить друга",
+        "tj": "Муаррифии дӯст"
+      },
       "dialogue": [
-        {"speaker": "A", "zh": "This is my friend, Sam.", "pinyin": "/ðɪs ɪz maɪ frend/", "text": {"uz": "Bu mening do'stim, Sam.", "ru": "Это мой друг, Сэм.", "tj": "Ин дӯсти ман, Сэм."}},
-        {"speaker": "B", "zh": "Hello, Sam!", "pinyin": "/həˈloʊ sæm/", "text": {"uz": "Salom, Sam!", "ru": "Привет, Сэм!", "tj": "Салом, Сэм!"}}
+        {
+          "speaker": "A",
+          "zh": "This is my friend, Sam.",
+          "pinyin": "",
+          "text": {
+            "uz": "Bu mening do'stim, Sam.",
+            "ru": "Это мой друг, Сэм.",
+            "tj": "Ин дӯсти ман, Сэм."
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "Hello, Sam!",
+          "pinyin": "",
+          "text": {
+            "uz": "Salom, Sam!",
+            "ru": "Привет, Сэм!",
+            "tj": "Салом, Сэм!"
+          }
+        }
       ]
     }
   ],
   "sections": [
     {
       "section_no": 1,
-      "section_title": {"uz": "Yangi so'zlar", "ru": "Новые слова", "tj": "Калимаҳои нав"},
+      "section_title": {
+        "uz": "Yangi so'zlar",
+        "ru": "Новые слова",
+        "tj": "Калимаҳои нав"
+      },
       "section_purpose": "intro",
       "cards": [
-        {"type": "active_word", "word": {"no": 1, "zh": "name", "pinyin": "/neɪm/", "pos": "n.", "meaning": {"uz": "ism", "ru": "имя", "tj": "ном"}}},
-        {"type": "active_word", "word": {"no": 2, "zh": "My name is", "pinyin": "/maɪ neɪm ɪz/", "pos": "expr.", "meaning": {"uz": "mening ismim", "ru": "меня зовут", "tj": "номи ман"}}},
-        {"type": "meaning_guess", "prompt": {"uz": "«name» ma'nosini tanlang:", "ru": "Выберите значение «name»:", "tj": "Маънои «name»-ро интихоб кунед:"}, "title": {"uz": "Ma'nosi nima?", "ru": "Что означает?", "tj": "Маъно чист?"}, "options": [{"uz": "ism", "ru": "имя", "tj": "ном"}, {"uz": "do'st", "ru": "друг", "tj": "дӯст"}, {"uz": "salom", "ru": "привет", "tj": "салом"}, {"uz": "rahmat", "ru": "спасибо", "tj": "ташаккур"}], "correct_index": 0},
-        {"type": "active_word", "word": {"no": 3, "zh": "What is your name?", "pinyin": "/wɒts jɔːr neɪm/", "pos": "expr.", "meaning": {"uz": "ismingiz nima?", "ru": "как вас зовут?", "tj": "номи шумо чист?"}}},
-        {"type": "active_word", "word": {"no": 4, "zh": "Nice to meet you", "pinyin": "/naɪs tə miːt juː/", "pos": "expr.", "meaning": {"uz": "tanishganimdan xursandman", "ru": "приятно познакомиться", "tj": "аз шиносоӣ шодам"}}},
-        {"type": "hanzi_choice", "prompt": {"uz": "«/frend/» qaysi so'z?", "ru": "Какое слово читается «/frend/»?", "tj": "«/frend/» кадом калима аст?"}, "title": {"uz": "So'zni tanlang", "ru": "Выберите слово", "tj": "Калимаро интихоб кунед"}, "options": ["name", "friend", "this is", "I am"], "correct_index": 1},
-        {"type": "active_word", "word": {"no": 5, "zh": "I am", "pinyin": "/aɪ æm/", "pos": "v.", "meaning": {"uz": "men ...man", "ru": "я есть", "tj": "ман ...ам"}}},
-        {"type": "active_word", "word": {"no": 6, "zh": "you are", "pinyin": "/juː ɑːr/", "pos": "v.", "meaning": {"uz": "siz ...siz", "ru": "ты/вы есть", "tj": "шумо ...ед"}}},
-        {"type": "pinyin_choice", "prompt": {"uz": "«name» talaffuzini tanlang:", "ru": "Выберите произношение «name»:", "tj": "Талаффузи «name»-ро интихоб кунед:"}, "title": {"uz": "Qanday o'qiladi?", "ru": "Как читается?", "tj": "Чӣ хел хонда мешавад?"}, "options": ["/frend/", "/neɪm/", "/aɪ æm/", "/ðɪs ɪz/"], "correct_index": 1},
-        {"type": "match_pairs", "pairs": [["name", {"uz": "ism", "ru": "имя", "tj": "ном"}], ["friend", {"uz": "do'st", "ru": "друг", "tj": "дӯст"}], ["I am", {"uz": "men ...man", "ru": "я есть", "tj": "ман ...ам"}], ["this is", {"uz": "bu ...", "ru": "это ...", "tj": "ин ..."}]]}
+        {
+          "type": "active_word",
+          "word": {
+            "no": 1,
+            "zh": "name",
+            "pinyin": "NAYM",
+            "pos": "n.",
+            "meaning": {
+              "uz": "ism",
+              "ru": "имя",
+              "tj": "ном"
+            }
+          }
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 2,
+            "zh": "My name is",
+            "pinyin": "MY-naym-iz",
+            "pos": "expr.",
+            "meaning": {
+              "uz": "mening ismim",
+              "ru": "меня зовут",
+              "tj": "номи ман"
+            }
+          }
+        },
+        {
+          "type": "meaning_guess",
+          "prompt": {
+            "uz": "«name» ma'nosini tanlang:",
+            "ru": "Выберите значение «name»:",
+            "tj": "Маънои «name»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Ma'nosi nima?",
+            "ru": "Что означает?",
+            "tj": "Маъно чист?"
+          },
+          "options": [
+            {
+              "uz": "ism",
+              "ru": "имя",
+              "tj": "ном"
+            },
+            {
+              "uz": "do'st",
+              "ru": "друг",
+              "tj": "дӯст"
+            },
+            {
+              "uz": "salom",
+              "ru": "привет",
+              "tj": "салом"
+            },
+            {
+              "uz": "rahmat",
+              "ru": "спасибо",
+              "tj": "ташаккур"
+            }
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 3,
+            "zh": "What is your name?",
+            "pinyin": "wots-yor-NAYM",
+            "pos": "expr.",
+            "meaning": {
+              "uz": "ismingiz nima?",
+              "ru": "как вас зовут?",
+              "tj": "номи шумо чист?"
+            }
+          }
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 4,
+            "zh": "Nice to meet you",
+            "pinyin": "nys-tu-MEET-yoo",
+            "pos": "expr.",
+            "meaning": {
+              "uz": "tanishganimdan xursandman",
+              "ru": "приятно познакомиться",
+              "tj": "аз шиносоӣ шодам"
+            }
+          }
+        },
+        {
+          "type": "hanzi_choice",
+          "prompt": {
+            "uz": "«FREND» qaysi so'z?",
+            "ru": "Какое слово читается «FREND»?",
+            "tj": "«FREND» кадом калима аст?"
+          },
+          "title": {
+            "uz": "So'zni tanlang",
+            "ru": "Выберите слово",
+            "tj": "Калимаро интихоб кунед"
+          },
+          "options": [
+            "name",
+            "friend",
+            "this is",
+            "I am"
+          ],
+          "correct_index": 1
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 5,
+            "zh": "I am",
+            "pinyin": "eye-AM",
+            "pos": "v.",
+            "meaning": {
+              "uz": "men ...man",
+              "ru": "я есть",
+              "tj": "ман ...ам"
+            }
+          }
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 6,
+            "zh": "you are",
+            "pinyin": "yoo-AR",
+            "pos": "v.",
+            "meaning": {
+              "uz": "siz ...siz",
+              "ru": "ты/вы есть",
+              "tj": "шумо ...ед"
+            }
+          }
+        },
+        {
+          "type": "pinyin_choice",
+          "prompt": {
+            "uz": "«name» talaffuzini tanlang:",
+            "ru": "Выберите произношение «name»:",
+            "tj": "Талаффузи «name»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Qanday o'qiladi?",
+            "ru": "Как читается?",
+            "tj": "Чӣ хел хонда мешавад?"
+          },
+          "options": [
+            "FREND",
+            "NAYM",
+            "eye-AM",
+            "THIS-iz"
+          ],
+          "correct_index": 1
+        },
+        {
+          "type": "match_pairs",
+          "pairs": [
+            [
+              "name",
+              {
+                "uz": "ism",
+                "ru": "имя",
+                "tj": "ном"
+              }
+            ],
+            [
+              "friend",
+              {
+                "uz": "do'st",
+                "ru": "друг",
+                "tj": "дӯст"
+              }
+            ],
+            [
+              "I am",
+              {
+                "uz": "men ...man",
+                "ru": "я есть",
+                "tj": "ман ...ам"
+              }
+            ],
+            [
+              "this is",
+              {
+                "uz": "bu ...",
+                "ru": "это ...",
+                "tj": "ин ..."
+              }
+            ]
+          ]
+        }
       ]
     },
     {
       "section_no": 2,
-      "section_title": {"uz": "Grammatika", "ru": "Грамматика", "tj": "Грамматика"},
+      "section_title": {
+        "uz": "Grammatika",
+        "ru": "Грамматика",
+        "tj": "Грамматика"
+      },
       "section_purpose": "grammar",
       "cards": [
-        {"type": "_grammar", "g": {"no": 1, "title": {"uz": "'to be' fe'li (am / is / are)", "ru": "Глагол 'to be' (am / is / are)", "tj": "Феъли 'to be' (am / is / are)"}, "title_zh": "verb to be", "rule": {"uz": "I am — men.\nYou are — siz.\nHe / She / It is — u.\nMisol: I am a student.", "ru": "I am — я.\nYou are — ты/вы.\nHe / She / It is — он/она.\nПример: I am a student.", "tj": "I am — ман.\nYou are — шумо.\nHe / She / It is — ӯ.\nМисол: I am a student."}}},
-        {"type": "_grammar", "g": {"no": 2, "title": {"uz": "O'zini tanishtirish", "ru": "Как представиться", "tj": "Худро муаррифӣ кардан"}, "title_zh": "introducing", "rule": {"uz": "My name is Tom. / I'm Tom.\nWhat is your name?\nNice to meet you!", "ru": "My name is Tom. / I'm Tom.\nWhat is your name?\nNice to meet you!", "tj": "My name is Tom. / I'm Tom.\nWhat is your name?\nNice to meet you!"}}},
-        {"type": "sentence_builder", "sentence": {"uz": "«Mening ismim Tom.»", "ru": "«Меня зовут Том.»", "tj": "«Номи ман Том.»"}, "tokens": ["is", "name", "Tom", "My", "are"], "answer_tokens": ["My", "name", "is", "Tom"], "explanation": {"uz": "My name is ... — ism aytish.", "ru": "My name is ... — назвать имя.", "tj": "My name is ... — ном гуфтан."}},
-        {"type": "quick_quiz", "prompt": {"uz": "«Men Tom» — qaysi to'g'ri?", "ru": "«Я Том» — что правильно?", "tj": "«Ман Том» — кадом дуруст аст?"}, "title": {"uz": "To'g'ri javobni tanlang", "ru": "Выберите правильный ответ", "tj": "Ҷавоби дурустро интихоб кунед"}, "options": ["I are Tom", "I am Tom", "I is Tom", "Me Tom"], "correct_index": 1}
+        {
+          "type": "_grammar",
+          "g": {
+            "no": 1,
+            "title": {
+              "uz": "'to be' fe'li (am / is / are)",
+              "ru": "Глагол 'to be' (am / is / are)",
+              "tj": "Феъли 'to be' (am / is / are)"
+            },
+            "title_zh": "verb to be",
+            "rule": {
+              "uz": "I am — men.\nYou are — siz.\nHe / She / It is — u.\nMisol: I am a student.",
+              "ru": "I am — я.\nYou are — ты/вы.\nHe / She / It is — он/она.\nПример: I am a student.",
+              "tj": "I am — ман.\nYou are — шумо.\nHe / She / It is — ӯ.\nМисол: I am a student."
+            }
+          }
+        },
+        {
+          "type": "_grammar",
+          "g": {
+            "no": 2,
+            "title": {
+              "uz": "O'zini tanishtirish",
+              "ru": "Как представиться",
+              "tj": "Худро муаррифӣ кардан"
+            },
+            "title_zh": "introducing",
+            "rule": {
+              "uz": "My name is Tom. / I'm Tom.\nWhat is your name?\nNice to meet you!",
+              "ru": "My name is Tom. / I'm Tom.\nWhat is your name?\nNice to meet you!",
+              "tj": "My name is Tom. / I'm Tom.\nWhat is your name?\nNice to meet you!"
+            }
+          }
+        },
+        {
+          "type": "sentence_builder",
+          "sentence": {
+            "uz": "«Mening ismim Tom.»",
+            "ru": "«Меня зовут Том.»",
+            "tj": "«Номи ман Том.»"
+          },
+          "tokens": [
+            "is",
+            "name",
+            "Tom",
+            "My",
+            "are"
+          ],
+          "answer_tokens": [
+            "My",
+            "name",
+            "is",
+            "Tom"
+          ],
+          "explanation": {
+            "uz": "My name is ... — ism aytish.",
+            "ru": "My name is ... — назвать имя.",
+            "tj": "My name is ... — ном гуфтан."
+          }
+        },
+        {
+          "type": "quick_quiz",
+          "prompt": {
+            "uz": "«Men Tom» — qaysi to'g'ri?",
+            "ru": "«Я Том» — что правильно?",
+            "tj": "«Ман Том» — кадом дуруст аст?"
+          },
+          "title": {
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
+          },
+          "options": [
+            "I are Tom",
+            "I am Tom",
+            "I is Tom",
+            "Me Tom"
+          ],
+          "correct_index": 1
+        }
       ]
     },
     {
       "section_no": 3,
-      "section_title": {"uz": "Mashq", "ru": "Практика", "tj": "Машқ"},
+      "section_title": {
+        "uz": "Mashq",
+        "ru": "Практика",
+        "tj": "Машқ"
+      },
       "section_purpose": "practice",
       "cards": [
-        {"type": "pinyin_choice", "prompt": {"uz": "«friend» talaffuzini tanlang:", "ru": "Выберите произношение «friend»:", "tj": "Талаффузи «friend»-ро интихоб кунед:"}, "title": {"uz": "Qanday o'qiladi?", "ru": "Как читается?", "tj": "Чӣ хел хонда мешавад?"}, "options": ["/frend/", "/neɪm/", "/juː ɑːr/", "/ðɪs ɪz/"], "correct_index": 0},
-        {"type": "meaning_guess", "prompt": {"uz": "«friend» ma'nosini tanlang:", "ru": "Выберите значение «friend»:", "tj": "Маънои «friend»-ро интихоб кунед:"}, "title": {"uz": "Ma'nosi nima?", "ru": "Что означает?", "tj": "Маъно чист?"}, "options": [{"uz": "do'st", "ru": "друг", "tj": "дӯст"}, {"uz": "ism", "ru": "имя", "tj": "ном"}, {"uz": "salom", "ru": "привет", "tj": "салом"}, {"uz": "xayr", "ru": "до свидания", "tj": "хайр"}], "correct_index": 0},
-        {"type": "listening_choice", "title": {"uz": "Eshitganingizni tanlang", "ru": "Выберите, что вы услышали", "tj": "Он чи шунидед, интихоб кунед"}, "audio_text": "Nice to meet you!", "pinyin": "/naɪs tə miːt juː/", "options": ["What is your name?", "Nice to meet you!", "My name is Anna.", "This is my friend."], "correct_index": 1, "explanation": {"uz": "Nice to meet you = tanishganimdan xursandman.", "ru": "Nice to meet you = приятно познакомиться.", "tj": "Nice to meet you = аз шиносоӣ шодам."}},
-        {"type": "match_pairs", "pairs": [["What is your name?", {"uz": "ismingiz nima?", "ru": "как вас зовут?", "tj": "номи шумо чист?"}], ["My name is", {"uz": "mening ismim", "ru": "меня зовут", "tj": "номи ман"}], ["you are", {"uz": "siz ...siz", "ru": "ты/вы есть", "tj": "шумо ...ед"}], ["Nice to meet you", {"uz": "xursandman", "ru": "приятно", "tj": "шодам"}]]},
-        {"type": "pronunciation", "phrase": "My name is Tom", "pinyin": "/maɪ neɪm ɪz tɒm/", "translation": {"uz": "Mening ismim Tom", "ru": "Меня зовут Том", "tj": "Номи ман Том"}}
+        {
+          "type": "pinyin_choice",
+          "prompt": {
+            "uz": "«friend» talaffuzini tanlang:",
+            "ru": "Выберите произношение «friend»:",
+            "tj": "Талаффузи «friend»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Qanday o'qiladi?",
+            "ru": "Как читается?",
+            "tj": "Чӣ хел хонда мешавад?"
+          },
+          "options": [
+            "FREND",
+            "NAYM",
+            "yoo-AR",
+            "THIS-iz"
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "meaning_guess",
+          "prompt": {
+            "uz": "«friend» ma'nosini tanlang:",
+            "ru": "Выберите значение «friend»:",
+            "tj": "Маънои «friend»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Ma'nosi nima?",
+            "ru": "Что означает?",
+            "tj": "Маъно чист?"
+          },
+          "options": [
+            {
+              "uz": "do'st",
+              "ru": "друг",
+              "tj": "дӯст"
+            },
+            {
+              "uz": "ism",
+              "ru": "имя",
+              "tj": "ном"
+            },
+            {
+              "uz": "salom",
+              "ru": "привет",
+              "tj": "салом"
+            },
+            {
+              "uz": "xayr",
+              "ru": "до свидания",
+              "tj": "хайр"
+            }
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "listening_choice",
+          "title": {
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
+          },
+          "audio_text": "Nice to meet you!",
+          "pinyin": "",
+          "options": [
+            "What is your name?",
+            "Nice to meet you!",
+            "My name is Anna.",
+            "This is my friend."
+          ],
+          "correct_index": 1,
+          "explanation": {
+            "uz": "Nice to meet you = tanishganimdan xursandman.",
+            "ru": "Nice to meet you = приятно познакомиться.",
+            "tj": "Nice to meet you = аз шиносоӣ шодам."
+          }
+        },
+        {
+          "type": "match_pairs",
+          "pairs": [
+            [
+              "What is your name?",
+              {
+                "uz": "ismingiz nima?",
+                "ru": "как вас зовут?",
+                "tj": "номи шумо чист?"
+              }
+            ],
+            [
+              "My name is",
+              {
+                "uz": "mening ismim",
+                "ru": "меня зовут",
+                "tj": "номи ман"
+              }
+            ],
+            [
+              "you are",
+              {
+                "uz": "siz ...siz",
+                "ru": "ты/вы есть",
+                "tj": "шумо ...ед"
+              }
+            ],
+            [
+              "Nice to meet you",
+              {
+                "uz": "xursandman",
+                "ru": "приятно",
+                "tj": "шодам"
+              }
+            ]
+          ]
+        },
+        {
+          "type": "pronunciation",
+          "phrase": "My name is Tom",
+          "pinyin": "",
+          "translation": {
+            "uz": "Mening ismim Tom",
+            "ru": "Меня зовут Том",
+            "tj": "Номи ман Том"
+          }
+        }
       ]
     },
     {
       "section_no": 4,
-      "section_title": {"uz": "Dialog", "ru": "Диалог", "tj": "Муколама"},
+      "section_title": {
+        "uz": "Dialog",
+        "ru": "Диалог",
+        "tj": "Муколама"
+      },
       "section_purpose": "dialog",
       "cards": [
-        {"type": "listening_choice", "title": {"uz": "Eshitganingizni tanlang", "ru": "Выберите, что вы услышали", "tj": "Он чи шунидед, интихоб кунед"}, "audio_text": "What is your name?", "pinyin": "/wɒts jɔːr neɪm/", "options": ["My name is Anna.", "What is your name?", "Nice to meet you!", "This is my friend."], "correct_index": 1, "explanation": {"uz": "What is your name? = ismingiz nima?", "ru": "What is your name? = как вас зовут?", "tj": "What is your name? = номи шумо чист?"}},
-        {"type": "gap_fill", "sentence": "____ name is Tom.", "prompt": {"uz": "Bo'sh joyga mos so'zni tanlang:", "ru": "Выберите подходящее слово:", "tj": "Калимаи мувофиқро интихоб кунед:"}, "options": ["I", "My", "You", "Is"], "correct_index": 1, "explanation": {"uz": "My name is ... — mening ismim.", "ru": "My name is ... — меня зовут.", "tj": "My name is ... — номи ман."}},
-        {"type": "dialog_cloze", "title": {"uz": "Dialogni to'ldiring", "ru": "Дополните диалог", "tj": "Муколамаро пурра кунед"}, "lines": [{"speaker": "A", "zh": "What is your name?", "blank": false}, {"speaker": "B", "zh": "", "blank": true}], "options": ["My name is Anna.", "Nice to meet you!", "Goodbye!", "Thank you!"], "correct_index": 0, "explanation": {"uz": "Ismni 'My name is ...' bilan aytamiz.", "ru": "Имя называем через 'My name is ...'.", "tj": "Номро бо 'My name is ...' мегӯем."}},
-        {"type": "quick_quiz", "prompt": {"uz": "'You ___ my friend' — qaysi to'g'ri?", "ru": "'You ___ my friend' — что правильно?", "tj": "'You ___ my friend' — кадом дуруст?"}, "title": {"uz": "To'g'ri javobni tanlang", "ru": "Выберите правильный ответ", "tj": "Ҷавоби дурустро интихоб кунед"}, "options": ["am", "are", "is", "be"], "correct_index": 1}
+        {
+          "type": "listening_choice",
+          "title": {
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
+          },
+          "audio_text": "What is your name?",
+          "pinyin": "",
+          "options": [
+            "My name is Anna.",
+            "What is your name?",
+            "Nice to meet you!",
+            "This is my friend."
+          ],
+          "correct_index": 1,
+          "explanation": {
+            "uz": "What is your name? = ismingiz nima?",
+            "ru": "What is your name? = как вас зовут?",
+            "tj": "What is your name? = номи шумо чист?"
+          }
+        },
+        {
+          "type": "gap_fill",
+          "sentence": "____ name is Tom.",
+          "prompt": {
+            "uz": "Bo'sh joyga mos so'zni tanlang:",
+            "ru": "Выберите подходящее слово:",
+            "tj": "Калимаи мувофиқро интихоб кунед:"
+          },
+          "options": [
+            "I",
+            "My",
+            "You",
+            "Is"
+          ],
+          "correct_index": 1,
+          "explanation": {
+            "uz": "My name is ... — mening ismim.",
+            "ru": "My name is ... — меня зовут.",
+            "tj": "My name is ... — номи ман."
+          }
+        },
+        {
+          "type": "dialog_cloze",
+          "title": {
+            "uz": "Dialogni to'ldiring",
+            "ru": "Дополните диалог",
+            "tj": "Муколамаро пурра кунед"
+          },
+          "lines": [
+            {
+              "speaker": "A",
+              "zh": "What is your name?",
+              "blank": false
+            },
+            {
+              "speaker": "B",
+              "zh": "",
+              "blank": true
+            }
+          ],
+          "options": [
+            "My name is Anna.",
+            "Nice to meet you!",
+            "Goodbye!",
+            "Thank you!"
+          ],
+          "correct_index": 0,
+          "explanation": {
+            "uz": "Ismni 'My name is ...' bilan aytamiz.",
+            "ru": "Имя называем через 'My name is ...'.",
+            "tj": "Номро бо 'My name is ...' мегӯем."
+          }
+        },
+        {
+          "type": "quick_quiz",
+          "prompt": {
+            "uz": "'You ___ my friend' — qaysi to'g'ri?",
+            "ru": "'You ___ my friend' — что правильно?",
+            "tj": "'You ___ my friend' — кадом дуруст?"
+          },
+          "title": {
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
+          },
+          "options": [
+            "am",
+            "are",
+            "is",
+            "be"
+          ],
+          "correct_index": 1
+        }
       ]
     }
   ]

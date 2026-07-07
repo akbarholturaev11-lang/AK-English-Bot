@@ -69,7 +69,7 @@ from app.services.subscription_service import SubscriptionService
 from app.services.subscription_price_service import PAYMENT_METHODS, PLANS, SubscriptionPriceService
 from app.services.subscription_currency_service import format_subscription_price
 from app.services.subscription_miniapp_service import SubscriptionMiniAppService
-from app.services.subscription_miniapp_service import PAYMENT_DETAILS_KEY
+from app.services.subscription_miniapp_service import PAYMENT_DETAILS_KEY, PAYMENT_DETAILS_KEYS
 from app.services.subscription_entry_analytics_service import SubscriptionEntryAnalyticsService
 from app.services.admin_miniapp_service import (
     HOT_LEAD_ACTIVITY_WINDOW,
@@ -611,6 +611,8 @@ async def _admin_miniapp_management_payload(session) -> dict:
         "ok": True,
         "prices": price_items,
         "payment_details": (await setting_repo.get(PAYMENT_DETAILS_KEY) or settings.PAYMENT_DETAILS or "").strip(),
+        "payment_details_dushanbe": (await setting_repo.get(PAYMENT_DETAILS_KEYS["alipay"]) or "").strip(),
+        "payment_details_alif": (await setting_repo.get(PAYMENT_DETAILS_KEYS["wechat"]) or "").strip(),
         "channels": {
             "enabled": await channels_service.is_enabled(),
             "items": [
@@ -1023,11 +1025,12 @@ async def course_v3_tour_audio(lang: str, key: str):
     return FileResponse(path, media_type="audio/mpeg")
 
 
-# --- Server-side Chinese TTS (edge-tts) with on-disk cache -------------------
-# Android WebView (Telegram) ko'pincha ingliz (zh-CN) speechSynthesis ovoziga ega
-# emas -> jimlik. Shuning uchun ovozni serverда generatsiya qilib, mp3 sifatida
-# beramiz. Har bir ibora birinchi so'rovда yaratilib diskка cache bo'ladi.
-TTS_VOICE = "zh-CN-XiaoxiaoNeural"
+# --- Server-side English TTS (edge-tts) with on-disk cache -------------------
+# Android WebView (Telegram) ko'pincha ishonchli ingliz speechSynthesis ovoziga
+# ega emas -> jimlik yoki noto'g'ri talaffuz. Shuning uchun ovozni serverда
+# generatsiya qilib, mp3 sifatida beramiz. Har bir ibora birinchi so'rovда
+# yaratilib diskка cache bo'ladi. Ovoz — Britaniya ingliz talaffuzi (🇬🇧).
+TTS_VOICE = "en-GB-SoniaNeural"
 TTS_CACHE_DIR = "app/static/audio/tts_cache"
 _tts_locks: dict[str, asyncio.Lock] = {}
 
@@ -1038,9 +1041,9 @@ async def v3_tts(text: str, rate: str = "-10%"):
     import re
 
     text = (text or "").strip()
-    # Faqat inglizcha iboralar: kamida bitta CJK belgisi bo'lishi shart va
+    # Faqat inglizcha iboralar: kamida bitta lotin harfi bo'lishi shart va
     # uzunlik cheklangan (abuse/disk to'lishining oldini olish uchun).
-    if not text or len(text) > 240 or not re.search(r"[一-鿿]", text):
+    if not text or len(text) > 240 or not re.search(r"[A-Za-z]", text):
         return JSONResponse(status_code=400, content={"error": "bad_text"})
     if not re.fullmatch(r"[+-]\d{1,3}%", rate):
         rate = "-10%"
@@ -2234,11 +2237,15 @@ async def admin_miniapp_payment_details_save(request: Request):
         payload = await request.json()
     except ValueError:
         payload = {}
+    slot = str(payload.get("slot") or "visa").strip()
+    setting_key = PAYMENT_DETAILS_KEYS.get(slot)
+    if not setting_key:
+        return JSONResponse(status_code=400, content={"ok": False, "error": "invalid_payment_slot"})
     text_value = str(payload.get("payment_details") or "").strip()
     if not text_value or len(text_value) > 1500:
         return JSONResponse(status_code=400, content={"ok": False, "error": "invalid_payment_details"})
     async with async_session_maker() as session:
-        await BotSettingRepository(session).set(PAYMENT_DETAILS_KEY, text_value)
+        await BotSettingRepository(session).set(setting_key, text_value)
         await session.commit()
     return JSONResponse(content={"ok": True})
 

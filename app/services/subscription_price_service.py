@@ -11,12 +11,14 @@ DEFAULT_SUBSCRIPTION_PRICES: dict[tuple[str, str], tuple[int, str]] = {
     ("visa", "10_days"): (29, "TJS"),
     ("visa", "1_month"): (89, "TJS"),
     ("visa", "3_months"): (179, "TJS"),
-    ("alipay", "10_days"): (29, "¥"),
-    ("alipay", "1_month"): (66, "¥"),
-    ("alipay", "3_months"): (179, "¥"),
-    ("wechat", "10_days"): (29, "¥"),
-    ("wechat", "1_month"): (66, "¥"),
-    ("wechat", "3_months"): (179, "¥"),
+    # Dushanbe City (alipay slot) and Alif bank (wechat slot) are Tajik TJS cards
+    # and mirror the VISA base price.
+    ("alipay", "10_days"): (29, "TJS"),
+    ("alipay", "1_month"): (89, "TJS"),
+    ("alipay", "3_months"): (179, "TJS"),
+    ("wechat", "10_days"): (29, "TJS"),
+    ("wechat", "1_month"): (89, "TJS"),
+    ("wechat", "3_months"): (179, "TJS"),
 }
 
 
@@ -64,7 +66,7 @@ class SubscriptionPriceService:
         if plan_type not in PLANS or amount <= 0:
             return None
 
-        currency = "¥" if method in {"alipay", "wechat"} else "TJS"
+        currency = "TJS"
         price = await self.repo.set_price(
             payment_method=method,
             plan_type=plan_type,
@@ -93,9 +95,9 @@ class SubscriptionPriceService:
 
     @staticmethod
     def _normalize_price(method: str, plan_type: str, amount: int, currency: str) -> tuple[int, str]:
-        if method == "visa":
-            normalized_amount, normalized_currency = normalize_visa_price(amount, currency)
-            if (normalized_currency or "").strip().lower() not in {"tjs", "somoni", "сомони"}:
-                return DEFAULT_SUBSCRIPTION_PRICES[("visa", plan_type)]
-            return normalized_amount, "TJS"
-        return amount, currency
+        # All mini app methods are now TJS card payments. Legacy ¥ rows are coerced
+        # back to the TJS default so old Alipay/WeChat prices don't leak through.
+        normalized_amount, normalized_currency = normalize_visa_price(amount, currency)
+        if (normalized_currency or "").strip().lower() not in {"tjs", "somoni", "сомони"}:
+            return DEFAULT_SUBSCRIPTION_PRICES[(method, plan_type)]
+        return normalized_amount, "TJS"

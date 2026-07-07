@@ -113,12 +113,12 @@
         },
         {
           "n": 7,
-          "zh": "今天几号",
-          "py": "jīntiān jǐ hào",
+          "zh": "Colors",
+          "py": "/ˈkʌlərz/",
           "tr": {
-            "uz": "Sanalar, haftaning kunlari va ketma-ket fe'l gaplarini o'rganish",
-            "ru": "Изучение дат, дней недели и предложений с последовательными глаголами",
-            "tj": "Омӯзиши санаҳо, рӯзҳои ҳафта ва ҷумлаҳо бо феъли пайдарпай"
+            "uz": "Ranglar va sifatlar",
+            "ru": "Цвета и прилагательные",
+            "tj": "Рангҳо ва сифатҳо"
           },
           "status": "locked",
           "content": "lesson_07",
@@ -126,12 +126,12 @@
         },
         {
           "n": 8,
-          "zh": "我想喝茶",
-          "py": "wǒ xiǎng hē chá",
+          "zh": "Common verbs",
+          "py": "/vɜːrbz/",
           "tr": {
-            "uz": "Istak bildirish, narx so'rash va o'lchov so'zlarini o'rganish",
-            "ru": "Выражение желаний, спрашивание цены и изучение счётных слов",
-            "tj": "Ифодаи орзуҳо, пурсидани нарх ва омӯзиши калимаҳои шуморавӣ"
+            "uz": "Kundalik fe'llar",
+            "ru": "Повседневные глаголы",
+            "tj": "Феълҳои ҳаррӯза"
           },
           "status": "locked",
           "content": "lesson_08",
@@ -139,12 +139,12 @@
         },
         {
           "n": 9,
-          "zh": "你儿子在哪儿工作",
-          "py": "nǐ érzi zài nǎr gōngzuò",
+          "zh": "Places",
+          "py": "/ˈpleɪsɪz/",
           "tr": {
-            "uz": "Joylashuv va ish joyi haqida so'rash, fe'l va predlog 在",
-            "ru": "Спрашивать о местонахождении и месте работы, глагол и предлог 在",
-            "tj": "Пурсидан дар бораи ҷойгиршавӣ ва ҷои кор, феъл ва пешояндаи 在"
+            "uz": "Joylar va go to",
+            "ru": "Места и go to",
+            "tj": "Ҷойҳо ва go to"
           },
           "status": "locked",
           "content": "lesson_09",
@@ -152,12 +152,12 @@
         },
         {
           "n": 10,
-          "zh": "我能坐这儿吗",
-          "py": "wǒ néng zuò zhèr ma",
+          "zh": "Time",
+          "py": "/taɪm/",
           "tr": {
-            "uz": "Joylashuvni ifodalash, 有-gaplar, modal fe'l 能 va bog'lovchi 和",
-            "ru": "Выражение местонахождения, предложения с 有, модальный глагол 能 и союз 和",
-            "tj": "Баёни ҷойгиршавӣ, ҷумлаҳои 有, феъли модалии 能 ва пайвандаки 和"
+            "uz": "Vaqt va soat",
+            "ru": "Время и часы",
+            "tj": "Вақт ва соат"
           },
           "status": "locked",
           "content": "lesson_10",
@@ -184,12 +184,12 @@
       "lessons": [
         {
           "n": 11,
-          "zh": "现在几点",
-          "py": "xiànzài jǐ diǎn",
+          "zh": "Weather",
+          "py": "/ˈweðər/",
           "tr": {
-            "uz": "Vaqtni aytish va so'rash, vaqt ravishi, 前 so'zi",
-            "ru": "Говорить и спрашивать о времени, временные наречия, слово 前",
-            "tj": "Гуфтан ва пурсидани вақт, зарфҳои вақт, калимаи 前"
+            "uz": "Ob-havo so'zlari",
+            "ru": "Слова о погоде",
+            "tj": "Калимаҳои обу ҳаво"
           },
           "status": "locked",
           "content": "lesson_11",

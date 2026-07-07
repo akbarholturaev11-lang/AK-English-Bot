@@ -13,7 +13,7 @@
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:-apple-system,"SF Pro Text","Segoe UI",Roboto,sans-serif}
-.han{font-family:"Songti SC","STSong","Noto Serif SC",serif;font-weight:600;letter-spacing:1px}
+.han{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-weight:600;letter-spacing:1px}
 .wrap{max-width:480px;margin:0 auto;min-height:100vh;position:relative;padding-top:var(--safe-t)}
 .scr{display:none;padding-bottom:calc(82px + var(--safe-b))}
 .scr.on{display:block}
@@ -227,7 +227,7 @@ button{cursor:pointer}
 .tokens{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:46px;border-bottom:2px dashed var(--line);padding-bottom:12px;margin-bottom:14px}
 .bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 .tok{background:var(--card);border:1.5px solid var(--line);border-radius:11px;padding:9px 15px;font-family:inherit;font-size:18px;color:var(--ink)}
-.tok.han{font-family:"Songti SC",serif;font-weight:600}
+.tok.han{font-family:Georgia,"Times New Roman",serif;font-weight:600}
 .pairs{display:flex;gap:10px}
 .pairs .col{flex:1;display:flex;flex-direction:column;gap:8px}
 .pcell{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:13px;text-align:center;font-family:inherit;font-size:16px;color:var(--ink)}
@@ -547,7 +547,7 @@ function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp
 function $(s){return document.querySelector(s)}
 var _ttsAudio=null;
 function clog(ev,msg,ex){try{var tg=window.Telegram&&window.Telegram.WebApp,c={ua:navigator.userAgent,plat:(tg&&tg.platform)||"",tgver:(tg&&tg.version)||"",page:location.pathname};if(ex)for(var k in ex)c[k]=ex[k];var b=JSON.stringify({event:ev,msg:msg||"",ctx:c});if(navigator.sendBeacon){navigator.sendBeacon("/api/v3/clientlog",new Blob([b],{type:"application/json"}))}else{fetch("/api/v3/clientlog",{method:"POST",headers:{"Content-Type":"application/json"},body:b,keepalive:true})}}catch(e){}}
-function _ttsFallback(t){try{clog("tts_fallback","",{t:(""+t).slice(0,16)})}catch(e){}try{window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="zh-CN";u.rate=.8;window.speechSynthesis.speak(u)}catch(e){}}
+function _ttsFallback(t){try{clog("tts_fallback","",{t:(""+t).slice(0,16)})}catch(e){}try{window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="en-GB";u.rate=.8;window.speechSynthesis.speak(u)}catch(e){}}
 function stopSpeak(){window._ttsTok=(window._ttsTok||0)+1;try{if(_ttsAudio){_ttsAudio.onplaying=null;_ttsAudio.onerror=null;_ttsAudio.pause();_ttsAudio=null}}catch(e){}try{window.speechSynthesis.cancel()}catch(e){}}
 function speak(t){if(!t)return;stopSpeak();var tok=window._ttsTok,st=0;try{var a=new Audio("/api/v3/tts?text="+encodeURIComponent(t));_ttsAudio=a;a.onplaying=function(){if(tok!==window._ttsTok){try{a.pause()}catch(e){}return}st=1};a.onerror=function(){if(tok!==window._ttsTok||st!==0)return;st=2;_ttsFallback(t)};var p=a.play();if(p&&p.catch)p.catch(function(){})}catch(e){if(tok===window._ttsTok&&st===0){st=2;_ttsFallback(t)}}}
 function haptic(t){try{tg&&tg.HapticFeedback&&(t==="ok"?tg.HapticFeedback.notificationOccurred("success"):t==="no"?tg.HapticFeedback.notificationOccurred("error"):tg.HapticFeedback.impactOccurred("light"))}catch(e){}}
@@ -1522,7 +1522,7 @@ function cardWordHanzi(c){
   var w=c.word||{};var opts=[w.zh].concat(_wrongWordOptions(c.words,"hanzi",w.zh)).slice(0,4);
   opts=opts.map(function(v,i){return {v:v,sort:Math.random()+i/100}}).sort(function(a,b){return a.sort-b.sort}).map(function(x){return x.v});
   var head='<div class="qcard"><div class="qpy" style="font-size:26px">'+esc(w.pinyin||"")+'</div><div class="tr" style="margin-top:8px;color:var(--ink2)">'+esc(tr(w.meaning))+'</div></div>';
-  _choiceFromWord(c,opts,opts.indexOf(w.zh),LANG==="ru"?"Выберите слово":LANG==="tj"?"Иероглифро интихоб кунед":"So'zni tanlang",{},head);
+  _choiceFromWord(c,opts,opts.indexOf(w.zh),LANG==="ru"?"Выберите слово":LANG==="tj"?"Калимаро интихоб кунед":"So'zni tanlang",{},head);
 }
 function cardWord(c){
   var w=c.word;$("#f-cta").style.display="flex";
@@ -2077,7 +2077,7 @@ function toast(msg,dur){
 }
 function chL(){return {
   ru:{title:"English-дуэль",load:"Загружаем дуэль…",same:"10 одинаковых вопросов для обоих игроков",mix:"Слова, произношение, перевод и грамматика вперемешку",accept:"Принять",reject:"Отклонить",start:"Начать раунд",wait:"Ожидаем соперника",waitSub:"Ваш результат сохранён. Когда соперник завершит раунд, бот пришлёт итог.",pending:"Соперник ещё не принял дуэль.",done:"Раунд завершён",youWon:"Вы победили",youLost:"Победил соперник",tie:"Ничья",score:"Счёт",xp:"XP получено",rating:"Открыть рейтинг",needTg:"Откройте в Telegram",err:"Дуэль не загрузилась",sent:"Результат сохранён"},
-  uz:{title:"English belashuv",load:"Belashuv yuklanyapti…",same:"Ikkala o'yinchiga 10 ta bir xil savol",mix:"So'z, pinyin, tarjima va grammatika aralash",accept:"Qabul qilish",reject:"Rad qilish",start:"Raundni boshlash",wait:"Raqibni kutyapmiz",waitSub:"Natijangiz saqlandi. Raqib yakunlasa, bot yakuniy hisobni yuboradi.",pending:"Raqib hali belashuvni qabul qilmadi.",done:"Raund tugadi",youWon:"Siz yutdingiz",youLost:"Raqib yutdi",tie:"Durrang",score:"Hisob",xp:"XP olindi",rating:"Reytingni ochish",needTg:"Telegram ichida oching",err:"Belashuv yuklanmadi",sent:"Natija saqlandi"},
+  uz:{title:"English belashuv",load:"Belashuv yuklanyapti…",same:"Ikkala o'yinchiga 10 ta bir xil savol",mix:"So'z, talaffuz, tarjima va grammatika aralash",accept:"Qabul qilish",reject:"Rad qilish",start:"Raundni boshlash",wait:"Raqibni kutyapmiz",waitSub:"Natijangiz saqlandi. Raqib yakunlasa, bot yakuniy hisobni yuboradi.",pending:"Raqib hali belashuvni qabul qilmadi.",done:"Raund tugadi",youWon:"Siz yutdingiz",youLost:"Raqib yutdi",tie:"Durrang",score:"Hisob",xp:"XP olindi",rating:"Reytingni ochish",needTg:"Telegram ichida oching",err:"Belashuv yuklanmadi",sent:"Natija saqlandi"},
   tj:{title:"Рақобати English",load:"Рақобат бор мешавад…",same:"Барои ҳар ду бозингар 10 саволи якхела",mix:"Калима, талаффуз, тарҷума ва грамматика омехта",accept:"Қабул",reject:"Рад кардан",start:"Оғози раунд",wait:"Рақибро интизорем",waitSub:"Натиҷаи шумо сабт шуд. Вақте рақиб анҷом диҳад, бот ҳисоби ниҳоиро мефиристад.",pending:"Рақиб ҳанӯз рақобатро қабул накардааст.",done:"Раунд анҷом шуд",youWon:"Шумо ғолиб шудед",youLost:"Рақиб ғолиб шуд",tie:"Мусовӣ",score:"Ҳисоб",xp:"XP гирифта шуд",rating:"Кушодани рейтинг",needTg:"Дар Telegram кушоед",err:"Рақобат бор нашуд",sent:"Натиҷа сабт шуд"}
 }[LANG]||{}}
 function challengeScore(ch,role){

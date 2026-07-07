@@ -365,9 +365,9 @@ const API={
 const PARAMS=new URLSearchParams(window.location.search);
 const INIT_DATA=tg?.initData||"";
 const PLAN_ORDER=["10_days","1_month","3_months"];
-const METHOD_ORDER=["visa","alipay","wechat"];
-const COUNTRY_ORDER=["tj","uz","ru","other"];
-const CARD_BANK_NAME="Dushanbe City";
+// "alipay" slot = Dushanbe City, "wechat" slot = Alif bank (both Tajik TJS cards).
+const METHOD_ORDER=["alipay","wechat","visa"];
+const COUNTRY_ORDER=["uz","ru","other"];
 const MODE_ORDER=["subscription","referral_discount","admin_discount","feedback_discount"];
 
 const I18N={
@@ -414,9 +414,9 @@ const I18N={
     discountProgress:"20% chegirma: {count}/{required} referral",
     planLabels:{ten:"10 kun",month:"1 oy",quarter:"3 oy",fast:"Tez start",best:"Eng foydali",quarterBadge:"Foydali",quarterNote:"≈ 2 TJS/kun"},
     methods:{
-      visa:["Bank karta / VISA","Tojik, o'zbek, rus yoki boshqa davlat kartasi"],
-      alipay:["Alipay","QR orqali yuan to'lovi"],
-      wechat:["WeChat Pay","QR orqali yuan to'lovi"]
+      alipay:["Dushanbe City","Tojikiston kartasi · TJS"],
+      wechat:["Alif bank","Tojikiston kartasi · TJS"],
+      visa:["VISA / Xalqaro","Rossiya, O'zbekiston yoki boshqa davlat kartasi"]
     },
     methodHint:"",
     countryTitle:"Karta qaysi davlatniki?",
@@ -511,9 +511,9 @@ const I18N={
     discountProgress:"Скидка 20%: {count}/{required} реферала",
     planLabels:{ten:"10 дней",month:"1 месяц",quarter:"3 месяца",fast:"Быстрый старт",best:"Выгодно",quarterBadge:"Выгодно",quarterNote:"≈ 2 TJS/день"},
     methods:{
-      visa:["Банковская карта / VISA","Карта Таджикистана, Узбекистана, России или другой страны"],
-      alipay:["Alipay","Оплата в юанях через QR"],
-      wechat:["WeChat Pay","Оплата в юанях через QR"]
+      alipay:["Dushanbe City","Карта Таджикистана · TJS"],
+      wechat:["Alif bank","Карта Таджикистана · TJS"],
+      visa:["VISA / Международная","Карта России, Узбекистана или другой страны"]
     },
     methodHint:"",
     countryTitle:"Из какой страны карта?",
@@ -608,9 +608,9 @@ const I18N={
     discountProgress:"20% тахфиф: {count}/{required} referral",
     planLabels:{ten:"10 рӯз",month:"1 моҳ",quarter:"3 моҳ",fast:"Оғози тез",best:"Фоиданок",quarterBadge:"Фоиданок",quarterNote:"≈ 2 TJS/рӯз"},
     methods:{
-      visa:["Корти бонкӣ / VISA","Корти тоҷик, ӯзбек, рус ё дигар давлат"],
-      alipay:["Alipay","Пардохти юан бо QR"],
-      wechat:["WeChat Pay","Пардохти юан бо QR"]
+      alipay:["Dushanbe City","Корти Тоҷикистон · TJS"],
+      wechat:["Alif bank","Корти Тоҷикистон · TJS"],
+      visa:["VISA / Байналмилалӣ","Корти Русия, Ӯзбекистон ё дигар давлат"]
     },
     methodHint:"",
     countryTitle:"Кортатон аз кадом давлат аст?",
@@ -673,8 +673,8 @@ const state={
   preview:!INIT_DATA,
   overview:null,
   plan:PLAN_ORDER.includes(PARAMS.get("plan"))?PARAMS.get("plan"):"10_days",
-  method:METHOD_ORDER.includes(PARAMS.get("method"))?PARAMS.get("method"):"visa",
-  country:"tj",
+  method:METHOD_ORDER.includes(PARAMS.get("method"))?PARAMS.get("method"):"alipay",
+  country:"uz",
   step:0,
   quote:null,
   screenshotDataUrl:"",
@@ -804,22 +804,27 @@ function mockOverview(){
     pending_payment:null,
     offer:special?{type:state.mode,available:true,percent,title:"Preview discount"}:null,
     discount:{referral_20_available:false,referral_count:0,referral_required:3,discount_used:false,offer_started:false,referral_link:""},
-    payment_details:"Preview karta rekviziti\nNAME: English AI\nCARD: 0000 0000 0000 0000",
+    payment_details:"Preview VISA rekviziti\nNAME: English AI\nCARD: 0000 0000 0000 0000",
+    payment_details_map:{
+      alipay:"Preview Dushanbe City\nNAME: English AI\nCARD: 1111 1111 1111 1111",
+      wechat:"Preview Alif bank\nNAME: English AI\nCARD: 2222 2222 2222 2222",
+      visa:"Preview VISA rekviziti\nNAME: English AI\nCARD: 0000 0000 0000 0000"
+    },
     prices:{
-      visa:{
+      alipay:{
         "10_days":apply({base_amount:29,final_amount:29,currency:"TJS",discount_applied:false,discount_percent:0}),
         "1_month":apply({base_amount:89,final_amount:89,currency:"TJS",discount_applied:false,discount_percent:0}),
         "3_months":apply({base_amount:179,final_amount:179,currency:"TJS",discount_applied:false,discount_percent:0})
       },
-      alipay:{
-        "10_days":apply({base_amount:29,final_amount:29,currency:"¥",discount_applied:false,discount_percent:0}),
-        "1_month":apply({base_amount:66,final_amount:66,currency:"¥",discount_applied:false,discount_percent:0}),
-        "3_months":apply({base_amount:179,final_amount:179,currency:"¥",discount_applied:false,discount_percent:0})
-      },
       wechat:{
-        "10_days":apply({base_amount:29,final_amount:29,currency:"¥",discount_applied:false,discount_percent:0}),
-        "1_month":apply({base_amount:66,final_amount:66,currency:"¥",discount_applied:false,discount_percent:0}),
-        "3_months":apply({base_amount:179,final_amount:179,currency:"¥",discount_applied:false,discount_percent:0})
+        "10_days":apply({base_amount:29,final_amount:29,currency:"TJS",discount_applied:false,discount_percent:0}),
+        "1_month":apply({base_amount:89,final_amount:89,currency:"TJS",discount_applied:false,discount_percent:0}),
+        "3_months":apply({base_amount:179,final_amount:179,currency:"TJS",discount_applied:false,discount_percent:0})
+      },
+      visa:{
+        "10_days":apply({base_amount:29,final_amount:29,currency:"TJS",discount_applied:false,discount_percent:0}),
+        "1_month":apply({base_amount:89,final_amount:89,currency:"TJS",discount_applied:false,discount_percent:0}),
+        "3_months":apply({base_amount:179,final_amount:179,currency:"TJS",discount_applied:false,discount_percent:0})
       }
     }
   };
@@ -850,8 +855,8 @@ function mockQuote(){
     exchange_rate:state.method==="visa"?card.rate:"",
     discount_applied:info.discount_applied,
     discount_percent:info.discount_percent,
-    payment_details:state.method==="visa"?(state.overview?.payment_details||mockOverview().payment_details):"",
-    qr:state.method==="visa"?null:{available:false}
+    payment_details:(state.overview?.payment_details_map||mockOverview().payment_details_map)[state.method]||"",
+    qr:null
   };
 }
 function fallbackOverview(){
@@ -1019,7 +1024,7 @@ function renderStart(text){
   $("#methodsTitle").textContent=text.methodsTitle;
   $("#methodHint").textContent=text.methodHint;
   $("#methodHint").style.display=text.methodHint?"block":"none";
-  const methodIcons={visa:"💳",alipay:"A",wechat:"W"};
+  const methodIcons={visa:"💳",alipay:"D",wechat:"A"};
   $("#methods").innerHTML=availableMethods().map(method=>{
     const item=text.methods[method];
     const selected=state.method===method?"selected":"";
@@ -1128,27 +1133,10 @@ function renderPay(text){
     [text.rows.plan,planText],
     [text.rows.method,methodText]
   ];
-  if(state.method==="visa"){
-    rows.push([text.rows.bank,CARD_BANK_NAME]);
-    if(state.country!=="tj"&&quote.exchange_rate)rows.push([text.rows.rate,quote.exchange_rate]);
-  }
+  if(state.method==="visa"&&quote.exchange_rate)rows.push([text.rows.rate,quote.exchange_rate]);
   $("#summaryRows").innerHTML=rows.map(row=>`<div class="row"><span>${row[0]}</span><strong>${row[1]}</strong></div>`).join("");
-  if(state.method==="visa"){
-    $("#paymentBox").innerHTML=renderPaymentDetails(quote.payment_details||state.overview?.payment_details||"",text);
-  }else if(quote.qr?.available&&quote.qr?.image_data_url){
-    $("#paymentBox").innerHTML=`<h4>${text.qrTitle}</h4>
-      <button class="qr qr-tappable" type="button" data-qr-toggle aria-label="${escapeAttr(text.downloadQr)}">
-        <img src="${quote.qr.image_data_url}" alt="QR">
-      </button>
-      <p class="qr-hint">${text.qrTapHint}</p>
-      <div class="qr-actions ${state.qrActionsOpen?"show":""}">
-        <div class="qr-actions-inner">
-          <button class="qr-download" type="button" data-open-qr-preview>${text.downloadQr}</button>
-        </div>
-      </div>`;
-  }else{
-    $("#paymentBox").innerHTML=`<h4>${text.qrTitle}</h4><div class="qr empty">${text.qrMissing}</div>`;
-  }
+  const details=quote.payment_details||state.overview?.payment_details_map?.[state.method]||"";
+  $("#paymentBox").innerHTML=renderPaymentDetails(details,text);
   $("#uploadTitle").textContent=state.screenshotName?text.uploaded.replace("{name}",state.screenshotName):text.uploadTitle;
   $("#uploadText").textContent=state.screenshotName?text.uploadText:text.uploadText;
   $("#uploadPlus").textContent=state.screenshotDataUrl?"✓":"+";
@@ -1185,7 +1173,7 @@ function paymentDetailRows(details){
 }
 function cardInstructionText(text){
   const hints=text.cardHints||{};
-  if(state.country==="tj")return hints.tj||text.detailsHint;
+  if(state.method!=="visa")return text.detailsHint;
   return hints.foreign||text.detailsHint;
 }
 function renderPaymentDetails(details,text){

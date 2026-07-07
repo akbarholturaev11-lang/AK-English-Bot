@@ -11,19 +11,103 @@
   "intro_prebuilt": true,
   "grammar_prebuilt": true,
   "active_words": [
-    {"no": 1, "zh": "one", "pinyin": "/wʌn/", "pos": "num.", "meaning": {"uz": "bir", "ru": "один", "tj": "як"}},
-    {"no": 2, "zh": "two", "pinyin": "/tuː/", "pos": "num.", "meaning": {"uz": "ikki", "ru": "два", "tj": "ду"}},
-    {"no": 3, "zh": "three", "pinyin": "/θriː/", "pos": "num.", "meaning": {"uz": "uch", "ru": "три", "tj": "се"}},
-    {"no": 4, "zh": "four", "pinyin": "/fɔːr/", "pos": "num.", "meaning": {"uz": "to'rt", "ru": "четыре", "tj": "чор"}},
-    {"no": 5, "zh": "five", "pinyin": "/faɪv/", "pos": "num.", "meaning": {"uz": "besh", "ru": "пять", "tj": "панҷ"}},
-    {"no": 6, "zh": "ten", "pinyin": "/ten/", "pos": "num.", "meaning": {"uz": "o'n", "ru": "десять", "tj": "даҳ"}},
-    {"no": 7, "zh": "How old are you?", "pinyin": "/haʊ oʊld ɑːr juː/", "pos": "expr.", "meaning": {"uz": "necha yoshdasiz?", "ru": "сколько вам лет?", "tj": "чандсола ҳастед?"}},
-    {"no": 8, "zh": "years old", "pinyin": "/jɪrz oʊld/", "pos": "expr.", "meaning": {"uz": "yoshda", "ru": "лет (о возрасте)", "tj": "сола"}}
+    {
+      "no": 1,
+      "zh": "one",
+      "pinyin": "WUN",
+      "pos": "num.",
+      "meaning": {
+        "uz": "bir",
+        "ru": "один",
+        "tj": "як"
+      }
+    },
+    {
+      "no": 2,
+      "zh": "two",
+      "pinyin": "TOO",
+      "pos": "num.",
+      "meaning": {
+        "uz": "ikki",
+        "ru": "два",
+        "tj": "ду"
+      }
+    },
+    {
+      "no": 3,
+      "zh": "three",
+      "pinyin": "THREE",
+      "pos": "num.",
+      "meaning": {
+        "uz": "uch",
+        "ru": "три",
+        "tj": "се"
+      }
+    },
+    {
+      "no": 4,
+      "zh": "four",
+      "pinyin": "FOR",
+      "pos": "num.",
+      "meaning": {
+        "uz": "to'rt",
+        "ru": "четыре",
+        "tj": "чор"
+      }
+    },
+    {
+      "no": 5,
+      "zh": "five",
+      "pinyin": "FYV",
+      "pos": "num.",
+      "meaning": {
+        "uz": "besh",
+        "ru": "пять",
+        "tj": "панҷ"
+      }
+    },
+    {
+      "no": 6,
+      "zh": "ten",
+      "pinyin": "TEN",
+      "pos": "num.",
+      "meaning": {
+        "uz": "o'n",
+        "ru": "десять",
+        "tj": "даҳ"
+      }
+    },
+    {
+      "no": 7,
+      "zh": "How old are you?",
+      "pinyin": "how-OLD-ar-yoo",
+      "pos": "expr.",
+      "meaning": {
+        "uz": "necha yoshdasiz?",
+        "ru": "сколько вам лет?",
+        "tj": "чандсола ҳастед?"
+      }
+    },
+    {
+      "no": 8,
+      "zh": "years old",
+      "pinyin": "YEERZ-old",
+      "pos": "expr.",
+      "meaning": {
+        "uz": "yoshda",
+        "ru": "лет (о возрасте)",
+        "tj": "сола"
+      }
+    }
   ],
   "grammar": [
     {
       "no": 1,
-      "title": {"uz": "1-10 raqamlari", "ru": "Числа 1-10", "tj": "Рақамҳои 1-10"},
+      "title": {
+        "uz": "1-10 raqamlari",
+        "ru": "Числа 1-10",
+        "tj": "Рақамҳои 1-10"
+      },
       "title_zh": "numbers",
       "rule": {
         "uz": "one(1), two(2), three(3), four(4), five(5), six(6), seven(7), eight(8), nine(9), ten(10).\nMisol: I have two friends.",
@@ -33,7 +117,11 @@
     },
     {
       "no": 2,
-      "title": {"uz": "Yoshni aytish", "ru": "Как назвать возраст", "tj": "Гуфтани син"},
+      "title": {
+        "uz": "Yoshni aytish",
+        "ru": "Как назвать возраст",
+        "tj": "Гуфтани син"
+      },
       "title_zh": "age",
       "rule": {
         "uz": "So'rash: How old are you?\nJavob: I am ten years old. / I'm ten.\n'am' — I bilan, 'is' — he/she bilan ishlatiladi.",
@@ -44,77 +132,634 @@
   ],
   "dialogues": [
     {
-      "scene": {"uz": "Yosh haqida so'rash", "ru": "Спрашиваем возраст", "tj": "Дар бораи син пурсидан"},
+      "scene": {
+        "uz": "Yosh haqida so'rash",
+        "ru": "Спрашиваем возраст",
+        "tj": "Дар бораи син пурсидан"
+      },
       "dialogue": [
-        {"speaker": "A", "zh": "How old are you?", "pinyin": "/haʊ oʊld ɑːr juː/", "text": {"uz": "Necha yoshdasiz?", "ru": "Сколько вам лет?", "tj": "Чандсола ҳастед?"}},
-        {"speaker": "B", "zh": "I am ten years old.", "pinyin": "/aɪ æm ten jɪrz oʊld/", "text": {"uz": "Men o'n yoshdaman.", "ru": "Мне десять лет.", "tj": "Ман даҳсола ҳастам."}}
+        {
+          "speaker": "A",
+          "zh": "How old are you?",
+          "pinyin": "",
+          "text": {
+            "uz": "Necha yoshdasiz?",
+            "ru": "Сколько вам лет?",
+            "tj": "Чандсола ҳастед?"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "I am ten years old.",
+          "pinyin": "",
+          "text": {
+            "uz": "Men o'n yoshdaman.",
+            "ru": "Мне десять лет.",
+            "tj": "Ман даҳсола ҳастам."
+          }
+        }
       ]
     },
     {
-      "scene": {"uz": "Sanoq", "ru": "Считаем", "tj": "Ҳисоб мекунем"},
+      "scene": {
+        "uz": "Sanoq",
+        "ru": "Считаем",
+        "tj": "Ҳисоб мекунем"
+      },
       "dialogue": [
-        {"speaker": "A", "zh": "One, two, three!", "pinyin": "/wʌn tuː θriː/", "text": {"uz": "Bir, ikki, uch!", "ru": "Один, два, три!", "tj": "Як, ду, се!"}},
-        {"speaker": "B", "zh": "Four, five!", "pinyin": "/fɔːr faɪv/", "text": {"uz": "To'rt, besh!", "ru": "Четыре, пять!", "tj": "Чор, панҷ!"}}
+        {
+          "speaker": "A",
+          "zh": "One, two, three!",
+          "pinyin": "",
+          "text": {
+            "uz": "Bir, ikki, uch!",
+            "ru": "Один, два, три!",
+            "tj": "Як, ду, се!"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "Four, five!",
+          "pinyin": "",
+          "text": {
+            "uz": "To'rt, besh!",
+            "ru": "Четыре, пять!",
+            "tj": "Чор, панҷ!"
+          }
+        }
       ]
     },
     {
-      "scene": {"uz": "Nechta?", "ru": "Сколько?", "tj": "Чандто?"},
+      "scene": {
+        "uz": "Nechta?",
+        "ru": "Сколько?",
+        "tj": "Чандто?"
+      },
       "dialogue": [
-        {"speaker": "A", "zh": "How many friends?", "pinyin": "/haʊ ˈmeni frendz/", "text": {"uz": "Nechta do'st?", "ru": "Сколько друзей?", "tj": "Чандто дӯст?"}},
-        {"speaker": "B", "zh": "Two friends.", "pinyin": "/tuː frendz/", "text": {"uz": "Ikkita do'st.", "ru": "Два друга.", "tj": "Ду дӯст."}}
+        {
+          "speaker": "A",
+          "zh": "How many friends?",
+          "pinyin": "",
+          "text": {
+            "uz": "Nechta do'st?",
+            "ru": "Сколько друзей?",
+            "tj": "Чандто дӯст?"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "Two friends.",
+          "pinyin": "",
+          "text": {
+            "uz": "Ikkita do'st.",
+            "ru": "Два друга.",
+            "tj": "Ду дӯст."
+          }
+        }
       ]
     }
   ],
   "sections": [
     {
       "section_no": 1,
-      "section_title": {"uz": "Yangi so'zlar", "ru": "Новые слова", "tj": "Калимаҳои нав"},
+      "section_title": {
+        "uz": "Yangi so'zlar",
+        "ru": "Новые слова",
+        "tj": "Калимаҳои нав"
+      },
       "section_purpose": "intro",
       "cards": [
-        {"type": "active_word", "word": {"no": 1, "zh": "one", "pinyin": "/wʌn/", "pos": "num.", "meaning": {"uz": "bir", "ru": "один", "tj": "як"}}},
-        {"type": "active_word", "word": {"no": 2, "zh": "two", "pinyin": "/tuː/", "pos": "num.", "meaning": {"uz": "ikki", "ru": "два", "tj": "ду"}}},
-        {"type": "meaning_guess", "prompt": {"uz": "«three» ma'nosini tanlang:", "ru": "Выберите значение «three»:", "tj": "Маънои «three»-ро интихоб кунед:"}, "title": {"uz": "Ma'nosi nima?", "ru": "Что означает?", "tj": "Маъно чист?"}, "options": [{"uz": "uch", "ru": "три", "tj": "се"}, {"uz": "besh", "ru": "пять", "tj": "панҷ"}, {"uz": "o'n", "ru": "десять", "tj": "даҳ"}, {"uz": "bir", "ru": "один", "tj": "як"}], "correct_index": 0},
-        {"type": "active_word", "word": {"no": 3, "zh": "three", "pinyin": "/θriː/", "pos": "num.", "meaning": {"uz": "uch", "ru": "три", "tj": "се"}}},
-        {"type": "active_word", "word": {"no": 4, "zh": "four", "pinyin": "/fɔːr/", "pos": "num.", "meaning": {"uz": "to'rt", "ru": "четыре", "tj": "чор"}}},
-        {"type": "hanzi_choice", "prompt": {"uz": "«/faɪv/» qaysi so'z?", "ru": "Какое слово читается «/faɪv/»?", "tj": "«/faɪv/» кадом калима аст?"}, "title": {"uz": "So'zni tanlang", "ru": "Выберите слово", "tj": "Калимаро интихоб кунед"}, "options": ["four", "five", "ten", "two"], "correct_index": 1},
-        {"type": "active_word", "word": {"no": 5, "zh": "five", "pinyin": "/faɪv/", "pos": "num.", "meaning": {"uz": "besh", "ru": "пять", "tj": "панҷ"}}},
-        {"type": "active_word", "word": {"no": 6, "zh": "ten", "pinyin": "/ten/", "pos": "num.", "meaning": {"uz": "o'n", "ru": "десять", "tj": "даҳ"}}},
-        {"type": "pinyin_choice", "prompt": {"uz": "«two» talaffuzini tanlang:", "ru": "Выберите произношение «two»:", "tj": "Талаффузи «two»-ро интихоб кунед:"}, "title": {"uz": "Qanday o'qiladi?", "ru": "Как читается?", "tj": "Чӣ хел хонда мешавад?"}, "options": ["/tuː/", "/ten/", "/wʌn/", "/faɪv/"], "correct_index": 0},
-        {"type": "match_pairs", "pairs": [["one", {"uz": "bir", "ru": "один", "tj": "як"}], ["three", {"uz": "uch", "ru": "три", "tj": "се"}], ["five", {"uz": "besh", "ru": "пять", "tj": "панҷ"}], ["ten", {"uz": "o'n", "ru": "десять", "tj": "даҳ"}]]}
+        {
+          "type": "active_word",
+          "word": {
+            "no": 1,
+            "zh": "one",
+            "pinyin": "WUN",
+            "pos": "num.",
+            "meaning": {
+              "uz": "bir",
+              "ru": "один",
+              "tj": "як"
+            }
+          }
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 2,
+            "zh": "two",
+            "pinyin": "TOO",
+            "pos": "num.",
+            "meaning": {
+              "uz": "ikki",
+              "ru": "два",
+              "tj": "ду"
+            }
+          }
+        },
+        {
+          "type": "meaning_guess",
+          "prompt": {
+            "uz": "«three» ma'nosini tanlang:",
+            "ru": "Выберите значение «three»:",
+            "tj": "Маънои «three»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Ma'nosi nima?",
+            "ru": "Что означает?",
+            "tj": "Маъно чист?"
+          },
+          "options": [
+            {
+              "uz": "uch",
+              "ru": "три",
+              "tj": "се"
+            },
+            {
+              "uz": "besh",
+              "ru": "пять",
+              "tj": "панҷ"
+            },
+            {
+              "uz": "o'n",
+              "ru": "десять",
+              "tj": "даҳ"
+            },
+            {
+              "uz": "bir",
+              "ru": "один",
+              "tj": "як"
+            }
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 3,
+            "zh": "three",
+            "pinyin": "THREE",
+            "pos": "num.",
+            "meaning": {
+              "uz": "uch",
+              "ru": "три",
+              "tj": "се"
+            }
+          }
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 4,
+            "zh": "four",
+            "pinyin": "FOR",
+            "pos": "num.",
+            "meaning": {
+              "uz": "to'rt",
+              "ru": "четыре",
+              "tj": "чор"
+            }
+          }
+        },
+        {
+          "type": "hanzi_choice",
+          "prompt": {
+            "uz": "«FYV» qaysi so'z?",
+            "ru": "Какое слово читается «FYV»?",
+            "tj": "«FYV» кадом калима аст?"
+          },
+          "title": {
+            "uz": "So'zni tanlang",
+            "ru": "Выберите слово",
+            "tj": "Калимаро интихоб кунед"
+          },
+          "options": [
+            "four",
+            "five",
+            "ten",
+            "two"
+          ],
+          "correct_index": 1
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 5,
+            "zh": "five",
+            "pinyin": "FYV",
+            "pos": "num.",
+            "meaning": {
+              "uz": "besh",
+              "ru": "пять",
+              "tj": "панҷ"
+            }
+          }
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 6,
+            "zh": "ten",
+            "pinyin": "TEN",
+            "pos": "num.",
+            "meaning": {
+              "uz": "o'n",
+              "ru": "десять",
+              "tj": "даҳ"
+            }
+          }
+        },
+        {
+          "type": "pinyin_choice",
+          "prompt": {
+            "uz": "«two» talaffuzini tanlang:",
+            "ru": "Выберите произношение «two»:",
+            "tj": "Талаффузи «two»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Qanday o'qiladi?",
+            "ru": "Как читается?",
+            "tj": "Чӣ хел хонда мешавад?"
+          },
+          "options": [
+            "TOO",
+            "TEN",
+            "WUN",
+            "FYV"
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "match_pairs",
+          "pairs": [
+            [
+              "one",
+              {
+                "uz": "bir",
+                "ru": "один",
+                "tj": "як"
+              }
+            ],
+            [
+              "three",
+              {
+                "uz": "uch",
+                "ru": "три",
+                "tj": "се"
+              }
+            ],
+            [
+              "five",
+              {
+                "uz": "besh",
+                "ru": "пять",
+                "tj": "панҷ"
+              }
+            ],
+            [
+              "ten",
+              {
+                "uz": "o'n",
+                "ru": "десять",
+                "tj": "даҳ"
+              }
+            ]
+          ]
+        }
       ]
     },
     {
       "section_no": 2,
-      "section_title": {"uz": "Grammatika", "ru": "Грамматика", "tj": "Грамматика"},
+      "section_title": {
+        "uz": "Grammatika",
+        "ru": "Грамматика",
+        "tj": "Грамматика"
+      },
       "section_purpose": "grammar",
       "cards": [
-        {"type": "_grammar", "g": {"no": 1, "title": {"uz": "1-10 raqamlari", "ru": "Числа 1-10", "tj": "Рақамҳои 1-10"}, "title_zh": "numbers", "rule": {"uz": "one(1) two(2) three(3) four(4) five(5) ... ten(10).\nMisol: I have two friends.", "ru": "one(1) two(2) three(3) four(4) five(5) ... ten(10).\nПример: I have two friends.", "tj": "one(1) two(2) three(3) four(4) five(5) ... ten(10).\nМисол: I have two friends."}}},
-        {"type": "_grammar", "g": {"no": 2, "title": {"uz": "Yoshni aytish", "ru": "Как назвать возраст", "tj": "Гуфтани син"}, "title_zh": "age", "rule": {"uz": "How old are you?\nI am ten years old. / I'm ten.", "ru": "How old are you?\nI am ten years old. / I'm ten.", "tj": "How old are you?\nI am ten years old. / I'm ten."}}},
-        {"type": "sentence_builder", "sentence": {"uz": "«Men o'n yoshdaman.»", "ru": "«Мне десять лет.»", "tj": "«Ман даҳсола ҳастам.»"}, "tokens": ["old", "am", "ten", "I", "years"], "answer_tokens": ["I", "am", "ten", "years", "old"], "explanation": {"uz": "I am ... years old — yoshni aytish.", "ru": "I am ... years old — назвать возраст.", "tj": "I am ... years old — гуфтани син."}},
-        {"type": "quick_quiz", "prompt": {"uz": "«Besh» — inglizchada qaysi?", "ru": "«Пять» — как по-английски?", "tj": "«Панҷ» — ба англисӣ кадом?"}, "title": {"uz": "To'g'ri javobni tanlang", "ru": "Выберите правильный ответ", "tj": "Ҷавоби дурустро интихоб кунед"}, "options": ["four", "five", "ten", "three"], "correct_index": 1}
+        {
+          "type": "_grammar",
+          "g": {
+            "no": 1,
+            "title": {
+              "uz": "1-10 raqamlari",
+              "ru": "Числа 1-10",
+              "tj": "Рақамҳои 1-10"
+            },
+            "title_zh": "numbers",
+            "rule": {
+              "uz": "one(1) two(2) three(3) four(4) five(5) ... ten(10).\nMisol: I have two friends.",
+              "ru": "one(1) two(2) three(3) four(4) five(5) ... ten(10).\nПример: I have two friends.",
+              "tj": "one(1) two(2) three(3) four(4) five(5) ... ten(10).\nМисол: I have two friends."
+            }
+          }
+        },
+        {
+          "type": "_grammar",
+          "g": {
+            "no": 2,
+            "title": {
+              "uz": "Yoshni aytish",
+              "ru": "Как назвать возраст",
+              "tj": "Гуфтани син"
+            },
+            "title_zh": "age",
+            "rule": {
+              "uz": "How old are you?\nI am ten years old. / I'm ten.",
+              "ru": "How old are you?\nI am ten years old. / I'm ten.",
+              "tj": "How old are you?\nI am ten years old. / I'm ten."
+            }
+          }
+        },
+        {
+          "type": "sentence_builder",
+          "sentence": {
+            "uz": "«Men o'n yoshdaman.»",
+            "ru": "«Мне десять лет.»",
+            "tj": "«Ман даҳсола ҳастам.»"
+          },
+          "tokens": [
+            "old",
+            "am",
+            "ten",
+            "I",
+            "years"
+          ],
+          "answer_tokens": [
+            "I",
+            "am",
+            "ten",
+            "years",
+            "old"
+          ],
+          "explanation": {
+            "uz": "I am ... years old — yoshni aytish.",
+            "ru": "I am ... years old — назвать возраст.",
+            "tj": "I am ... years old — гуфтани син."
+          }
+        },
+        {
+          "type": "quick_quiz",
+          "prompt": {
+            "uz": "«Besh» — inglizchada qaysi?",
+            "ru": "«Пять» — как по-английски?",
+            "tj": "«Панҷ» — ба англисӣ кадом?"
+          },
+          "title": {
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
+          },
+          "options": [
+            "four",
+            "five",
+            "ten",
+            "three"
+          ],
+          "correct_index": 1
+        }
       ]
     },
     {
       "section_no": 3,
-      "section_title": {"uz": "Mashq", "ru": "Практика", "tj": "Машқ"},
+      "section_title": {
+        "uz": "Mashq",
+        "ru": "Практика",
+        "tj": "Машқ"
+      },
       "section_purpose": "practice",
       "cards": [
-        {"type": "pinyin_choice", "prompt": {"uz": "«ten» talaffuzini tanlang:", "ru": "Выберите произношение «ten»:", "tj": "Талаффузи «ten»-ро интихоб кунед:"}, "title": {"uz": "Qanday o'qiladi?", "ru": "Как читается?", "tj": "Чӣ хел хонда мешавад?"}, "options": ["/ten/", "/tuː/", "/θriː/", "/wʌn/"], "correct_index": 0},
-        {"type": "meaning_guess", "prompt": {"uz": "«one» ma'nosini tanlang:", "ru": "Выберите значение «one»:", "tj": "Маънои «one»-ро интихоб кунед:"}, "title": {"uz": "Ma'nosi nima?", "ru": "Что означает?", "tj": "Маъно чист?"}, "options": [{"uz": "bir", "ru": "один", "tj": "як"}, {"uz": "ikki", "ru": "два", "tj": "ду"}, {"uz": "o'n", "ru": "десять", "tj": "даҳ"}, {"uz": "to'rt", "ru": "четыре", "tj": "чор"}], "correct_index": 0},
-        {"type": "listening_choice", "title": {"uz": "Eshitganingizni tanlang", "ru": "Выберите, что вы услышали", "tj": "Он чи шунидед, интихоб кунед"}, "audio_text": "How old are you?", "pinyin": "/haʊ oʊld ɑːr juː/", "options": ["How many friends?", "How old are you?", "What is your name?", "Nice to meet you!"], "correct_index": 1, "explanation": {"uz": "How old are you? = necha yoshdasiz?", "ru": "How old are you? = сколько вам лет?", "tj": "How old are you? = чандсола ҳастед?"}},
-        {"type": "match_pairs", "pairs": [["two", {"uz": "ikki", "ru": "два", "tj": "ду"}], ["four", {"uz": "to'rt", "ru": "четыре", "tj": "чор"}], ["years old", {"uz": "yoshda", "ru": "лет", "tj": "сола"}], ["How old are you?", {"uz": "necha yoshdasiz?", "ru": "сколько вам лет?", "tj": "чандсола?"}]]},
-        {"type": "pronunciation", "phrase": "I am ten years old", "pinyin": "/aɪ æm ten jɪrz oʊld/", "translation": {"uz": "Men o'n yoshdaman", "ru": "Мне десять лет", "tj": "Ман даҳсола ҳастам"}}
+        {
+          "type": "pinyin_choice",
+          "prompt": {
+            "uz": "«ten» talaffuzini tanlang:",
+            "ru": "Выберите произношение «ten»:",
+            "tj": "Талаффузи «ten»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Qanday o'qiladi?",
+            "ru": "Как читается?",
+            "tj": "Чӣ хел хонда мешавад?"
+          },
+          "options": [
+            "TEN",
+            "TOO",
+            "THREE",
+            "WUN"
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "meaning_guess",
+          "prompt": {
+            "uz": "«one» ma'nosini tanlang:",
+            "ru": "Выберите значение «one»:",
+            "tj": "Маънои «one»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Ma'nosi nima?",
+            "ru": "Что означает?",
+            "tj": "Маъно чист?"
+          },
+          "options": [
+            {
+              "uz": "bir",
+              "ru": "один",
+              "tj": "як"
+            },
+            {
+              "uz": "ikki",
+              "ru": "два",
+              "tj": "ду"
+            },
+            {
+              "uz": "o'n",
+              "ru": "десять",
+              "tj": "даҳ"
+            },
+            {
+              "uz": "to'rt",
+              "ru": "четыре",
+              "tj": "чор"
+            }
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "listening_choice",
+          "title": {
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
+          },
+          "audio_text": "How old are you?",
+          "pinyin": "",
+          "options": [
+            "How many friends?",
+            "How old are you?",
+            "What is your name?",
+            "Nice to meet you!"
+          ],
+          "correct_index": 1,
+          "explanation": {
+            "uz": "How old are you? = necha yoshdasiz?",
+            "ru": "How old are you? = сколько вам лет?",
+            "tj": "How old are you? = чандсола ҳастед?"
+          }
+        },
+        {
+          "type": "match_pairs",
+          "pairs": [
+            [
+              "two",
+              {
+                "uz": "ikki",
+                "ru": "два",
+                "tj": "ду"
+              }
+            ],
+            [
+              "four",
+              {
+                "uz": "to'rt",
+                "ru": "четыре",
+                "tj": "чор"
+              }
+            ],
+            [
+              "years old",
+              {
+                "uz": "yoshda",
+                "ru": "лет",
+                "tj": "сола"
+              }
+            ],
+            [
+              "How old are you?",
+              {
+                "uz": "necha yoshdasiz?",
+                "ru": "сколько вам лет?",
+                "tj": "чандсола?"
+              }
+            ]
+          ]
+        },
+        {
+          "type": "pronunciation",
+          "phrase": "I am ten years old",
+          "pinyin": "",
+          "translation": {
+            "uz": "Men o'n yoshdaman",
+            "ru": "Мне десять лет",
+            "tj": "Ман даҳсола ҳастам"
+          }
+        }
       ]
     },
     {
       "section_no": 4,
-      "section_title": {"uz": "Dialog", "ru": "Диалог", "tj": "Муколама"},
+      "section_title": {
+        "uz": "Dialog",
+        "ru": "Диалог",
+        "tj": "Муколама"
+      },
       "section_purpose": "dialog",
       "cards": [
-        {"type": "listening_choice", "title": {"uz": "Eshitganingizni tanlang", "ru": "Выберите, что вы услышали", "tj": "Он чи шунидед, интихоб кунед"}, "audio_text": "Two friends.", "pinyin": "/tuː frendz/", "options": ["Two friends.", "Ten years old.", "How old are you?", "One, two, three!"], "correct_index": 0, "explanation": {"uz": "two = ikki.", "ru": "two = два.", "tj": "two = ду."}},
-        {"type": "gap_fill", "sentence": "I am ten ____ old.", "prompt": {"uz": "Bo'sh joyga mos so'zni tanlang:", "ru": "Выберите подходящее слово:", "tj": "Калимаи мувофиқро интихоб кунед:"}, "options": ["year", "years", "old", "name"], "correct_index": 1, "explanation": {"uz": "... years old — yoshni bildiradi.", "ru": "... years old — о возрасте.", "tj": "... years old — синро мефаҳмонад."}},
-        {"type": "dialog_cloze", "title": {"uz": "Dialogni to'ldiring", "ru": "Дополните диалог", "tj": "Муколамаро пурра кунед"}, "lines": [{"speaker": "A", "zh": "How old are you?", "blank": false}, {"speaker": "B", "zh": "", "blank": true}], "options": ["I am ten years old.", "My name is Anna.", "Nice to meet you!", "Goodbye!"], "correct_index": 0, "explanation": {"uz": "Yoshni 'I am ... years old' bilan aytamiz.", "ru": "Возраст — 'I am ... years old'.", "tj": "Синро бо 'I am ... years old' мегӯем."}},
-        {"type": "quick_quiz", "prompt": {"uz": "Qaysi tartib to'g'ri?", "ru": "Какой порядок правильный?", "tj": "Кадом тартиб дуруст?"}, "title": {"uz": "To'g'ri javobni tanlang", "ru": "Выберите правильный ответ", "tj": "Ҷавоби дурустро интихоб кунед"}, "options": ["one, two, three", "one, three, two", "two, one, three", "three, two, one"], "correct_index": 0}
+        {
+          "type": "listening_choice",
+          "title": {
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
+          },
+          "audio_text": "Two friends.",
+          "pinyin": "",
+          "options": [
+            "Two friends.",
+            "Ten years old.",
+            "How old are you?",
+            "One, two, three!"
+          ],
+          "correct_index": 0,
+          "explanation": {
+            "uz": "two = ikki.",
+            "ru": "two = два.",
+            "tj": "two = ду."
+          }
+        },
+        {
+          "type": "gap_fill",
+          "sentence": "I am ten ____ old.",
+          "prompt": {
+            "uz": "Bo'sh joyga mos so'zni tanlang:",
+            "ru": "Выберите подходящее слово:",
+            "tj": "Калимаи мувофиқро интихоб кунед:"
+          },
+          "options": [
+            "year",
+            "years",
+            "old",
+            "name"
+          ],
+          "correct_index": 1,
+          "explanation": {
+            "uz": "... years old — yoshni bildiradi.",
+            "ru": "... years old — о возрасте.",
+            "tj": "... years old — синро мефаҳмонад."
+          }
+        },
+        {
+          "type": "dialog_cloze",
+          "title": {
+            "uz": "Dialogni to'ldiring",
+            "ru": "Дополните диалог",
+            "tj": "Муколамаро пурра кунед"
+          },
+          "lines": [
+            {
+              "speaker": "A",
+              "zh": "How old are you?",
+              "blank": false
+            },
+            {
+              "speaker": "B",
+              "zh": "",
+              "blank": true
+            }
+          ],
+          "options": [
+            "I am ten years old.",
+            "My name is Anna.",
+            "Nice to meet you!",
+            "Goodbye!"
+          ],
+          "correct_index": 0,
+          "explanation": {
+            "uz": "Yoshni 'I am ... years old' bilan aytamiz.",
+            "ru": "Возраст — 'I am ... years old'.",
+            "tj": "Синро бо 'I am ... years old' мегӯем."
+          }
+        },
+        {
+          "type": "quick_quiz",
+          "prompt": {
+            "uz": "Qaysi tartib to'g'ri?",
+            "ru": "Какой порядок правильный?",
+            "tj": "Кадом тартиб дуруст?"
+          },
+          "title": {
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
+          },
+          "options": [
+            "one, two, three",
+            "one, three, two",
+            "two, one, three",
+            "three, two, one"
+          ],
+          "correct_index": 0
+        }
       ]
     }
   ]

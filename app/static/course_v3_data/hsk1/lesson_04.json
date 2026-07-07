@@ -11,19 +11,103 @@
   "intro_prebuilt": true,
   "grammar_prebuilt": true,
   "active_words": [
-    {"no": 1, "zh": "family", "pinyin": "/ˈfæməli/", "pos": "n.", "meaning": {"uz": "oila", "ru": "семья", "tj": "оила"}},
-    {"no": 2, "zh": "mother", "pinyin": "/ˈmʌðər/", "pos": "n.", "meaning": {"uz": "ona", "ru": "мама", "tj": "модар"}},
-    {"no": 3, "zh": "father", "pinyin": "/ˈfɑːðər/", "pos": "n.", "meaning": {"uz": "ota", "ru": "папа", "tj": "падар"}},
-    {"no": 4, "zh": "brother", "pinyin": "/ˈbrʌðər/", "pos": "n.", "meaning": {"uz": "aka, uka", "ru": "брат", "tj": "бародар"}},
-    {"no": 5, "zh": "sister", "pinyin": "/ˈsɪstər/", "pos": "n.", "meaning": {"uz": "opa, singil", "ru": "сестра", "tj": "хоҳар"}},
-    {"no": 6, "zh": "he", "pinyin": "/hiː/", "pos": "pron.", "meaning": {"uz": "u (erkak)", "ru": "он", "tj": "ӯ (мард)"}},
-    {"no": 7, "zh": "she", "pinyin": "/ʃiː/", "pos": "pron.", "meaning": {"uz": "u (ayol)", "ru": "она", "tj": "ӯ (зан)"}},
-    {"no": 8, "zh": "my", "pinyin": "/maɪ/", "pos": "pron.", "meaning": {"uz": "mening", "ru": "мой / моя", "tj": "ман, -и ман"}}
+    {
+      "no": 1,
+      "zh": "family",
+      "pinyin": "FAM-uh-lee",
+      "pos": "n.",
+      "meaning": {
+        "uz": "oila",
+        "ru": "семья",
+        "tj": "оила"
+      }
+    },
+    {
+      "no": 2,
+      "zh": "mother",
+      "pinyin": "MUH-thur",
+      "pos": "n.",
+      "meaning": {
+        "uz": "ona",
+        "ru": "мама",
+        "tj": "модар"
+      }
+    },
+    {
+      "no": 3,
+      "zh": "father",
+      "pinyin": "FAH-thur",
+      "pos": "n.",
+      "meaning": {
+        "uz": "ota",
+        "ru": "папа",
+        "tj": "падар"
+      }
+    },
+    {
+      "no": 4,
+      "zh": "brother",
+      "pinyin": "BRUH-thur",
+      "pos": "n.",
+      "meaning": {
+        "uz": "aka, uka",
+        "ru": "брат",
+        "tj": "бародар"
+      }
+    },
+    {
+      "no": 5,
+      "zh": "sister",
+      "pinyin": "SIS-tur",
+      "pos": "n.",
+      "meaning": {
+        "uz": "opa, singil",
+        "ru": "сестра",
+        "tj": "хоҳар"
+      }
+    },
+    {
+      "no": 6,
+      "zh": "he",
+      "pinyin": "HEE",
+      "pos": "pron.",
+      "meaning": {
+        "uz": "u (erkak)",
+        "ru": "он",
+        "tj": "ӯ (мард)"
+      }
+    },
+    {
+      "no": 7,
+      "zh": "she",
+      "pinyin": "SHEE",
+      "pos": "pron.",
+      "meaning": {
+        "uz": "u (ayol)",
+        "ru": "она",
+        "tj": "ӯ (зан)"
+      }
+    },
+    {
+      "no": 8,
+      "zh": "my",
+      "pinyin": "MY",
+      "pos": "pron.",
+      "meaning": {
+        "uz": "mening",
+        "ru": "мой / моя",
+        "tj": "ман, -и ман"
+      }
+    }
   ],
   "grammar": [
     {
       "no": 1,
-      "title": {"uz": "he is / she is", "ru": "he is / she is", "tj": "he is / she is"},
+      "title": {
+        "uz": "he is / she is",
+        "ru": "he is / she is",
+        "tj": "he is / she is"
+      },
       "title_zh": "third person to be",
       "rule": {
         "uz": "He is (He's) — u (erkak).\nShe is (She's) — u (ayol).\nMisol: He is my father. She is my mother.",
@@ -33,7 +117,11 @@
     },
     {
       "no": 2,
-      "title": {"uz": "Egalik: my / your", "ru": "Притяжательные: my / your", "tj": "Мансубият: my / your"},
+      "title": {
+        "uz": "Egalik: my / your",
+        "ru": "Притяжательные: my / your",
+        "tj": "Мансубият: my / your"
+      },
       "title_zh": "possessive",
       "rule": {
         "uz": "my — mening, your — sizning.\nOtdan oldin keladi: my mother, your brother.\nMisol: This is my sister.",
@@ -44,77 +132,633 @@
   ],
   "dialogues": [
     {
-      "scene": {"uz": "Oilani tanishtirish", "ru": "Знакомим с семьёй", "tj": "Муаррифии оила"},
+      "scene": {
+        "uz": "Oilani tanishtirish",
+        "ru": "Знакомим с семьёй",
+        "tj": "Муаррифии оила"
+      },
       "dialogue": [
-        {"speaker": "A", "zh": "This is my mother.", "pinyin": "/ðɪs ɪz maɪ ˈmʌðər/", "text": {"uz": "Bu mening onam.", "ru": "Это моя мама.", "tj": "Ин модари ман."}},
-        {"speaker": "B", "zh": "Nice to meet you!", "pinyin": "/naɪs tə miːt juː/", "text": {"uz": "Tanishganimdan xursandman!", "ru": "Приятно познакомиться!", "tj": "Аз шиносоӣ шодам!"}}
+        {
+          "speaker": "A",
+          "zh": "This is my mother.",
+          "pinyin": "",
+          "text": {
+            "uz": "Bu mening onam.",
+            "ru": "Это моя мама.",
+            "tj": "Ин модари ман."
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "Nice to meet you!",
+          "pinyin": "",
+          "text": {
+            "uz": "Tanishganimdan xursandman!",
+            "ru": "Приятно познакомиться!",
+            "tj": "Аз шиносоӣ шодам!"
+          }
+        }
       ]
     },
     {
-      "scene": {"uz": "U kim?", "ru": "Кто это?", "tj": "Ӯ кист?"},
+      "scene": {
+        "uz": "U kim?",
+        "ru": "Кто это?",
+        "tj": "Ӯ кист?"
+      },
       "dialogue": [
-        {"speaker": "A", "zh": "Who is he?", "pinyin": "/huː ɪz hiː/", "text": {"uz": "U kim?", "ru": "Кто он?", "tj": "Ӯ кист?"}},
-        {"speaker": "B", "zh": "He is my brother.", "pinyin": "/hiː ɪz maɪ ˈbrʌðər/", "text": {"uz": "U mening akam.", "ru": "Он мой брат.", "tj": "Ӯ бародари ман."}}
+        {
+          "speaker": "A",
+          "zh": "Who is he?",
+          "pinyin": "",
+          "text": {
+            "uz": "U kim?",
+            "ru": "Кто он?",
+            "tj": "Ӯ кист?"
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "He is my brother.",
+          "pinyin": "",
+          "text": {
+            "uz": "U mening akam.",
+            "ru": "Он мой брат.",
+            "tj": "Ӯ бародари ман."
+          }
+        }
       ]
     },
     {
-      "scene": {"uz": "Oila haqida", "ru": "О семье", "tj": "Дар бораи оила"},
+      "scene": {
+        "uz": "Oila haqida",
+        "ru": "О семье",
+        "tj": "Дар бораи оила"
+      },
       "dialogue": [
-        {"speaker": "A", "zh": "She is my sister.", "pinyin": "/ʃiː ɪz maɪ ˈsɪstər/", "text": {"uz": "U mening opam.", "ru": "Она моя сестра.", "tj": "Ӯ хоҳари ман."}},
-        {"speaker": "B", "zh": "A nice family!", "pinyin": "/ə naɪs ˈfæməli/", "text": {"uz": "Ajoyib oila!", "ru": "Хорошая семья!", "tj": "Оилаи хуб!"}}
+        {
+          "speaker": "A",
+          "zh": "She is my sister.",
+          "pinyin": "",
+          "text": {
+            "uz": "U mening opam.",
+            "ru": "Она моя сестра.",
+            "tj": "Ӯ хоҳари ман."
+          }
+        },
+        {
+          "speaker": "B",
+          "zh": "A nice family!",
+          "pinyin": "",
+          "text": {
+            "uz": "Ajoyib oila!",
+            "ru": "Хорошая семья!",
+            "tj": "Оилаи хуб!"
+          }
+        }
       ]
     }
   ],
   "sections": [
     {
       "section_no": 1,
-      "section_title": {"uz": "Yangi so'zlar", "ru": "Новые слова", "tj": "Калимаҳои нав"},
+      "section_title": {
+        "uz": "Yangi so'zlar",
+        "ru": "Новые слова",
+        "tj": "Калимаҳои нав"
+      },
       "section_purpose": "intro",
       "cards": [
-        {"type": "active_word", "word": {"no": 1, "zh": "family", "pinyin": "/ˈfæməli/", "pos": "n.", "meaning": {"uz": "oila", "ru": "семья", "tj": "оила"}}},
-        {"type": "active_word", "word": {"no": 2, "zh": "mother", "pinyin": "/ˈmʌðər/", "pos": "n.", "meaning": {"uz": "ona", "ru": "мама", "tj": "модар"}}},
-        {"type": "meaning_guess", "prompt": {"uz": "«father» ma'nosini tanlang:", "ru": "Выберите значение «father»:", "tj": "Маънои «father»-ро интихоб кунед:"}, "title": {"uz": "Ma'nosi nima?", "ru": "Что означает?", "tj": "Маъно чист?"}, "options": [{"uz": "ota", "ru": "папа", "tj": "падар"}, {"uz": "ona", "ru": "мама", "tj": "модар"}, {"uz": "aka", "ru": "брат", "tj": "бародар"}, {"uz": "oila", "ru": "семья", "tj": "оила"}], "correct_index": 0},
-        {"type": "active_word", "word": {"no": 3, "zh": "father", "pinyin": "/ˈfɑːðər/", "pos": "n.", "meaning": {"uz": "ota", "ru": "папа", "tj": "падар"}}},
-        {"type": "active_word", "word": {"no": 4, "zh": "brother", "pinyin": "/ˈbrʌðər/", "pos": "n.", "meaning": {"uz": "aka, uka", "ru": "брат", "tj": "бародар"}}},
-        {"type": "hanzi_choice", "prompt": {"uz": "«/ˈsɪstər/» qaysi so'z?", "ru": "Какое слово читается «/ˈsɪstər/»?", "tj": "«/ˈsɪstər/» кадом калима аст?"}, "title": {"uz": "So'zni tanlang", "ru": "Выберите слово", "tj": "Калимаро интихоб кунед"}, "options": ["brother", "sister", "mother", "father"], "correct_index": 1},
-        {"type": "active_word", "word": {"no": 5, "zh": "sister", "pinyin": "/ˈsɪstər/", "pos": "n.", "meaning": {"uz": "opa, singil", "ru": "сестра", "tj": "хоҳар"}}},
-        {"type": "active_word", "word": {"no": 6, "zh": "he", "pinyin": "/hiː/", "pos": "pron.", "meaning": {"uz": "u (erkak)", "ru": "он", "tj": "ӯ (мард)"}}},
-        {"type": "pinyin_choice", "prompt": {"uz": "«she» talaffuzini tanlang:", "ru": "Выберите произношение «she»:", "tj": "Талаффузи «she»-ро интихоб кунед:"}, "title": {"uz": "Qanday o'qiladi?", "ru": "Как читается?", "tj": "Чӣ хел хонда мешавад?"}, "options": ["/hiː/", "/ʃiː/", "/maɪ/", "/ˈfæməli/"], "correct_index": 1},
-        {"type": "match_pairs", "pairs": [["family", {"uz": "oila", "ru": "семья", "tj": "оила"}], ["mother", {"uz": "ona", "ru": "мама", "tj": "модар"}], ["he", {"uz": "u (erkak)", "ru": "он", "tj": "ӯ (мард)"}], ["my", {"uz": "mening", "ru": "мой", "tj": "-и ман"}]]}
+        {
+          "type": "active_word",
+          "word": {
+            "no": 1,
+            "zh": "family",
+            "pinyin": "FAM-uh-lee",
+            "pos": "n.",
+            "meaning": {
+              "uz": "oila",
+              "ru": "семья",
+              "tj": "оила"
+            }
+          }
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 2,
+            "zh": "mother",
+            "pinyin": "MUH-thur",
+            "pos": "n.",
+            "meaning": {
+              "uz": "ona",
+              "ru": "мама",
+              "tj": "модар"
+            }
+          }
+        },
+        {
+          "type": "meaning_guess",
+          "prompt": {
+            "uz": "«father» ma'nosini tanlang:",
+            "ru": "Выберите значение «father»:",
+            "tj": "Маънои «father»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Ma'nosi nima?",
+            "ru": "Что означает?",
+            "tj": "Маъно чист?"
+          },
+          "options": [
+            {
+              "uz": "ota",
+              "ru": "папа",
+              "tj": "падар"
+            },
+            {
+              "uz": "ona",
+              "ru": "мама",
+              "tj": "модар"
+            },
+            {
+              "uz": "aka",
+              "ru": "брат",
+              "tj": "бародар"
+            },
+            {
+              "uz": "oila",
+              "ru": "семья",
+              "tj": "оила"
+            }
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 3,
+            "zh": "father",
+            "pinyin": "FAH-thur",
+            "pos": "n.",
+            "meaning": {
+              "uz": "ota",
+              "ru": "папа",
+              "tj": "падар"
+            }
+          }
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 4,
+            "zh": "brother",
+            "pinyin": "BRUH-thur",
+            "pos": "n.",
+            "meaning": {
+              "uz": "aka, uka",
+              "ru": "брат",
+              "tj": "бародар"
+            }
+          }
+        },
+        {
+          "type": "hanzi_choice",
+          "prompt": {
+            "uz": "«SIS-tur» qaysi so'z?",
+            "ru": "Какое слово читается «SIS-tur»?",
+            "tj": "«SIS-tur» кадом калима аст?"
+          },
+          "title": {
+            "uz": "So'zni tanlang",
+            "ru": "Выберите слово",
+            "tj": "Калимаро интихоб кунед"
+          },
+          "options": [
+            "brother",
+            "sister",
+            "mother",
+            "father"
+          ],
+          "correct_index": 1
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 5,
+            "zh": "sister",
+            "pinyin": "SIS-tur",
+            "pos": "n.",
+            "meaning": {
+              "uz": "opa, singil",
+              "ru": "сестра",
+              "tj": "хоҳар"
+            }
+          }
+        },
+        {
+          "type": "active_word",
+          "word": {
+            "no": 6,
+            "zh": "he",
+            "pinyin": "HEE",
+            "pos": "pron.",
+            "meaning": {
+              "uz": "u (erkak)",
+              "ru": "он",
+              "tj": "ӯ (мард)"
+            }
+          }
+        },
+        {
+          "type": "pinyin_choice",
+          "prompt": {
+            "uz": "«she» talaffuzini tanlang:",
+            "ru": "Выберите произношение «she»:",
+            "tj": "Талаффузи «she»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Qanday o'qiladi?",
+            "ru": "Как читается?",
+            "tj": "Чӣ хел хонда мешавад?"
+          },
+          "options": [
+            "HEE",
+            "SHEE",
+            "MY",
+            "FAM-uh-lee"
+          ],
+          "correct_index": 1
+        },
+        {
+          "type": "match_pairs",
+          "pairs": [
+            [
+              "family",
+              {
+                "uz": "oila",
+                "ru": "семья",
+                "tj": "оила"
+              }
+            ],
+            [
+              "mother",
+              {
+                "uz": "ona",
+                "ru": "мама",
+                "tj": "модар"
+              }
+            ],
+            [
+              "he",
+              {
+                "uz": "u (erkak)",
+                "ru": "он",
+                "tj": "ӯ (мард)"
+              }
+            ],
+            [
+              "my",
+              {
+                "uz": "mening",
+                "ru": "мой",
+                "tj": "-и ман"
+              }
+            ]
+          ]
+        }
       ]
     },
     {
       "section_no": 2,
-      "section_title": {"uz": "Grammatika", "ru": "Грамматика", "tj": "Грамматика"},
+      "section_title": {
+        "uz": "Grammatika",
+        "ru": "Грамматика",
+        "tj": "Грамматика"
+      },
       "section_purpose": "grammar",
       "cards": [
-        {"type": "_grammar", "g": {"no": 1, "title": {"uz": "he is / she is", "ru": "he is / she is", "tj": "he is / she is"}, "title_zh": "third person to be", "rule": {"uz": "He is — u (erkak).\nShe is — u (ayol).\nMisol: He is my father.", "ru": "He is — он.\nShe is — она.\nПример: He is my father.", "tj": "He is — ӯ (мард).\nShe is — ӯ (зан).\nМисол: He is my father."}}},
-        {"type": "_grammar", "g": {"no": 2, "title": {"uz": "Egalik: my / your", "ru": "Притяжательные: my / your", "tj": "Мансубият: my / your"}, "title_zh": "possessive", "rule": {"uz": "my — mening, your — sizning.\nMisol: This is my sister.", "ru": "my — мой, your — твой.\nПример: This is my sister.", "tj": "my — -и ман, your — -и шумо.\nМисол: This is my sister."}}},
-        {"type": "sentence_builder", "sentence": {"uz": "«U mening otam.»", "ru": "«Он мой папа.»", "tj": "«Ӯ падари ман.»"}, "tokens": ["my", "She", "is", "He", "father"], "answer_tokens": ["He", "is", "my", "father"], "explanation": {"uz": "He is my ... — erkak haqida.", "ru": "He is my ... — о мужчине.", "tj": "He is my ... — дар бораи мард."}},
-        {"type": "quick_quiz", "prompt": {"uz": "«She ___ my mother» — qaysi to'g'ri?", "ru": "«She ___ my mother» — что правильно?", "tj": "«She ___ my mother» — кадом дуруст?"}, "title": {"uz": "To'g'ri javobni tanlang", "ru": "Выберите правильный ответ", "tj": "Ҷавоби дурустро интихоб кунед"}, "options": ["am", "are", "is", "be"], "correct_index": 2}
+        {
+          "type": "_grammar",
+          "g": {
+            "no": 1,
+            "title": {
+              "uz": "he is / she is",
+              "ru": "he is / she is",
+              "tj": "he is / she is"
+            },
+            "title_zh": "third person to be",
+            "rule": {
+              "uz": "He is — u (erkak).\nShe is — u (ayol).\nMisol: He is my father.",
+              "ru": "He is — он.\nShe is — она.\nПример: He is my father.",
+              "tj": "He is — ӯ (мард).\nShe is — ӯ (зан).\nМисол: He is my father."
+            }
+          }
+        },
+        {
+          "type": "_grammar",
+          "g": {
+            "no": 2,
+            "title": {
+              "uz": "Egalik: my / your",
+              "ru": "Притяжательные: my / your",
+              "tj": "Мансубият: my / your"
+            },
+            "title_zh": "possessive",
+            "rule": {
+              "uz": "my — mening, your — sizning.\nMisol: This is my sister.",
+              "ru": "my — мой, your — твой.\nПример: This is my sister.",
+              "tj": "my — -и ман, your — -и шумо.\nМисол: This is my sister."
+            }
+          }
+        },
+        {
+          "type": "sentence_builder",
+          "sentence": {
+            "uz": "«U mening otam.»",
+            "ru": "«Он мой папа.»",
+            "tj": "«Ӯ падари ман.»"
+          },
+          "tokens": [
+            "my",
+            "She",
+            "is",
+            "He",
+            "father"
+          ],
+          "answer_tokens": [
+            "He",
+            "is",
+            "my",
+            "father"
+          ],
+          "explanation": {
+            "uz": "He is my ... — erkak haqida.",
+            "ru": "He is my ... — о мужчине.",
+            "tj": "He is my ... — дар бораи мард."
+          }
+        },
+        {
+          "type": "quick_quiz",
+          "prompt": {
+            "uz": "«She ___ my mother» — qaysi to'g'ri?",
+            "ru": "«She ___ my mother» — что правильно?",
+            "tj": "«She ___ my mother» — кадом дуруст?"
+          },
+          "title": {
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
+          },
+          "options": [
+            "am",
+            "are",
+            "is",
+            "be"
+          ],
+          "correct_index": 2
+        }
       ]
     },
     {
       "section_no": 3,
-      "section_title": {"uz": "Mashq", "ru": "Практика", "tj": "Машқ"},
+      "section_title": {
+        "uz": "Mashq",
+        "ru": "Практика",
+        "tj": "Машқ"
+      },
       "section_purpose": "practice",
       "cards": [
-        {"type": "pinyin_choice", "prompt": {"uz": "«mother» talaffuzini tanlang:", "ru": "Выберите произношение «mother»:", "tj": "Талаффузи «mother»-ро интихоб кунед:"}, "title": {"uz": "Qanday o'qiladi?", "ru": "Как читается?", "tj": "Чӣ хел хонда мешавад?"}, "options": ["/ˈmʌðər/", "/ˈfɑːðər/", "/ˈsɪstər/", "/ˈbrʌðər/"], "correct_index": 0},
-        {"type": "meaning_guess", "prompt": {"uz": "«she» ma'nosini tanlang:", "ru": "Выберите значение «she»:", "tj": "Маънои «she»-ро интихоб кунед:"}, "title": {"uz": "Ma'nosi nima?", "ru": "Что означает?", "tj": "Маъно чист?"}, "options": [{"uz": "u (ayol)", "ru": "она", "tj": "ӯ (зан)"}, {"uz": "u (erkak)", "ru": "он", "tj": "ӯ (мард)"}, {"uz": "mening", "ru": "мой", "tj": "-и ман"}, {"uz": "oila", "ru": "семья", "tj": "оила"}], "correct_index": 0},
-        {"type": "listening_choice", "title": {"uz": "Eshitganingizni tanlang", "ru": "Выберите, что вы услышали", "tj": "Он чи шунидед, интихоб кунед"}, "audio_text": "He is my brother.", "pinyin": "/hiː ɪz maɪ ˈbrʌðər/", "options": ["She is my sister.", "He is my brother.", "This is my mother.", "A nice family!"], "correct_index": 1, "explanation": {"uz": "He is my brother = u mening akam.", "ru": "He is my brother = он мой брат.", "tj": "He is my brother = ӯ бародари ман."}},
-        {"type": "match_pairs", "pairs": [["father", {"uz": "ota", "ru": "папа", "tj": "падар"}], ["sister", {"uz": "opa", "ru": "сестра", "tj": "хоҳар"}], ["she", {"uz": "u (ayol)", "ru": "она", "tj": "ӯ (зан)"}], ["brother", {"uz": "aka", "ru": "брат", "tj": "бародар"}]]},
-        {"type": "pronunciation", "phrase": "This is my family", "pinyin": "/ðɪs ɪz maɪ ˈfæməli/", "translation": {"uz": "Bu mening oilam", "ru": "Это моя семья", "tj": "Ин оилаи ман"}}
+        {
+          "type": "pinyin_choice",
+          "prompt": {
+            "uz": "«mother» talaffuzini tanlang:",
+            "ru": "Выберите произношение «mother»:",
+            "tj": "Талаффузи «mother»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Qanday o'qiladi?",
+            "ru": "Как читается?",
+            "tj": "Чӣ хел хонда мешавад?"
+          },
+          "options": [
+            "MUH-thur",
+            "FAH-thur",
+            "SIS-tur",
+            "BRUH-thur"
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "meaning_guess",
+          "prompt": {
+            "uz": "«she» ma'nosini tanlang:",
+            "ru": "Выберите значение «she»:",
+            "tj": "Маънои «she»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Ma'nosi nima?",
+            "ru": "Что означает?",
+            "tj": "Маъно чист?"
+          },
+          "options": [
+            {
+              "uz": "u (ayol)",
+              "ru": "она",
+              "tj": "ӯ (зан)"
+            },
+            {
+              "uz": "u (erkak)",
+              "ru": "он",
+              "tj": "ӯ (мард)"
+            },
+            {
+              "uz": "mening",
+              "ru": "мой",
+              "tj": "-и ман"
+            },
+            {
+              "uz": "oila",
+              "ru": "семья",
+              "tj": "оила"
+            }
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "listening_choice",
+          "title": {
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
+          },
+          "audio_text": "He is my brother.",
+          "pinyin": "",
+          "options": [
+            "She is my sister.",
+            "He is my brother.",
+            "This is my mother.",
+            "A nice family!"
+          ],
+          "correct_index": 1,
+          "explanation": {
+            "uz": "He is my brother = u mening akam.",
+            "ru": "He is my brother = он мой брат.",
+            "tj": "He is my brother = ӯ бародари ман."
+          }
+        },
+        {
+          "type": "match_pairs",
+          "pairs": [
+            [
+              "father",
+              {
+                "uz": "ota",
+                "ru": "папа",
+                "tj": "падар"
+              }
+            ],
+            [
+              "sister",
+              {
+                "uz": "opa",
+                "ru": "сестра",
+                "tj": "хоҳар"
+              }
+            ],
+            [
+              "she",
+              {
+                "uz": "u (ayol)",
+                "ru": "она",
+                "tj": "ӯ (зан)"
+              }
+            ],
+            [
+              "brother",
+              {
+                "uz": "aka",
+                "ru": "брат",
+                "tj": "бародар"
+              }
+            ]
+          ]
+        },
+        {
+          "type": "pronunciation",
+          "phrase": "This is my family",
+          "pinyin": "",
+          "translation": {
+            "uz": "Bu mening oilam",
+            "ru": "Это моя семья",
+            "tj": "Ин оилаи ман"
+          }
+        }
       ]
     },
     {
       "section_no": 4,
-      "section_title": {"uz": "Dialog", "ru": "Диалог", "tj": "Муколама"},
+      "section_title": {
+        "uz": "Dialog",
+        "ru": "Диалог",
+        "tj": "Муколама"
+      },
       "section_purpose": "dialog",
       "cards": [
-        {"type": "listening_choice", "title": {"uz": "Eshitganingizni tanlang", "ru": "Выберите, что вы услышали", "tj": "Он чи шунидед, интихоб кунед"}, "audio_text": "Who is he?", "pinyin": "/huː ɪz hiː/", "options": ["Who is he?", "She is my sister.", "A nice family!", "This is my mother."], "correct_index": 0, "explanation": {"uz": "Who is he? = u kim?", "ru": "Who is he? = кто он?", "tj": "Who is he? = ӯ кист?"}},
-        {"type": "gap_fill", "sentence": "____ is my mother.", "prompt": {"uz": "Bo'sh joyga mos so'zni tanlang:", "ru": "Выберите подходящее слово:", "tj": "Калимаи мувофиқро интихоб кунед:"}, "options": ["He", "She", "My", "You"], "correct_index": 1, "explanation": {"uz": "mother — ayol, shuning uchun 'She'.", "ru": "mother — женщина, поэтому 'She'.", "tj": "mother — зан, барои ҳамин 'She'."}},
-        {"type": "dialog_cloze", "title": {"uz": "Dialogni to'ldiring", "ru": "Дополните диалог", "tj": "Муколамаро пурра кунед"}, "lines": [{"speaker": "A", "zh": "Who is she?", "blank": false}, {"speaker": "B", "zh": "", "blank": true}], "options": ["She is my mother.", "He is my brother.", "My name is Tom.", "I am ten."], "correct_index": 0, "explanation": {"uz": "'she' uchun 'She is ...'.", "ru": "Для 'she' — 'She is ...'.", "tj": "Барои 'she' — 'She is ...'."}},
-        {"type": "quick_quiz", "prompt": {"uz": "Qaysi biri oila a'zosi emas?", "ru": "Кто не член семьи?", "tj": "Кадомаш аъзои оила нест?"}, "title": {"uz": "To'g'ri javobni tanlang", "ru": "Выберите правильный ответ", "tj": "Ҷавоби дурустро интихоб кунед"}, "options": ["mother", "friend", "brother", "sister"], "correct_index": 1}
+        {
+          "type": "listening_choice",
+          "title": {
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
+          },
+          "audio_text": "Who is he?",
+          "pinyin": "",
+          "options": [
+            "Who is he?",
+            "She is my sister.",
+            "A nice family!",
+            "This is my mother."
+          ],
+          "correct_index": 0,
+          "explanation": {
+            "uz": "Who is he? = u kim?",
+            "ru": "Who is he? = кто он?",
+            "tj": "Who is he? = ӯ кист?"
+          }
+        },
+        {
+          "type": "gap_fill",
+          "sentence": "____ is my mother.",
+          "prompt": {
+            "uz": "Bo'sh joyga mos so'zni tanlang:",
+            "ru": "Выберите подходящее слово:",
+            "tj": "Калимаи мувофиқро интихоб кунед:"
+          },
+          "options": [
+            "He",
+            "She",
+            "My",
+            "You"
+          ],
+          "correct_index": 1,
+          "explanation": {
+            "uz": "mother — ayol, shuning uchun 'She'.",
+            "ru": "mother — женщина, поэтому 'She'.",
+            "tj": "mother — зан, барои ҳамин 'She'."
+          }
+        },
+        {
+          "type": "dialog_cloze",
+          "title": {
+            "uz": "Dialogni to'ldiring",
+            "ru": "Дополните диалог",
+            "tj": "Муколамаро пурра кунед"
+          },
+          "lines": [
+            {
+              "speaker": "A",
+              "zh": "Who is she?",
+              "blank": false
+            },
+            {
+              "speaker": "B",
+              "zh": "",
+              "blank": true
+            }
+          ],
+          "options": [
+            "She is my mother.",
+            "He is my brother.",
+            "My name is Tom.",
+            "I am ten."
+          ],
+          "correct_index": 0,
+          "explanation": {
+            "uz": "'she' uchun 'She is ...'.",
+            "ru": "Для 'she' — 'She is ...'.",
+            "tj": "Барои 'she' — 'She is ...'."
+          }
+        },
+        {
+          "type": "quick_quiz",
+          "prompt": {
+            "uz": "Qaysi biri oila a'zosi emas?",
+            "ru": "Кто не член семьи?",
+            "tj": "Кадомаш аъзои оила нест?"
+          },
+          "title": {
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
+          },
+          "options": [
+            "mother",
+            "friend",
+            "brother",
+            "sister"
+          ],
+          "correct_index": 1
+        }
       ]
     }
   ]
