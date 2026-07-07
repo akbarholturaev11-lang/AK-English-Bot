@@ -56,12 +56,12 @@
         },
         {
           "n": 4,
-          "zh": "她是我的汉语老师",
-          "py": "tā shì wǒ de Hànyǔ lǎoshī",
+          "zh": "Family",
+          "py": "/ˈfæməli/",
           "tr": {
-            "uz": "Uchinchi shaxslar haqida gapirish, 的 bilan egalikni ifodalash va 谁/哪 so'roq so'zlarini ishlatish",
-            "ru": "Говорить о третьих лицах, выражать принадлежность с 的 и использовать вопросительные слова 谁/哪",
-            "tj": "Дар бораи шахсони сеюм гап задан, ифодаи моликият бо 的 ва истифодаи калимаҳои саволии 谁/哪"
+            "uz": "Oila a'zolari, he/she va my",
+            "ru": "Члены семьи, he/she и my",
+            "tj": "Аъзои оила, he/she ва my"
           },
           "status": "locked",
           "content": "lesson_04",
