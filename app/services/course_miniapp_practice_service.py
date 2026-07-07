@@ -285,14 +285,18 @@ class CourseMiniAppPracticeService:
                 )
         total = len(questions)
         percent = round((score / total) * 100) if total else 0
-        recommendation = level.upper()
+        _LEVEL_NAMES = {
+            "beginner": "Beginner", "hsk1": "Beginner",
+            "hsk2": "Elementary", "hsk3": "Intermediate", "hsk4": "Advanced",
+        }
+        recommendation = _LEVEL_NAMES.get(str(level or "").strip().lower(), str(level or "").title())
         if mode == "placement":
-            recommendation = "HSK 1"
+            recommendation = "Beginner"
             for item_level in ("hsk1", "hsk2", "hsk3", "hsk4"):
                 item = by_level.get(item_level, {})
                 item_percent = round((item.get("score", 0) / item.get("total", 1)) * 100)
                 if item_percent >= 60:
-                    recommendation = item_level.upper().replace("HSK", "HSK ")
+                    recommendation = _LEVEL_NAMES.get(item_level, "Beginner")
 
         event_name = "training_completed" if mode == "training" else "test_completed"
         await self.mistakes.record_items(

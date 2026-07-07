@@ -98,9 +98,10 @@ async def _resolve_lessons_for_user_level(engine: CourseEngineService, level: st
 
 
 def _lesson_choice_text(lang: str, level: str | None) -> str:
-    label = (level or "HSK").upper()
-    if label == "BEGINNER":
-        label = "HSK1"
+    label = {
+        "beginner": "Beginner", "hsk1": "Beginner",
+        "hsk2": "Elementary", "hsk3": "Intermediate", "hsk4": "Advanced",
+    }.get((level or "").strip().lower(), "Beginner")
     texts = {
         "uz": f"<b>{label} kursi</b>\n\nQaysi darsdan boshlaymiz?",
         "ru": f"<b>Курс {label}</b>\n\nС какого урока начнём?",
@@ -406,34 +407,34 @@ def _get_demo_lesson(level: str, lang: str) -> tuple:
         },
         "hsk1": {
             "tj": (
-                "🎯 <b>HSK1 — Мушкилӣ дорад!</b>\n\n"
+                "🎯 <b>Beginner — Мушкилӣ дорад!</b>\n\n"
                 "Ин 3 рақамро хонед:\n\n"
                 "🔢 <b>三</b> · <b>十</b> · <b>百</b>\n\n"
                 "Агар хоҳед, бо рақамҳо як ҷумла бисозед — масалан синнатон ё шумораи чизе. Нависед — месанҷам 🕵️",
                 _challenge_context(
-                    "The user is HSK1 level. You offered an optional mini-challenge: "
+                    "The user is Beginner level. You offered an optional mini-challenge: "
                     "make a sentence using Chinese numbers 三(3), 十(10), 百(100). "
                     "Correct and encourage when they attempt it."
                 )
             ),
             "uz": (
-                "🎯 <b>HSK1 — Qiyin emas!</b>\n\n"
+                "🎯 <b>Beginner — Qiyin emas!</b>\n\n"
                 "Bu 3 raqamni o'qing:\n\n"
                 "🔢 <b>三</b> · <b>十</b> · <b>百</b>\n\n"
                 "Xohlasangiz, raqamlar bilan gap tuzing — masalan yoshingiz yoki biror narsa soni. Yozsangiz, tekshiraman 🕵️",
                 _challenge_context(
-                    "The user is HSK1 level. You offered an optional mini-challenge: "
+                    "The user is Beginner level. You offered an optional mini-challenge: "
                     "make a sentence using Chinese numbers 三(3), 十(10), 百(100). "
                     "Correct and encourage when they attempt it."
                 )
             ),
             "ru": (
-                "🎯 <b>HSK1 — Это несложно!</b>\n\n"
+                "🎯 <b>Beginner — Это несложно!</b>\n\n"
                 "Прочитайте эти 3 числа:\n\n"
                 "🔢 <b>三</b> · <b>十</b> · <b>百</b>\n\n"
                 "Если хотите, составьте предложение с числами — например ваш возраст или количество чего-то. Напишете — проверю 🕵️",
                 _challenge_context(
-                    "The user is HSK1 level. You offered an optional mini-challenge: "
+                    "The user is Beginner level. You offered an optional mini-challenge: "
                     "make a sentence using Chinese numbers 三(3), 十(10), 百(100). "
                     "Correct and encourage when they attempt it."
                 )

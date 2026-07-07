@@ -423,12 +423,12 @@ class CourseMiniAppLessonFlowService:
     def _level_label(level: str | None) -> str:
         normalized = str(level or "").strip().lower()
         labels = {
-            "hsk1": "HSK 1",
-            "hsk2": "HSK 2",
-            "hsk3": "HSK 3",
-            "hsk4": "HSK 4",
-            "hsk4a": "HSK 4 上",
-            "hsk4b": "HSK 4 下",
+            "hsk1": "Beginner",
+            "hsk2": "Elementary",
+            "hsk3": "Intermediate",
+            "hsk4": "Advanced",
+            "hsk4a": "Advanced (Part 1)",
+            "hsk4b": "Advanced (Part 2)",
         }
         return labels.get(normalized, normalized.upper() or "HSK")
 

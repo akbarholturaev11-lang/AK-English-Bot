@@ -571,11 +571,13 @@ def _lesson_selection_markup(lessons: list, resolved_level: str, lang: str):
 
 def _course_level_label(level: str | None) -> str:
     normalized = (level or "").strip().lower()
-    if normalized.startswith("hsk") and len(normalized) > 3:
-        return f"HSK {normalized[3:]}"
-    if normalized == "beginner":
-        return "HSK 1"
-    return (level or "HSK").upper()
+    labels = {
+        "beginner": "Beginner", "a1": "Beginner", "hsk1": "Beginner",
+        "a2": "Elementary", "hsk2": "Elementary",
+        "b1": "Intermediate", "hsk3": "Intermediate",
+        "b2": "Advanced", "hsk4": "Advanced",
+    }
+    return labels.get(normalized, "Beginner")
 
 
 def _course_days_since(created_at) -> int:
