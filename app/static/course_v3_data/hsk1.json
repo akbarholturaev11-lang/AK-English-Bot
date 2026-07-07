@@ -32,12 +32,12 @@
         },
         {
           "n": 2,
-          "zh": "谢谢你",
-          "py": "xièxie nǐ",
+          "zh": "Introducing yourself",
+          "py": "/ˌɪntrəˈdjuːsɪŋ/",
           "tr": {
-            "uz": "Xitoycha minnatdorchilik bildirish va xayrlashishni o'rganing",
-            "ru": "Научитесь выражать благодарность и прощаться по-китайски",
-            "tj": "Омӯзед, ки чӣ тавр ба забони чинӣ сипосгузорӣ кунед ва хайр гӯед"
+            "uz": "Ism, tanishuv va to be feli",
+            "ru": "Имя, знакомство и глагол to be",
+            "tj": "Ном, шиносоӣ ва феъли to be"
           },
           "status": "locked",
           "content": "lesson_02"

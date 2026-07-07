@@ -2,858 +2,119 @@
   "schema_version": 2,
   "level": "hsk1",
   "lesson_id": 2,
-  "title": "谢谢你",
+  "title": "Introducing yourself",
   "subtitle": {
-    "uz": "Xitoycha minnatdorchilik bildirish va xayrlashishni o'rganing",
-    "ru": "Научитесь выражать благодарность и прощаться по-китайски",
-    "tj": "Омӯзед, ки чӣ тавр ба забони чинӣ сипосгузорӣ кунед ва хайр гӯед"
+    "uz": "Ism, tanishuv va 'to be' fe'li",
+    "ru": "Имя, знакомство и глагол 'to be'",
+    "tj": "Ном, шиносоӣ ва феъли 'to be'"
   },
   "intro_prebuilt": true,
   "grammar_prebuilt": true,
   "active_words": [
-    {
-      "no": 1,
-      "zh": "谢谢",
-      "pinyin": "xièxie",
-      "pos": "v.",
-      "meaning": {
-        "uz": "rahmat aytmoq, rahmat",
-        "ru": "благодарить, спасибо",
-        "tj": "ташаккур гуфтан, раҳмат"
-      }
-    },
-    {
-      "no": 2,
-      "zh": "不",
-      "pinyin": "bù",
-      "pos": "adv.",
-      "meaning": {
-        "uz": "yo'q, emas",
-        "ru": "нет, не",
-        "tj": "не, нест"
-      }
-    },
-    {
-      "no": 3,
-      "zh": "不客气",
-      "pinyin": "bú kèqi",
-      "pos": "expr.",
-      "meaning": {
-        "uz": "iltimos, muammo yo'q",
-        "ru": "пожалуйста, не за что",
-        "tj": "хоҳиш мекунам, мушкиле нест"
-      }
-    },
-    {
-      "no": 4,
-      "zh": "再见",
-      "pinyin": "zàijiàn",
-      "pos": "v.",
-      "meaning": {
-        "uz": "xayr, ko'rishguncha",
-        "ru": "до свидания, пока",
-        "tj": "хайр, то дидан"
-      }
-    }
+    {"no": 1, "zh": "name", "pinyin": "/neɪm/", "pos": "n.", "meaning": {"uz": "ism", "ru": "имя", "tj": "ном"}},
+    {"no": 2, "zh": "My name is", "pinyin": "/maɪ neɪm ɪz/", "pos": "expr.", "meaning": {"uz": "mening ismim", "ru": "меня зовут", "tj": "номи ман"}},
+    {"no": 3, "zh": "What is your name?", "pinyin": "/wɒts jɔːr neɪm/", "pos": "expr.", "meaning": {"uz": "ismingiz nima?", "ru": "как вас зовут?", "tj": "номи шумо чист?"}},
+    {"no": 4, "zh": "Nice to meet you", "pinyin": "/naɪs tə miːt juː/", "pos": "expr.", "meaning": {"uz": "tanishganimdan xursandman", "ru": "приятно познакомиться", "tj": "аз шиносоӣ шодам"}},
+    {"no": 5, "zh": "I am", "pinyin": "/aɪ æm/", "pos": "v.", "meaning": {"uz": "men ...man", "ru": "я есть", "tj": "ман ...ам"}},
+    {"no": 6, "zh": "you are", "pinyin": "/juː ɑːr/", "pos": "v.", "meaning": {"uz": "siz ...siz", "ru": "ты есть / вы есть", "tj": "шумо ...ед"}},
+    {"no": 7, "zh": "this is", "pinyin": "/ðɪs ɪz/", "pos": "expr.", "meaning": {"uz": "bu ...", "ru": "это ...", "tj": "ин ..."}},
+    {"no": 8, "zh": "friend", "pinyin": "/frend/", "pos": "n.", "meaning": {"uz": "do'st", "ru": "друг", "tj": "дӯст"}}
   ],
   "grammar": [
     {
       "no": 1,
-      "title": {
-        "uz": "不 — inkor yuklamasi",
-        "ru": "不 — отрицательная частица",
-        "tj": "不 — ҳарфи инкорӣ"
-      },
-      "title_zh": "不 — inkor yuklamasi",
+      "title": {"uz": "'to be' fe'li (am / is / are)", "ru": "Глагол 'to be' (am / is / are)", "tj": "Феъли 'to be' (am / is / are)"},
+      "title_zh": "verb to be",
       "rule": {
-        "uz": "不(bù) — inkor yuklamasi (yo'q, emas).\nDiqqat: 不 4-ton, lekin keyingi bo'g'in ham 4-ton bo'lsa, 2-tonga o'zgaradi.\nbù + 4-ton → bú + 4-ton\nMisol: 不客气 → bú kèqi\n不谢 → bú xiè",
-        "ru": "不(bù) — отрицательная частица (нет, не).\nПримечание: 不 имеет 4-й тон, но меняется на 2-й перед другим слогом 4-го тона.\nbù + 4-й тон → bú + 4-й тон\nПример: 不客气 → bú kèqi\n不谢 → bú xiè",
-        "tj": "不(bù) — ҳарфи инкорӣ (не, нест).\nДиққат: 不 садои 4-ум дорад, аммо агар ҳиҷои баъдӣ ҳам садои 4-ум бошад, ба садои 2-юм иваз мешавад.\nbù + садои 4 → bú + садои 4\nМисол: 不客气 → bú kèqi\n不谢 → bú xiè"
-      },
-      "examples": [
-        {
-          "zh": "不谢",
-          "pinyin": "bú xiè",
-          "translation": {
-            "uz": "iltimos (so'zma-so'z: rahmat yo'q)",
-            "ru": "пожалуйста (дословно: не благодари)",
-            "tj": "хоҳиш мекунам"
-          }
-        },
-        {
-          "zh": "不客气",
-          "pinyin": "bú kèqi",
-          "translation": {
-            "uz": "iltimos, muammo yo'q",
-            "ru": "не за что, пожалуйста",
-            "tj": "хоҳиш мекунам, мушкиле нест"
-          }
-        },
-        {
-          "zh": "不好",
-          "pinyin": "bù hǎo",
-          "translation": {
-            "uz": "yaxshi emas",
-            "ru": "нехорошо, плохо",
-            "tj": "хуб нест"
-          }
-        }
-      ]
+        "uz": "I am (I'm) — men.\nYou are (You're) — siz.\nHe / She / It is — u.\nMisol: I am a student. You are my friend.",
+        "ru": "I am (I'm) — я.\nYou are (You're) — ты/вы.\nHe / She / It is — он/она/оно.\nПример: I am a student. You are my friend.",
+        "tj": "I am (I'm) — ман.\nYou are (You're) — шумо.\nHe / She / It is — ӯ.\nМисол: I am a student. You are my friend."
+      }
     },
     {
       "no": 2,
-      "title": {
-        "uz": "轻声 — neytral ton",
-        "ru": "轻声 — нейтральный тон",
-        "tj": "轻声 — садои бетараф"
-      },
-      "title_zh": "轻声 — neytral ton",
+      "title": {"uz": "O'zini tanishtirish", "ru": "Как представиться", "tj": "Худро муаррифӣ кардан"},
+      "title_zh": "introducing",
       "rule": {
-        "uz": "Xitoy tilida 5-ton ham bor — neytral ton (轻声).\nU qisqa va engil, ton belgisi yo'q.\nKo'pincha qarindoshlik atamalarida uchraydi.\nMisol: 妈妈(māma), 爸爸(bàba), 爷爷(yéye), 奶奶(nǎinai)",
-        "ru": "В китайском также есть 5-й тон — нейтральный (轻声).\nОн короткий и лёгкий, без знака тона.\nЧасто встречается в терминах родства.\nПример: 妈妈(māma), 爸爸(bàba), 爷爷(yéye), 奶奶(nǎinai)",
-        "tj": "Дар забони чинӣ садои 5-ум ҳам вуҷуд дорад — садои бетараф (轻声).\nОн кӯтоҳ ва сабук аст, бе нишонаи садо.\nБештар дар истилоҳоти хешутаборӣ истифода мешавад.\nМисол: 妈妈(māma), 爸爸(bàba), 爷爷(yéye), 奶奶(nǎinai)"
-      },
-      "examples": [
-        {
-          "zh": "妈妈",
-          "pinyin": "māma",
-          "translation": {
-            "uz": "ona",
-            "ru": "мама",
-            "tj": "модар"
-          }
-        },
-        {
-          "zh": "爸爸",
-          "pinyin": "bàba",
-          "translation": {
-            "uz": "ota",
-            "ru": "папа",
-            "tj": "падар"
-          }
-        },
-        {
-          "zh": "爷爷",
-          "pinyin": "yéye",
-          "translation": {
-            "uz": "bobo (otaning otasi)",
-            "ru": "дедушка (по отцу)",
-            "tj": "бобои падарӣ"
-          }
-        },
-        {
-          "zh": "奶奶",
-          "pinyin": "nǎinai",
-          "translation": {
-            "uz": "buvi (otaning onasi)",
-            "ru": "бабушка (по отцу)",
-            "tj": "модарбузурги падарӣ"
-          }
-        }
-      ]
+        "uz": "Ism aytish: My name is Tom. / I'm Tom.\nSo'rash: What is your name?\nJavobdan keyin: Nice to meet you!",
+        "ru": "Назвать имя: My name is Tom. / I'm Tom.\nСпросить: What is your name?\nПосле ответа: Nice to meet you!",
+        "tj": "Ном гуфтан: My name is Tom. / I'm Tom.\nПурсидан: What is your name?\nБаъди ҷавоб: Nice to meet you!"
+      }
     }
   ],
   "dialogues": [
     {
-      "scene": {
-        "uz": "Yordam uchun rahmat",
-        "ru": "Благодарность за помощь",
-        "tj": "Ташаккур барои ёрӣ"
-      },
+      "scene": {"uz": "Ilk tanishuv", "ru": "Первое знакомство", "tj": "Шиносоии аввал"},
       "dialogue": [
-        {
-          "speaker": "A",
-          "zh": "谢谢！",
-          "pinyin": "Xièxie!",
-          "text": {
-            "uz": "Rahmat!",
-            "ru": "Спасибо!",
-            "tj": "Раҳмат!"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "不谢！",
-          "pinyin": "Bú xiè!",
-          "text": {
-            "uz": "Iltimos!",
-            "ru": "Пожалуйста!",
-            "tj": "Хоҳиш мекунам!"
-          }
-        }
+        {"speaker": "A", "zh": "Hello! What is your name?", "pinyin": "/wɒts jɔːr neɪm/", "text": {"uz": "Salom! Ismingiz nima?", "ru": "Привет! Как вас зовут?", "tj": "Салом! Номи шумо чист?"}},
+        {"speaker": "B", "zh": "My name is Anna.", "pinyin": "/maɪ neɪm ɪz ˈænə/", "text": {"uz": "Mening ismim Anna.", "ru": "Меня зовут Анна.", "tj": "Номи ман Анна."}}
       ]
     },
     {
-      "scene": {
-        "uz": "Rasmiy rahmat",
-        "ru": "Официальная благодарность",
-        "tj": "Ташаккури расмӣ"
-      },
+      "scene": {"uz": "Xushmuomala javob", "ru": "Вежливый ответ", "tj": "Ҷавоби хушмуомила"},
       "dialogue": [
-        {
-          "speaker": "A",
-          "zh": "谢谢你！",
-          "pinyin": "Xièxie nǐ!",
-          "text": {
-            "uz": "Senga rahmat!",
-            "ru": "Спасибо тебе!",
-            "tj": "Аз ту ташаккур!"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "不客气！",
-          "pinyin": "Bú kèqi!",
-          "text": {
-            "uz": "Iltimos (muammo yo'q)!",
-            "ru": "Не за что!",
-            "tj": "Хоҳиш мекунам!"
-          }
-        }
+        {"speaker": "A", "zh": "I'm Tom. Nice to meet you!", "pinyin": "/naɪs tə miːt juː/", "text": {"uz": "Men Tom. Tanishganimdan xursandman!", "ru": "Я Том. Приятно познакомиться!", "tj": "Ман Том. Аз шиносоӣ шодам!"}},
+        {"speaker": "B", "zh": "Nice to meet you too!", "pinyin": "/naɪs tə miːt juː tuː/", "text": {"uz": "Men ham xursandman!", "ru": "Мне тоже приятно!", "tj": "Ман ҳам шодам!"}}
       ]
     },
     {
-      "scene": {
-        "uz": "Xayrlashuv",
-        "ru": "Прощание",
-        "tj": "Хайр гуфтан"
-      },
+      "scene": {"uz": "Do'stni tanishtirish", "ru": "Представить друга", "tj": "Муаррифии дӯст"},
       "dialogue": [
-        {
-          "speaker": "A",
-          "zh": "再见！",
-          "pinyin": "Zàijiàn!",
-          "text": {
-            "uz": "Xayr!",
-            "ru": "До свидания!",
-            "tj": "Хайр!"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "再见！",
-          "pinyin": "Zàijiàn!",
-          "text": {
-            "uz": "Xayr!",
-            "ru": "До свидания!",
-            "tj": "Хайр!"
-          }
-        }
+        {"speaker": "A", "zh": "This is my friend, Sam.", "pinyin": "/ðɪs ɪz maɪ frend/", "text": {"uz": "Bu mening do'stim, Sam.", "ru": "Это мой друг, Сэм.", "tj": "Ин дӯсти ман, Сэм."}},
+        {"speaker": "B", "zh": "Hello, Sam!", "pinyin": "/həˈloʊ sæm/", "text": {"uz": "Salom, Sam!", "ru": "Привет, Сэм!", "tj": "Салом, Сэм!"}}
       ]
     }
   ],
   "sections": [
     {
       "section_no": 1,
-      "section_title": {
-        "uz": "Yangi so'zlar",
-        "ru": "Новые слова",
-        "tj": "Калимаҳои нав"
-      },
+      "section_title": {"uz": "Yangi so'zlar", "ru": "Новые слова", "tj": "Калимаҳои нав"},
       "section_purpose": "intro",
       "cards": [
-        {
-          "type": "active_word",
-          "word": {
-            "no": 1,
-            "zh": "谢谢",
-            "pinyin": "xièxie",
-            "pos": "v.",
-            "meaning": {
-              "uz": "rahmat aytmoq, rahmat",
-              "ru": "благодарить, спасибо",
-              "tj": "ташаккур гуфтан, раҳмат"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 2,
-            "zh": "不",
-            "pinyin": "bù",
-            "pos": "adv.",
-            "meaning": {
-              "uz": "yo'q, emas",
-              "ru": "нет, не",
-              "tj": "не, нест"
-            }
-          }
-        },
-        {
-          "type": "hanzi_choice",
-          "prompt": {
-            "uz": "bù qaysi ieroglif?",
-            "ru": "Какой иероглиф читается bù?",
-            "tj": "bù кадом иероглиф аст?"
-          },
-          "title": {
-            "uz": "Ieroglifni tanlang",
-            "ru": "Выберите иероглиф",
-            "tj": "Иероглифро интихоб кунед"
-          },
-          "options": [
-            "谢谢",
-            "不客气",
-            "不",
-            "再见"
-          ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "不 = yo'q, emas (bù)",
-            "ru": "不 = нет, не (bù)",
-            "tj": "不 = не, нест (bù)"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 3,
-            "zh": "不客气",
-            "pinyin": "bú kèqi",
-            "pos": "expr.",
-            "meaning": {
-              "uz": "iltimos, muammo yo'q",
-              "ru": "пожалуйста, не за что",
-              "tj": "хоҳиш мекунам, мушкиле нест"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 4,
-            "zh": "再见",
-            "pinyin": "zàijiàn",
-            "pos": "v.",
-            "meaning": {
-              "uz": "xayr, ko'rishguncha",
-              "ru": "до свидания, пока",
-              "tj": "хайр, то дидан"
-            }
-          }
-        },
-        {
-          "type": "pinyin_choice",
-          "prompt": {
-            "uz": "不 talaffuzini tanlang:",
-            "ru": "Выберите произношение 不:",
-            "tj": "Талаффузи 不-ро интихоб кунед:"
-          },
-          "title": {
-            "uz": "Qanday o'qiladi?",
-            "ru": "Как читается?",
-            "tj": "Чӣ хел хонда мешавад?"
-          },
-          "options": [
-            "xièxie",
-            "bú kèqi",
-            "zàijiàn",
-            "bù"
-          ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "不 — bù",
-            "ru": "不 — bù",
-            "tj": "不 — bù"
-          }
-        },
-        {
-          "type": "match_pairs",
-          "pairs": [
-            [
-              "谢谢",
-              {
-                "uz": "rahmat aytmoq, rahmat",
-                "ru": "благодарить, спасибо",
-                "tj": "ташаккур гуфтан, раҳмат"
-              }
-            ],
-            [
-              "不",
-              {
-                "uz": "yo'q, emas",
-                "ru": "нет, не",
-                "tj": "не, нест"
-              }
-            ],
-            [
-              "不客气",
-              {
-                "uz": "iltimos, muammo yo'q",
-                "ru": "пожалуйста, не за что",
-                "tj": "хоҳиш мекунам, мушкиле нест"
-              }
-            ],
-            [
-              "再见",
-              {
-                "uz": "xayr, ko'rishguncha",
-                "ru": "до свидания, пока",
-                "tj": "хайр, то дидан"
-              }
-            ]
-          ],
-          "explanation": {
-            "uz": "Juftliklar darsdagi yangi so'zlardan olindi.",
-            "ru": "Пары взяты из новых слов урока.",
-            "tj": "Ҷуфтҳо аз калимаҳои нави дарс гирифта шудаанд."
-          }
-        }
+        {"type": "active_word", "word": {"no": 1, "zh": "name", "pinyin": "/neɪm/", "pos": "n.", "meaning": {"uz": "ism", "ru": "имя", "tj": "ном"}}},
+        {"type": "active_word", "word": {"no": 2, "zh": "My name is", "pinyin": "/maɪ neɪm ɪz/", "pos": "expr.", "meaning": {"uz": "mening ismim", "ru": "меня зовут", "tj": "номи ман"}}},
+        {"type": "meaning_guess", "prompt": {"uz": "«name» ma'nosini tanlang:", "ru": "Выберите значение «name»:", "tj": "Маънои «name»-ро интихоб кунед:"}, "title": {"uz": "Ma'nosi nima?", "ru": "Что означает?", "tj": "Маъно чист?"}, "options": [{"uz": "ism", "ru": "имя", "tj": "ном"}, {"uz": "do'st", "ru": "друг", "tj": "дӯст"}, {"uz": "salom", "ru": "привет", "tj": "салом"}, {"uz": "rahmat", "ru": "спасибо", "tj": "ташаккур"}], "correct_index": 0},
+        {"type": "active_word", "word": {"no": 3, "zh": "What is your name?", "pinyin": "/wɒts jɔːr neɪm/", "pos": "expr.", "meaning": {"uz": "ismingiz nima?", "ru": "как вас зовут?", "tj": "номи шумо чист?"}}},
+        {"type": "active_word", "word": {"no": 4, "zh": "Nice to meet you", "pinyin": "/naɪs tə miːt juː/", "pos": "expr.", "meaning": {"uz": "tanishganimdan xursandman", "ru": "приятно познакомиться", "tj": "аз шиносоӣ шодам"}}},
+        {"type": "hanzi_choice", "prompt": {"uz": "«/frend/» qaysi so'z?", "ru": "Какое слово читается «/frend/»?", "tj": "«/frend/» кадом калима аст?"}, "title": {"uz": "So'zni tanlang", "ru": "Выберите слово", "tj": "Калимаро интихоб кунед"}, "options": ["name", "friend", "this is", "I am"], "correct_index": 1},
+        {"type": "active_word", "word": {"no": 5, "zh": "I am", "pinyin": "/aɪ æm/", "pos": "v.", "meaning": {"uz": "men ...man", "ru": "я есть", "tj": "ман ...ам"}}},
+        {"type": "active_word", "word": {"no": 6, "zh": "you are", "pinyin": "/juː ɑːr/", "pos": "v.", "meaning": {"uz": "siz ...siz", "ru": "ты/вы есть", "tj": "шумо ...ед"}}},
+        {"type": "pinyin_choice", "prompt": {"uz": "«name» talaffuzini tanlang:", "ru": "Выберите произношение «name»:", "tj": "Талаффузи «name»-ро интихоб кунед:"}, "title": {"uz": "Qanday o'qiladi?", "ru": "Как читается?", "tj": "Чӣ хел хонда мешавад?"}, "options": ["/frend/", "/neɪm/", "/aɪ æm/", "/ðɪs ɪz/"], "correct_index": 1},
+        {"type": "match_pairs", "pairs": [["name", {"uz": "ism", "ru": "имя", "tj": "ном"}], ["friend", {"uz": "do'st", "ru": "друг", "tj": "дӯст"}], ["I am", {"uz": "men ...man", "ru": "я есть", "tj": "ман ...ам"}], ["this is", {"uz": "bu ...", "ru": "это ...", "tj": "ин ..."}]]}
       ]
     },
     {
       "section_no": 2,
-      "section_title": {
-        "uz": "Grammatika",
-        "ru": "Грамматика",
-        "tj": "Грамматика"
-      },
+      "section_title": {"uz": "Grammatika", "ru": "Грамматика", "tj": "Грамматика"},
       "section_purpose": "grammar",
       "cards": [
-        {
-          "type": "_grammar",
-          "g": {
-            "no": 1,
-            "title": {
-              "uz": "不 — inkor yuklamasi",
-              "ru": "不 — отрицательная частица",
-              "tj": "不 — ҳарфи инкорӣ"
-            },
-            "title_zh": "不 — inkor yuklamasi",
-            "rule": {
-              "uz": "不(bù) — inkor yuklamasi (yo'q, emas).\nDiqqat: 不 4-ton, lekin keyingi bo'g'in ham 4-ton bo'lsa, 2-tonga o'zgaradi.\nbù + 4-ton → bú + 4-ton\nMisol: 不客气 → bú kèqi\n不谢 → bú xiè",
-              "ru": "不(bù) — отрицательная частица (нет, не).\nПримечание: 不 имеет 4-й тон, но меняется на 2-й перед другим слогом 4-го тона.\nbù + 4-й тон → bú + 4-й тон\nПример: 不客气 → bú kèqi\n不谢 → bú xiè",
-              "tj": "不(bù) — ҳарфи инкорӣ (не, нест).\nДиққат: 不 садои 4-ум дорад, аммо агар ҳиҷои баъдӣ ҳам садои 4-ум бошад, ба садои 2-юм иваз мешавад.\nbù + садои 4 → bú + садои 4\nМисол: 不客气 → bú kèqi\n不谢 → bú xiè"
-            },
-            "examples": [
-              {
-                "zh": "不谢",
-                "pinyin": "bú xiè",
-                "translation": {
-                  "uz": "iltimos (so'zma-so'z: rahmat yo'q)",
-                  "ru": "пожалуйста (дословно: не благодари)",
-                  "tj": "хоҳиш мекунам"
-                }
-              },
-              {
-                "zh": "不客气",
-                "pinyin": "bú kèqi",
-                "translation": {
-                  "uz": "iltimos, muammo yo'q",
-                  "ru": "не за что, пожалуйста",
-                  "tj": "хоҳиш мекунам, мушкиле нест"
-                }
-              },
-              {
-                "zh": "不好",
-                "pinyin": "bù hǎo",
-                "translation": {
-                  "uz": "yaxshi emas",
-                  "ru": "нехорошо, плохо",
-                  "tj": "хуб нест"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "sentence_builder",
-          "sentence": {
-            "uz": "yaxshi emas",
-            "ru": "нехорошо, плохо",
-            "tj": "хуб нест"
-          },
-          "tokens": [
-            "谢谢",
-            "不客气",
-            "好",
-            "不"
-          ],
-          "answer_tokens": [
-            "不",
-            "好"
-          ],
-          "explanation": {
-            "uz": "不好 — bù hǎo",
-            "ru": "不好 — bù hǎo",
-            "tj": "不好 — bù hǎo"
-          }
-        },
-        {
-          "type": "_grammar",
-          "g": {
-            "no": 2,
-            "title": {
-              "uz": "轻声 — neytral ton",
-              "ru": "轻声 — нейтральный тон",
-              "tj": "轻声 — садои бетараф"
-            },
-            "title_zh": "轻声 — neytral ton",
-            "rule": {
-              "uz": "Xitoy tilida 5-ton ham bor — neytral ton (轻声).\nU qisqa va engil, ton belgisi yo'q.\nKo'pincha qarindoshlik atamalarida uchraydi.\nMisol: 妈妈(māma), 爸爸(bàba), 爷爷(yéye), 奶奶(nǎinai)",
-              "ru": "В китайском также есть 5-й тон — нейтральный (轻声).\nОн короткий и лёгкий, без знака тона.\nЧасто встречается в терминах родства.\nПример: 妈妈(māma), 爸爸(bàba), 爷爷(yéye), 奶奶(nǎinai)",
-              "tj": "Дар забони чинӣ садои 5-ум ҳам вуҷуд дорад — садои бетараф (轻声).\nОн кӯтоҳ ва сабук аст, бе нишонаи садо.\nБештар дар истилоҳоти хешутаборӣ истифода мешавад.\nМисол: 妈妈(māma), 爸爸(bàba), 爷爷(yéye), 奶奶(nǎinai)"
-            },
-            "examples": [
-              {
-                "zh": "妈妈",
-                "pinyin": "māma",
-                "translation": {
-                  "uz": "ona",
-                  "ru": "мама",
-                  "tj": "модар"
-                }
-              },
-              {
-                "zh": "爸爸",
-                "pinyin": "bàba",
-                "translation": {
-                  "uz": "ota",
-                  "ru": "папа",
-                  "tj": "падар"
-                }
-              },
-              {
-                "zh": "爷爷",
-                "pinyin": "yéye",
-                "translation": {
-                  "uz": "bobo (otaning otasi)",
-                  "ru": "дедушка (по отцу)",
-                  "tj": "бобои падарӣ"
-                }
-              },
-              {
-                "zh": "奶奶",
-                "pinyin": "nǎinai",
-                "translation": {
-                  "uz": "buvi (otaning onasi)",
-                  "ru": "бабушка (по отцу)",
-                  "tj": "модарбузурги падарӣ"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "quick_quiz",
-          "prompt": {
-            "uz": "«ota» — xitoychada qaysi biri?",
-            "ru": "«папа» — какое предложение по-китайски?",
-            "tj": "«падар» — кадом ҷумла ба хитоӣ аст?"
-          },
-          "title": {
-            "uz": "To'g'ri gapni tanlang",
-            "ru": "Выберите верное предложение",
-            "tj": "Ҷумлаи дурустро интихоб кунед"
-          },
-          "options": [
-            "爷爷",
-            "奶奶",
-            "爸爸",
-            "不好"
-          ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "爸爸 — bàba",
-            "ru": "爸爸 — bàba",
-            "tj": "爸爸 — bàba"
-          }
-        }
+        {"type": "_grammar", "g": {"no": 1, "title": {"uz": "'to be' fe'li (am / is / are)", "ru": "Глагол 'to be' (am / is / are)", "tj": "Феъли 'to be' (am / is / are)"}, "title_zh": "verb to be", "rule": {"uz": "I am — men.\nYou are — siz.\nHe / She / It is — u.\nMisol: I am a student.", "ru": "I am — я.\nYou are — ты/вы.\nHe / She / It is — он/она.\nПример: I am a student.", "tj": "I am — ман.\nYou are — шумо.\nHe / She / It is — ӯ.\nМисол: I am a student."}}},
+        {"type": "_grammar", "g": {"no": 2, "title": {"uz": "O'zini tanishtirish", "ru": "Как представиться", "tj": "Худро муаррифӣ кардан"}, "title_zh": "introducing", "rule": {"uz": "My name is Tom. / I'm Tom.\nWhat is your name?\nNice to meet you!", "ru": "My name is Tom. / I'm Tom.\nWhat is your name?\nNice to meet you!", "tj": "My name is Tom. / I'm Tom.\nWhat is your name?\nNice to meet you!"}}},
+        {"type": "sentence_builder", "sentence": {"uz": "«Mening ismim Tom.»", "ru": "«Меня зовут Том.»", "tj": "«Номи ман Том.»"}, "tokens": ["is", "name", "Tom", "My", "are"], "answer_tokens": ["My", "name", "is", "Tom"], "explanation": {"uz": "My name is ... — ism aytish.", "ru": "My name is ... — назвать имя.", "tj": "My name is ... — ном гуфтан."}},
+        {"type": "quick_quiz", "prompt": {"uz": "«Men Tom» — qaysi to'g'ri?", "ru": "«Я Том» — что правильно?", "tj": "«Ман Том» — кадом дуруст аст?"}, "title": {"uz": "To'g'ri javobni tanlang", "ru": "Выберите правильный ответ", "tj": "Ҷавоби дурустро интихоб кунед"}, "options": ["I are Tom", "I am Tom", "I is Tom", "Me Tom"], "correct_index": 1}
       ]
     },
     {
       "section_no": 3,
-      "section_title": {
-        "uz": "Mashq",
-        "ru": "Упражнение",
-        "tj": "Машқ"
-      },
+      "section_title": {"uz": "Mashq", "ru": "Практика", "tj": "Машқ"},
       "section_purpose": "practice",
       "cards": [
-        {
-          "type": "listening_choice",
-          "title": {
-            "uz": "Eshitganingizni tanlang",
-            "ru": "Выберите, что вы услышали",
-            "tj": "Он чи шунидед, интихоб кунед"
-          },
-          "audio_text": "谢谢！",
-          "pinyin": "Xièxie!",
-          "options": [
-            "不客气！",
-            "不谢！",
-            "谢谢！",
-            "谢谢你！"
-          ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "谢谢！ — Rahmat!",
-            "ru": "谢谢！ — Спасибо!",
-            "tj": "谢谢！ — Раҳмат!"
-          }
-        },
-        {
-          "type": "pinyin_choice",
-          "prompt": {
-            "uz": "不 talaffuzini tanlang:",
-            "ru": "Выберите произношение 不:",
-            "tj": "Талаффузи 不-ро интихоб кунед:"
-          },
-          "title": {
-            "uz": "Qanday o'qiladi?",
-            "ru": "Как читается?",
-            "tj": "Чӣ хел хонда мешавад?"
-          },
-          "options": [
-            "bú kèqi",
-            "bù",
-            "zàijiàn",
-            "xièxie"
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "不 — bù",
-            "ru": "不 — bù",
-            "tj": "不 — bù"
-          }
-        },
-        {
-          "type": "match_pairs",
-          "pairs": [
-            [
-              "谢谢",
-              {
-                "uz": "rahmat aytmoq, rahmat",
-                "ru": "благодарить, спасибо",
-                "tj": "ташаккур гуфтан, раҳмат"
-              }
-            ],
-            [
-              "不",
-              {
-                "uz": "yo'q, emas",
-                "ru": "нет, не",
-                "tj": "не, нест"
-              }
-            ],
-            [
-              "不客气",
-              {
-                "uz": "iltimos, muammo yo'q",
-                "ru": "пожалуйста, не за что",
-                "tj": "хоҳиш мекунам, мушкиле нест"
-              }
-            ],
-            [
-              "再见",
-              {
-                "uz": "xayr, ko'rishguncha",
-                "ru": "до свидания, пока",
-                "tj": "хайр, то дидан"
-              }
-            ]
-          ],
-          "explanation": {
-            "uz": "Juftliklar darsdagi yangi so'zlardan olindi.",
-            "ru": "Пары взяты из новых слов урока.",
-            "tj": "Ҷуфтҳо аз калимаҳои нави дарс гирифта шудаанд."
-          }
-        },
-        {
-          "type": "sentence_builder",
-          "sentence": {
-            "uz": "Senga rahmat!",
-            "ru": "Спасибо тебе!",
-            "tj": "Аз ту ташаккур!"
-          },
-          "tokens": [
-            "你",
-            "谢谢",
-            "不",
-            "不客气"
-          ],
-          "answer_tokens": [
-            "谢谢",
-            "你"
-          ],
-          "explanation": {
-            "uz": "谢谢你！ — Xièxie nǐ!",
-            "ru": "谢谢你！ — Xièxie nǐ!",
-            "tj": "谢谢你！ — Xièxie nǐ!"
-          }
-        },
-        {
-          "type": "translation_choice",
-          "prompt": {
-            "uz": "'iltimos, muammo yo'q' xitoycha qaysi?",
-            "ru": "'пожалуйста, не за что' по-китайски?",
-            "tj": "'хоҳиш мекунам, мушкиле нест' ба хитоӣ кадом аст?"
-          },
-          "title": {
-            "uz": "Xitoycha qanday?",
-            "ru": "Как по-китайски?",
-            "tj": "Ба хитоӣ чӣ тавр?"
-          },
-          "options": [
-            "再见",
-            "谢谢",
-            "不客气",
-            "不"
-          ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "iltimos, muammo yo'q = 不客气 (bú kèqi)",
-            "ru": "пожалуйста, не за что = 不客气 (bú kèqi)",
-            "tj": "хоҳиш мекунам, мушкиле нест = 不客气 (bú kèqi)"
-          }
-        },
-        {
-          "type": "pronunciation",
-          "phrase": "谢谢",
-          "pinyin": "xièxie",
-          "translation": {
-            "uz": "rahmat aytmoq, rahmat",
-            "ru": "благодарить, спасибо",
-            "tj": "ташаккур гуфтан, раҳмат"
-          }
-        }
+        {"type": "pinyin_choice", "prompt": {"uz": "«friend» talaffuzini tanlang:", "ru": "Выберите произношение «friend»:", "tj": "Талаффузи «friend»-ро интихоб кунед:"}, "title": {"uz": "Qanday o'qiladi?", "ru": "Как читается?", "tj": "Чӣ хел хонда мешавад?"}, "options": ["/frend/", "/neɪm/", "/juː ɑːr/", "/ðɪs ɪz/"], "correct_index": 0},
+        {"type": "meaning_guess", "prompt": {"uz": "«friend» ma'nosini tanlang:", "ru": "Выберите значение «friend»:", "tj": "Маънои «friend»-ро интихоб кунед:"}, "title": {"uz": "Ma'nosi nima?", "ru": "Что означает?", "tj": "Маъно чист?"}, "options": [{"uz": "do'st", "ru": "друг", "tj": "дӯст"}, {"uz": "ism", "ru": "имя", "tj": "ном"}, {"uz": "salom", "ru": "привет", "tj": "салом"}, {"uz": "xayr", "ru": "до свидания", "tj": "хайр"}], "correct_index": 0},
+        {"type": "listening_choice", "title": {"uz": "Eshitganingizni tanlang", "ru": "Выберите, что вы услышали", "tj": "Он чи шунидед, интихоб кунед"}, "audio_text": "Nice to meet you!", "pinyin": "/naɪs tə miːt juː/", "options": ["What is your name?", "Nice to meet you!", "My name is Anna.", "This is my friend."], "correct_index": 1, "explanation": {"uz": "Nice to meet you = tanishganimdan xursandman.", "ru": "Nice to meet you = приятно познакомиться.", "tj": "Nice to meet you = аз шиносоӣ шодам."}},
+        {"type": "match_pairs", "pairs": [["What is your name?", {"uz": "ismingiz nima?", "ru": "как вас зовут?", "tj": "номи шумо чист?"}], ["My name is", {"uz": "mening ismim", "ru": "меня зовут", "tj": "номи ман"}], ["you are", {"uz": "siz ...siz", "ru": "ты/вы есть", "tj": "шумо ...ед"}], ["Nice to meet you", {"uz": "xursandman", "ru": "приятно", "tj": "шодам"}]]},
+        {"type": "pronunciation", "phrase": "My name is Tom", "pinyin": "/maɪ neɪm ɪz tɒm/", "translation": {"uz": "Mening ismim Tom", "ru": "Меня зовут Том", "tj": "Номи ман Том"}}
       ]
     },
     {
       "section_no": 4,
-      "section_title": {
-        "uz": "Dialog",
-        "ru": "Диалог",
-        "tj": "Муколама"
-      },
+      "section_title": {"uz": "Dialog", "ru": "Диалог", "tj": "Муколама"},
       "section_purpose": "dialog",
       "cards": [
-        {
-          "type": "listening_choice",
-          "title": {
-            "uz": "Tinglang — nima dedi?",
-            "ru": "Послушайте — что сказали?",
-            "tj": "Гӯш кунед — чӣ гуфт?"
-          },
-          "audio_text": "谢谢！",
-          "pinyin": "Xièxie!",
-          "options": [
-            "谢谢！",
-            "不客气！",
-            "谢谢你！",
-            "不谢！"
-          ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "谢谢！ — Rahmat!",
-            "ru": "谢谢！ — Спасибо!",
-            "tj": "谢谢！ — Раҳмат!"
-          }
-        },
-        {
-          "type": "quick_quiz",
-          "prompt": {
-            "uz": "Dialog oxirida B nima deydi?",
-            "ru": "Что B говорит в конце диалога?",
-            "tj": "Дар охири муколама B чӣ мегӯяд?"
-          },
-          "title": {
-            "uz": "Dialogdan savol:",
-            "ru": "Вопрос по диалогу:",
-            "tj": "Савол аз муколама:"
-          },
-          "options": [
-            "不谢！",
-            "谢谢你！",
-            "谢谢！",
-            "不客气！"
-          ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "To'g'ri javob: 不谢！",
-            "ru": "Правильный ответ: 不谢！",
-            "tj": "Ҷавоби дуруст: 不谢！"
-          }
-        },
-        {
-          "type": "dialog_cloze",
-          "title": {
-            "uz": "Dialogni to'ldiring",
-            "ru": "Дополните диалог",
-            "tj": "Муколамаро пурра кунед"
-          },
-          "lines": [
-            {
-              "speaker": "A",
-              "zh": "谢谢！",
-              "blank": false
-            },
-            {
-              "speaker": "B",
-              "zh": "",
-              "blank": true
-            }
-          ],
-          "options": [
-            "不客气！",
-            "谢谢！",
-            "谢谢你！",
-            "不谢！"
-          ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "To'g'ri javob: 不谢！",
-            "ru": "Правильный ответ: 不谢！",
-            "tj": "Ҷавоби дуруст: 不谢！"
-          }
-        },
-        {
-          "type": "quick_quiz",
-          "prompt": {
-            "uz": "Dialogda A avval nima deydi?",
-            "ru": "Что A говорит в начале диалога?",
-            "tj": "Дар муколама A аввал чӣ мегӯяд?"
-          },
-          "title": {
-            "uz": "Dialogdan savol:",
-            "ru": "Вопрос по диалогу:",
-            "tj": "Савол аз муколама:"
-          },
-          "options": [
-            "谢谢！",
-            "不谢！",
-            "谢谢你！",
-            "不客气！"
-          ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "To'g'ri javob: 谢谢！",
-            "ru": "Правильный ответ: 谢谢！",
-            "tj": "Ҷавоби дуруст: 谢谢！"
-          }
-        },
-        {
-          "type": "gap_fill",
-          "sentence": "____谢！",
-          "prompt": {
-            "uz": "Bo'sh joyga mos ieroglifni tanlang:",
-            "ru": "Выберите подходящий иероглиф:",
-            "tj": "Иероглифи мувофиқро интихоб кунед:"
-          },
-          "options": [
-            "系",
-            "不",
-            "您",
-            "谢"
-          ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "To'g'ri: 谢 — 谢谢！ (Rahmat!)",
-            "ru": "Верно: 谢 — 谢谢！ (Спасибо!)",
-            "tj": "Дуруст: 谢 — 谢谢！ (Раҳмат!)"
-          }
-        }
+        {"type": "listening_choice", "title": {"uz": "Eshitganingizni tanlang", "ru": "Выберите, что вы услышали", "tj": "Он чи шунидед, интихоб кунед"}, "audio_text": "What is your name?", "pinyin": "/wɒts jɔːr neɪm/", "options": ["My name is Anna.", "What is your name?", "Nice to meet you!", "This is my friend."], "correct_index": 1, "explanation": {"uz": "What is your name? = ismingiz nima?", "ru": "What is your name? = как вас зовут?", "tj": "What is your name? = номи шумо чист?"}},
+        {"type": "gap_fill", "sentence": "____ name is Tom.", "prompt": {"uz": "Bo'sh joyga mos so'zni tanlang:", "ru": "Выберите подходящее слово:", "tj": "Калимаи мувофиқро интихоб кунед:"}, "options": ["I", "My", "You", "Is"], "correct_index": 1, "explanation": {"uz": "My name is ... — mening ismim.", "ru": "My name is ... — меня зовут.", "tj": "My name is ... — номи ман."}},
+        {"type": "dialog_cloze", "title": {"uz": "Dialogni to'ldiring", "ru": "Дополните диалог", "tj": "Муколамаро пурра кунед"}, "lines": [{"speaker": "A", "zh": "What is your name?", "blank": false}, {"speaker": "B", "zh": "", "blank": true}], "options": ["My name is Anna.", "Nice to meet you!", "Goodbye!", "Thank you!"], "correct_index": 0, "explanation": {"uz": "Ismni 'My name is ...' bilan aytamiz.", "ru": "Имя называем через 'My name is ...'.", "tj": "Номро бо 'My name is ...' мегӯем."}},
+        {"type": "quick_quiz", "prompt": {"uz": "'You ___ my friend' — qaysi to'g'ri?", "ru": "'You ___ my friend' — что правильно?", "tj": "'You ___ my friend' — кадом дуруст?"}, "title": {"uz": "To'g'ri javobni tanlang", "ru": "Выберите правильный ответ", "tj": "Ҷавоби дурустро интихоб кунед"}, "options": ["am", "are", "is", "be"], "correct_index": 1}
       ]
     }
   ]
