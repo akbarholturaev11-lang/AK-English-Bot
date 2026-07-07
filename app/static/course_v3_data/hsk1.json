@@ -44,12 +44,12 @@
         },
         {
           "n": 3,
-          "zh": "你叫什么名字",
-          "py": "nǐ jiào shénme míngzi",
+          "zh": "Numbers & age",
+          "py": "/ˈnʌmbərz/",
           "tr": {
-            "uz": "Xitoycha ismingizni, millatingizni va kasbingizni aytishni o'rganing",
-            "ru": "Научитесь называть своё имя, национальность и профессию по-китайски",
-            "tj": "Омӯзед, ки чӣ тавр исм, миллат ва касби худро ба забони чинӣ гӯед"
+            "uz": "1-10 raqamlari va yoshni aytish",
+            "ru": "Числа 1-10 и возраст",
+            "tj": "Рақамҳои 1-10 ва син"
           },
           "status": "locked",
           "content": "lesson_03"
