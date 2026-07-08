@@ -111,9 +111,8 @@ function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()
 
 var TOTAL=10,pool=[],quiz=[],qi=0,score=0,answered=false;
 function buildPool(){
-  // single-character words make the cleanest "similar character" tiles
-  pool=(typeof WORDS!=="undefined"?WORDS:[]).filter(function(w){return Array.from(String(w.h)).length===1});
-  if(pool.length<8)pool=(typeof WORDS!=="undefined"?WORDS:[]);
+  // Barcha so'zlar (ingliz so'zlari har xil uzunlikda — belgi filtri yo'q)
+  pool=(typeof WORDS!=="undefined"?WORDS:[]).slice();
 }
 function makeQuiz(){
   quiz=[];var used={};var tries=0;

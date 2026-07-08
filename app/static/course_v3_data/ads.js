@@ -27,18 +27,18 @@
   function T(){ return I18N[CFG.lang] || I18N.uz; }
 
   var PROMO = {
-    uz:[{i:"microphone-2",t:"Birinchi kundan gapirasan",s:"Panda 阿宝 sabr bilan tinglaydi va xatoingni yumshoq tuzatadi"},
-        {i:"books",t:"Adashmaysan — yo'l tayyor",s:"HSK 1–4: har kuni aniq keyingi qadam ko'rsatiladi"},
+    uz:[{i:"microphone-2",t:"Birinchi kundan gapirasan",s:"Alex the owl sabr bilan tinglaydi va xatoingni yumshoq tuzatadi"},
+        {i:"books",t:"Adashmaysan — yo'l tayyor",s:"Beginner–Advanced: har kuni aniq keyingi qadam ko'rsatiladi"},
         {i:"clipboard-check",t:"Imtihonga ishonch bilan borasan",s:"Cheksiz test va aniq daraja — qayerda turganingni bilasan"},
         {i:"target-arrow",t:"Xatoing yo'qolmaydi",s:"Har xato ustida ishlab, uni butunlay o'zlashtirasan"},
         {i:"infinity",t:"Diqqating faqat o'rganishda",s:"Reklama va limitlarsiz — hech narsa chalg'itmaydi"}],
-    ru:[{i:"microphone-2",t:"Заговоришь с первого дня",s:"Панда 阿宝 терпеливо слушает и мягко исправляет ошибки"},
-        {i:"books",t:"Не собьёшься с пути",s:"HSK 1–4: каждый день — понятный следующий шаг"},
+    ru:[{i:"microphone-2",t:"Заговоришь с первого дня",s:"Сова Alex терпеливо слушает и мягко исправляет ошибки"},
+        {i:"books",t:"Не собьёшься с пути",s:"Beginner–Advanced: каждый день — понятный следующий шаг"},
         {i:"clipboard-check",t:"Придёшь на экзамен уверенно",s:"Безлимит тестов и точный уровень — знаешь, где ты"},
         {i:"target-arrow",t:"Ошибки не теряются",s:"Прорабатываешь каждую и осваиваешь до конца"},
         {i:"infinity",t:"Внимание только на учёбе",s:"Без рекламы и лимитов — ничто не отвлекает"}],
-    tj:[{i:"microphone-2",t:"Аз рӯзи аввал гап мезанӣ",s:"Панда 阿宝 бо сабр гӯш мекунад ва хатоятро нарм ислоҳ мекунад"},
-        {i:"books",t:"Аз роҳ намемонӣ",s:"HSK 1–4: ҳар рӯз қадами оянда равшан аст"},
+    tj:[{i:"microphone-2",t:"Аз рӯзи аввал гап мезанӣ",s:"Сова Alex бо сабр гӯш мекунад ва хатоятро нарм ислоҳ мекунад"},
+        {i:"books",t:"Аз роҳ намемонӣ",s:"Beginner–Advanced: ҳар рӯз қадами оянда равшан аст"},
         {i:"clipboard-check",t:"Ба имтиҳон боварӣ меравӣ",s:"Тести бепоён ва сатҳи аниқ — медонӣ дар куҷоӣ"},
         {i:"target-arrow",t:"Хатоҳо гум намешаванд",s:"Ҳар хаторо кор карда, пурра аз худ мекунӣ"},
         {i:"infinity",t:"Диққат танҳо ба омӯзиш",s:"Бе реклама ва маҳдудият — ҳеҷ чиз халал намерасонад"}]

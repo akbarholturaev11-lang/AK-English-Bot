@@ -903,7 +903,7 @@ async def course_data_file(level: str):
 
 # ── Course v3 Mini App ──────────────────────────────────────────────────────
 
-_COURSE_V3_PAGES = {"onboarding", "recognition", "pronunciation", "test", "mistakes", "voice", "memorize"}
+_COURSE_V3_PAGES = {"onboarding", "recognition", "pronunciation", "test", "mistakes", "voice"}
 _COURSE_V3_LEVELS = {"hsk1", "hsk2", "hsk3", "hsk4"}
 
 
@@ -975,11 +975,6 @@ async def course_v3_sub_page(page: str):
     if page not in _COURSE_V3_PAGES:
         return JSONResponse(status_code=404, content={"error": "not_found"})
     return miniapp_file_response(f"app/static/course_v3_{page}.html")
-
-
-@app.get("/course_v3_data/memo.js")
-async def course_v3_memo_script():
-    return static_asset_response("app/static/course_v3_data/memo.js", "application/javascript")
 
 
 @app.get("/course_v3_data/ads.js")

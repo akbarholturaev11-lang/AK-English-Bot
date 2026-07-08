@@ -194,7 +194,7 @@ function finish(){
   document.getElementById('dh').textContent=okCount+' / '+list.length+' '+L.done;document.getElementById('dp').textContent=L.doneSub;document.getElementById('db').textContent=L.again;
   document.getElementById('done').classList.add('on');beep([523,659,784,1046]);haptic(true);}
 function start(){
-  var pool=(typeof WORDS!=="undefined"?WORDS:[]).filter(function(w){return Array.from(String(w.h)).length<=3});
+  var pool=(typeof WORDS!=="undefined"?WORDS:[]).slice();
   if(!pool.length){document.getElementById('stage').innerHTML='<div class="loading">Ma\'lumot yuklanmadi</div>';return}
   list=shuffle(pool.slice()).slice(0,TOTAL);i=0;okCount=0;busy=false;
   document.getElementById('done').classList.remove('on');document.getElementById('ctrl').style.display='flex';document.getElementById('prog').style.width='0';

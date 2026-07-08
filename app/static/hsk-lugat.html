@@ -198,7 +198,7 @@ html.theme-light .hero{padding-bottom:10px;}
           <button class="nav-arrow" id="char-next" aria-label="Keyingi belgi">›</button>
         </div>
         <div class="char-box-lg" id="char-box-lg"></div>
-        <div class="writer-controls">
+        <div class="writer-controls hidden">
           <button class="ctrl-btn" id="ctrl-restart" aria-label="Bir chiziq orqaga">«</button>
           <button class="ctrl-btn ctrl-main" id="ctrl-playpause" aria-label="Pauza / Davom">▶</button>
           <button class="ctrl-btn" id="ctrl-skip" aria-label="Bir chiziq oldinga">»</button>
@@ -242,11 +242,6 @@ html.theme-light .hero{padding-bottom:10px;}
         <button class="practice-btn" id="pr-recog" type="button">
           <span class="pb-ic">🔍</span>
           <span class="pb-tx"><span class="pb-t" id="pr-recog-t"></span><span class="pb-s" id="pr-recog-s"></span></span>
-          <span class="pb-arr">›</span>
-        </button>
-        <button class="practice-btn" id="pr-mem" type="button">
-          <span class="pb-ic">⚡</span>
-          <span class="pb-tx"><span class="pb-t" id="pr-mem-t"></span><span class="pb-s" id="pr-mem-s"></span></span>
           <span class="pb-arr">›</span>
         </button>
       </div>
@@ -678,8 +673,6 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
     document.getElementById('pr-pron-s').textContent = pl.pronS;
     document.getElementById('pr-recog-t').textContent = pl.recogT;
     document.getElementById('pr-recog-s').textContent = pl.recogS;
-    document.getElementById('pr-mem-t').textContent = pl.memT;
-    document.getElementById('pr-mem-s').textContent = pl.memS;
   }
 
   function goPractice(page){
@@ -691,7 +684,6 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
   }
   document.getElementById('pr-pron').onclick = function(){ goPractice('course_v3_pronunciation'); };
   document.getElementById('pr-recog').onclick = function(){ goPractice('course_v3_recognition'); };
-  document.getElementById('pr-mem').onclick = function(){ goPractice('course_v3_memorize'); };
 
   function goBackToStudy(){
     if(isLight){ location.href = '/course-v3.html?lang=' + currentLang + '&tab=mashq'; return; }
@@ -728,7 +720,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
       var w = results[i];
       html += '<div class="row" data-idx="'+w.id+'"><div class="h">'+escapeHtml(w.h)+'</div>'+
         '<div class="info"><div class="p">'+escapeHtml(w.p)+'</div><div class="m">'+escapeHtml(text(w.m))+'</div></div>'+
-        '<div class="lv">'+escapeHtml(w.lv)+'</div></div>';
+        '<div class="lv">'+escapeHtml(levelLabels[w.lv]||w.lv)+'</div></div>';
     }
     listEl.innerHTML = html;
   }
@@ -838,16 +830,9 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
   }
   var memoLoadPromise = null;
   function loadMemoData(){
-    if(window.MEMO_DATA) return Promise.resolve();
-    if(memoLoadPromise) return memoLoadPromise;
-    memoLoadPromise = new Promise(function(resolve){
-      var s = document.createElement('script');
-      s.src = 'course_v3_data/memo.js?v=20260628';
-      s.onload = function(){ resolve(); };
-      s.onerror = function(){ resolve(); };
-      document.head.appendChild(s);
-    });
-    return memoLoadPromise;
+    // Memorize (hanzi memo) moduli English uchun olib tashlandi — memo-block har doim bo'sh.
+    if(!window.MEMO_DATA) window.MEMO_DATA = {};
+    return Promise.resolve();
   }
   // Structured "fast memorization" sections — optional, only when memo data exists for the char.
   function renderMemo(word){
@@ -953,7 +938,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
   function openDetail(word){
     scrollPos = listEl.scrollTop;
     currentWord = word;
-    detailLevel.textContent = word.lv;
+    detailLevel.textContent = levelLabels[word.lv]||word.lv;
     detailPinyin.textContent = word.p;
     detailMeaning.textContent = text(word.m);
 
