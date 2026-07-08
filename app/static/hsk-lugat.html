@@ -151,7 +151,7 @@ html.theme-light{color-scheme:light;
   --text:#211D17;--text2:#6E665B;
   --accent:#C2403A;--accent-dim:rgba(194,64,58,.10);
   --ink:#C2403A;--ink-dim:rgba(194,64,58,.12);
-  --cjk:"Songti SC","STSong","Noto Serif SC",serif;}
+  --cjk:Georgia,"Iowan Old Style","Times New Roman",serif;}
 html.theme-light #app{background:#FBF7EF;}
 html.theme-light .char-box-lg .grid-bg line{stroke:rgba(33,29,23,.08);}
 html.theme-light #search:focus{box-shadow:0 0 0 4px rgba(194,64,58,.12);}
@@ -278,7 +278,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
   var UI = {
     uz: {
       title: "Yangi so'zlar lug'ati",
-      placeholder: "Ma'no, pinyin yoki ieroglif bo'yicha qidiring…",
+      placeholder: "So'z, talaffuz yoki ma'no bo'yicha qidiring…",
       countAll: function(n, level){ return level + ' · ' + n + " so'z"; },
       countResults: function(n){ return n + " natija"; },
       strokes: function(n){ return n + " chiziq"; },
@@ -289,7 +289,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
     },
     ru: {
       title: "Словарь новых слов",
-      placeholder: "Поиск по значению, пиньиню или иероглифу…",
+      placeholder: "Поиск по слову, произношению или значению…",
       countAll: function(n, level){ return level + ' · ' + n + " слов"; },
       countResults: function(n){ return n + " результатов"; },
       strokes: function(n){ return n + " черт"; },
@@ -300,7 +300,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
     },
     tj: {
       title: "Луғати калимаҳои нав",
-      placeholder: "Ҷустуҷӯ аз рӯи маъно, пиньин ё иероглиф…",
+      placeholder: "Ҷустуҷӯ аз рӯи калима, талаффуз ё маъно…",
       countAll: function(n, level){ return level + ' · ' + n + " калима"; },
       countResults: function(n){ return n + " натиҷа"; },
       strokes: function(n){ return n + " хат"; },
@@ -321,9 +321,9 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
   };
 
   var practiceLabels = {
-    uz:{head:'Mashqlar', pronT:'Talaffuzni tekshirish', pronS:'Bot bilan ayting', recogT:"O'xshashlardan ajrating", recogS:'Ieroglifni taning', memT:'Tez eslab qolish', memS:'Yodlash mashqi'},
-    ru:{head:'Упражнения', pronT:'Проверка произношения', pronS:'Скажите боту', recogT:'Найдите среди похожих', recogS:'Распознавание', memT:'Быстрое запоминание', memS:'Тренировка памяти'},
-    tj:{head:'Машқҳо', pronT:'Санҷиши талаффуз', pronS:'Ба бот гӯед', recogT:'Аз байни монандҳо ёбед', recogS:'Шинохти иероглиф', memT:'Зуд ёд гирифтан', memS:'Машқи ҳофиза'}
+    uz:{head:'Mashqlar', pronT:'Talaffuzni tekshirish', pronS:'Bot bilan ayting', recogT:"So'zni tanish", recogS:"To'g'ri so'zni tanlang", memT:'Tez eslab qolish', memS:'Yodlash mashqi'},
+    ru:{head:'Упражнения', pronT:'Проверка произношения', pronS:'Скажите боту', recogT:'Узнавание слов', recogS:'Выберите слово', memT:'Быстрое запоминание', memS:'Тренировка памяти'},
+    tj:{head:'Машқҳо', pronT:'Санҷиши талаффуз', pronS:'Ба бот гӯед', recogT:'Шинохти калима', recogS:'Калимаро интихоб кунед', memT:'Зуд ёд гирифтан', memS:'Машқи ҳофиза'}
   };
 
   var memoLabels = {
