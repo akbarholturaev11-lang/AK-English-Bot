@@ -85,7 +85,7 @@ button{cursor:pointer}
 .grip{width:40px;height:4px;border-radius:3px;background:var(--line);margin:8px auto 14px}
 .sx{position:absolute;right:14px;top:14px;background:none;border:none;color:var(--ink2);font-size:22px}
 .shead{text-align:center;margin-bottom:14px}
-.shead .zh{font-size:34px;line-height:1}
+.shead .zh{font-size:clamp(24px,7vw,34px);line-height:1.12;word-break:break-word;overflow-wrap:anywhere}
 .shead .py{font-size:15px;color:var(--cin2);font-weight:500;margin-top:5px}
 .shead .tr{font-size:13px;color:var(--ink2);margin-top:2px}
 .shead .stars{color:var(--gold);font-size:15px;margin-top:6px;letter-spacing:2px}
@@ -165,7 +165,7 @@ button{cursor:pointer}
 .k-word{background:var(--cinbg);color:var(--cin2)}.k-gram{background:#E7F0F8;color:#2F6F9E}.k-dia{background:var(--jadebg);color:var(--jade)}.k-check{background:var(--goldbg);color:var(--gold)}
 .qq{font-size:14px;color:var(--ink2);font-weight:500;margin:6px 2px 12px}
 .qcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px 18px;text-align:center;margin-bottom:16px;box-shadow:0 6px 0 rgba(194,64,58,.08)}
-.qcard .qh{font-size:50px;line-height:1}
+.qcard .qh{font-size:clamp(28px,9vw,46px);line-height:1.12;word-break:break-word;overflow-wrap:anywhere}
 .qcard .qh.qask{font-size:29px;line-height:1.32}
 .qcard .qpy{font-size:17px;color:var(--cin2);font-weight:500;margin-top:8px}
 .qcard .gap{font-size:30px;line-height:1.4}.qcard .gap u{text-decoration:none;color:var(--cin);border-bottom:3px solid var(--cin);padding:0 16px}
@@ -179,7 +179,7 @@ button{cursor:pointer}
 .opt small{display:block;color:var(--ink3);font-size:12px;margin-top:2px}
 /* teaching word */
 .wc{text-align:center;padding:8px 0}
-.wc .big{font-size:92px;line-height:1}
+.wc .big{font-size:clamp(36px,13vw,72px);line-height:1.08;word-break:break-word;overflow-wrap:anywhere;max-width:100%}
 .wc .py{font-size:26px;color:var(--cin2);font-weight:500;margin-top:8px;display:inline-flex;align-items:center;gap:10px}
 .wc .pos{display:inline-block;font-size:12px;color:var(--ink2);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:3px 11px;margin-top:12px}
 .wc .mn{font-size:18px;margin-top:12px}
@@ -554,7 +554,7 @@ function haptic(t){try{tg&&tg.HapticFeedback&&(t==="ok"?tg.HapticFeedback.notifi
 var ac;function beep(seq){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();var t=ac.currentTime;seq.forEach(function(f,k){var o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;o.connect(g);g.connect(ac.destination);var s=t+k*0.09;g.gain.setValueAtTime(0.0001,s);g.gain.exponentialRampToValueAtTime(0.12,s+0.02);g.gain.exponentialRampToValueAtTime(0.0001,s+0.16);o.start(s);o.stop(s+0.18)})}catch(e){}}
 
 /* ---------- App ---------- */
-var MAP=null,SCREEN="course",HP=5,notifOn=true,dailyGoal=50,PROF={},ratingLoaded=false,pendingRankUp=null;
+var MAP=null,SCREEN="course",HP=5,notifOn=true,dailyGoal=50,PROF={},ratingLoaded=false,pendingRankUp=null,BOT_USERNAME="AKEnglishTutor_bot";
 function syncNotify(){if(MAP&&MAP.notify&&typeof MAP.notify.enabled==="boolean")notifOn=MAP.notify.enabled}
 function notifTimesHtml(){var c={uz:{head:"Bot quyidagi holatlarda xabar yuboradi:",items:["Reytingda kimdir sizdan o'zib ketsa","Kun tugayotganda darsni hali bajarmagan bo'lsangiz","Streak (kunlar ketma-ketligi) uzilish xavfi bo'lsa"]},ru:{head:"Бот пришлёт уведомление, когда:",items:["кто-то обгоняет вас в рейтинге","день заканчивается, а урок ещё не пройден","серия (streak) под угрозой"]},tj:{head:"Бот вақте огоҳӣ мефиристад, ки:",items:["касе дар рейтинг аз шумо пеш меравад","рӯз ба охир мерасаду дарс иҷро нашудааст","силсила (streak) дар хатар аст"]}}[LANG]||{head:"",items:[]};return '<b style="color:var(--ink);font-weight:500">'+esc(c.head)+'</b>'+c.items.map(function(x){return '<div style="margin-top:3px">• '+esc(x)+'</div>'}).join("");}
 var App={
@@ -741,6 +741,7 @@ var App={
   pickGoal:function(v){dailyGoal=v;App.closeSheet();renderProfile()},
   levelPicker:function(){
     var names={hsk1:["Hello","Beginner"],hsk2:["Thanks","Elementary"],hsk3:["OK","Intermediate"],hsk4:["Fluent","Advanced"]};
+    var lvIc={hsk1:"antenna-bars-2",hsk2:"antenna-bars-3",hsk3:"antenna-bars-4",hsk4:"antenna-bars-5"};
     var sub={
       ru:{hsk1:"С нуля",hsk2:"Базовое общение",hsk3:"Повседневное общение",hsk4:"Свободное общение",title:"Выберите уровень"},
       uz:{hsk1:"Noldan",hsk2:"Asosiy suhbat",hsk3:"Kundalik muloqot",hsk4:"Erkin muloqot",title:"Darajani tanlang"},
@@ -748,7 +749,7 @@ var App={
     }[LANG];
     var cur=normalizeLevel(MAP&&MAP.level||getSelectedLevel());
     App.openSheet('<div class="shead"><div class="tr" style="font-size:16px;color:var(--ink)">'+sub.title+'</div></div>'
-      +LEVELS.map(function(lv){var n=names[lv];return '<button class="opt-row'+(cur===lv?' on':'')+'" onclick="App.pickLevel(\''+lv+'\')"><span class="han" style="font-size:22px;width:34px;text-align:center">'+n[0]+'</span><span style="flex:1"><b style="display:block">'+n[1]+'</b><small style="color:var(--ink2)">'+sub[lv]+'</small></span>'+(cur===lv?'<span class="chk"><i class="ti ti-check"></i></span>':'')+'</button>'}).join(""));
+      +LEVELS.map(function(lv){var n=names[lv];return '<button class="opt-row'+(cur===lv?' on':'')+'" onclick="App.pickLevel(\''+lv+'\')"><span style="width:34px;text-align:center;flex-shrink:0;color:var(--cin);font-size:22px"><i class="ti ti-'+lvIc[lv]+'"></i></span><span style="flex:1"><b style="display:block">'+n[1]+'</b><small style="color:var(--ink2)">'+sub[lv]+'</small></span>'+(cur===lv?'<span class="chk"><i class="ti ti-check"></i></span>':'')+'</button>'}).join(""));
   },
   pickLevel:function(lv){App.closeSheet();loadLevel(lv)},
   goCurrentLesson:function(){var idx=-1;allLessons().forEach(function(l,i){if(l.status==="current")idx=i});App.show("course");if(idx>=0)setTimeout(function(){openLessonSheet(idx)},60)},
@@ -1176,9 +1177,11 @@ function authGateCopy(){
   }[LANG]||{};
 }
 function openBotStart(){
-  var url="https://t.me/hsk_ai_bot?start=start";
-  try{if(tg&&tg.openTelegramLink){tg.openTelegramLink(url);return}}catch(e){}
+  var url="https://t.me/"+BOT_USERNAME+"?start=start";
+  // Mini App botning o'zi tomonidan ochilgani uchun tg.close() foydalanuvchini
+  // aynan shu bot chatiga qaytaradi — username'ga bog'liq emas, eng ishonchli yo'l.
   try{if(tg&&tg.close){tg.close();return}}catch(e){}
+  try{if(tg&&tg.openTelegramLink){tg.openTelegramLink(url);return}}catch(e){}
   try{location.href=url}catch(e){}
 }
 function showAuthGate(){
@@ -1763,7 +1766,7 @@ function loadLevel(lv){
     .then(function(r){return r.json().then(function(d){d._status=r.status;return d})})
     .then(function(d){
       if(!d||d.authenticated===false||d._status===401){showAuthGate();return;}
-      hideAuthGate();MAP=d;adoptServerLang(d);setSelectedLevel(MAP.level||lv);if(d.user)PROF=d.user;syncNotify();ratingLoaded=false;renderAll();App.show("course");prefetchNearbyLessons();
+      hideAuthGate();MAP=d;adoptServerLang(d);setSelectedLevel(MAP.level||lv);if(d.user)PROF=d.user;if(d.bot_username)BOT_USERNAME=d.bot_username;syncNotify();ratingLoaded=false;renderAll();App.show("course");prefetchNearbyLessons();
     }).catch(function(){showAuthGate()});
 }
 function applyLessonDone(cur,d){
@@ -2209,7 +2212,7 @@ function finishChallengeRound(){
 	function openWriteTemplates(uIdx,src){
 	  var u=socialUsers(src)[uIdx]||{n:"",xp:0};
 	  var myXp=Number((MAP&&MAP.progress&&MAP.progress.xp)||0);
-	  var botLink="https://t.me/hsk_ai_bot";
+	  var botLink="https://t.me/"+BOT_USERNAME;
 	  var rank=uIdx+1;
 	  var myRank=currentRatingRank()||rank||1;
   var t={
@@ -2255,7 +2258,7 @@ function openInviteSheet(){
 	    }).catch(function(){toast(LANG==="ru"?"Ссылка не загрузилась":LANG==="tj"?"Силка бор нашуд":"Link yuklanmadi",2200);App.closeSheet()});
     return;
   }
-  var link="https://t.me/hsk_ai_bot";
+  var link="https://t.me/"+BOT_USERNAME;
   var text={ru:"Привет! Учу английский в English AI. Заходи:",uz:"Salom! Men English AI bilan ingliz tilini o'rganyapman. Kirib ko'r:",tj:"Салом! Ман бо English AI англисӣ меомӯзам. Дароед:"}[LANG];
   renderInviteSheet({ok:true,link:link,share_text:text});
 }
@@ -2372,7 +2375,11 @@ function renderAll(){
   document.querySelectorAll("#nav [data-i]").forEach(function(s){s.textContent=T().nav[s.dataset.i]});
   if(MAP){renderCourse();renderMashq();renderRating();renderProfile();if(SCREEN==="voice")renderVoice()}
 }
-(function(){var p=new URLSearchParams(location.search);var onb=false;try{onb=!!localStorage.getItem("hsk_v3_onb")}catch(e){}if(INIT_DATA&&!onb&&!p.get("onboarded")){location.replace("/course_v3_onboarding.html?lang="+LANG);}})();
+(function(){var p=new URLSearchParams(location.search);var onb=false;try{onb=!!localStorage.getItem("hsk_v3_onb")}catch(e){}
+  // Bot aniq bir darsni/challenge'ni ochsa (deep-link), foydalanuvchi allaqachon
+  // mavjud — uni onboarding'ga uloqtirmaymiz, aks holda dars manzili yo'qoladi.
+  var deeplink=p.get("lesson")||p.get("challenge_id");
+  if(INIT_DATA&&!onb&&!p.get("onboarded")&&!deeplink){location.replace("/course_v3_onboarding.html?lang="+LANG);}})();
 navInit();
 $("#sheet").onclick=function(){App.closeSheet()};
 $("#paywall").onclick=function(){App.closePaywall()};
@@ -2383,7 +2390,7 @@ window.openLessonSheet=openLessonSheet;window.startLesson=startLesson;window.App
   var url="/api/v3/map?lang="+LANG+"&level="+bootLevel+"&tz="+encodeURIComponent(-new Date().getTimezoneOffset());
   fetch(url,{headers:{"X-Telegram-Init-Data":INIT_DATA}}).then(function(r){return r.json().then(function(d){d._status=r.status;return d})}).then(function(d){
     if(!d||d.authenticated===false||d._status===401){showAuthGate();return;}
-    hideAuthGate();MAP=d;adoptServerLang(d);setSelectedLevel(MAP.level||bootLevel);if(d.user)PROF=d.user;syncNotify();
+    hideAuthGate();MAP=d;adoptServerLang(d);setSelectedLevel(MAP.level||bootLevel);if(d.user)PROF=d.user;if(d.bot_username)BOT_USERNAME=d.bot_username;syncNotify();
     renderAll();
     prefetchNearbyLessons();
     var sp=new URLSearchParams(location.search);

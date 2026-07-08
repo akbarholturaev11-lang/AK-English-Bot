@@ -1198,6 +1198,7 @@ async def v3_course_map(request: Request, lang: str = "uz", level: str | None = 
             "enabled": bool(getattr(profile, "notifications_enabled", True)),
         }
         data["admin_contact"] = admin_contact_url(await BotSettingRepository(session).get(ADMIN_CONTACT_KEY))
+        data["bot_username"] = (settings.BOT_USERNAME or "AKEnglishTutor_bot").strip().lstrip("@") or "AKEnglishTutor_bot"
 
         _apply_course_v3_access_policy(data, level=resolved_level, completed=completed, is_paid=is_paid)
 
@@ -1243,7 +1244,7 @@ async def v3_invite_payload(request: Request, lang: str = "uz"):
         active_count = await service.get_trial_activation_progress(user)
         joined_count = await service.referral_repo.count_by_referrer(user.telegram_id)
         referrals = await service.list_miniapp_referrals(user, timezone_offset_minutes=tz_offset)
-        bot_username = (settings.BOT_USERNAME or "hsk_ai_bot").strip().lstrip("@") or "hsk_ai_bot"
+        bot_username = (settings.BOT_USERNAME or "AKEnglishTutor_bot").strip().lstrip("@") or "AKEnglishTutor_bot"
         link = f"https://t.me/{bot_username}?start={user.referral_code}"
         full_lang, full_text = await service.build_trial_progress_text(user)
 

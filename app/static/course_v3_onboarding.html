@@ -21,7 +21,7 @@ html,body{background:var(--paper);color:var(--ink);font-family:-apple-system,"SF
 .bub{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;border-bottom-left-radius:3px;padding:11px 14px;font-size:14px;line-height:1.4}
 .body{flex:1;overflow-y:auto;padding:14px 16px 0}
 .lv{display:flex;align-items:center;gap:13px;width:100%;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:15px;padding:14px;margin-bottom:11px;font-family:inherit;color:var(--ink)}
-.lv .glyph{width:46px;height:46px;border-radius:12px;background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.lv .glyph{width:46px;height:46px;border-radius:12px;background:var(--paper);color:var(--cin);display:flex;align-items:center;justify-content:center;font-size:24px;line-height:1;flex-shrink:0}
 .lv .ot{flex:1}.lv .ot .hd{font-size:15px;font-weight:500;display:flex;align-items:center;gap:7px}.lv .ot small{font-size:12px;color:var(--ink2)}
 .lv .chk{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;flex-shrink:0}
 .lv.sel{border-color:var(--cin);background:var(--cinbg)}.lv.sel .glyph{background:#fff}.lv.sel .chk{background:var(--cin);border-color:var(--cin)}
@@ -32,7 +32,7 @@ html,body{background:var(--paper);color:var(--ink);font-family:-apple-system,"SF
 .welcome .big{width:140px;height:140px;margin-bottom:8px}
 .welcome h1{font-size:27px;margin:6px 0 6px}.welcome p{font-size:15px;color:var(--ink2);margin:0;line-height:1.5}
 .recap{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:14px;width:100%;margin-top:12px;display:flex;align-items:center;gap:12px}
-.recap .glyph{width:46px;height:46px;border-radius:12px;background:var(--cinbg);color:var(--cin);display:flex;align-items:center;justify-content:center;font-size:22px}
+.recap .glyph{width:46px;height:46px;border-radius:12px;background:var(--cinbg);color:var(--cin);display:flex;align-items:center;justify-content:center;font-size:24px;line-height:1;flex-shrink:0}
 .recap b{font-size:16px;font-weight:500;display:block}.recap small{font-size:12px;color:var(--ink2)}
 .pd-breathe{animation:pdBreathe 2.6s ease-in-out infinite;transform-origin:50% 100%}
 .pd-bounce{animation:pdBounce .7s ease-in-out infinite;transform-origin:50% 100%}
@@ -90,10 +90,10 @@ function panda(m){
     +decor
     +'</g></svg>';
 }
-var LV=[{k:"hsk1",g:"Hello",hd:"Beginner",s:{ru:"С нуля · самый лёгкий",uz:"Noldan · eng oson",tj:"Аз сифр · осонтарин"},rec:1},
-  {k:"hsk2",g:"Thanks",hd:"Elementary",s:{ru:"Базовое общение",uz:"Asosiy suhbat",tj:"Муоширати асосӣ"}},
-  {k:"hsk3",g:"OK",hd:"Intermediate",s:{ru:"Повседневное общение",uz:"Kundalik muloqot",tj:"Муоширати ҳаррӯза"}},
-  {k:"hsk4",g:"Fluent",hd:"Advanced",s:{ru:"Свободное общение",uz:"Erkin muloqot",tj:"Муоширати озод"}}];
+var LV=[{k:"hsk1",ic:"antenna-bars-2",hd:"Beginner",s:{ru:"С нуля · самый лёгкий",uz:"Noldan · eng oson",tj:"Аз сифр · осонтарин"},rec:1},
+  {k:"hsk2",ic:"antenna-bars-3",hd:"Elementary",s:{ru:"Базовое общение",uz:"Asosiy suhbat",tj:"Муоширати асосӣ"}},
+  {k:"hsk3",ic:"antenna-bars-4",hd:"Intermediate",s:{ru:"Повседневное общение",uz:"Kundalik muloqot",tj:"Муоширати ҳаррӯза"}},
+  {k:"hsk4",ic:"antenna-bars-5",hd:"Advanced",s:{ru:"Свободное общение",uz:"Erkin muloqot",tj:"Муоширати озод"}}];
 var step=0,sel="hsk1";
 function trv(o){return typeof o==="string"?o:(o[LANG]||o.ru)}
 function render(){
@@ -101,11 +101,11 @@ function render(){
   document.getElementById("top").style.display=step===0?"none":"flex";
   if(step===0){st.innerHTML='<div class="welcome"><div class="big">'+panda("cheer")+'</div><h1 class="han">English AI</h1><p>'+L.boot+'</p></div>';cta.textContent=L.start;return;}
   if(step===1){document.getElementById("prog").style.width="50%";
-    var rows=LV.map(function(l){return '<button class="lv'+(sel===l.k?" sel":"")+'" onclick="pick(\''+l.k+'\')"><span class="glyph han">'+l.g+'</span><span class="ot"><span class="hd">'+l.hd+(l.rec?' <span class="tag">'+L.rec+'</span>':"")+'</span><small>'+trv(l.s)+'</small></span><span class="chk"><i class="ti ti-check"></i></span></button>'}).join("");
+    var rows=LV.map(function(l){return '<button class="lv'+(sel===l.k?" sel":"")+'" onclick="pick(\''+l.k+'\')"><span class="glyph"><i class="ti ti-'+l.ic+'"></i></span><span class="ot"><span class="hd">'+l.hd+(l.rec?' <span class="tag">'+L.rec+'</span>':"")+'</span><small>'+trv(l.s)+'</small></span><span class="chk"><i class="ti ti-check"></i></span></button>'}).join("");
     st.innerHTML='<div class="guide"><div class="panda">'+panda("happy")+'</div><div class="bub">'+L.ask+'</div></div><div class="body">'+rows+'<div class="hint"><a>'+L.placement+'</a></div></div>';cta.textContent=L.cont;return;}
   document.getElementById("prog").style.width="100%";
   var Lvl=LV.filter(function(x){return x.k===sel})[0];
-  st.innerHTML='<div class="welcome"><div class="big">'+panda("cheer")+'</div><h1>'+L.ready+'</h1><p>'+L.readySub+'</p><div class="recap"><span class="glyph han">'+Lvl.g+'</span><div><b>'+Lvl.hd+'</b><small>'+trv(Lvl.s)+'</small></div></div></div>';
+  st.innerHTML='<div class="welcome"><div class="big">'+panda("cheer")+'</div><h1>'+L.ready+'</h1><p>'+L.readySub+'</p><div class="recap"><span class="glyph"><i class="ti ti-'+Lvl.ic+'"></i></span><div><b>'+Lvl.hd+'</b><small>'+trv(Lvl.s)+'</small></div></div></div>';
   cta.innerHTML='<i class="ti ti-player-play"></i> '+L.first;
 }
 function pick(k){sel=k;render()}
