@@ -62,6 +62,20 @@ Payment screenshot AI is advisory only. Never turn it into automatic approval wi
 - Do not read, print, commit, or document secrets from `.env`.
 - If env names change, update `.env.example` with empty placeholders only.
 
+## Chinese-to-English Conversion
+
+This bot was converted from an HSK (Chinese) bot to an English bot. When cleaning up remaining Chinese-leaning spots:
+
+- **Convert only UI / user-facing text** — anything the bot's "English teacher" shows to the user: messages, dialogs, AI prompts, translations, explanations.
+- **Do NOT break Chinese-leaning keys inside the code.** They are internal identifiers, invisible to the user, and wired into the frontend and other services. Renaming them breaks the system. Examples:
+  - level codes: `hsk1`–`hsk4`, `hsk4a`, `hsk4b` (rendered as Beginner/Elementary/Intermediate/Advanced in the UI)
+  - data field names: `zh`, `pinyin`
+  - task/type identifiers: `build_chinese_sentence`, `hanzi_to_pinyin`, `meaning_to_hanzi`, `pinyin_choice`
+  - skill names: `characters`, `pinyin`
+  - goal keys: `study_china`, `work_china`
+- Only convert the **content** these identifiers produce, never the identifier strings.
+- **Course lesson data (`app/static/course_v3_data/*.json`) is off-limits without explicit approval.**
+
 ## Engineering Discipline
 
 - For Telegram changes, inspect handler order, FSM state, callback clarity, database consistency, anti-spam behavior, admin tooling, payments, and subscriptions.

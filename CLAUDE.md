@@ -224,6 +224,22 @@ Agar men "davom et" desam:
 
 ---
 
+## Xitoychadan inglizchaga o'girish qoidasi
+
+Bu bot HSK (xitoy tili) botidan English botga aylantirilgan. Xitoychaga moyil qolgan joylarni tozalaganda:
+
+- **UI / user ko'radigan joylarnigina inglizchaga o'gir** — botning "English o'qituvchisi" foydalanuvchiga ko'rsatadigan matn, dialog, prompt, xabar, tarjima.
+- **Ichki koddagi xitoychaga moyil kalit so'zlarni BUZMA** — bular UI'da ko'rinmaydi, faqat kod ichida ishlaydi. Tegsang system sinadi. Masalan:
+  - level kodlari: `hsk1`–`hsk4`, `hsk4a`, `hsk4b` (UI'da Beginner/Elementary/Intermediate/Advanced deб ko'rinadi)
+  - data maydon nomlari: `zh`, `pinyin`
+  - task/type identifikatorlari: `build_chinese_sentence`, `hanzi_to_pinyin`, `meaning_to_hanzi`, `pinyin_choice`
+  - skill nomlari: `characters`, `pinyin`
+  - goal kalitlari: `study_china`, `work_china`
+- Bu identifikatorlar frontend + boshqa service'lar bilan bog'langan. Nomiga tegsang bir nechta joyni sindiradsan — faqat ular chiqaradigan **kontentni** inglizchaga o'gir.
+- **Dars kontenti (`app/static/course_v3_data/*.json`) — alohida ruxsatsiz tegma.**
+
+---
+
 ## Yakuniy qoida
 
 Maqsad chiroyli gap emas.

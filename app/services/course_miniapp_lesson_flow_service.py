@@ -747,46 +747,42 @@ class CourseMiniAppLessonFlowService:
 
     @staticmethod
     def _dialog_lines_for_word(word: dict) -> list[dict]:
-        zh = str(word.get("zh") or "").strip()
+        term = str(word.get("zh") or "").strip()
         pos = str(word.get("pos") or "").lower()
         place_words = {
-            "银行",
-            "学校",
-            "大学",
-            "医院",
-            "商店",
-            "饭店",
-            "机场",
-            "车站",
-            "洗手间",
-            "公司",
-            "办公室",
-            "家",
+            "bank",
+            "school",
+            "university",
+            "hospital",
+            "shop",
+            "store",
+            "restaurant",
+            "airport",
+            "station",
+            "toilet",
+            "restroom",
+            "company",
+            "office",
+            "home",
         }
-        if zh == "赚":
-            return [
-                {"speaker": "A", "text": "你为什么工作？"},
-                {"speaker": "B", "text": "我想赚钱。"},
-            ]
         if pos.startswith(("v", "verb")):
-            prefix = "我需要" if len(zh) >= 2 else "我想"
             return [
-                {"speaker": "A", "text": "你今天做什么？"},
-                {"speaker": "B", "text": f"{prefix}{zh}。"},
+                {"speaker": "A", "text": "What are you doing today?"},
+                {"speaker": "B", "text": f"I want to {term}."},
             ]
         if pos.startswith(("adj", "a")):
             return [
-                {"speaker": "A", "text": "这个怎么样？"},
-                {"speaker": "B", "text": f"很{zh}。"},
+                {"speaker": "A", "text": "How is it?"},
+                {"speaker": "B", "text": f"It's very {term}."},
             ]
-        if zh in place_words or "place" in pos:
+        if term.lower() in place_words or "place" in pos:
             return [
-                {"speaker": "A", "text": "你去哪儿？"},
-                {"speaker": "B", "text": f"我去{zh}。"},
+                {"speaker": "A", "text": "Where are you going?"},
+                {"speaker": "B", "text": f"I'm going to the {term}."},
             ]
         return [
-            {"speaker": "A", "text": "这是什么？"},
-            {"speaker": "B", "text": f"这是{zh}。"},
+            {"speaker": "A", "text": "What is this?"},
+            {"speaker": "B", "text": f"This is {term}."},
         ]
 
     def _short_dialog_card(self, active_words: list[dict], *, lang: str) -> dict | None:
@@ -1082,34 +1078,39 @@ class CourseMiniAppLessonFlowService:
     def _sentence_tokens_for_word(cls, word: dict) -> list[str]:
         sentence = cls._sentence_text_for_word(word)
         if sentence:
-            return [char for char in sentence if "\u4e00" <= char <= "\u9fff"]
-        zh = str(word.get("zh") or "").strip()
-        if not zh:
+            hanzi = [char for char in sentence if "\u4e00" <= char <= "\u9fff"]
+            if hanzi:
+                return hanzi
+            words = sentence.strip().rstrip(".!?\u3002\uff01\uff1f,").split()
+            if len(words) >= 2:
+                return words
+        term = str(word.get("zh") or "").strip()
+        if not term:
             return []
         pos = str(word.get("pos") or "").lower()
         place_words = {
-            "银行",
-            "学校",
-            "大学",
-            "医院",
-            "商店",
-            "饭店",
-            "机场",
-            "车站",
-            "洗手间",
-            "公司",
-            "办公室",
-            "家",
+            "bank",
+            "school",
+            "university",
+            "hospital",
+            "shop",
+            "store",
+            "restaurant",
+            "airport",
+            "station",
+            "toilet",
+            "restroom",
+            "company",
+            "office",
+            "home",
         }
-        if zh == "赚":
-            return ["我", "想", "赚钱"]
         if pos.startswith(("v", "verb")):
-            return ["我", "需要" if len(zh) >= 2 else "想", zh]
+            return ["I", "want", "to", term]
         if pos.startswith(("adj", "a")):
-            return ["很", zh]
-        if zh in place_words or "place" in pos:
-            return ["我", "去", zh]
-        return ["这是", zh]
+            return ["It", "is", "very", term]
+        if term.lower() in place_words or "place" in pos:
+            return ["I", "go", "to", "the", term]
+        return ["This", "is", term]
 
     def _gap_sentence_for_word(self, word: dict) -> str:
         zh = str(word.get("zh") or "").strip()
@@ -1122,7 +1123,10 @@ class CourseMiniAppLessonFlowService:
         tokens = self._sentence_tokens_for_word(word)
         if len(tokens) < 2:
             return None
-        sentence = "".join(tokens) + "。"
+        if all(self._single_hanzi(item) for item in tokens):
+            sentence = "".join(tokens) + "。"
+        else:
+            sentence = " ".join(tokens) + "."
         return {
             "type": "build_chinese_sentence",
             "prompt": self._copy(lang, "sentence_builder"),

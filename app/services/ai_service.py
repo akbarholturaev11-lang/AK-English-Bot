@@ -265,18 +265,17 @@ class AIService:
         }
         target_lang = lang_labels.get(user_language, "Russian")
         model = "gpt-4o-mini"
-        has_chinese = any("\u4e00" <= char <= "\u9fff" for char in transcript)
         direction = (
-            f"The latest transcript contains Chinese. Translate only the latest transcript into {target_lang}."
-            if has_chinese
-            else "The latest transcript is not Chinese. Interpret only the latest transcript into natural Simplified Chinese."
+            "Detect the language of the latest transcript. "
+            f"If it is English, translate only the latest transcript into {target_lang}. "
+            f"If it is in {target_lang} (or any non-English language), interpret only the latest transcript into natural, idiomatic English."
         )
 
         messages = [
             {
                 "role": "system",
                 "content": (
-                    "You are a context-aware Chinese conversation interpreter for real-life dialogue. "
+                    "You are a context-aware English conversation interpreter for real-life dialogue. "
                     f"The user's interface language is {target_lang}. "
                     f"{direction} "
                     "Use recent context only to resolve pronouns, tone, missing objects, and situation. "
