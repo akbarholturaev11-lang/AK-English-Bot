@@ -2839,6 +2839,8 @@ async def admin_miniapp_course_ads_upload(request: Request):
     duration_seconds = CourseAdService.normalize_duration(form.get("duration_seconds"))
     link_url = CourseAdService.normalize_link(form.get("link_url"))
     language = CourseAdService.normalize_language(form.get("language"))
+    ad_type = CourseAdService.normalize_ad_type(form.get("ad_type"))
+    button_text = CourseAdService.normalize_button_text(form.get("button_text"))
     async with async_session_maker() as session:
         ad = await CourseAdService(session).create_video(
             title=title,
@@ -2846,6 +2848,8 @@ async def admin_miniapp_course_ads_upload(request: Request):
             duration_seconds=duration_seconds,
             link_url=link_url,
             language=language,
+            ad_type=ad_type,
+            button_text=button_text,
             media_blob=media_backup,
             created_by_telegram_id=telegram_id,
         )
