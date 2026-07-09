@@ -1112,7 +1112,7 @@ async def run_course_entry_flow(
             await respond(t("course_no_lessons_available", lang))
             return
 
-        level_label = resolved_level.upper() if resolved_level else "English"
+        level_label = _course_level_label(resolved_level) if resolved_level else "English"
         await respond(
             f"{level_label}. {t('course_choose_lesson', lang)}",
             reply_markup=_lesson_selection_markup(lessons, resolved_level, lang),

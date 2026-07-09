@@ -25,15 +25,15 @@ def _with_miniapp(rows: list[list[InlineKeyboardButton]], lang: str) -> InlineKe
     )
 
 
-def _parse_title(raw: str) -> str:
-    """lesson.title oddiy string yoki JSON bo'lishi mumkin — inglizcha qismini qaytaradi."""
+def _parse_title(raw: str, lang: str = "uz") -> str:
+    """lesson.title oddiy string yoki JSON bo'lishi mumkin."""
     if not raw:
         return ""
     if raw.strip().startswith("{"):
         try:
             d = json.loads(raw)
             if isinstance(d, dict):
-                return d.get("zh") or d.get("uz") or raw
+                return d.get(lang) or d.get("uz") or d.get("ru") or d.get("tj") or d.get("zh") or raw
         except Exception:
             pass
     return raw
@@ -246,7 +246,7 @@ def lesson_selection_keyboard(
     for lesson in page_lessons:
         buttons.append([
             InlineKeyboardButton(
-                text=f"{lesson.lesson_order}. {_parse_title(lesson.title or '')}",
+                text=f"{lesson.lesson_order}. {_parse_title(lesson.title or '', lang)}",
                 callback_data=f"course:pick_lesson:{lesson.id}",
             )
         ])

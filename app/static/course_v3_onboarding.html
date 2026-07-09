@@ -53,7 +53,7 @@ html,body{background:var(--paper);color:var(--ink);font-family:-apple-system,"SF
 <script>
 var params=new URLSearchParams(location.search||"");
 var LANG=(params.get("lang")||"ru");if(["uz","ru","tj"].indexOf(LANG)<0)LANG="ru";
-var L={ru:{boot:"Beginner с нуля — учите английский каждый день по несколько минут с пандой Alex.",ask:"С какого уровня начнём? Не знаешь — начни с Beginner.",placement:"Не знаете уровень? Короткий тест",start:"Начать",cont:"Продолжить",ready:"Готово!",readySub:"Начнём с первого урока.",first:"Начать первый урок",rec:"Рекомендуем"},
+var L={ru:{boot:"Beginner с нуля — учите английский каждый день по несколько минут с Alex.",ask:"С какого уровня начнём? Не знаешь — начни с Beginner.",placement:"Не знаете уровень? Короткий тест",start:"Начать",cont:"Продолжить",ready:"Готово!",readySub:"Начнём с первого урока.",first:"Начать первый урок",rec:"Рекомендуем"},
   uz:{boot:"Beginner noldan — har kuni bir necha daqiqada Alex the owl bilan ingliz tilini o'rganing.",ask:"Qaysi darajadan boshlaymiz? Bilmasang — Beginner dan ket.",placement:"Darajangni bilmaysanmi? Qisqa test",start:"Boshlash",cont:"Davom etish",ready:"Tayyor!",readySub:"Birinchi darsdan boshlaymiz.",first:"Birinchi darsni boshlash",rec:"Tavsiya"},
   tj:{boot:"Beginner аз сифр — ҳар рӯз чанд дақиқа бо сова Alex англисиро омӯзед.",ask:"Аз кадом сатҳ оғоз кунем? Намедонӣ — аз Beginner.",placement:"Сатҳро намедонед? Тести кӯтоҳ",start:"Оғоз",cont:"Идома",ready:"Тайёр!",readySub:"Аз дарси аввал оғоз мекунем.",first:"Оғози дарси аввал",rec:"Тавсия"}}[LANG];
 var tg=window.Telegram&&window.Telegram.WebApp;if(tg){try{tg.ready();tg.expand()}catch(e){}}

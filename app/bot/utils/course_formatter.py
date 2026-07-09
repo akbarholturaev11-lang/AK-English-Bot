@@ -13,16 +13,16 @@ def _parse(value: Any, default: Any = None):
         return default
 
 
-def _parse_title(raw: str) -> str:
+def _parse_title(raw: str, lang: str = "uz") -> str:
     """lesson.title oddiy string yoki JSON bo'lishi mumkin.
-    JSON bo'lsa — inglizcha (zh) qismini, yo'q bo'lsa uz ni qaytaradi."""
+    JSON bo'lsa — avval foydalanuvchi tilidagi title qaytariladi."""
     if not raw:
         return ""
     if raw.strip().startswith("{"):
         try:
             d = json.loads(raw)
             if isinstance(d, dict):
-                return d.get("zh") or d.get("uz") or raw
+                return d.get(lang) or d.get("uz") or d.get("ru") or d.get("tj") or d.get("zh") or raw
         except Exception:
             pass
     return raw
@@ -195,9 +195,9 @@ def _hsk4_grammar_analysis(title_zh: str, lang: str) -> str:
     title = (title_zh or "").replace(" ", "")
     texts = {
         "emphasis": {
-            "uz": "Gapda kutilganidan kuchliroq holat ta'kidlanadi; odatda 都/也 natijani kuchaytiradi.",
-            "ru": "В предложении подчеркивается более сильный или неожиданный случай; 都/也 обычно усиливает результат.",
-            "tj": "Дар ҷумла ҳолати қавитар ё ғайричашмдошт таъкид мешавад; 都/也 натиҷаро қавитар мекунад.",
+            "uz": "Gapda kutilganidan kuchliroq holat ta'kidlanadi; odatda kuchaytiruvchi so'z natijani kuchaytiradi.",
+            "ru": "В предложении подчеркивается более сильный или неожиданный случай; усилительное слово обычно усиливает результат.",
+            "tj": "Дар ҷумла ҳолати қавитар ё ғайричашмдошт таъкид мешавад; калимаи таъкидӣ натиҷаро қавитар мекунад.",
         },
         "condition": {
             "uz": "Birinchi qism shart yoki vaziyatni beradi, ikkinchi qism esa shu shartdagi natijani ko'rsatadi.",
@@ -253,29 +253,29 @@ def _hsk4_grammar_tip(title_zh: str, lang: str) -> str:
     title = (title_zh or "").replace(" ", "")
     tips = [
         (("不仅", "不但"), {
-            "uz": "Ikkinchi qismda odatda 也/还/而且 keladi; ikki tomonni ham ijobiy kuchaytiradi.",
-            "ru": "Во второй части обычно стоит 也/还/而且; конструкция усиливает оба положительных признака.",
-            "tj": "Дар қисми дуюм одатан 也/还/而且 меояд; ду хусусияти мусбатро қавитар мекунад.",
+            "uz": "Ikkinchi qismda odatda qo'shimcha bog'lovchi keladi; ikki tomonni ham ijobiy kuchaytiradi.",
+            "ru": "Во второй части обычно стоит дополнительная связка; конструкция усиливает оба положительных признака.",
+            "tj": "Дар қисми дуюм одатан пайвандаки иловагӣ меояд; ду хусусияти мусбатро қавитар мекунад.",
         }),
         (("从来",), {
-            "uz": "Inkor ma'nosida ko'pincha 没/不 bilan ishlaydi: 从来没... = hech qachon ...magan.",
-            "ru": "В отрицании обычно идет с 没/不: 从来没... = никогда не....",
-            "tj": "Дар маънои инкор одатан бо 没/不 меояд: 从来没... = ҳеч вақт ... накардааст.",
+            "uz": "Inkor ma'nosida ko'pincha yordamchi inkor bilan ishlaydi: ma'nosi 'hech qachon ...magan'.",
+            "ru": "В отрицании обычно используется отрицательный маркер: смысл — 'никогда не...'.",
+            "tj": "Дар маънои инкор одатан нишондиҳандаи инкор меояд: маънояш 'ҳеч вақт ... накардааст'.",
         }),
         (("刚",), {
-            "uz": "刚 fe'ldan oldin keladi va 'hozirgina/yangi' ma'nosini beradi; uzoq o'tmish uchun ishlatmang.",
-            "ru": "刚 ставится перед глаголом и значит 'только что/недавно'; не используйте для далекого прошлого.",
-            "tj": "刚 пеш аз феъл меояд ва маънои 'нав/ҳозир' медиҳад; барои гузаштаи дур истифода накунед.",
+            "uz": "Bu qolip fe'ldan oldin keladi va 'hozirgina/yangi' ma'nosini beradi; uzoq o'tmish uchun ishlatmang.",
+            "ru": "Этот шаблон ставится перед глаголом и значит 'только что/недавно'; не используйте для далекого прошлого.",
+            "tj": "Ин қолаб пеш аз феъл меояд ва маънои 'нав/ҳозир' медиҳад; барои гузаштаи дур истифода накунед.",
         }),
         (("即使", "尽管", "无论", "不管", "再"), {
-            "uz": "Natija qismida ko'pincha 也/都/还 keladi; shu so'z natija o'zgarmasligini ko'rsatadi.",
-            "ru": "В части результата часто стоит 也/都/还; оно показывает, что результат не меняется.",
-            "tj": "Дар қисми натиҷа одатан 也/都/还 меояд; он тағйир наёфтани натиҷаро нишон медиҳад.",
+            "uz": "Natija qismida ko'pincha kuchaytiruvchi so'z keladi; shu so'z natija o'zgarmasligini ko'rsatadi.",
+            "ru": "В части результата часто стоит усилительное слово; оно показывает, что результат не меняется.",
+            "tj": "Дар қисми натиҷа одатан калимаи таъкидӣ меояд; он тағйир наёфтани натиҷаро нишон медиҳад.",
         }),
         (("否则",), {
-            "uz": "Avval maslahat/shart keladi, keyin 否则 bilan yomon yoki kutilmagan natija aytiladi.",
-            "ru": "Сначала идет совет или условие, затем через 否则 называется нежелательный результат.",
-            "tj": "Аввал маслиҳат ё шарт меояд, баъд бо 否则 натиҷаи номатлуб гуфта мешавад.",
+            "uz": "Avval maslahat yoki shart keladi, keyin yomon yoki kutilmagan natija aytiladi.",
+            "ru": "Сначала идет совет или условие, затем называется нежелательный результат.",
+            "tj": "Аввал маслиҳат ё шарт меояд, баъд натиҷаи номатлуб гуфта мешавад.",
         }),
         (("然而", "却", "相反", "不过"), {
             "uz": "Bular oddiy 'va' emas; oldingi fikrga burilish yoki qarama-qarshi natija qo'shadi.",
@@ -293,14 +293,14 @@ def _hsk4_grammar_tip(title_zh: str, lang: str) -> str:
             "tj": "Баъди қолаб мавзу меояд; ҳукм ё баҳои асосӣ дар қисми баъдӣ гуфта мешавад.",
         }),
         (("是否",), {
-            "uz": "是否 yozma va rasmiyroq uslub; og'zaki nutqda ko'pincha 是不是 ishlatiladi.",
-            "ru": "是否 более письменное и официальное; в разговоре чаще используют 是不是.",
-            "tj": "是否 бештар хаттӣ ва расмӣ аст; дар гуфтор бештар 是不是 истифода мешавад.",
+            "uz": "Bu yozma va rasmiyroq uslub; og'zaki nutqda ko'pincha oddiyroq savol shakli ishlatiladi.",
+            "ru": "Это более письменный и официальный стиль; в разговоре чаще используют более простую форму вопроса.",
+            "tj": "Ин услуб бештар хаттӣ ва расмӣ аст; дар гуфтор шакли содатари савол бештар истифода мешавад.",
         }),
         (("把",), {
-            "uz": "把 dan keyingi obyektga nima bo'lganini fe'l va natija qismi bilan aniq ko'rsating.",
-            "ru": "После 把 нужно ясно показать, что произошло с объектом, через глагол и результат.",
-            "tj": "Баъди 把 бояд бо феъл ва натиҷа нишон диҳед, ки бо объект чӣ шуд.",
+            "uz": "Obyektga nima bo'lganini fe'l va natija qismi bilan aniq ko'rsating.",
+            "ru": "Нужно ясно показать, что произошло с объектом, через глагол и результат.",
+            "tj": "Бо феъл ва натиҷа равшан нишон диҳед, ки бо объект чӣ шуд.",
         }),
     ]
     for markers, localized in tips:
@@ -386,9 +386,9 @@ def _append_hsk4_grammar_item(lines: list[str], item: dict, lang: str, index: in
 
 def format_vocab(lesson, lang: str, lesson_total_steps: int = 6) -> str:
     vocab = _parse(lesson.vocabulary_json, [])
-    title = _parse_title(lesson.title or "")
+    title = _parse_title(lesson.title or "", lang)
 
-    label = {"uz": "Yangi so'zlar 🇨🇳", "tj": "Калимаҳои нав 🇨🇳", "ru": "Новые слова 🇨🇳"}
+    label = {"uz": "Yangi so'zlar 🇬🇧", "tj": "Калимаҳои нав 🇬🇧", "ru": "Новые слова 🇬🇧"}
     lines = [f"【1/{lesson_total_steps}】 {title} · {label.get(lang, label['ru'])}", ""]
 
     hint = {
@@ -434,7 +434,7 @@ def format_vocab(lesson, lang: str, lesson_total_steps: int = 6) -> str:
 
 def format_dialogue(lesson, lang: str, lesson_total_steps: int = 6) -> str:
     dialogues = _parse(lesson.dialogue_json, [])
-    title = _parse_title(lesson.title or "")
+    title = _parse_title(lesson.title or "", lang)
 
     step_label = {"uz": "Jonli dialog 🎭", "tj": "Муколамаи зинда 🎭", "ru": "Живой диалог 🎭"}
     lines = [f"【2/{lesson_total_steps}】 {title} · {step_label.get(lang, step_label['ru'])}", ""]
@@ -443,7 +443,7 @@ def format_dialogue(lesson, lang: str, lesson_total_steps: int = 6) -> str:
         if not isinstance(block, dict):
             continue
 
-        # section label (课文 1, 课文 2 ...)
+        # section label (Dialog 1, Dialog 2 ...)
         section = block.get("section_label", "")
         scene = (
             block.get(f"scene_{lang}")
@@ -502,7 +502,7 @@ def format_dialogue(lesson, lang: str, lesson_total_steps: int = 6) -> str:
 
 def format_grammar(lesson, lang: str, lesson_total_steps: int = 6) -> str:
     grammar = _parse(lesson.grammar_json, [])
-    title = _parse_title(lesson.title or "")
+    title = _parse_title(lesson.title or "", lang)
 
     step_label = {"uz": "Grammatika 📐", "tj": "Грамматика 📐", "ru": "Грамматика 📐"}
     lines = [f"【3/{lesson_total_steps}】 {title} · {step_label.get(lang, step_label['ru'])}", ""]
@@ -544,7 +544,7 @@ def format_grammar(lesson, lang: str, lesson_total_steps: int = 6) -> str:
 
 def format_exercise(lesson, lang: str, lesson_total_steps: int = 6) -> str:
     exercises = _parse(lesson.exercise_json, [])
-    title = _parse_title(lesson.title or "")
+    title = _parse_title(lesson.title or "", lang)
 
     step_label = {"uz": "Test vaqti! 🧠", "tj": "Вақти санҷиш! 🧠", "ru": "Время теста! 🧠"}
     lines = [f"【5/{lesson_total_steps}】 {title} · {step_label.get(lang, step_label['ru'])}", ""]
@@ -631,12 +631,12 @@ def format_vocab_1(lesson, lang: str) -> str:
     vocab = _parse(lesson.vocabulary_json, [])
     total = len(vocab)
     page  = vocab[:8]
-    title = _parse_title(lesson.title or "")
+    title = _parse_title(lesson.title or "", lang)
 
     hdr = {
-        "uz": "📖 Yangi so'zlar 🇨🇳",
-        "tj": "📖 Калимаҳои нав 🇨🇳",
-        "ru": "📖 Новые слова 🇨🇳",
+        "uz": "📖 Yangi so'zlar 🇬🇧",
+        "tj": "📖 Калимаҳои нав 🇬🇧",
+        "ru": "📖 Новые слова 🇬🇧",
     }
     hint_tpl = {
         "uz": "✨ Bugun <b>{}</b> ta yangi so'z — darsni tugatgach amalda ishlata olasiz!",
@@ -664,12 +664,12 @@ def format_vocab_2(lesson, lang: str) -> str:
     page  = vocab[8:]
     if not page:
         return ""
-    title = _parse_title(lesson.title or "")
+    title = _parse_title(lesson.title or "", lang)
 
     hdr = {
-        "uz": "📖 Yangi so'zlar — davomi 🇨🇳",
-        "tj": "📖 Калимаҳои нав — давом 🇨🇳",
-        "ru": "📖 Новые слова — продолжение 🇨🇳",
+        "uz": "📖 Yangi so'zlar — davomi 🇬🇧",
+        "tj": "📖 Калимаҳои нав — давом 🇬🇧",
+        "ru": "📖 Новые слова — продолжение 🇬🇧",
     }
 
     lines = [
@@ -691,9 +691,9 @@ def format_block_vocab(lesson, lang: str, n: int) -> str:
     if not block or not words:
         return ""
 
-    title = _parse_title(lesson.title or "")
+    title = _parse_title(lesson.title or "", lang)
     total = len(_lesson_blocks(lesson))
-    section = block.get("section_label", "") or f"课文 {n}"
+    section = block.get("section_label", "") or f"Dialog {n}"
     scene = block.get(f"scene_{lang}") or block.get("scene_label_zh") or ""
     header = " · ".join(filter(None, [section, scene]))
 
@@ -726,7 +726,7 @@ def format_block_vocab(lesson, lang: str, n: int) -> str:
 
 def format_block_quiz(lesson, lang: str, n: int) -> str:
     block = _block_by_no(lesson, n)
-    title = _parse_title(lesson.title or "")
+    title = _parse_title(lesson.title or "", lang)
     total = len(_lesson_blocks(lesson))
     questions = block.get("mini_quiz") or []
 
@@ -778,9 +778,9 @@ def format_block_grammar(lesson, lang: str, n: int) -> str:
     if not block:
         return ""
 
-    title = _parse_title(lesson.title or "")
+    title = _parse_title(lesson.title or "", lang)
     total = len(_lesson_blocks(lesson))
-    section = block.get("section_label", "") or f"课文 {n}"
+    section = block.get("section_label", "") or f"Dialog {n}"
     scene = block.get(f"scene_{lang}") or block.get("scene_label_zh") or ""
     header = " · ".join(filter(None, [section, scene]))
     grammar_notes = block.get("grammar_notes") or []
@@ -855,8 +855,8 @@ def format_dialogue_n(lesson, lang: str, n: int) -> str:
     if not isinstance(block, dict):
         return ""
 
-    title   = _parse_title(lesson.title or "")
-    section = block.get("section_label", "") or f"课文 {n}"
+    title   = _parse_title(lesson.title or "", lang)
+    section = block.get("section_label", "") or f"Dialog {n}"
     scene   = (
         block.get(f"scene_{lang}")
         or block.get("scene_label_zh")
@@ -965,7 +965,7 @@ def format_grammar_v2(lesson, lang: str) -> str:
     if not grammar:
         return ""
 
-    title = _parse_title(lesson.title or "")
+    title = _parse_title(lesson.title or "", lang)
     hdr = {
         "uz": "📐 Grammatika",
         "tj": "📐 Грамматика",
@@ -991,7 +991,7 @@ def format_grammar_v2(lesson, lang: str) -> str:
 
 
 def format_satisfaction_check(lesson, lang: str) -> str:
-    title = _parse_title(lesson.title or "")
+    title = _parse_title(lesson.title or "", lang)
     labels = {
         "uz": "Dars yakuni",
         "tj": "Анҷоми дарс",
@@ -1017,7 +1017,7 @@ def format_review(lesson, lang: str) -> str:
     vocab_fallback = _parse(getattr(lesson, "vocabulary_json", None), [])
     dialogue_fallback = _parse(getattr(lesson, "dialogue_json", None), [])
     grammar_fallback = _parse(getattr(lesson, "grammar_json", None), [])
-    title = _parse_title(lesson.title or "")
+    title = _parse_title(lesson.title or "", lang)
 
     if isinstance(review, list) and review and isinstance(review[0], dict):
         item = review[0]
@@ -1134,7 +1134,7 @@ def format_step(lesson, lang: str, step: str) -> str | None:
 # ─────────────────────────────────────────────────────────────────────────────
 
 def format_intro(lesson, lang: str, lesson_total_steps: int = 6) -> str:
-    title = _parse_title(lesson.title or "")
+    title = _parse_title(lesson.title or "", lang)
     intro_raw = lesson.intro_text or ""
 
     try:

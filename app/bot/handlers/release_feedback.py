@@ -71,19 +71,19 @@ _COURSE_MINIAPP_V2_RELEASE_TEXTS = {
     "uz": (
         "⚡ Course mode yangilandi!\n\n"
         "Quiz endi yengil interaktiv formatda: 5 ta tez savol, speaker, chiplar, progress va darhol feedback.\n\n"
-        "Uyga vazifa o'rniga Mustahkamlash qo'shildi: so'z tartiblash, mos juftlik, eshitib tanlash va iyeroglifni ko'rish.\n\n"
+        "Uyga vazifa o'rniga Mustahkamlash qo'shildi: so'z tartiblash, mos juftlik, eshitib tanlash va so'zni ko'rish.\n\n"
         "Kursga kiring va keyingi darsda sinab ko'ring."
     ),
     "ru": (
         "⚡ Course mode обновился!\n\n"
         "Quiz теперь в лёгком интерактивном формате: 5 быстрых вопросов, speaker, chips, progress и мгновенный feedback.\n\n"
-        "Вместо домашнего задания добавлено Закрепление: порядок слов, пары, выбор на слух и просмотр иероглифа.\n\n"
+        "Вместо домашнего задания добавлено Закрепление: порядок слов, пары, выбор на слух и просмотр слова.\n\n"
         "Зайдите в курс и попробуйте на следующем уроке."
     ),
     "tj": (
         "⚡ Course mode нав шуд!\n\n"
         "Quiz ҳоло дар формати сабуки интерактивӣ аст: 5 саволи тез, speaker, chip-ҳо, progress ва feedback-и фаврӣ.\n\n"
-        "Ба ҷои вазифаи хонагӣ Мустаҳкамкунӣ илова шуд: тартиби калимаҳо, ҷуфтҳо, интихоб аз рӯи шунидан ва дидани иероглиф.\n\n"
+        "Ба ҷои вазифаи хонагӣ Мустаҳкамкунӣ илова шуд: тартиби калимаҳо, ҷуфтҳо, интихоб аз рӯи шунидан ва дидани калима.\n\n"
         "Ба курс дароед ва дар дарси навбатӣ санҷед."
     ),
 }

@@ -2,134 +2,79 @@
   "schema_version": 2,
   "level": "hsk2",
   "lesson_id": 11,
-  "title": "他比我大三岁",
+  "title": "Comparisons",
   "subtitle": {
-    "uz": "'Bǐ' qiyoslash konstruktsiyasini, fe'l sifatdoshini aniqlovchi sifatida ishlatishni va 'kěnéng' yordamchi fe'lini o'rganish.",
-    "ru": "Изучение конструкции сравнения 'bǐ', использования глагольных конструкций в роли определения и модального глагола 'kěnéng'.",
-    "tj": "Омӯзиши конструксияи муқоисавии 'bǐ', истифодаи сохторҳои феълӣ ҳамчун муайянкунанда ва феъли ёрирасони 'kěnéng'."
+    "uz": "Comparisons: so'zlar, gaplar va dialoglar.",
+    "ru": "Comparisons: слова, фразы и диалоги.",
+    "tj": "Comparisons: калимаҳо, ҷумлаҳо ва муколамаҳо."
   },
   "intro_prebuilt": true,
   "grammar_prebuilt": true,
   "active_words": [
     {
       "no": 1,
-      "zh": "唱歌",
-      "pinyin": "chànggē",
-      "pos": "v.",
+      "zh": "older",
+      "pinyin": "OLDER",
+      "pos": "adj.",
       "meaning": {
-        "uz": "qo'shiq aytmoq",
-        "ru": "петь песню",
-        "tj": "суруд хондан"
+        "uz": "kattaroq",
+        "ru": "старше",
+        "tj": "калонтар"
       }
     },
     {
       "no": 2,
-      "zh": "男",
-      "pinyin": "nán",
+      "zh": "younger",
+      "pinyin": "YOUNGER",
       "pos": "adj.",
       "meaning": {
-        "uz": "erkak, o'g'il",
-        "ru": "мужской, мальчик",
-        "tj": "мард, писар"
+        "uz": "yoshroq",
+        "ru": "младше",
+        "tj": "ҷавонтар"
       }
     },
     {
       "no": 3,
-      "zh": "女",
-      "pinyin": "nǚ",
+      "zh": "taller",
+      "pinyin": "TALLER",
       "pos": "adj.",
       "meaning": {
-        "uz": "ayol, qiz",
-        "ru": "женский, девочка",
-        "tj": "зан, духтар"
+        "uz": "bo‘yi balandroq",
+        "ru": "выше ростом",
+        "tj": "қадбаландтар"
       }
     },
     {
       "no": 4,
-      "zh": "孩子",
-      "pinyin": "háizi",
-      "pos": "n.",
+      "zh": "than",
+      "pinyin": "THAN",
+      "pos": "prep.",
       "meaning": {
-        "uz": "bola",
-        "ru": "ребёнок",
-        "tj": "кӯдак"
+        "uz": "...dan ko‘ra",
+        "ru": "чем",
+        "tj": "нисбат ба"
       }
     },
     {
       "no": 5,
-      "zh": "右边",
-      "pinyin": "yòubian",
-      "pos": "n.",
+      "zh": "more",
+      "pinyin": "MORE",
+      "pos": "adv.",
       "meaning": {
-        "uz": "o'ng tomon",
-        "ru": "правая сторона",
-        "tj": "тарафи рост"
+        "uz": "ko‘proq",
+        "ru": "больше",
+        "tj": "бештар"
       }
     },
     {
       "no": 6,
-      "zh": "比",
-      "pinyin": "bǐ",
-      "pos": "prep.",
+      "zh": "less",
+      "pinyin": "LESS",
+      "pos": "adv.",
       "meaning": {
-        "uz": "… dan (qiyoslash uchun)",
-        "ru": "чем… (для сравнения)",
-        "tj": "аз… (барои муқоиса)"
-      }
-    },
-    {
-      "no": 7,
-      "zh": "便宜",
-      "pinyin": "piányi",
-      "pos": "adj.",
-      "meaning": {
-        "uz": "arzon",
-        "ru": "дешёвый",
-        "tj": "арзон"
-      }
-    },
-    {
-      "no": 8,
-      "zh": "说话",
-      "pinyin": "shuōhuà",
-      "pos": "v.",
-      "meaning": {
-        "uz": "gapirmoq, so'zlamoq",
-        "ru": "говорить, разговаривать",
-        "tj": "гап задан, сухан гуфтан"
-      }
-    },
-    {
-      "no": 9,
-      "zh": "可能",
-      "pinyin": "kěnéng",
-      "pos": "aux.",
-      "meaning": {
-        "uz": "ehtimol, mumkin",
-        "ru": "возможно, может быть",
-        "tj": "эҳтимол, мумкин аст"
-      }
-    },
-    {
-      "no": 10,
-      "zh": "去年",
-      "pinyin": "qùnián",
-      "pos": "n.",
-      "meaning": {
-        "uz": "o'tgan yil",
-        "ru": "в прошлом году",
-        "tj": "соли гузашта"
-      }
-    },
-    {
-      "no": 11,
-      "zh": "姓",
-      "pinyin": "xìng",
-      "pos": "v.",
-      "meaning": {
-        "uz": "familiyasi … bo'lmoq",
-        "ru": "иметь фамилию…",
-        "tj": "насабаш … буданаш"
+        "uz": "kamroq",
+        "ru": "меньше",
+        "tj": "камтар"
       }
     }
   ],
@@ -137,33 +82,24 @@
     {
       "no": 1,
       "title": {
-        "uz": "Fe'l birikmasi aniqlovchi sifatida",
-        "ru": "Глагольная конструкция в роли определения",
-        "tj": "Сохтори феълӣ ҳамчун муайянкунанда"
+        "uz": "comparative + than",
+        "ru": "comparative + than",
+        "tj": "comparative + than"
       },
-      "title_zh": "动词结构做定语",
+      "title_zh": "comparative + than",
       "rule": {
-        "uz": "Xitoy tilida fe'l birikmasi yoki gap bo'lagi ot oldidan aniqlovchi bo'lib kelishi mumkin. Bu holda aniqlovchi bilan ot orasiga '的' yuklamasi qo'yiladi. Masalan: '看报纸的女孩子' (gazeta o'qiyotgan qiz).",
-        "ru": "В китайском языке глагольная конструкция или часть предложения может выступать определением перед существительным. В этом случае между определением и существительным ставится частица '的'. Например: '看报纸的女孩子' (девушка, читающая газету).",
-        "tj": "Дар забони чинӣ сохтори феълӣ ё бахши ҷумла метавонад пеш аз исм ҳамчун муайянкунанда бояд. Дар ин ҳол байни муайянкунанда ва исм зарраи '的' гузошта мешавад. Масалан: '看报纸的女孩子' (духтаре ки рӯзнома мехонад)."
+        "uz": "Qolip: comparative + than. Misol: My brother is older than me. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+        "ru": "Шаблон: comparative + than. Пример: My brother is older than me. Используйте его в коротких естественных фразах.",
+        "tj": "Қолаб: comparative + than. Мисол: My brother is older than me. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
       },
       "examples": [
         {
-          "zh": "左边看报纸的女孩子是我姐姐。",
-          "pinyin": "Zuǒbian kàn bàozhǐ de nǚ háizi shì wǒ jiějie.",
+          "zh": "My brother is older than me.",
+          "pinyin": "",
           "translation": {
-            "uz": "Chap tomondagi gazeta o'qiyotgan qiz mening opam.",
-            "ru": "Девушка слева, читающая газету, — моя старшая сестра.",
-            "tj": "Духтаре ки тарафи чап рӯзнома мехонад хоҳари калонии ман аст."
-          }
-        },
-        {
-          "zh": "前边说话的那个人是老师。",
-          "pinyin": "Qiánbian shuōhuà de nà ge rén shì lǎoshī.",
-          "translation": {
-            "uz": "Oldinda gapirgan odam o'qituvchi.",
-            "ru": "Тот человек впереди, который говорит, — учитель.",
-            "tj": "Он касе ки пеш гап мезанад муаллим аст."
+            "uz": "My brother is older than me.",
+            "ru": "My brother is older than me.",
+            "tj": "My brother is older than me."
           }
         }
       ]
@@ -171,67 +107,24 @@
     {
       "no": 2,
       "title": {
-        "uz": "'Bǐ' qiyoslash gapi (1)",
-        "ru": "Предложения сравнения с 'bǐ' (1)",
-        "tj": "Ҷумлаи муқоисавӣ бо 'bǐ' (1)"
+        "uz": "expanded sentence",
+        "ru": "expanded sentence",
+        "tj": "expanded sentence"
       },
-      "title_zh": "“比”字句（1）",
+      "title_zh": "expanded sentence",
       "rule": {
-        "uz": "'Bǐ' qiyoslash gapi quyidagi tuzilishga ega: A + 比 + B + sifat (+ miqdor farqi). Bu 'A, B dan ko'proq/katta/yaxshi' ma'nosini beradi. Inkor shaklida '没有' ishlatiladi: A + 没有 + B + sifat.",
-        "ru": "Конструкция сравнения с 'bǐ' имеет структуру: A + 比 + B + прилагательное (+ разница в количестве). Означает 'A больше/старше/лучше, чем B'. В отрицательной форме используется '没有': A + 没有 + B + прилагательное.",
-        "tj": "Ҷумлаи муқоисавӣ бо 'bǐ' сохтори зеринро дорад: A + 比 + B + сифат (+ фарқи миқдорӣ). Маъниаш 'A аз B бештар/калонтар/беҳтар аст'. Дар шакли инкорӣ '没有' истифода мешавад: A + 没有 + B + сифат."
+        "uz": "Qolip: add time, place, or reason. Misol: My brother is older than me. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+        "ru": "Шаблон: add time, place, or reason. Пример: My brother is older than me. Используйте его в коротких естественных фразах.",
+        "tj": "Қолаб: add time, place, or reason. Мисол: My brother is older than me. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
       },
       "examples": [
         {
-          "zh": "他比我大三岁。",
-          "pinyin": "Tā bǐ wǒ dà sān suì.",
+          "zh": "My brother is older than me.",
+          "pinyin": "",
           "translation": {
-            "uz": "U mendan uch yosh katta.",
-            "ru": "Он старше меня на три года.",
-            "tj": "Ӯ аз ман се сол калонтар аст."
-          }
-        },
-        {
-          "zh": "苹果没有西瓜大。",
-          "pinyin": "Píngguǒ méiyǒu xīguā dà.",
-          "translation": {
-            "uz": "Olma tarvuz kadar katta emas.",
-            "ru": "Яблоко не такое большое, как арбуз.",
-            "tj": "Себ ба андозаи тарбуз калон нест."
-          }
-        }
-      ]
-    },
-    {
-      "no": 3,
-      "title": {
-        "uz": "'Kěnéng' yordamchi fe'li",
-        "ru": "Модальный глагол 'kěnéng'",
-        "tj": "Феъли ёрирасони 'kěnéng'"
-      },
-      "title_zh": "助动词“可能”",
-      "rule": {
-        "uz": "'Kěnéng' yordamchi fe'li 'ehtimol, mumkin' ma'nosini beradi va fe'l oldidan qo'yiladi. U ma'lum bo'lmagan holatlar haqida taxmin bildiradi. Inkor shakli: '不可能' (mumkin emas, aslo).",
-        "ru": "Модальный глагол 'kěnéng' означает 'возможно, может быть' и ставится перед глаголом. Выражает предположение о неизвестных ситуациях. Отрицательная форма: '不可能' (невозможно).",
-        "tj": "Феъли ёрирасони 'kěnéng' маъниаш 'эҳтимол, мумкин аст' буда пеш аз феъл меояд. Вай тахминро дар бораи вазъиятҳои номаълум ифода мекунад. Шакли инкорӣ: '不可能' (ғайриимкон аст)."
-      },
-      "examples": [
-        {
-          "zh": "你可能不认识她。",
-          "pinyin": "Nǐ kěnéng bù rènshi tā.",
-          "translation": {
-            "uz": "Siz uni tanimas ehtimol.",
-            "ru": "Возможно, ты её не знаешь.",
-            "tj": "Эҳтимол шумо ӯро намешиносед."
-          }
-        },
-        {
-          "zh": "他可能今天来。",
-          "pinyin": "Tā kěnéng jīntiān lái.",
-          "translation": {
-            "uz": "U ehtimol bugun keladi.",
-            "ru": "Возможно, он придёт сегодня.",
-            "tj": "Эҳтимол ӯ имрӯз меояд."
+            "uz": "My brother is older than me.",
+            "ru": "My brother is older than me.",
+            "tj": "My brother is older than me."
           }
         }
       ]
@@ -240,196 +133,87 @@
   "dialogues": [
     {
       "scene": {
-        "uz": "Qo'shiq aytish zalida",
-        "ru": "В зале для пения",
-        "tj": "Дар толори сурудхонӣ"
+        "uz": "Dars boshida",
+        "ru": "В начале урока",
+        "tj": "Дар оғози дарс"
       },
       "dialogue": [
         {
           "speaker": "A",
-          "zh": "王方，昨天和你一起唱歌的人是谁？",
-          "pinyin": "Wáng Fāng, zuótiān hé nǐ yìqǐ chànggē de rén shì shéi?",
+          "zh": "What are we learning today?",
+          "pinyin": "",
           "text": {
-            "uz": "Van Fan, kecha siz bilan birga qo'shiq aytgan odam kim edi?",
-            "ru": "Ван Фан, кто это был вчера, когда ты пел(а) вместе с тобой?",
-            "tj": "Ван Фан, дирӯз он касе ки бо ту якҷоя суруд мехонд кӣ буд?"
+            "uz": "Bugun nimani o‘rganamiz?",
+            "ru": "Что мы сегодня изучаем?",
+            "tj": "Имрӯз чиро меомӯзем?"
           }
         },
         {
           "speaker": "B",
-          "zh": "一个朋友。",
-          "pinyin": "Yí ge péngyou.",
+          "zh": "We are learning Comparisons.",
+          "pinyin": "",
           "text": {
-            "uz": "Bir do'stim.",
-            "ru": "Один друг.",
-            "tj": "Як дӯстам."
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "什么朋友？是不是男朋友？",
-          "pinyin": "Shénme péngyou? Shì bú shì nán péngyou?",
-          "text": {
-            "uz": "Qanday do'st? Yigit do'stingizmi?",
-            "ru": "Что за друг? Это случайно не парень?",
-            "tj": "Чӣ гуна дӯст? Магар дӯсти писарат аст?"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "不是不是，我同学介绍的，昨天第一次见。",
-          "pinyin": "Bú shì bú shì, wǒ tóngxué jièshào de, zuótiān dì yī cì jiàn.",
-          "text": {
-            "uz": "Yo'q yo'q, sinfdoshim tanishtirgan, kecha birinchi marta uchrashdik.",
-            "ru": "Нет-нет, познакомил однокурсник, вчера виделись первый раз.",
-            "tj": "Не не, ҳамсинфам шинос кард, дирӯз бори аввал дидем."
+            "uz": "Bugun Comparisons mavzusini o‘rganamiz.",
+            "ru": "Мы изучаем тему Comparisons.",
+            "tj": "Мо мавзӯи Comparisons-ро меомӯзем."
           }
         }
       ]
     },
     {
       "scene": {
-        "uz": "Yotoqxonada",
-        "ru": "В общежитии",
-        "tj": "Дар хобгоҳ"
+        "uz": "Misol gap",
+        "ru": "Пример фразы",
+        "tj": "Ҷумлаи намуна"
       },
       "dialogue": [
         {
           "speaker": "A",
-          "zh": "左边这个看报纸的女孩子是你姐姐吗？",
-          "pinyin": "Zuǒbian zhège kàn bàozhǐ de nǚ háizi shì nǐ jiějie ma?",
+          "zh": "Can you give an example?",
+          "pinyin": "",
           "text": {
-            "uz": "Chap tomondagi gazeta o'qiyotgan qiz sizning opangizmi?",
-            "ru": "Та девушка слева, которая читает газету, это твоя старшая сестра?",
-            "tj": "Он духтаре ки тарафи чап рӯзнома мехонад хоҳари калонии туст?"
+            "uz": "Misol keltira olasizmi?",
+            "ru": "Можете привести пример?",
+            "tj": "Метавонед мисол диҳед?"
           }
         },
         {
           "speaker": "B",
-          "zh": "是，右边写字的那个人是我哥哥。",
-          "pinyin": "Shì, yòubian xiě zì de nà ge rén shì wǒ gēge.",
+          "zh": "My brother is older than me.",
+          "pinyin": "",
           "text": {
-            "uz": "Ha, o'ng tomonda yozayotgan odam mening akam.",
-            "ru": "Да, а тот, кто справа пишет, это мой старший брат.",
-            "tj": "Бале, он касе ки тарафи рост менависад бародари калонии ман аст."
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "你哥哥多大？",
-          "pinyin": "Nǐ gēge duō dà?",
-          "text": {
-            "uz": "Akangiz necha yoshda?",
-            "ru": "Сколько лет твоему брату?",
-            "tj": "Бародари калониат чанд сол дорад?"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "25岁，他比我大三岁。",
-          "pinyin": "Èrshíwǔ suì, tā bǐ wǒ dà sān suì.",
-          "text": {
-            "uz": "25 yoshda, u mendan uch yosh katta.",
-            "ru": "25 лет, он старше меня на три года.",
-            "tj": "25 сол, ӯ аз ман се сол калонтар аст."
+            "uz": "My brother is older than me.",
+            "ru": "My brother is older than me.",
+            "tj": "My brother is older than me."
           }
         }
       ]
     },
     {
       "scene": {
-        "uz": "Do'konda",
-        "ru": "В магазине",
-        "tj": "Дар мағоза"
+        "uz": "Qisqa suhbat",
+        "ru": "Короткий разговор",
+        "tj": "Суҳбати кӯтоҳ"
       },
       "dialogue": [
         {
           "speaker": "A",
-          "zh": "今天的西瓜怎么卖？",
-          "pinyin": "Jīntiān de xīguā zěnme mài?",
+          "zh": "Do you know the word \"older\"?",
+          "pinyin": "",
           "text": {
-            "uz": "Bugungi tarvuz qancha?",
-            "ru": "Сколько стоит сегодня арбуз?",
-            "tj": "Тарбузи имрӯза чанд пул аст?"
+            "uz": "“older” so‘zini bilasizmi?",
+            "ru": "Вы знаете слово “older”?",
+            "tj": "Оё калимаи “older”-ро медонед?"
           }
         },
         {
           "speaker": "B",
-          "zh": "三块五一斤。",
-          "pinyin": "Sān kuài wǔ yì jīn.",
+          "zh": "Yes. It means kattaroq.",
+          "pinyin": "",
           "text": {
-            "uz": "Bir jin uchun uch yuan besh fen.",
-            "ru": "Три юаня пятьдесят за полкило.",
-            "tj": "Барои як ҷин се юан панҷ феник."
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "比昨天便宜。",
-          "pinyin": "Bǐ zuótiān piányi.",
-          "text": {
-            "uz": "Kechaga qaraganda arzon.",
-            "ru": "Дешевле, чем вчера.",
-            "tj": "Аз дирӯз арзонтар аст."
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "是，苹果也比昨天便宜一些。您来点儿吧。",
-          "pinyin": "Shì, píngguǒ yě bǐ zuótiān piányi yìxiē. Nín lái diǎnr ba.",
-          "text": {
-            "uz": "Ha, olma ham kechaga qaraganda biroz arzon. Biroz oling.",
-            "ru": "Да, яблоки тоже немного дешевле, чем вчера. Берите немного.",
-            "tj": "Бале, себ ҳам аз дирӯз каме арзонтар аст. Каме гиред."
-          }
-        }
-      ]
-    },
-    {
-      "scene": {
-        "uz": "Maktabda",
-        "ru": "В школе",
-        "tj": "Дар мактаб"
-      },
-      "dialogue": [
-        {
-          "speaker": "A",
-          "zh": "前边说话的那个人是不是我的汉语老师？你可能不认识她。",
-          "pinyin": "Qiánbian shuōhuà de nà ge rén shì bú shì wǒ de Hànyǔ lǎoshī? Nǐ kěnéng bù rènshi tā.",
-          "text": {
-            "uz": "Oldinda gapirgan odam mening xitoy tili o'qituvchim emasmi? Siz uni tanimas ehtimol.",
-            "ru": "Тот человек впереди, который говорит, не мой ли преподаватель китайского? Ты, наверное, её не знаешь.",
-            "tj": "Оё он касе ки пеш гап мезанад муаллими забони чинии ман нест? Эҳтимол шумо ӯро намешиносед."
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "是新来的汉语老师吗？",
-          "pinyin": "Shì xīn lái de Hànyǔ lǎoshī ma?",
-          "text": {
-            "uz": "Yangi kelgan xitoy tili o'qituvchisimi?",
-            "ru": "Это новый преподаватель китайского?",
-            "tj": "Оё ин муаллими нави забони чинӣ аст?"
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "是去年来的，她姓王，28岁。",
-          "pinyin": "Shì qùnián lái de, tā xìng Wáng, èrshíbā suì.",
-          "text": {
-            "uz": "O'tgan yil kelgan, familiyasi Van, 28 yoshda.",
-            "ru": "Пришла в прошлом году, её фамилия Ван, 28 лет.",
-            "tj": "Соли гузашта омад, насабаш Ван аст, 28 сол дорад."
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "她比我们老师小两岁。",
-          "pinyin": "Tā bǐ wǒmen lǎoshī xiǎo liǎng suì.",
-          "text": {
-            "uz": "U bizning o'qituvchimizdan ikki yosh kichik.",
-            "ru": "Она на два года моложе нашего учителя.",
-            "tj": "Ӯ аз муаллими мо ду сол хурдтар аст."
+            "uz": "Ha. Ma’nosi: kattaroq.",
+            "ru": "Да. Значение: старше.",
+            "tj": "Бале. Маънояш: калонтар."
           }
         }
       ]
@@ -449,13 +233,13 @@
           "type": "active_word",
           "word": {
             "no": 1,
-            "zh": "唱歌",
-            "pinyin": "chànggē",
-            "pos": "v.",
+            "zh": "older",
+            "pinyin": "OLDER",
+            "pos": "adj.",
             "meaning": {
-              "uz": "qo'shiq aytmoq",
-              "ru": "петь песню",
-              "tj": "суруд хондан"
+              "uz": "kattaroq",
+              "ru": "старше",
+              "tj": "калонтар"
             }
           }
         },
@@ -463,52 +247,27 @@
           "type": "active_word",
           "word": {
             "no": 2,
-            "zh": "男",
-            "pinyin": "nán",
+            "zh": "younger",
+            "pinyin": "YOUNGER",
             "pos": "adj.",
             "meaning": {
-              "uz": "erkak, o'g'il",
-              "ru": "мужской, мальчик",
-              "tj": "мард, писар"
+              "uz": "yoshroq",
+              "ru": "младше",
+              "tj": "ҷавонтар"
             }
-          }
-        },
-        {
-          "type": "hanzi_choice",
-          "prompt": {
-            "uz": "chànggē qaysi ieroglif?",
-            "ru": "Какой иероглиф читается chànggē?",
-            "tj": "chànggē кадом иероглиф аст?"
-          },
-          "title": {
-            "uz": "Ieroglifni tanlang",
-            "ru": "Выберите иероглиф",
-            "tj": "Иероглифро интихоб кунед"
-          },
-          "options": [
-            "女",
-            "唱歌",
-            "男",
-            "孩子"
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "唱歌 = qo'shiq aytmoq (chànggē)",
-            "ru": "唱歌 = петь песню (chànggē)",
-            "tj": "唱歌 = суруд хондан (chànggē)"
           }
         },
         {
           "type": "active_word",
           "word": {
             "no": 3,
-            "zh": "女",
-            "pinyin": "nǚ",
+            "zh": "taller",
+            "pinyin": "TALLER",
             "pos": "adj.",
             "meaning": {
-              "uz": "ayol, qiz",
-              "ru": "женский, девочка",
-              "tj": "зан, духтар"
+              "uz": "bo‘yi balandroq",
+              "ru": "выше ростом",
+              "tj": "қадбаландтар"
             }
           }
         },
@@ -516,75 +275,22 @@
           "type": "active_word",
           "word": {
             "no": 4,
-            "zh": "孩子",
-            "pinyin": "háizi",
-            "pos": "n.",
-            "meaning": {
-              "uz": "bola",
-              "ru": "ребёнок",
-              "tj": "кӯдак"
-            }
-          }
-        },
-        {
-          "type": "pinyin_choice",
-          "prompt": {
-            "uz": "男 talaffuzini tanlang:",
-            "ru": "Выберите произношение 男:",
-            "tj": "Талаффузи 男-ро интихоб кунед:"
-          },
-          "title": {
-            "uz": "Qanday o'qiladi?",
-            "ru": "Как читается?",
-            "tj": "Чӣ хел хонда мешавад?"
-          },
-          "options": [
-            "chànggē",
-            "nán",
-            "háizi",
-            "nǚ"
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "男 — nán",
-            "ru": "男 — nán",
-            "tj": "男 — nán"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 5,
-            "zh": "右边",
-            "pinyin": "yòubian",
-            "pos": "n.",
-            "meaning": {
-              "uz": "o'ng tomon",
-              "ru": "правая сторона",
-              "tj": "тарафи рост"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 6,
-            "zh": "比",
-            "pinyin": "bǐ",
+            "zh": "than",
+            "pinyin": "THAN",
             "pos": "prep.",
             "meaning": {
-              "uz": "… dan (qiyoslash uchun)",
-              "ru": "чем… (для сравнения)",
-              "tj": "аз… (барои муқоиса)"
+              "uz": "...dan ko‘ra",
+              "ru": "чем",
+              "tj": "нисбат ба"
             }
           }
         },
         {
           "type": "meaning_guess",
           "prompt": {
-            "uz": "比 so'zining ma'nosini tanlang:",
-            "ru": "Выберите значение слова 比:",
-            "tj": "Маънои калимаи 比-ро интихоб кунед:"
+            "uz": "«older» ma'nosini tanlang:",
+            "ru": "Выберите значение «older»:",
+            "tj": "Маънои «older»-ро интихоб кунед:"
           },
           "title": {
             "uz": "Ma'nosi nima?",
@@ -593,120 +299,54 @@
           },
           "options": [
             {
-              "uz": "… dan (qiyoslash uchun)",
-              "ru": "чем… (для сравнения)",
-              "tj": "аз… (барои муқоиса)"
+              "uz": "kattaroq",
+              "ru": "старше",
+              "tj": "калонтар"
             },
             {
-              "uz": "ayol, qiz",
-              "ru": "женский, девочка",
-              "tj": "зан, духтар"
+              "uz": "yoshroq",
+              "ru": "младше",
+              "tj": "ҷавонтар"
             },
             {
-              "uz": "qo'shiq aytmoq",
-              "ru": "петь песню",
-              "tj": "суруд хондан"
+              "uz": "bo‘yi balandroq",
+              "ru": "выше ростом",
+              "tj": "қадбаландтар"
             },
             {
-              "uz": "erkak, o'g'il",
-              "ru": "мужской, мальчик",
-              "tj": "мард, писар"
+              "uz": "...dan ko‘ra",
+              "ru": "чем",
+              "tj": "нисбат ба"
             }
           ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "比 = … dan (qiyoslash uchun) (bǐ)",
-            "ru": "比 = чем… (для сравнения) (bǐ)",
-            "tj": "比 = аз… (барои муқоиса) (bǐ)"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 7,
-            "zh": "便宜",
-            "pinyin": "piányi",
-            "pos": "adj.",
-            "meaning": {
-              "uz": "arzon",
-              "ru": "дешёвый",
-              "tj": "арзон"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 8,
-            "zh": "说话",
-            "pinyin": "shuōhuà",
-            "pos": "v.",
-            "meaning": {
-              "uz": "gapirmoq, so'zlamoq",
-              "ru": "говорить, разговаривать",
-              "tj": "гап задан, сухан гуфтан"
-            }
-          }
+          "correct_index": 0
         },
         {
           "type": "hanzi_choice",
           "prompt": {
-            "uz": "shuōhuà qaysi ieroglif?",
-            "ru": "Какой иероглиф читается shuōhuà?",
-            "tj": "shuōhuà кадом иероглиф аст?"
+            "uz": "«YOUNGER» qaysi so'z?",
+            "ru": "Какое слово читается «YOUNGER»?",
+            "tj": "«YOUNGER» кадом калима аст?"
           },
           "title": {
-            "uz": "Ieroglifni tanlang",
-            "ru": "Выберите иероглиф",
-            "tj": "Иероглифро интихоб кунед"
+            "uz": "So'zni tanlang",
+            "ru": "Выберите слово",
+            "tj": "Калимаро интихоб кунед"
           },
           "options": [
-            "男",
-            "女",
-            "唱歌",
-            "说话"
+            "younger",
+            "older",
+            "taller",
+            "than"
           ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "说话 = gapirmoq, so'zlamoq (shuōhuà)",
-            "ru": "说话 = говорить, разговаривать (shuōhuà)",
-            "tj": "说话 = гап задан, сухан гуфтан (shuōhuà)"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 9,
-            "zh": "可能",
-            "pinyin": "kěnéng",
-            "pos": "aux.",
-            "meaning": {
-              "uz": "ehtimol, mumkin",
-              "ru": "возможно, может быть",
-              "tj": "эҳтимол, мумкин аст"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 10,
-            "zh": "去年",
-            "pinyin": "qùnián",
-            "pos": "n.",
-            "meaning": {
-              "uz": "o'tgan yil",
-              "ru": "в прошлом году",
-              "tj": "соли гузашта"
-            }
-          }
+          "correct_index": 0
         },
         {
           "type": "pinyin_choice",
           "prompt": {
-            "uz": "去年 talaffuzini tanlang:",
-            "ru": "Выберите произношение 去年:",
-            "tj": "Талаффузи 去年-ро интихоб кунед:"
+            "uz": "«older» talaffuzini tanlang:",
+            "ru": "Выберите произношение «older»:",
+            "tj": "Талаффузи «older»-ро интихоб кунед:"
           },
           "title": {
             "uz": "Qanday o'qiladi?",
@@ -714,59 +354,49 @@
             "tj": "Чӣ хел хонда мешавад?"
           },
           "options": [
-            "qùnián",
-            "nǚ",
-            "chànggē",
-            "nán"
+            "OLDER",
+            "YOUNGER",
+            "TALLER",
+            "THAN"
           ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "去年 — qùnián",
-            "ru": "去年 — qùnián",
-            "tj": "去年 — qùnián"
-          }
+          "correct_index": 0
         },
         {
           "type": "match_pairs",
           "pairs": [
             [
-              "唱歌",
+              "older",
               {
-                "uz": "qo'shiq aytmoq",
-                "ru": "петь песню",
-                "tj": "суруд хондан"
+                "uz": "kattaroq",
+                "ru": "старше",
+                "tj": "калонтар"
               }
             ],
             [
-              "男",
+              "younger",
               {
-                "uz": "erkak, o'g'il",
-                "ru": "мужской, мальчик",
-                "tj": "мард, писар"
+                "uz": "yoshroq",
+                "ru": "младше",
+                "tj": "ҷавонтар"
               }
             ],
             [
-              "女",
+              "taller",
               {
-                "uz": "ayol, qiz",
-                "ru": "женский, девочка",
-                "tj": "зан, духтар"
+                "uz": "bo‘yi balandroq",
+                "ru": "выше ростом",
+                "tj": "қадбаландтар"
               }
             ],
             [
-              "孩子",
+              "than",
               {
-                "uz": "bola",
-                "ru": "ребёнок",
-                "tj": "кӯдак"
+                "uz": "...dan ko‘ra",
+                "ru": "чем",
+                "tj": "нисбат ба"
               }
             ]
-          ],
-          "explanation": {
-            "uz": "Juftliklar darsdagi yangi so'zlardan olindi.",
-            "ru": "Пары взяты из новых слов урока.",
-            "tj": "Ҷуфтҳо аз калимаҳои нави дарс гирифта шудаанд."
-          }
+          ]
         }
       ]
     },
@@ -784,57 +414,27 @@
           "g": {
             "no": 1,
             "title": {
-              "uz": "Fe'l birikmasi aniqlovchi sifatida",
-              "ru": "Глагольная конструкция в роли определения",
-              "tj": "Сохтори феълӣ ҳамчун муайянкунанда"
+              "uz": "comparative + than",
+              "ru": "comparative + than",
+              "tj": "comparative + than"
             },
-            "title_zh": "动词结构做定语",
+            "title_zh": "comparative + than",
             "rule": {
-              "uz": "Xitoy tilida fe'l birikmasi yoki gap bo'lagi ot oldidan aniqlovchi bo'lib kelishi mumkin. Bu holda aniqlovchi bilan ot orasiga '的' yuklamasi qo'yiladi. Masalan: '看报纸的女孩子' (gazeta o'qiyotgan qiz).",
-              "ru": "В китайском языке глагольная конструкция или часть предложения может выступать определением перед существительным. В этом случае между определением и существительным ставится частица '的'. Например: '看报纸的女孩子' (девушка, читающая газету).",
-              "tj": "Дар забони чинӣ сохтори феълӣ ё бахши ҷумла метавонад пеш аз исм ҳамчун муайянкунанда бояд. Дар ин ҳол байни муайянкунанда ва исм зарраи '的' гузошта мешавад. Масалан: '看报纸的女孩子' (духтаре ки рӯзнома мехонад)."
+              "uz": "Qolip: comparative + than. Misol: My brother is older than me. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+              "ru": "Шаблон: comparative + than. Пример: My brother is older than me. Используйте его в коротких естественных фразах.",
+              "tj": "Қолаб: comparative + than. Мисол: My brother is older than me. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
             },
             "examples": [
               {
-                "zh": "左边看报纸的女孩子是我姐姐。",
-                "pinyin": "Zuǒbian kàn bàozhǐ de nǚ háizi shì wǒ jiějie.",
+                "zh": "My brother is older than me.",
+                "pinyin": "",
                 "translation": {
-                  "uz": "Chap tomondagi gazeta o'qiyotgan qiz mening opam.",
-                  "ru": "Девушка слева, читающая газету, — моя старшая сестра.",
-                  "tj": "Духтаре ки тарафи чап рӯзнома мехонад хоҳари калонии ман аст."
-                }
-              },
-              {
-                "zh": "前边说话的那个人是老师。",
-                "pinyin": "Qiánbian shuōhuà de nà ge rén shì lǎoshī.",
-                "translation": {
-                  "uz": "Oldinda gapirgan odam o'qituvchi.",
-                  "ru": "Тот человек впереди, который говорит, — учитель.",
-                  "tj": "Он касе ки пеш гап мезанад муаллим аст."
+                  "uz": "My brother is older than me.",
+                  "ru": "My brother is older than me.",
+                  "tj": "My brother is older than me."
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "gap_fill",
-          "sentence": "左边看报纸的女____是我姐姐。",
-          "prompt": {
-            "uz": "Bo'sh joyga mos so'zni tanlang:",
-            "ru": "Выберите слово для пропуска:",
-            "tj": "Калимаи мувофиқро барои ҷойи холӣ интихоб кунед:"
-          },
-          "options": [
-            "女",
-            "唱歌",
-            "男",
-            "孩子"
-          ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "To'g'ri: 孩子 (háizi) — bola",
-            "ru": "Верно: 孩子 (háizi) — ребёнок",
-            "tj": "Дуруст: 孩子 (háizi) — кӯдак"
           }
         },
         {
@@ -842,33 +442,24 @@
           "g": {
             "no": 2,
             "title": {
-              "uz": "'Bǐ' qiyoslash gapi (1)",
-              "ru": "Предложения сравнения с 'bǐ' (1)",
-              "tj": "Ҷумлаи муқоисавӣ бо 'bǐ' (1)"
+              "uz": "expanded sentence",
+              "ru": "expanded sentence",
+              "tj": "expanded sentence"
             },
-            "title_zh": "“比”字句（1）",
+            "title_zh": "expanded sentence",
             "rule": {
-              "uz": "'Bǐ' qiyoslash gapi quyidagi tuzilishga ega: A + 比 + B + sifat (+ miqdor farqi). Bu 'A, B dan ko'proq/katta/yaxshi' ma'nosini beradi. Inkor shaklida '没有' ishlatiladi: A + 没有 + B + sifat.",
-              "ru": "Конструкция сравнения с 'bǐ' имеет структуру: A + 比 + B + прилагательное (+ разница в количестве). Означает 'A больше/старше/лучше, чем B'. В отрицательной форме используется '没有': A + 没有 + B + прилагательное.",
-              "tj": "Ҷумлаи муқоисавӣ бо 'bǐ' сохтори зеринро дорад: A + 比 + B + сифат (+ фарқи миқдорӣ). Маъниаш 'A аз B бештар/калонтар/беҳтар аст'. Дар шакли инкорӣ '没有' истифода мешавад: A + 没有 + B + сифат."
+              "uz": "Qolip: add time, place, or reason. Misol: My brother is older than me. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+              "ru": "Шаблон: add time, place, or reason. Пример: My brother is older than me. Используйте его в коротких естественных фразах.",
+              "tj": "Қолаб: add time, place, or reason. Мисол: My brother is older than me. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
             },
             "examples": [
               {
-                "zh": "他比我大三岁。",
-                "pinyin": "Tā bǐ wǒ dà sān suì.",
+                "zh": "My brother is older than me.",
+                "pinyin": "",
                 "translation": {
-                  "uz": "U mendan uch yosh katta.",
-                  "ru": "Он старше меня на три года.",
-                  "tj": "Ӯ аз ман се сол калонтар аст."
-                }
-              },
-              {
-                "zh": "苹果没有西瓜大。",
-                "pinyin": "Píngguǒ méiyǒu xīguā dà.",
-                "translation": {
-                  "uz": "Olma tarvuz kadar katta emas.",
-                  "ru": "Яблоко не такое большое, как арбуз.",
-                  "tj": "Себ ба андозаи тарбуз калон нест."
+                  "uz": "My brother is older than me.",
+                  "ru": "My brother is older than me.",
+                  "tj": "My brother is older than me."
                 }
               }
             ]
@@ -877,120 +468,52 @@
         {
           "type": "sentence_builder",
           "sentence": {
-            "uz": "Olma tarvuz kadar katta emas.",
-            "ru": "Яблоко не такое большое, как арбуз.",
-            "tj": "Себ ба андозаи тарбуз калон нест."
+            "uz": "My brother is older than me.",
+            "ru": "My brother is older than me.",
+            "tj": "My brother is older than me."
           },
           "tokens": [
-            "唱歌",
-            "西瓜",
-            "大",
-            "没有",
-            "男",
-            "苹果"
+            "me",
+            "than",
+            "older",
+            "is",
+            "brother",
+            "My",
+            "not"
           ],
           "answer_tokens": [
-            "苹果",
-            "没有",
-            "西瓜",
-            "大"
+            "My",
+            "brother",
+            "is",
+            "older",
+            "than",
+            "me"
           ],
           "explanation": {
-            "uz": "苹果没有西瓜大。 — Píngguǒ méiyǒu xīguā dà.",
-            "ru": "苹果没有西瓜大。 — Píngguǒ méiyǒu xīguā dà.",
-            "tj": "苹果没有西瓜大。 — Píngguǒ méiyǒu xīguā dà."
-          }
-        },
-        {
-          "type": "_grammar",
-          "g": {
-            "no": 3,
-            "title": {
-              "uz": "'Kěnéng' yordamchi fe'li",
-              "ru": "Модальный глагол 'kěnéng'",
-              "tj": "Феъли ёрирасони 'kěnéng'"
-            },
-            "title_zh": "助动词“可能”",
-            "rule": {
-              "uz": "'Kěnéng' yordamchi fe'li 'ehtimol, mumkin' ma'nosini beradi va fe'l oldidan qo'yiladi. U ma'lum bo'lmagan holatlar haqida taxmin bildiradi. Inkor shakli: '不可能' (mumkin emas, aslo).",
-              "ru": "Модальный глагол 'kěnéng' означает 'возможно, может быть' и ставится перед глаголом. Выражает предположение о неизвестных ситуациях. Отрицательная форма: '不可能' (невозможно).",
-              "tj": "Феъли ёрирасони 'kěnéng' маъниаш 'эҳтимол, мумкин аст' буда пеш аз феъл меояд. Вай тахминро дар бораи вазъиятҳои номаълум ифода мекунад. Шакли инкорӣ: '不可能' (ғайриимкон аст)."
-            },
-            "examples": [
-              {
-                "zh": "你可能不认识她。",
-                "pinyin": "Nǐ kěnéng bù rènshi tā.",
-                "translation": {
-                  "uz": "Siz uni tanimas ehtimol.",
-                  "ru": "Возможно, ты её не знаешь.",
-                  "tj": "Эҳтимол шумо ӯро намешиносед."
-                }
-              },
-              {
-                "zh": "他可能今天来。",
-                "pinyin": "Tā kěnéng jīntiān lái.",
-                "translation": {
-                  "uz": "U ehtimol bugun keladi.",
-                  "ru": "Возможно, он придёт сегодня.",
-                  "tj": "Эҳтимол ӯ имрӯз меояд."
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "sentence_builder",
-          "sentence": {
-            "uz": "Siz uni tanimas ehtimol.",
-            "ru": "Возможно, ты её не знаешь.",
-            "tj": "Эҳтимол шумо ӯро намешиносед."
-          },
-          "tokens": [
-            "可能",
-            "男",
-            "认识",
-            "她",
-            "你",
-            "不",
-            "唱歌"
-          ],
-          "answer_tokens": [
-            "你",
-            "可能",
-            "不",
-            "认识",
-            "她"
-          ],
-          "explanation": {
-            "uz": "你可能不认识她。 — Nǐ kěnéng bù rènshi tā.",
-            "ru": "你可能不认识她。 — Nǐ kěnéng bù rènshi tā.",
-            "tj": "你可能不认识她。 — Nǐ kěnéng bù rènshi tā."
+            "uz": "So‘z tartibiga e’tibor bering.",
+            "ru": "Обратите внимание на порядок слов.",
+            "tj": "Ба тартиби калимаҳо диққат диҳед."
           }
         },
         {
           "type": "quick_quiz",
           "prompt": {
-            "uz": "«U ehtimol bugun keladi.» — xitoychada qaysi biri?",
-            "ru": "«Возможно, он придёт сегодня.» — какое предложение по-китайски?",
-            "tj": "«Эҳтимол ӯ имрӯз меояд.» — кадом ҷумла ба хитоӣ аст?"
+            "uz": "“kattaroq” inglizchada qaysi?",
+            "ru": "“старше” — как по-английски?",
+            "tj": "“калонтар” ба англисӣ кадом аст?"
           },
           "title": {
-            "uz": "To'g'ri gapni tanlang",
-            "ru": "Выберите верное предложение",
-            "tj": "Ҷумлаи дурустро интихоб кунед"
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
           },
           "options": [
-            "你可能不认识她。",
-            "苹果没有西瓜大。",
-            "他可能今天来。",
-            "他比我大三岁。"
+            "older",
+            "younger",
+            "taller",
+            "than"
           ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "他可能今天来。 — Tā kěnéng jīntiān lái.",
-            "ru": "他可能今天来。 — Tā kěnéng jīntiān lái.",
-            "tj": "他可能今天来。 — Tā kěnéng jīntiān lái."
-          }
+          "correct_index": 0
         }
       ]
     },
@@ -998,11 +521,67 @@
       "section_no": 3,
       "section_title": {
         "uz": "Mashq",
-        "ru": "Упражнение",
+        "ru": "Практика",
         "tj": "Машқ"
       },
       "section_purpose": "practice",
       "cards": [
+        {
+          "type": "pinyin_choice",
+          "prompt": {
+            "uz": "«taller» talaffuzini tanlang:",
+            "ru": "Выберите произношение «taller»:",
+            "tj": "Талаффузи «taller»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Qanday o'qiladi?",
+            "ru": "Как читается?",
+            "tj": "Чӣ хел хонда мешавад?"
+          },
+          "options": [
+            "TALLER",
+            "OLDER",
+            "YOUNGER",
+            "THAN"
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "meaning_guess",
+          "prompt": {
+            "uz": "«than» ma'nosini tanlang:",
+            "ru": "Выберите значение «than»:",
+            "tj": "Маънои «than»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Ma'nosi nima?",
+            "ru": "Что означает?",
+            "tj": "Маъно чист?"
+          },
+          "options": [
+            {
+              "uz": "...dan ko‘ra",
+              "ru": "чем",
+              "tj": "нисбат ба"
+            },
+            {
+              "uz": "kattaroq",
+              "ru": "старше",
+              "tj": "калонтар"
+            },
+            {
+              "uz": "yoshroq",
+              "ru": "младше",
+              "tj": "ҷавонтар"
+            },
+            {
+              "uz": "bo‘yi balandroq",
+              "ru": "выше ростом",
+              "tj": "қадбаландтар"
+            }
+          ],
+          "correct_index": 0
+        },
         {
           "type": "listening_choice",
           "title": {
@@ -1010,154 +589,66 @@
             "ru": "Выберите, что вы услышали",
             "tj": "Он чи шунидед, интихоб кунед"
           },
-          "audio_text": "王方，昨天和你一起唱歌的人是谁？",
-          "pinyin": "Wáng Fāng, zuótiān hé nǐ yìqǐ chànggē de rén shì shéi?",
+          "audio_text": "My brother is older than me.",
+          "pinyin": "",
           "options": [
-            "不是不是，我同学介绍的，昨天第一次见。",
-            "什么朋友？是不是男朋友？",
-            "一个朋友。",
-            "王方，昨天和你一起唱歌的人是谁？"
+            "My brother is older than me.",
+            "I need younger.",
+            "This is older.",
+            "Please wait."
           ],
-          "correct_index": 3,
+          "correct_index": 0,
           "explanation": {
-            "uz": "王方，昨天和你一起唱歌的人是谁？ — Van Fan, kecha siz bilan birga qo'shiq aytgan odam kim edi?",
-            "ru": "王方，昨天和你一起唱歌的人是谁？ — Ван Фан, кто это был вчера, когда ты пел(а) вместе с тобой?",
-            "tj": "王方，昨天和你一起唱歌的人是谁？ — Ван Фан, дирӯз он касе ки бо ту якҷоя суруд мехонд кӣ буд?"
+            "uz": "My brother is older than me.",
+            "ru": "My brother is older than me.",
+            "tj": "My brother is older than me."
           }
         },
         {
           "type": "match_pairs",
           "pairs": [
             [
-              "唱歌",
+              "taller",
               {
-                "uz": "qo'shiq aytmoq",
-                "ru": "петь песню",
-                "tj": "суруд хондан"
+                "uz": "bo‘yi balandroq",
+                "ru": "выше ростом",
+                "tj": "қадбаландтар"
               }
             ],
             [
-              "男",
+              "than",
               {
-                "uz": "erkak, o'g'il",
-                "ru": "мужской, мальчик",
-                "tj": "мард, писар"
+                "uz": "...dan ko‘ra",
+                "ru": "чем",
+                "tj": "нисбат ба"
               }
             ],
             [
-              "女",
+              "more",
               {
-                "uz": "ayol, qiz",
-                "ru": "женский, девочка",
-                "tj": "зан, духтар"
+                "uz": "ko‘proq",
+                "ru": "больше",
+                "tj": "бештар"
               }
             ],
             [
-              "孩子",
+              "less",
               {
-                "uz": "bola",
-                "ru": "ребёнок",
-                "tj": "кӯдак"
+                "uz": "kamroq",
+                "ru": "меньше",
+                "tj": "камтар"
               }
             ]
-          ],
-          "explanation": {
-            "uz": "Juftliklar darsdagi yangi so'zlardan olindi.",
-            "ru": "Пары взяты из новых слов урока.",
-            "tj": "Ҷуфтҳо аз калимаҳои нави дарс гирифта шудаанд."
-          }
-        },
-        {
-          "type": "translation_choice",
-          "prompt": {
-            "uz": "'familiyasi … bo'lmoq' xitoycha qaysi?",
-            "ru": "'иметь фамилию…' по-китайски?",
-            "tj": "'насабаш … буданаш' ба хитоӣ кадом аст?"
-          },
-          "title": {
-            "uz": "Xitoycha qanday?",
-            "ru": "Как по-китайски?",
-            "tj": "Ба хитоӣ чӣ тавр?"
-          },
-          "options": [
-            "男",
-            "姓",
-            "唱歌",
-            "女"
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "familiyasi … bo'lmoq = 姓 (xìng)",
-            "ru": "иметь фамилию… = 姓 (xìng)",
-            "tj": "насабаш … буданаш = 姓 (xìng)"
-          }
-        },
-        {
-          "type": "hanzi_choice",
-          "prompt": {
-            "uz": "xìng qaysi ieroglif?",
-            "ru": "Какой иероглиф читается xìng?",
-            "tj": "xìng кадом иероглиф аст?"
-          },
-          "title": {
-            "uz": "Ieroglifni tanlang",
-            "ru": "Выберите иероглиф",
-            "tj": "Иероглифро интихоб кунед"
-          },
-          "options": [
-            "女",
-            "男",
-            "姓",
-            "唱歌"
-          ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "姓 = familiyasi … bo'lmoq (xìng)",
-            "ru": "姓 = иметь фамилию… (xìng)",
-            "tj": "姓 = насабаш … буданаш (xìng)"
-          }
-        },
-        {
-          "type": "sentence_builder",
-          "sentence": {
-            "uz": "Qanday do'st? Yigit do'stingizmi?",
-            "ru": "Что за друг? Это случайно не парень?",
-            "tj": "Чӣ гуна дӯст? Магар дӯсти писарат аст?"
-          },
-          "tokens": [
-            "是",
-            "唱歌",
-            "朋友",
-            "朋友",
-            "男",
-            "什么",
-            "是",
-            "不",
-            "女"
-          ],
-          "answer_tokens": [
-            "什么",
-            "朋友",
-            "是",
-            "不",
-            "是",
-            "男",
-            "朋友"
-          ],
-          "explanation": {
-            "uz": "什么朋友？是不是男朋友？ — Shénme péngyou? Shì bú shì nán péngyou?",
-            "ru": "什么朋友？是不是男朋友？ — Shénme péngyou? Shì bú shì nán péngyou?",
-            "tj": "什么朋友？是不是男朋友？ — Shénme péngyou? Shì bú shì nán péngyou?"
-          }
+          ]
         },
         {
           "type": "pronunciation",
-          "phrase": "唱歌",
-          "pinyin": "chànggē",
+          "phrase": "My brother is older than me.",
+          "pinyin": "",
           "translation": {
-            "uz": "qo'shiq aytmoq",
-            "ru": "петь песню",
-            "tj": "суруд хондан"
+            "uz": "My brother is older than me.",
+            "ru": "My brother is older than me.",
+            "tj": "My brother is older than me."
           }
         }
       ]
@@ -1174,48 +665,44 @@
         {
           "type": "listening_choice",
           "title": {
-            "uz": "Tinglang — nima dedi?",
-            "ru": "Послушайте — что сказали?",
-            "tj": "Гӯш кунед — чӣ гуфт?"
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
           },
-          "audio_text": "王方，昨天和你一起唱歌的人是谁？",
-          "pinyin": "Wáng Fāng, zuótiān hé nǐ yìqǐ chànggē de rén shì shéi?",
+          "audio_text": "My brother is older than me.",
+          "pinyin": "",
           "options": [
-            "一个朋友。",
-            "不是不是，我同学介绍的，昨天第一次见。",
-            "什么朋友？是不是男朋友？",
-            "王方，昨天和你一起唱歌的人是谁？"
+            "My brother is older than me.",
+            "I have older.",
+            "Where is younger?",
+            "No problem."
           ],
-          "correct_index": 3,
+          "correct_index": 0,
           "explanation": {
-            "uz": "王方，昨天和你一起唱歌的人是谁？ — Van Fan, kecha siz bilan birga qo'shiq aytgan odam kim edi?",
-            "ru": "王方，昨天和你一起唱歌的人是谁？ — Ван Фан, кто это был вчера, когда ты пел(а) вместе с тобой?",
-            "tj": "王方，昨天和你一起唱歌的人是谁？ — Ван Фан, дирӯз он касе ки бо ту якҷоя суруд мехонд кӣ буд?"
+            "uz": "My brother is older than me.",
+            "ru": "My brother is older than me.",
+            "tj": "My brother is older than me."
           }
         },
         {
-          "type": "quick_quiz",
+          "type": "gap_fill",
+          "sentence": "My brother is ____ than me.",
           "prompt": {
-            "uz": "Dialogda A avval nima deydi?",
-            "ru": "Что A говорит в начале диалога?",
-            "tj": "Дар муколама A аввал чӣ мегӯяд?"
-          },
-          "title": {
-            "uz": "Dialogdan savol:",
-            "ru": "Вопрос по диалогу:",
-            "tj": "Савол аз муколама:"
+            "uz": "Bo'sh joyga mos so'zni tanlang:",
+            "ru": "Выберите подходящее слово:",
+            "tj": "Калимаи мувофиқро интихоб кунед:"
           },
           "options": [
-            "不是不是，我同学介绍的，昨天第一次见。",
-            "王方，昨天和你一起唱歌的人是谁？",
-            "一个朋友。",
-            "什么朋友？是不是男朋友？"
+            "older",
+            "younger",
+            "taller",
+            "not"
           ],
-          "correct_index": 1,
+          "correct_index": 0,
           "explanation": {
-            "uz": "To'g'ri javob: 王方，昨天和你一起唱歌的人是谁？",
-            "ru": "Правильный ответ: 王方，昨天和你一起唱歌的人是谁？",
-            "tj": "Ҷавоби дуруст: 王方，昨天和你一起唱歌的人是谁？"
+            "uz": "To‘g‘ri javob: older.",
+            "ru": "Правильный ответ: older.",
+            "tj": "Ҷавоби дуруст: older."
           }
         },
         {
@@ -1228,17 +715,7 @@
           "lines": [
             {
               "speaker": "A",
-              "zh": "王方，昨天和你一起唱歌的人是谁？",
-              "blank": false
-            },
-            {
-              "speaker": "B",
-              "zh": "一个朋友。",
-              "blank": false
-            },
-            {
-              "speaker": "A",
-              "zh": "什么朋友？是不是男朋友？",
+              "zh": "Can you give an example?",
               "blank": false
             },
             {
@@ -1248,63 +725,37 @@
             }
           ],
           "options": [
-            "什么朋友？是不是男朋友？",
-            "不是不是，我同学介绍的，昨天第一次见。",
-            "一个朋友。",
-            "王方，昨天和你一起唱歌的人是谁？"
+            "My brother is older than me.",
+            "I like older.",
+            "Good morning!",
+            "Thank you!"
           ],
-          "correct_index": 1,
+          "correct_index": 0,
           "explanation": {
-            "uz": "To'g'ri javob: 不是不是，我同学介绍的，昨天第一次见。",
-            "ru": "Правильный ответ: 不是不是，我同学介绍的，昨天第一次见。",
-            "tj": "Ҷавоби дуруст: 不是不是，我同学介绍的，昨天第一次见。"
+            "uz": "My brother is older than me.",
+            "ru": "My brother is older than me.",
+            "tj": "My brother is older than me."
           }
         },
         {
           "type": "quick_quiz",
           "prompt": {
-            "uz": "Dialog oxirida B nima deydi?",
-            "ru": "Что B говорит в конце диалога?",
-            "tj": "Дар охири муколама B чӣ мегӯяд?"
+            "uz": "“kattaroq” inglizchada qaysi?",
+            "ru": "“старше” — как по-английски?",
+            "tj": "“калонтар” ба англисӣ кадом аст?"
           },
           "title": {
-            "uz": "Dialogdan savol:",
-            "ru": "Вопрос по диалогу:",
-            "tj": "Савол аз муколама:"
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
           },
           "options": [
-            "一个朋友。",
-            "王方，昨天和你一起唱歌的人是谁？",
-            "什么朋友？是不是男朋友？",
-            "不是不是，我同学介绍的，昨天第一次见。"
+            "older",
+            "younger",
+            "taller",
+            "than"
           ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "To'g'ri javob: 不是不是，我同学介绍的，昨天第一次见。",
-            "ru": "Правильный ответ: 不是不是，我同学介绍的，昨天第一次见。",
-            "tj": "Ҷавоби дуруст: 不是不是，我同学介绍的，昨天第一次见。"
-          }
-        },
-        {
-          "type": "gap_fill",
-          "sentence": "____方，昨天和你一起唱歌的人是谁？",
-          "prompt": {
-            "uz": "Bo'sh joyga mos ieroglifni tanlang:",
-            "ru": "Выберите подходящий иероглиф:",
-            "tj": "Иероглифи мувофиқро интихоб кунед:"
-          },
-          "options": [
-            "下",
-            "电",
-            "夫",
-            "王"
-          ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "To'g'ri: 王 — 王方，昨天和你一起唱歌的人是谁？ (Van Fan, kecha siz bilan birga qo'shiq aytgan odam kim edi?)",
-            "ru": "Верно: 王 — 王方，昨天和你一起唱歌的人是谁？ (Ван Фан, кто это был вчера, когда ты пел(а) вместе с тобой?)",
-            "tj": "Дуруст: 王 — 王方，昨天和你一起唱歌的人是谁？ (Ван Фан, дирӯз он касе ки бо ту якҷоя суруд мехонд кӣ буд?)"
-          }
+          "correct_index": 0
         }
       ]
     }

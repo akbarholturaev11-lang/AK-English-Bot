@@ -80,6 +80,34 @@ ADMIN_ENTRY_TEXT = (
     "• <b>Admin mini ilova</b> — to'liq grafik panel (statistika, sof foyda, to'lov, sozlash)\n"
     "• <b>Ruchnoy panel</b> — chat ichidagi qo'lda boshqaruv bo'limlari"
 )
+
+_LEVEL_LABELS = {
+    "beginner": "Boshlang'ich",
+    "hsk1": "Beginner",
+    "hsk2": "Elementary",
+    "hsk3": "Intermediate",
+    "hsk4": "Advanced",
+}
+_LEVEL_ALIASES = {
+    "beginner": "hsk1",
+    "hsk1": "hsk1",
+    "elementary": "hsk2",
+    "hsk2": "hsk2",
+    "intermediate": "hsk3",
+    "hsk3": "hsk3",
+    "advanced": "hsk4",
+    "hsk4": "hsk4",
+}
+
+
+def _level_label(level: str | None) -> str:
+    return _LEVEL_LABELS.get(str(level or "").strip().lower(), str(level or "English"))
+
+
+def _level_code_from_admin_input(value: str | None) -> str | None:
+    return _LEVEL_ALIASES.get(str(value or "").strip().lower())
+
+
 ADMIN_MENU_TEXT = "<b>🛠 Ruchnoy panel</b>\n\nQuyidagi amallardan birini tanlang:"
 _ADMIN_FLOW_CHAT_ID = "admin_flow_chat_id"
 _ADMIN_FLOW_MSG_ID = "admin_flow_msg_id"
@@ -2179,7 +2207,7 @@ async def admin_stats_callback(callback: CallbackQuery, session):
     engagement  = _pct(qa_users, total)
     level_order = ["beginner", "hsk1", "hsk2", "hsk3", "hsk4"]
     level_str   = "  " + "   ".join(
-        f"{l.upper()}: {level_counts.get(l, 0)}" for l in level_order
+        f"{_level_label(l)}: {level_counts.get(l, 0)}" for l in level_order
     )
     lang_str = "  " + " | ".join(f"{k}: {v}" for k, v in sorted(lang_counts.items()))
     feature_usage_str = "\n".join(
@@ -2522,20 +2550,25 @@ async def admin_giveaccess_info(callback: CallbackQuery, session):
 
 @router.message(Command("audio_list"))
 async def admin_audio_list_handler(message: Message, session):
-    """Yuklangan audio fayllar ro'yxati: /audio_list hsk1 1"""
+    """Yuklangan audio fayllar ro'yxati: /audio_list beginner 1"""
     if not _is_admin(message.from_user.id):
         return
 
     parts = message.text.strip().split()
     if len(parts) < 3:
         await message.answer(
-            "Foydalanish: <code>/audio_list hsk1 1</code>\n"
-            "(level va lesson_order)",
+            "Foydalanish: <code>/audio_list beginner 1</code>\n"
+            "Darajalar: <code>beginner</code> | <code>elementary</code> | "
+            "<code>intermediate</code> | <code>advanced</code>",
             parse_mode="HTML",
         )
         return
 
-    level = parts[1].lower()
+    level = _level_code_from_admin_input(parts[1])
+    if not level:
+        await message.answer("❌ Daraja: beginner, elementary, intermediate yoki advanced")
+        return
+
     try:
         lesson_order = int(parts[2])
     except ValueError:
@@ -2546,10 +2579,10 @@ async def admin_audio_list_handler(message: Message, session):
     rows = await repo.list_for_lesson(level, lesson_order)
 
     if not rows:
-        await message.answer(f"🔇 {level} / lesson_{lesson_order:02d} uchun audio yo'q")
+        await message.answer(f"🔇 {_level_label(level)} / lesson_{lesson_order:02d} uchun audio yo'q")
         return
 
-    lines = [f"🎵 <b>{level} — Dars {lesson_order}</b>\n"]
+    lines = [f"🎵 <b>{_level_label(level)} — Dars {lesson_order}</b>\n"]
     for row in rows:
         lines.append(f"  <code>{row.audio_type}</code> → <code>{row.file_id[:30]}…</code>")
     await message.answer("\n".join(lines), parse_mode="HTML")
@@ -2559,39 +2592,45 @@ async def admin_audio_list_handler(message: Message, session):
 async def admin_upload_audio_handler(message: Message, session):
     """Audio yuklash — voice, audio yoki mp3/ogg fayl sifatida yuboring.
 
-    Caption (podpis) ga yozing:  hsk1 1 dialogue_1
+    Caption (podpis) ga yozing:  beginner 1 dialogue_1
     Format:  {level} {lesson_order} {audio_type}
     audio_type:  vocab | dialogue_1 | dialogue_2 | ...
 
     Misol caption:
-      hsk1 1 vocab
-      hsk1 1 dialogue_1
-      hsk2 3 dialogue_2
+      beginner 1 vocab
+      beginner 1 dialogue_1
+      elementary 3 dialogue_2
     """
     if not _is_admin(message.from_user.id):
         raise SkipHandler()
 
     caption = (message.caption or "").strip().lower()
     import re
-    m = re.match(r"^(hsk\d+)\s+(\d+)\s+(vocab|dialogue_\d+)$", caption)
-    if not m:
+    caption_parts = caption.split()
+    level = _level_code_from_admin_input(caption_parts[0] if caption_parts else None)
+    lesson_order_raw = caption_parts[1] if len(caption_parts) > 1 else ""
+    audio_type = caption_parts[2] if len(caption_parts) > 2 else ""
+    if (
+        len(caption_parts) != 3
+        or not level
+        or not re.fullmatch(r"\d+", lesson_order_raw)
+        or not re.fullmatch(r"(vocab|dialogue_\d+)", audio_type)
+    ):
         # Caption yo'q yoki noto'g'ri — yordam ko'rsat
         await message.answer(
             "📎 Fayl qabul qilindi, lekin <b>caption (podpis) noto'g'ri</b>.\n\n"
             "Faylni qaytadan yuboring, caption qatoriga quyidagi formatda yozing:\n"
-            "<code>hsk1 1 dialogue_1</code>\n\n"
-            "Misollар:\n"
-            "<code>hsk1 1 vocab</code> — 1-dars so'zlar\n"
-            "<code>hsk1 1 dialogue_1</code> — 1-dars 1-dialog\n"
-            "<code>hsk1 1 dialogue_2</code> — 1-dars 2-dialog\n"
-            "<code>hsk2 3 dialogue_1</code> — Elementary 3-dars 1-dialog",
+            "<code>beginner 1 dialogue_1</code>\n\n"
+            "Misollar:\n"
+            "<code>beginner 1 vocab</code> — 1-dars so'zlar\n"
+            "<code>beginner 1 dialogue_1</code> — 1-dars 1-dialog\n"
+            "<code>beginner 1 dialogue_2</code> — 1-dars 2-dialog\n"
+            "<code>elementary 3 dialogue_1</code> — Elementary 3-dars 1-dialog",
             parse_mode="HTML",
         )
         return
 
-    level = m.group(1)
-    lesson_order = int(m.group(2))
-    audio_type = m.group(3)
+    lesson_order = int(lesson_order_raw)
 
     # file_id olish — voice, audio yoki document (mp3 fayl)
     if message.voice:
@@ -2609,7 +2648,7 @@ async def admin_upload_audio_handler(message: Message, session):
 
     await message.answer(
         f"✅ Saqlandi!\n"
-        f"📍 <b>{level}</b> · Dars <b>{lesson_order}</b> · <code>{audio_type}</code>\n"
+        f"📍 <b>{_level_label(level)}</b> · Dars <b>{lesson_order}</b> · <code>{audio_type}</code>\n"
         f"🔑 <code>{file_id[:50]}…</code>",
         parse_mode="HTML",
     )

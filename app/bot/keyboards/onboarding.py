@@ -118,7 +118,7 @@ def _parse_lesson_title(raw: str, lang: str) -> str:
     except Exception:
         return raw
     if isinstance(data, dict):
-        return str(data.get("zh") or data.get(lang) or data.get("uz") or data.get("ru") or raw)
+        return str(data.get(lang) or data.get("uz") or data.get("ru") or data.get("tj") or data.get("zh") or raw)
     return raw
 
 

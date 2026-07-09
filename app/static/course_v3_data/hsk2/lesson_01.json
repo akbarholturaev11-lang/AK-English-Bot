@@ -1,1400 +1,761 @@
 {
-  "schema_version": 2,
-  "level": "hsk2",
-  "lesson_id": 1,
-  "title": "九月去北京旅游最好",
-  "subtitle": {
-    "uz": "Sayohat, sport va kundalik hayot mavzularida suhbat qurish; 要, 最 va taxminiy sonlarni ishlatishni o'rganish.",
-    "ru": "Научиться вести беседу о путешествиях, спорте и повседневной жизни; освоить вспомогательный глагол 要, наречие степени 最 и приблизительные числа.",
-    "tj": "Гуфтугӯ дар мавзӯи сафар, варзиш ва ҳаёти рӯзмарра; омӯхтани феъли ёрдамии 要, зарфи дараҷаи 最 ва рақамҳои тахминӣ."
+ "schema_version": 2,
+ "level": "hsk2",
+ "lesson_id": 1,
+ "title": "Yesterday (past of be)",
+ "subtitle": {
+  "uz": "O'tgan zamon: was/were",
+  "ru": "Прошедшее время: was/were",
+  "tj": "Замони гузашта: was/were"
+ },
+ "intro_prebuilt": true,
+ "grammar_prebuilt": true,
+ "active_words": [
+  {
+   "zh": "yesterday",
+   "pinyin": "YES-tur-day",
+   "pos": "n.",
+   "meaning": {
+    "uz": "kecha",
+    "ru": "вчера",
+    "tj": "дирӯз"
+   },
+   "no": 1
   },
-  "intro_prebuilt": true,
-  "grammar_prebuilt": true,
-  "active_words": [
+  {
+   "zh": "was",
+   "pinyin": "WOZ",
+   "pos": "v.",
+   "meaning": {
+    "uz": "edi (men/u)",
+    "ru": "был (я/он)",
+    "tj": "буд (ман/ӯ)"
+   },
+   "no": 2
+  },
+  {
+   "zh": "were",
+   "pinyin": "WUR",
+   "pos": "v.",
+   "meaning": {
+    "uz": "eding/edik (siz/biz)",
+    "ru": "был (ты/мы)",
+    "tj": "будӣ/будем"
+   },
+   "no": 3
+  },
+  {
+   "zh": "ago",
+   "pinyin": "uh-GOH",
+   "pos": "adv.",
+   "meaning": {
+    "uz": "oldin",
+    "ru": "назад (о времени)",
+    "tj": "пеш"
+   },
+   "no": 4
+  },
+  {
+   "zh": "last",
+   "pinyin": "LAST",
+   "pos": "adj.",
+   "meaning": {
+    "uz": "o'tgan",
+    "ru": "прошлый",
+    "tj": "гузашта"
+   },
+   "no": 5
+  },
+  {
+   "zh": "busy",
+   "pinyin": "BIZ-ee",
+   "pos": "adj.",
+   "meaning": {
+    "uz": "band",
+    "ru": "занятый",
+    "tj": "машғул"
+   },
+   "no": 6
+  },
+  {
+   "zh": "absent",
+   "pinyin": "AB-sunt",
+   "pos": "adj.",
+   "meaning": {
+    "uz": "yo'q, kelmagan",
+    "ru": "отсутствующий",
+    "tj": "ҳозирнабуда"
+   },
+   "no": 7
+  },
+  {
+   "zh": "ready",
+   "pinyin": "RED-ee",
+   "pos": "adj.",
+   "meaning": {
+    "uz": "tayyor",
+    "ru": "готовый",
+    "tj": "тайёр"
+   },
+   "no": 8
+  }
+ ],
+ "grammar": [
+  {
+   "no": 1,
+   "title": {
+    "uz": "was / were",
+    "ru": "was / were",
+    "tj": "was / were"
+   },
+   "title_en": "was / were (past of be)",
+   "rule": {
+    "uz": "I/he/she was. You/we/they were.\nMisol: I was busy yesterday.",
+    "ru": "I/he/she was. You/we/they were.\nПример: I was busy yesterday.",
+    "tj": "I/he/she was. You/we/they were.\nМисол: I was busy yesterday."
+   }
+  },
+  {
+   "no": 2,
+   "title": {
+    "uz": "Vaqt: last / ago",
+    "ru": "Время: last / ago",
+    "tj": "Вақт: last / ago"
+   },
+   "title_en": "last week / two days ago",
+   "rule": {
+    "uz": "last week, last night; two days ago.\nMisol: I was there two days ago.",
+    "ru": "last week, last night; two days ago.\nПример: I was there two days ago.",
+    "tj": "last week, last night; two days ago.\nМисол: I was there two days ago."
+   }
+  }
+ ],
+ "dialogues": [
+  {
+   "scene": {
+    "uz": "Kecha",
+    "ru": "Вчера",
+    "tj": "Дирӯз"
+   },
+   "dialogue": [
     {
-      "no": 1,
-      "zh": "旅游",
-      "pinyin": "lǚyóu",
-      "pos": "v.",
-      "meaning": {
-        "uz": "sayohat qilmoq",
-        "ru": "путешествовать",
-        "tj": "сафар кардан"
-      }
+     "speaker": "A",
+     "zh": "Where were you yesterday?",
+     "pinyin": "",
+     "text": {
+      "uz": "Kecha qayerda eding?",
+      "ru": "Где ты был вчера?",
+      "tj": "Дирӯз дар куҷо будӣ?"
+     }
     },
     {
-      "no": 2,
-      "zh": "觉得",
-      "pinyin": "juéde",
-      "pos": "v.",
-      "meaning": {
-        "uz": "deb o'ylash, his qilish",
-        "ru": "думать, считать, чувствовать",
-        "tj": "фикр кардан, ҳис кардан"
-      }
+     "speaker": "B",
+     "zh": "I was at home.",
+     "pinyin": "",
+     "text": {
+      "uz": "Uyda edim.",
+      "ru": "Я был дома.",
+      "tj": "Ман дар хона будам."
+     }
+    }
+   ]
+  },
+  {
+   "scene": {
+    "uz": "Band",
+    "ru": "Занят",
+    "tj": "Машғул"
+   },
+   "dialogue": [
+    {
+     "speaker": "A",
+     "zh": "Were you busy?",
+     "pinyin": "",
+     "text": {
+      "uz": "Band edingmi?",
+      "ru": "Ты был занят?",
+      "tj": "Машғул будӣ?"
+     }
     },
     {
-      "no": 3,
-      "zh": "最",
-      "pinyin": "zuì",
-      "pos": "adv.",
-      "meaning": {
-        "uz": "eng, juda",
-        "ru": "самый, наиболее",
-        "tj": "аз ҳама, бештар"
-      }
+     "speaker": "B",
+     "zh": "Yes, I was very busy.",
+     "pinyin": "",
+     "text": {
+      "uz": "Ha, juda band edim.",
+      "ru": "Да, я был очень занят.",
+      "tj": "Ҳа, хеле машғул будам."
+     }
+    }
+   ]
+  },
+  {
+   "scene": {
+    "uz": "O'tgan hafta",
+    "ru": "Прошлая неделя",
+    "tj": "Ҳафтаи гузашта"
+   },
+   "dialogue": [
+    {
+     "speaker": "A",
+     "zh": "It was last week.",
+     "pinyin": "",
+     "text": {
+      "uz": "Bu o'tgan hafta edi.",
+      "ru": "Это было на прошлой неделе.",
+      "tj": "Ин ҳафтаи гузашта буд."
+     }
     },
     {
-      "no": 4,
-      "zh": "为什么",
-      "pinyin": "wèi shénme",
-      "pos": "conj./adv.",
-      "meaning": {
-        "uz": "nega, nima uchun",
-        "ru": "почему, зачем",
-        "tj": "чаро, барои чӣ"
-      }
-    },
+     "speaker": "B",
+     "zh": "Yes, two days ago.",
+     "pinyin": "",
+     "text": {
+      "uz": "Ha, ikki kun oldin.",
+      "ru": "Да, два дня назад.",
+      "tj": "Ҳа, ду рӯз пеш."
+     }
+    }
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "section_no": 1,
+   "section_title": {
+    "uz": "Yangi so'zlar",
+    "ru": "Новые слова",
+    "tj": "Калимаҳои нав"
+   },
+   "cards": [
     {
-      "no": 5,
-      "zh": "也",
-      "pinyin": "yě",
-      "pos": "adv.",
-      "meaning": {
-        "uz": "ham",
-        "ru": "тоже, также",
-        "tj": "ҳам"
-      }
-    },
-    {
-      "no": 6,
-      "zh": "运动",
-      "pinyin": "yùndòng",
-      "pos": "n./v.",
-      "meaning": {
-        "uz": "sport; sport qilmoq",
-        "ru": "спорт; заниматься спортом",
-        "tj": "варзиш; варзиш кардан"
-      }
-    },
-    {
-      "no": 7,
-      "zh": "踢足球",
-      "pinyin": "tī zúqiú",
-      "pos": "v.",
-      "meaning": {
-        "uz": "futbol o'ynamoq",
-        "ru": "играть в футбол",
-        "tj": "футбол бозӣ кардан"
-      }
-    },
-    {
-      "no": 8,
-      "zh": "一起",
-      "pinyin": "yìqǐ",
-      "pos": "adv.",
-      "meaning": {
-        "uz": "birga, birgalikda",
-        "ru": "вместе",
-        "tj": "якҷо, бо ҳам"
-      }
-    },
-    {
-      "no": 9,
-      "zh": "要",
-      "pinyin": "yào",
-      "pos": "aux.",
-      "meaning": {
-        "uz": "kerak, xohlamoq, bormoqchi",
-        "ru": "нужно, хотеть, собираться",
-        "tj": "лозим, хостан, қасд доштан"
-      }
-    },
-    {
-      "no": 10,
-      "zh": "新",
-      "pinyin": "xīn",
-      "pos": "adj.",
-      "meaning": {
-        "uz": "yangi",
-        "ru": "новый",
-        "tj": "нав"
-      }
-    },
-    {
-      "no": 11,
-      "zh": "它",
-      "pinyin": "tā",
-      "pos": "pron.",
-      "meaning": {
-        "uz": "u (hayvon yoki narsa haqida)",
-        "ru": "оно, он/она (о животных и предметах)",
-        "tj": "он/он (дар бораи ҳайвон ё чиз)"
-      }
-    },
-    {
-      "no": 12,
-      "zh": "眼睛",
-      "pinyin": "yǎnjing",
+     "type": "active_word",
+     "word": {
+      "zh": "yesterday",
+      "pinyin": "YES-tur-day",
       "pos": "n.",
       "meaning": {
-        "uz": "ko'z",
-        "ru": "глаза",
-        "tj": "чашм"
-      }
+       "uz": "kecha",
+       "ru": "вчера",
+       "tj": "дирӯз"
+      },
+      "no": 1
+     }
     },
     {
-      "no": 13,
-      "zh": "花花",
-      "pinyin": "Huāhua",
-      "pos": "proper noun",
+     "type": "active_word",
+     "word": {
+      "zh": "was",
+      "pinyin": "WOZ",
+      "pos": "v.",
       "meaning": {
-        "uz": "Huahua (mushuk ismi)",
-        "ru": "Хуахуа (кличка кошки)",
-        "tj": "Хуахуа (номи гурба)"
-      }
-    }
-  ],
-  "grammar": [
+       "uz": "edi (men/u)",
+       "ru": "был (я/он)",
+       "tj": "буд (ман/ӯ)"
+      },
+      "no": 2
+     }
+    },
     {
+     "type": "meaning_guess",
+     "prompt": {
+      "uz": "«yesterday» ma'nosini tanlang:",
+      "ru": "Выберите значение «yesterday»:",
+      "tj": "Маънои «yesterday»-ро интихоб кунед:"
+     },
+     "title": {
+      "uz": "Ma'nosi nima?",
+      "ru": "Что означает?",
+      "tj": "Маъно чист?"
+     },
+     "options": [
+      {
+       "uz": "kecha",
+       "ru": "вчера",
+       "tj": "дирӯз"
+      },
+      {
+       "uz": "edi (men/u)",
+       "ru": "был (я/он)",
+       "tj": "буд (ман/ӯ)"
+      },
+      {
+       "uz": "eding/edik (siz/biz)",
+       "ru": "был (ты/мы)",
+       "tj": "будӣ/будем"
+      },
+      {
+       "uz": "oldin",
+       "ru": "назад (о времени)",
+       "tj": "пеш"
+      }
+     ],
+     "correct_index": 0
+    },
+    {
+     "type": "active_word",
+     "word": {
+      "zh": "were",
+      "pinyin": "WUR",
+      "pos": "v.",
+      "meaning": {
+       "uz": "eding/edik (siz/biz)",
+       "ru": "был (ты/мы)",
+       "tj": "будӣ/будем"
+      },
+      "no": 3
+     }
+    },
+    {
+     "type": "active_word",
+     "word": {
+      "zh": "ago",
+      "pinyin": "uh-GOH",
+      "pos": "adv.",
+      "meaning": {
+       "uz": "oldin",
+       "ru": "назад (о времени)",
+       "tj": "пеш"
+      },
+      "no": 4
+     }
+    },
+    {
+     "type": "hanzi_choice",
+     "prompt": {
+      "uz": "«LAST» qaysi so'z?",
+      "ru": "Какое слово читается «LAST»?",
+      "tj": "«LAST» кадом калима аст?"
+     },
+     "title": {
+      "uz": "So'zni tanlang",
+      "ru": "Выберите слово",
+      "tj": "Калимаро интихоб кунед"
+     },
+     "options": [
+      "last",
+      "yesterday",
+      "was",
+      "were"
+     ],
+     "correct_index": 0
+    },
+    {
+     "type": "active_word",
+     "word": {
+      "zh": "last",
+      "pinyin": "LAST",
+      "pos": "adj.",
+      "meaning": {
+       "uz": "o'tgan",
+       "ru": "прошлый",
+       "tj": "гузашта"
+      },
+      "no": 5
+     }
+    },
+    {
+     "type": "active_word",
+     "word": {
+      "zh": "busy",
+      "pinyin": "BIZ-ee",
+      "pos": "adj.",
+      "meaning": {
+       "uz": "band",
+       "ru": "занятый",
+       "tj": "машғул"
+      },
+      "no": 6
+     }
+    },
+    {
+     "type": "pinyin_choice",
+     "prompt": {
+      "uz": "«yesterday» talaffuzini tanlang:",
+      "ru": "Выберите произношение «yesterday»:",
+      "tj": "Талаффузи «yesterday»-ро интихоб кунед:"
+     },
+     "title": {
+      "uz": "Qanday o'qiladi?",
+      "ru": "Как читается?",
+      "tj": "Чӣ хел хонда мешавад?"
+     },
+     "options": [
+      "YES-tur-day",
+      "WOZ",
+      "WUR",
+      "uh-GOH"
+     ],
+     "correct_index": 0
+    },
+    {
+     "type": "match_pairs",
+     "pairs": [
+      [
+       "yesterday",
+       {
+        "uz": "kecha",
+        "ru": "вчера",
+        "tj": "дирӯз"
+       }
+      ],
+      [
+       "was",
+       {
+        "uz": "edi (men/u)",
+        "ru": "был (я/он)",
+        "tj": "буд (ман/ӯ)"
+       }
+      ],
+      [
+       "were",
+       {
+        "uz": "eding/edik (siz/biz)",
+        "ru": "был (ты/мы)",
+        "tj": "будӣ/будем"
+       }
+      ],
+      [
+       "ago",
+       {
+        "uz": "oldin",
+        "ru": "назад (о времени)",
+        "tj": "пеш"
+       }
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "section_no": 2,
+   "section_title": {
+    "uz": "Grammatika",
+    "ru": "Грамматика",
+    "tj": "Грамматика"
+   },
+   "cards": [
+    {
+     "type": "_grammar",
+     "g": {
       "no": 1,
       "title": {
-        "uz": "Yordamchi fe'l: 要",
-        "ru": "Вспомогательный глагол: 要",
-        "tj": "Феъли ёрдамӣ: 要"
+       "uz": "was / were",
+       "ru": "was / were",
+       "tj": "was / were"
       },
-      "title_zh": "助动词：要",
+      "title_en": "was / were (past of be)",
       "rule": {
-        "uz": "'要' (yào) - istak yoki zaruriyatni bildiruvchi yordamchi fe'l. Fe'ldan oldin kelib, 'xohlamoq / bormoqchi / kerak' ma'nolarini beradi. Inkor shakli: 不要 (buyruq) yoki 不想 (istamaslik).",
-        "ru": "'要' (yào) — вспомогательный глагол, выражающий желание или необходимость. Ставится перед основным глаголом, означает «хотеть / собираться / нужно». Отрицание: 不要 (запрет) или 不想 (нежелание).",
-        "tj": "'要' (yào) — феъли ёрдамии ифодакунандаи хоҳиш ё зарурат. Пеш аз феъли асосӣ меояд ва маънои 'хостан / қасд доштан / лозим' дорад. Шакли инкорӣ: 不要 (манъ) ё 不想 (нахостан)."
-      },
-      "examples": [
-        {
-          "zh": "我要去北京旅游。",
-          "pinyin": "Wǒ yào qù Běijīng lǚyóu.",
-          "translation": {
-            "uz": "Men Pekinga sayohat qilmoqchiman.",
-            "ru": "Я собираюсь поехать в Пекин.",
-            "tj": "Ман мехоҳам ба Пекин сафар кунам."
-          }
-        },
-        {
-          "zh": "我们要不要买新椅子？",
-          "pinyin": "Wǒmen yào bú yào mǎi xīn yǐzi?",
-          "translation": {
-            "uz": "Yangi stul sotib olishimiz kerakmi?",
-            "ru": "Нам купить новые стулья?",
-            "tj": "Мо бояд курсии нав харем?"
-          }
-        }
-      ]
+       "uz": "I/he/she was. You/we/they were.\nMisol: I was busy yesterday.",
+       "ru": "I/he/she was. You/we/they were.\nПример: I was busy yesterday.",
+       "tj": "I/he/she was. You/we/they were.\nМисол: I was busy yesterday."
+      }
+     }
     },
     {
+     "type": "_grammar",
+     "g": {
       "no": 2,
       "title": {
-        "uz": "Daraja ravishi: 最",
-        "ru": "Наречие степени: 最",
-        "tj": "Зарфи дараҷа: 最"
+       "uz": "Vaqt: last / ago",
+       "ru": "Время: last / ago",
+       "tj": "Вақт: last / ago"
       },
-      "title_zh": "程度副词：最",
+      "title_en": "last week / two days ago",
       "rule": {
-        "uz": "'最' (zuì) - 'eng' ma'nosini beruvchi daraja ravishi. Sifat yoki fe'ldan oldin kelib, eng yuqori darajani bildiradi.",
-        "ru": "'最' (zuì) — наречие степени, означающее «самый, наиболее». Ставится перед прилагательным или глаголом и обозначает наивысшую степень.",
-        "tj": "'最' (zuì) — зарфи дараҷа бо маънои 'аз ҳама, бештар'. Пеш аз сифат ё феъл меояд ва дараҷаи аълоро ифода мекунад."
-      },
-      "examples": [
-        {
-          "zh": "九月去北京旅游最好。",
-          "pinyin": "Jiǔ yuè qù Běijīng lǚyóu zuì hǎo.",
-          "translation": {
-            "uz": "Pekinga sent'abrda borish eng yaxshi.",
-            "ru": "Лучше всего ехать в Пекин в сентябре.",
-            "tj": "Дар моҳи сентябр сафар ба Пекин аз ҳама беҳтар аст."
-          }
-        },
-        {
-          "zh": "我最喜欢踢足球。",
-          "pinyin": "Wǒ zuì xǐhuan tī zúqiú.",
-          "translation": {
-            "uz": "Men eng ko'p futbol o'ynashni yaxshi ko'raman.",
-            "ru": "Больше всего я люблю играть в футбол.",
-            "tj": "Ман аз ҳама бештар футбол бозӣ кардан ро дӯст медорам."
-          }
-        }
-      ]
+       "uz": "last week, last night; two days ago.\nMisol: I was there two days ago.",
+       "ru": "last week, last night; two days ago.\nПример: I was there two days ago.",
+       "tj": "last week, last night; two days ago.\nМисол: I was there two days ago."
+      }
+     }
     },
     {
-      "no": 3,
-      "title": {
-        "uz": "Taxminiy sonlar: 几、多",
-        "ru": "Приблизительные числа: 几、多",
-        "tj": "Рақамҳои тахминӣ: 几、多"
-      },
-      "title_zh": "概数的表达：几、多",
-      "rule": {
-        "uz": "Taxminiy sonni ifodalash usullari:\n• 几 (jǐ) — 'bir nechta' (odatda 10 gacha), noaniq miqdor.\n• 多 (duō) — son + ölçü + 多 shaklida 'dan ko'proq, ziyod' ma'nosini beradi.",
-        "ru": "Способы выражения приблизительного числа:\n• 几 (jǐ) — «несколько» (обычно до 10), неопределённое количество.\n• 多 (duō) — после числа + счётного слова означает «с лишним, больше».",
-        "tj": "Усулҳои ифодаи рақамҳои тахминӣ:\n• 几 (jǐ) — 'чанд' (одатан то 10), миқдори номуайян.\n• 多 (duō) — баъд аз рақам + воҳид маънои 'зиёда аз, бештар' дорад."
-      },
-      "examples": [
-        {
-          "zh": "这里有几个杯子。",
-          "pinyin": "Zhèlǐ yǒu jǐ ge bēizi.",
-          "translation": {
-            "uz": "Bu yerda bir nechta qadah bor.",
-            "ru": "Здесь есть несколько стаканов.",
-            "tj": "Инҷо чанд косача вуҷуд дорад."
-          }
-        },
-        {
-          "zh": "它六个多月了。",
-          "pinyin": "Tā liù ge duō yuè le.",
-          "translation": {
-            "uz": "U olti oydan ziyod bo'ldi.",
-            "ru": "Ей уже больше шести месяцев.",
-            "tj": "Вай зиёда аз шаш моҳ шудааст."
-          }
-        }
-      ]
+     "type": "sentence_builder",
+     "sentence": {
+      "uz": "«Men kecha band edim.»",
+      "ru": "«Вчера я был занят.»",
+      "tj": "«Ман дирӯз машғул будам.»"
+     },
+     "tokens": [
+      "busy",
+      "was",
+      "I",
+      "yesterday",
+      "were"
+     ],
+     "answer_tokens": [
+      "I",
+      "was",
+      "busy",
+      "yesterday"
+     ],
+     "explanation": {
+      "uz": "I was + sifat.",
+      "ru": "I was + прилаг.",
+      "tj": "I was + сифат."
+     }
+    },
+    {
+     "type": "quick_quiz",
+     "prompt": {
+      "uz": "«Kecha» — inglizchada qaysi?",
+      "ru": "«Вчера» — как по-английски?",
+      "tj": "«Дирӯз» — ба англисӣ кадом?"
+     },
+     "title": {
+      "uz": "To'g'ri javobni tanlang",
+      "ru": "Выберите правильный ответ",
+      "tj": "Ҷавоби дурустро интихоб кунед"
+     },
+     "options": [
+      "yesterday",
+      "last",
+      "ago",
+      "ready"
+     ],
+     "correct_index": 0
     }
-  ],
-  "dialogues": [
+   ]
+  },
+  {
+   "section_no": 3,
+   "section_title": {
+    "uz": "Mashq",
+    "ru": "Практика",
+    "tj": "Машқ"
+   },
+   "cards": [
     {
-      "scene": {
-        "uz": "Maktabda",
-        "ru": "В школе",
-        "tj": "Дар мактаб"
-      },
-      "dialogue": [
-        {
-          "speaker": "A",
-          "zh": "我想去北京旅游，你觉得什么时候去最好？",
-          "pinyin": "Wǒ xiǎng qù Běijīng lǚyóu, nǐ juéde shénme shíhou qù zuì hǎo?",
-          "text": {
-            "uz": "Men Pekinga sayohat qilmoqchiman, sen qachon borish eng yaxshi deb o'ylaysan?",
-            "ru": "Я хочу поехать в Пекин, как ты думаешь, когда лучше всего ехать?",
-            "tj": "Ман мехоҳам ба Пекин сафар кунам, ба назари ту кай рафтан беҳтар аст?"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "九月去北京旅游最好。",
-          "pinyin": "Jiǔ yuè qù Běijīng lǚyóu zuì hǎo.",
-          "text": {
-            "uz": "Sent'abrda Pekinga sayohat qilish eng yaxshi.",
-            "ru": "Лучше всего ехать в Пекин в сентябре.",
-            "tj": "Дар моҳи сентябр сафар ба Пекин аз ҳама беҳтар аст."
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "为什么？",
-          "pinyin": "Wèi shénme?",
-          "text": {
-            "uz": "Nega?",
-            "ru": "Почему?",
-            "tj": "Чаро?"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "九月的北京天气不冷也不热。",
-          "pinyin": "Jiǔ yuè de Běijīng tiānqì bù lěng yě bú rè.",
-          "text": {
-            "uz": "Sent'abrda Pekingning ob-havosi sovuq ham emas, issiq ham emas.",
-            "ru": "В сентябре в Пекине погода ни холодная, ни жаркая.",
-            "tj": "Дар моҳи сентябр ҳавои Пекин на сард аст ва на гарм."
-          }
-        }
-      ]
+     "type": "pinyin_choice",
+     "prompt": {
+      "uz": "«was» talaffuzini tanlang:",
+      "ru": "Выберите произношение «was»:",
+      "tj": "Талаффузи «was»-ро интихоб кунед:"
+     },
+     "title": {
+      "uz": "Qanday o'qiladi?",
+      "ru": "Как читается?",
+      "tj": "Чӣ хел хонда мешавад?"
+     },
+     "options": [
+      "WOZ",
+      "YES-tur-day",
+      "WUR",
+      "uh-GOH"
+     ],
+     "correct_index": 0
     },
     {
-      "scene": {
-        "uz": "Suratlarni ko'rib",
-        "ru": "Рассматривая фотографии",
-        "tj": "Дар хонандани аксҳо"
+     "type": "meaning_guess",
+     "prompt": {
+      "uz": "«busy» ma'nosini tanlang:",
+      "ru": "Выберите значение «busy»:",
+      "tj": "Маънои «busy»-ро интихоб кунед:"
+     },
+     "title": {
+      "uz": "Ma'nosi nima?",
+      "ru": "Что означает?",
+      "tj": "Маъно чист?"
+     },
+     "options": [
+      {
+       "uz": "band",
+       "ru": "занятый",
+       "tj": "машғул"
       },
-      "dialogue": [
-        {
-          "speaker": "A",
-          "zh": "你喜欢什么运动？",
-          "pinyin": "Nǐ xǐhuan shénme yùndòng?",
-          "text": {
-            "uz": "Sen qanday sportni yaxshi ko'rasan?",
-            "ru": "Какой спорт ты любишь?",
-            "tj": "Ту кадом варзишро дӯст медорӣ?"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "我最喜欢踢足球。",
-          "pinyin": "Wǒ zuì xǐhuan tī zúqiú.",
-          "text": {
-            "uz": "Men futbol o'ynashni eng ko'p yaxshi ko'raman.",
-            "ru": "Больше всего я люблю играть в футбол.",
-            "tj": "Ман аз ҳама бештар футбол бозӣ кардан ро дӯст медорам."
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "下午我们一起去踢足球吧。",
-          "pinyin": "Xiàwǔ wǒmen yìqǐ qù tī zúqiú ba.",
-          "text": {
-            "uz": "Tushdan keyin birga futbol o'ynamizmi?",
-            "ru": "Давай после обеда вместе поиграем в футбол.",
-            "tj": "Баъд аз нисфирӯзӣ биёед якҷо футбол бозем."
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "好啊！",
-          "pinyin": "Hǎo a!",
-          "text": {
-            "uz": "Ha, albatta!",
-            "ru": "Конечно!",
-            "tj": "Хуб, бале!"
-          }
-        }
-      ]
+      {
+       "uz": "kecha",
+       "ru": "вчера",
+       "tj": "дирӯз"
+      },
+      {
+       "uz": "edi (men/u)",
+       "ru": "был (я/он)",
+       "tj": "буд (ман/ӯ)"
+      },
+      {
+       "uz": "eding/edik (siz/biz)",
+       "ru": "был (ты/мы)",
+       "tj": "будӣ/будем"
+      }
+     ],
+     "correct_index": 0
     },
     {
-      "scene": {
-        "uz": "Uyda",
-        "ru": "Дома",
-        "tj": "Дар хона"
-      },
-      "dialogue": [
-        {
-          "speaker": "A",
-          "zh": "我们要不要买几个新的椅子？",
-          "pinyin": "Wǒmen yào bú yào mǎi jǐ ge xīn de yǐzi?",
-          "text": {
-            "uz": "Bir nechta yangi stul sotib olishimiz kerakmi?",
-            "ru": "Нам купить несколько новых стульев?",
-            "tj": "Мо бояд чанд курсии нав харем?"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "好啊。什么时候去买？",
-          "pinyin": "Hǎo a. Shénme shíhou qù mǎi?",
-          "text": {
-            "uz": "Ha. Qachon boramiz?",
-            "ru": "Хорошо. Когда пойдём покупать?",
-            "tj": "Хуб. Кай меравем харидан?"
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "明天下午怎么样？",
-          "pinyin": "Míngtiān xiàwǔ zěnmeyàng?",
-          "text": {
-            "uz": "Ertaga tushdan keyin qanday?",
-            "ru": "Как насчёт завтра после обеда?",
-            "tj": "Фардо баъд аз нисфирӯзӣ чӣ тавр?"
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "你明天几点能回来？",
-          "pinyin": "Nǐ míngtiān jǐ diǎn néng huílái?",
-          "text": {
-            "uz": "Ertaga sen necha da qaytib kelolasan?",
-            "ru": "В котором часу ты завтра сможешь вернуться?",
-            "tj": "Ту фардо соати чанд метавонӣ баргардӣ?"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "三点多。",
-          "pinyin": "Sān diǎn duō.",
-          "text": {
-            "uz": "Uchdan keyin (taxminan).",
-            "ru": "Около трёх (чуть после).",
-            "tj": "Каме баъд аз соати се."
-          }
-        }
-      ]
+     "type": "listening_choice",
+     "title": {
+      "uz": "Eshitganingizni tanlang",
+      "ru": "Выберите, что вы услышали",
+      "tj": "Он чи шунидед, интихоб кунед"
+     },
+     "audio_text": "I was busy yesterday.",
+     "pinyin": "",
+     "options": [
+      "I was busy yesterday.",
+      "I am ready now.",
+      "She is a doctor.",
+      "We were here."
+     ],
+     "correct_index": 0,
+     "explanation": {
+      "uz": "was = edi (birlik).",
+      "ru": "was = был.",
+      "tj": "was = буд."
+     }
     },
     {
-      "scene": {
-        "uz": "Uyda",
-        "ru": "Дома",
-        "tj": "Дар хона"
-      },
-      "dialogue": [
-        {
-          "speaker": "A",
-          "zh": "桌子下面有个猫。",
-          "pinyin": "Zhuōzi xiàmiàn yǒu ge māo.",
-          "text": {
-            "uz": "Stol ostida mushuk bor.",
-            "ru": "Под столом есть кошка.",
-            "tj": "Зери мӯия як гурба аст."
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "那是我的猫，它叫花花。",
-          "pinyin": "Nà shì wǒ de māo, tā jiào Huāhua.",
-          "text": {
-            "uz": "Bu mening mushugim, u Huahua deb ataladi.",
-            "ru": "Это моя кошка, её зовут Хуахуа.",
-            "tj": "Ин гурбаи ман аст, номаш Хуахуа аст."
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "它很漂亮。",
-          "pinyin": "Tā hěn piàoliang.",
-          "text": {
-            "uz": "U juda chiroyli.",
-            "ru": "Она очень красивая.",
-            "tj": "Вай хеле зебо аст."
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "是啊，我觉得它的眼睛最漂亮。",
-          "pinyin": "Shì a, wǒ juéde tā de yǎnjing zuì piàoliang.",
-          "text": {
-            "uz": "Ha, menimcha uning ko'zlari eng chiroyli.",
-            "ru": "Да, я думаю, что её глаза самые красивые.",
-            "tj": "Бале, ба назари ман чашмонаш аз ҳама зеботаранд."
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "它多大了？",
-          "pinyin": "Tā duō dà le?",
-          "text": {
-            "uz": "U qancha yoshda?",
-            "ru": "Сколько ей лет?",
-            "tj": "Вай чанд сол дорад?"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "六个多月。",
-          "pinyin": "Liù ge duō yuè.",
-          "text": {
-            "uz": "Olti oydan ziyod.",
-            "ru": "Больше шести месяцев.",
-            "tj": "Зиёда аз шаш моҳ."
-          }
-        }
+     "type": "match_pairs",
+     "pairs": [
+      [
+       "last",
+       {
+        "uz": "o'tgan",
+        "ru": "прошлый",
+        "tj": "гузашта"
+       }
+      ],
+      [
+       "busy",
+       {
+        "uz": "band",
+        "ru": "занятый",
+        "tj": "машғул"
+       }
+      ],
+      [
+       "absent",
+       {
+        "uz": "yo'q, kelmagan",
+        "ru": "отсутствующий",
+        "tj": "ҳозирнабуда"
+       }
+      ],
+      [
+       "ready",
+       {
+        "uz": "tayyor",
+        "ru": "готовый",
+        "tj": "тайёр"
+       }
       ]
+     ]
+    },
+    {
+     "type": "pronunciation",
+     "phrase": "I was very busy yesterday",
+     "pinyin": "",
+     "translation": {
+      "uz": "Kecha juda band edim",
+      "ru": "Вчера я был очень занят",
+      "tj": "Дирӯз ман хеле машғул будам"
+     }
     }
-  ],
-  "sections": [
+   ]
+  },
+  {
+   "section_no": 4,
+   "section_title": {
+    "uz": "Dialog",
+    "ru": "Диалог",
+    "tj": "Муколама"
+   },
+   "cards": [
     {
-      "section_no": 1,
-      "section_title": {
-        "uz": "Yangi so'zlar",
-        "ru": "Новые слова",
-        "tj": "Калимаҳои нав"
-      },
-      "section_purpose": "intro",
-      "cards": [
-        {
-          "type": "active_word",
-          "word": {
-            "no": 1,
-            "zh": "旅游",
-            "pinyin": "lǚyóu",
-            "pos": "v.",
-            "meaning": {
-              "uz": "sayohat qilmoq",
-              "ru": "путешествовать",
-              "tj": "сафар кардан"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 2,
-            "zh": "觉得",
-            "pinyin": "juéde",
-            "pos": "v.",
-            "meaning": {
-              "uz": "deb o'ylash, his qilish",
-              "ru": "думать, считать, чувствовать",
-              "tj": "фикр кардан, ҳис кардан"
-            }
-          }
-        },
-        {
-          "type": "meaning_guess",
-          "prompt": {
-            "uz": "觉得 so'zining ma'nosini tanlang:",
-            "ru": "Выберите значение слова 觉得:",
-            "tj": "Маънои калимаи 觉得-ро интихоб кунед:"
-          },
-          "title": {
-            "uz": "Ma'nosi nima?",
-            "ru": "Что означает?",
-            "tj": "Маъно чист?"
-          },
-          "options": [
-            {
-              "uz": "nega, nima uchun",
-              "ru": "почему, зачем",
-              "tj": "чаро, барои чӣ"
-            },
-            {
-              "uz": "sayohat qilmoq",
-              "ru": "путешествовать",
-              "tj": "сафар кардан"
-            },
-            {
-              "uz": "deb o'ylash, his qilish",
-              "ru": "думать, считать, чувствовать",
-              "tj": "фикр кардан, ҳис кардан"
-            },
-            {
-              "uz": "eng, juda",
-              "ru": "самый, наиболее",
-              "tj": "аз ҳама, бештар"
-            }
-          ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "觉得 = deb o'ylash, his qilish (juéde)",
-            "ru": "觉得 = думать, считать, чувствовать (juéde)",
-            "tj": "觉得 = фикр кардан, ҳис кардан (juéde)"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 3,
-            "zh": "最",
-            "pinyin": "zuì",
-            "pos": "adv.",
-            "meaning": {
-              "uz": "eng, juda",
-              "ru": "самый, наиболее",
-              "tj": "аз ҳама, бештар"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 4,
-            "zh": "为什么",
-            "pinyin": "wèi shénme",
-            "pos": "conj./adv.",
-            "meaning": {
-              "uz": "nega, nima uchun",
-              "ru": "почему, зачем",
-              "tj": "чаро, барои чӣ"
-            }
-          }
-        },
-        {
-          "type": "hanzi_choice",
-          "prompt": {
-            "uz": "lǚyóu qaysi ieroglif?",
-            "ru": "Какой иероглиф читается lǚyóu?",
-            "tj": "lǚyóu кадом иероглиф аст?"
-          },
-          "title": {
-            "uz": "Ieroglifni tanlang",
-            "ru": "Выберите иероглиф",
-            "tj": "Иероглифро интихоб кунед"
-          },
-          "options": [
-            "觉得",
-            "旅游",
-            "最",
-            "为什么"
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "旅游 = sayohat qilmoq (lǚyóu)",
-            "ru": "旅游 = путешествовать (lǚyóu)",
-            "tj": "旅游 = сафар кардан (lǚyóu)"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 5,
-            "zh": "也",
-            "pinyin": "yě",
-            "pos": "adv.",
-            "meaning": {
-              "uz": "ham",
-              "ru": "тоже, также",
-              "tj": "ҳам"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 6,
-            "zh": "运动",
-            "pinyin": "yùndòng",
-            "pos": "n./v.",
-            "meaning": {
-              "uz": "sport; sport qilmoq",
-              "ru": "спорт; заниматься спортом",
-              "tj": "варзиш; варзиш кардан"
-            }
-          }
-        },
-        {
-          "type": "pinyin_choice",
-          "prompt": {
-            "uz": "也 talaffuzini tanlang:",
-            "ru": "Выберите произношение 也:",
-            "tj": "Талаффузи 也-ро интихоб кунед:"
-          },
-          "title": {
-            "uz": "Qanday o'qiladi?",
-            "ru": "Как читается?",
-            "tj": "Чӣ хел хонда мешавад?"
-          },
-          "options": [
-            "juéde",
-            "zuì",
-            "yě",
-            "lǚyóu"
-          ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "也 — yě",
-            "ru": "也 — yě",
-            "tj": "也 — yě"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 7,
-            "zh": "踢足球",
-            "pinyin": "tī zúqiú",
-            "pos": "v.",
-            "meaning": {
-              "uz": "futbol o'ynamoq",
-              "ru": "играть в футбол",
-              "tj": "футбол бозӣ кардан"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 8,
-            "zh": "一起",
-            "pinyin": "yìqǐ",
-            "pos": "adv.",
-            "meaning": {
-              "uz": "birga, birgalikda",
-              "ru": "вместе",
-              "tj": "якҷо, бо ҳам"
-            }
-          }
-        },
-        {
-          "type": "meaning_guess",
-          "prompt": {
-            "uz": "一起 so'zining ma'nosini tanlang:",
-            "ru": "Выберите значение слова 一起:",
-            "tj": "Маънои калимаи 一起-ро интихоб кунед:"
-          },
-          "title": {
-            "uz": "Ma'nosi nima?",
-            "ru": "Что означает?",
-            "tj": "Маъно чист?"
-          },
-          "options": [
-            {
-              "uz": "eng, juda",
-              "ru": "самый, наиболее",
-              "tj": "аз ҳама, бештар"
-            },
-            {
-              "uz": "sayohat qilmoq",
-              "ru": "путешествовать",
-              "tj": "сафар кардан"
-            },
-            {
-              "uz": "birga, birgalikda",
-              "ru": "вместе",
-              "tj": "якҷо, бо ҳам"
-            },
-            {
-              "uz": "deb o'ylash, his qilish",
-              "ru": "думать, считать, чувствовать",
-              "tj": "фикр кардан, ҳис кардан"
-            }
-          ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "一起 = birga, birgalikda (yìqǐ)",
-            "ru": "一起 = вместе (yìqǐ)",
-            "tj": "一起 = якҷо, бо ҳам (yìqǐ)"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 9,
-            "zh": "要",
-            "pinyin": "yào",
-            "pos": "aux.",
-            "meaning": {
-              "uz": "kerak, xohlamoq, bormoqchi",
-              "ru": "нужно, хотеть, собираться",
-              "tj": "лозим, хостан, қасд доштан"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 10,
-            "zh": "新",
-            "pinyin": "xīn",
-            "pos": "adj.",
-            "meaning": {
-              "uz": "yangi",
-              "ru": "новый",
-              "tj": "нав"
-            }
-          }
-        },
-        {
-          "type": "hanzi_choice",
-          "prompt": {
-            "uz": "zuì qaysi ieroglif?",
-            "ru": "Какой иероглиф читается zuì?",
-            "tj": "zuì кадом иероглиф аст?"
-          },
-          "title": {
-            "uz": "Ieroglifni tanlang",
-            "ru": "Выберите иероглиф",
-            "tj": "Иероглифро интихоб кунед"
-          },
-          "options": [
-            "觉得",
-            "最",
-            "为什么",
-            "旅游"
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "最 = eng, juda (zuì)",
-            "ru": "最 = самый, наиболее (zuì)",
-            "tj": "最 = аз ҳама, бештар (zuì)"
-          }
-        },
-        {
-          "type": "match_pairs",
-          "pairs": [
-            [
-              "旅游",
-              {
-                "uz": "sayohat qilmoq",
-                "ru": "путешествовать",
-                "tj": "сафар кардан"
-              }
-            ],
-            [
-              "觉得",
-              {
-                "uz": "deb o'ylash, his qilish",
-                "ru": "думать, считать, чувствовать",
-                "tj": "фикр кардан, ҳис кардан"
-              }
-            ],
-            [
-              "最",
-              {
-                "uz": "eng, juda",
-                "ru": "самый, наиболее",
-                "tj": "аз ҳама, бештар"
-              }
-            ],
-            [
-              "为什么",
-              {
-                "uz": "nega, nima uchun",
-                "ru": "почему, зачем",
-                "tj": "чаро, барои чӣ"
-              }
-            ]
-          ],
-          "explanation": {
-            "uz": "Juftliklar darsdagi yangi so'zlardan olindi.",
-            "ru": "Пары взяты из новых слов урока.",
-            "tj": "Ҷуфтҳо аз калимаҳои нави дарс гирифта шудаанд."
-          }
-        }
-      ]
+     "type": "listening_choice",
+     "title": {
+      "uz": "Eshitganingizni tanlang",
+      "ru": "Выберите, что вы услышали",
+      "tj": "Он чи шунидед, интихоб кунед"
+     },
+     "audio_text": "We were at home.",
+     "pinyin": "",
+     "options": [
+      "We were at home.",
+      "I was ready.",
+      "He is absent.",
+      "It was last week."
+     ],
+     "correct_index": 0,
+     "explanation": {
+      "uz": "were = eduk/edingiz (ko'plik).",
+      "ru": "were = были.",
+      "tj": "were = будем/будед."
+     }
     },
     {
-      "section_no": 2,
-      "section_title": {
-        "uz": "Grammatika",
-        "ru": "Грамматика",
-        "tj": "Грамматика"
-      },
-      "section_purpose": "grammar",
-      "cards": [
-        {
-          "type": "_grammar",
-          "g": {
-            "no": 1,
-            "title": {
-              "uz": "Yordamchi fe'l: 要",
-              "ru": "Вспомогательный глагол: 要",
-              "tj": "Феъли ёрдамӣ: 要"
-            },
-            "title_zh": "助动词：要",
-            "rule": {
-              "uz": "'要' (yào) - istak yoki zaruriyatni bildiruvchi yordamchi fe'l. Fe'ldan oldin kelib, 'xohlamoq / bormoqchi / kerak' ma'nolarini beradi. Inkor shakli: 不要 (buyruq) yoki 不想 (istamaslik).",
-              "ru": "'要' (yào) — вспомогательный глагол, выражающий желание или необходимость. Ставится перед основным глаголом, означает «хотеть / собираться / нужно». Отрицание: 不要 (запрет) или 不想 (нежелание).",
-              "tj": "'要' (yào) — феъли ёрдамии ифодакунандаи хоҳиш ё зарурат. Пеш аз феъли асосӣ меояд ва маънои 'хостан / қасд доштан / лозим' дорад. Шакли инкорӣ: 不要 (манъ) ё 不想 (нахостан)."
-            },
-            "examples": [
-              {
-                "zh": "我要去北京旅游。",
-                "pinyin": "Wǒ yào qù Běijīng lǚyóu.",
-                "translation": {
-                  "uz": "Men Pekinga sayohat qilmoqchiman.",
-                  "ru": "Я собираюсь поехать в Пекин.",
-                  "tj": "Ман мехоҳам ба Пекин сафар кунам."
-                }
-              },
-              {
-                "zh": "我们要不要买新椅子？",
-                "pinyin": "Wǒmen yào bú yào mǎi xīn yǐzi?",
-                "translation": {
-                  "uz": "Yangi stul sotib olishimiz kerakmi?",
-                  "ru": "Нам купить новые стулья?",
-                  "tj": "Мо бояд курсии нав харем?"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "sentence_builder",
-          "sentence": {
-            "uz": "Men Pekinga sayohat qilmoqchiman.",
-            "ru": "Я собираюсь поехать в Пекин.",
-            "tj": "Ман мехоҳам ба Пекин сафар кунам."
-          },
-          "tokens": [
-            "旅游",
-            "北京",
-            "我",
-            "去",
-            "最",
-            "觉得",
-            "要"
-          ],
-          "answer_tokens": [
-            "我",
-            "要",
-            "去",
-            "北京",
-            "旅游"
-          ],
-          "explanation": {
-            "uz": "我要去北京旅游。 — Wǒ yào qù Běijīng lǚyóu.",
-            "ru": "我要去北京旅游。 — Wǒ yào qù Běijīng lǚyóu.",
-            "tj": "我要去北京旅游。 — Wǒ yào qù Běijīng lǚyóu."
-          }
-        },
-        {
-          "type": "_grammar",
-          "g": {
-            "no": 2,
-            "title": {
-              "uz": "Daraja ravishi: 最",
-              "ru": "Наречие степени: 最",
-              "tj": "Зарфи дараҷа: 最"
-            },
-            "title_zh": "程度副词：最",
-            "rule": {
-              "uz": "'最' (zuì) - 'eng' ma'nosini beruvchi daraja ravishi. Sifat yoki fe'ldan oldin kelib, eng yuqori darajani bildiradi.",
-              "ru": "'最' (zuì) — наречие степени, означающее «самый, наиболее». Ставится перед прилагательным или глаголом и обозначает наивысшую степень.",
-              "tj": "'最' (zuì) — зарфи дараҷа бо маънои 'аз ҳама, бештар'. Пеш аз сифат ё феъл меояд ва дараҷаи аълоро ифода мекунад."
-            },
-            "examples": [
-              {
-                "zh": "九月去北京旅游最好。",
-                "pinyin": "Jiǔ yuè qù Běijīng lǚyóu zuì hǎo.",
-                "translation": {
-                  "uz": "Pekinga sent'abrda borish eng yaxshi.",
-                  "ru": "Лучше всего ехать в Пекин в сентябре.",
-                  "tj": "Дар моҳи сентябр сафар ба Пекин аз ҳама беҳтар аст."
-                }
-              },
-              {
-                "zh": "我最喜欢踢足球。",
-                "pinyin": "Wǒ zuì xǐhuan tī zúqiú.",
-                "translation": {
-                  "uz": "Men eng ko'p futbol o'ynashni yaxshi ko'raman.",
-                  "ru": "Больше всего я люблю играть в футбол.",
-                  "tj": "Ман аз ҳама бештар футбол бозӣ кардан ро дӯст медорам."
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "sentence_builder",
-          "sentence": {
-            "uz": "Men eng ko'p futbol o'ynashni yaxshi ko'raman.",
-            "ru": "Больше всего я люблю играть в футбол.",
-            "tj": "Ман аз ҳама бештар футбол бозӣ кардан ро дӯст медорам."
-          },
-          "tokens": [
-            "喜欢",
-            "我",
-            "踢足球",
-            "最",
-            "觉得",
-            "旅游"
-          ],
-          "answer_tokens": [
-            "我",
-            "最",
-            "喜欢",
-            "踢足球"
-          ],
-          "explanation": {
-            "uz": "我最喜欢踢足球。 — Wǒ zuì xǐhuan tī zúqiú.",
-            "ru": "我最喜欢踢足球。 — Wǒ zuì xǐhuan tī zúqiú.",
-            "tj": "我最喜欢踢足球。 — Wǒ zuì xǐhuan tī zúqiú."
-          }
-        },
-        {
-          "type": "_grammar",
-          "g": {
-            "no": 3,
-            "title": {
-              "uz": "Taxminiy sonlar: 几、多",
-              "ru": "Приблизительные числа: 几、多",
-              "tj": "Рақамҳои тахминӣ: 几、多"
-            },
-            "title_zh": "概数的表达：几、多",
-            "rule": {
-              "uz": "Taxminiy sonni ifodalash usullari:\n• 几 (jǐ) — 'bir nechta' (odatda 10 gacha), noaniq miqdor.\n• 多 (duō) — son + ölçü + 多 shaklida 'dan ko'proq, ziyod' ma'nosini beradi.",
-              "ru": "Способы выражения приблизительного числа:\n• 几 (jǐ) — «несколько» (обычно до 10), неопределённое количество.\n• 多 (duō) — после числа + счётного слова означает «с лишним, больше».",
-              "tj": "Усулҳои ифодаи рақамҳои тахминӣ:\n• 几 (jǐ) — 'чанд' (одатан то 10), миқдори номуайян.\n• 多 (duō) — баъд аз рақам + воҳид маънои 'зиёда аз, бештар' дорад."
-            },
-            "examples": [
-              {
-                "zh": "这里有几个杯子。",
-                "pinyin": "Zhèlǐ yǒu jǐ ge bēizi.",
-                "translation": {
-                  "uz": "Bu yerda bir nechta qadah bor.",
-                  "ru": "Здесь есть несколько стаканов.",
-                  "tj": "Инҷо чанд косача вуҷуд дорад."
-                }
-              },
-              {
-                "zh": "它六个多月了。",
-                "pinyin": "Tā liù ge duō yuè le.",
-                "translation": {
-                  "uz": "U olti oydan ziyod bo'ldi.",
-                  "ru": "Ей уже больше шести месяцев.",
-                  "tj": "Вай зиёда аз шаш моҳ шудааст."
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "sentence_builder",
-          "sentence": {
-            "uz": "Bu yerda bir nechta qadah bor.",
-            "ru": "Здесь есть несколько стаканов.",
-            "tj": "Инҷо чанд косача вуҷуд дорад."
-          },
-          "tokens": [
-            "这",
-            "几",
-            "个",
-            "有",
-            "觉得",
-            "杯子",
-            "里",
-            "旅游"
-          ],
-          "answer_tokens": [
-            "这",
-            "里",
-            "有",
-            "几",
-            "个",
-            "杯子"
-          ],
-          "explanation": {
-            "uz": "这里有几个杯子。 — Zhèlǐ yǒu jǐ ge bēizi.",
-            "ru": "这里有几个杯子。 — Zhèlǐ yǒu jǐ ge bēizi.",
-            "tj": "这里有几个杯子。 — Zhèlǐ yǒu jǐ ge bēizi."
-          }
-        },
-        {
-          "type": "quick_quiz",
-          "prompt": {
-            "uz": "«Men eng ko'p futbol o'ynashni yaxshi ko'raman.» — xitoychada qaysi biri?",
-            "ru": "«Больше всего я люблю играть в футбол.» — какое предложение по-китайски?",
-            "tj": "«Ман аз ҳама бештар футбол бозӣ кардан ро дӯст медорам.» — кадом ҷумла ба хитоӣ аст?"
-          },
-          "title": {
-            "uz": "To'g'ri gapni tanlang",
-            "ru": "Выберите верное предложение",
-            "tj": "Ҷумлаи дурустро интихоб кунед"
-          },
-          "options": [
-            "我要去北京旅游。",
-            "我最喜欢踢足球。",
-            "九月去北京旅游最好。",
-            "它六个多月了。"
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "我最喜欢踢足球。 — Wǒ zuì xǐhuan tī zúqiú.",
-            "ru": "我最喜欢踢足球。 — Wǒ zuì xǐhuan tī zúqiú.",
-            "tj": "我最喜欢踢足球。 — Wǒ zuì xǐhuan tī zúqiú."
-          }
-        }
-      ]
+     "type": "gap_fill",
+     "sentence": "I ____ busy yesterday.",
+     "prompt": {
+      "uz": "Bo'sh joyga mos so'zni tanlang:",
+      "ru": "Выберите подходящее слово:",
+      "tj": "Калимаи мувофиқро интихоб кунед:"
+     },
+     "options": [
+      "was",
+      "were",
+      "am",
+      "is"
+     ],
+     "correct_index": 0,
+     "explanation": {
+      "uz": "I bilan — was.",
+      "ru": "С I — was.",
+      "tj": "Бо I — was."
+     }
     },
     {
-      "section_no": 3,
-      "section_title": {
-        "uz": "Mashq",
-        "ru": "Упражнение",
-        "tj": "Машқ"
+     "type": "dialog_cloze",
+     "title": {
+      "uz": "Dialogni to'ldiring",
+      "ru": "Дополните диалог",
+      "tj": "Муколамаро пурра кунед"
+     },
+     "lines": [
+      {
+       "speaker": "A",
+       "zh": "Where were you yesterday?",
+       "blank": false
       },
-      "section_purpose": "practice",
-      "cards": [
-        {
-          "type": "listening_choice",
-          "title": {
-            "uz": "Eshitganingizni tanlang",
-            "ru": "Выберите, что вы услышали",
-            "tj": "Он чи шунидед, интихоб кунед"
-          },
-          "audio_text": "我想去北京旅游，你觉得什么时候去最好？",
-          "pinyin": "Wǒ xiǎng qù Běijīng lǚyóu, nǐ juéde shénme shíhou qù zuì hǎo?",
-          "options": [
-            "九月去北京旅游最好。",
-            "九月的北京天气不冷也不热。",
-            "为什么？",
-            "我想去北京旅游，你觉得什么时候去最好？"
-          ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "我想去北京旅游，你觉得什么时候去最好？ — Men Pekinga sayohat qilmoqchiman, sen qachon borish eng yaxshi deb o'ylaysan?",
-            "ru": "我想去北京旅游，你觉得什么时候去最好？ — Я хочу поехать в Пекин, как ты думаешь, когда лучше всего ехать?",
-            "tj": "我想去北京旅游，你觉得什么时候去最好？ — Ман мехоҳам ба Пекин сафар кунам, ба назари ту кай рафтан беҳтар аст?"
-          }
-        },
-        {
-          "type": "sentence_builder",
-          "sentence": {
-            "uz": "Sen qanday sportni yaxshi ko'rasan?",
-            "ru": "Какой спорт ты любишь?",
-            "tj": "Ту кадом варзишро дӯст медорӣ?"
-          },
-          "tokens": [
-            "你",
-            "喜欢",
-            "觉得",
-            "旅游",
-            "什么",
-            "运动"
-          ],
-          "answer_tokens": [
-            "你",
-            "喜欢",
-            "什么",
-            "运动"
-          ],
-          "explanation": {
-            "uz": "你喜欢什么运动？ — Nǐ xǐhuan shénme yùndòng?",
-            "ru": "你喜欢什么运动？ — Nǐ xǐhuan shénme yùndòng?",
-            "tj": "你喜欢什么运动？ — Nǐ xǐhuan shénme yùndòng?"
-          }
-        },
-        {
-          "type": "pinyin_choice",
-          "prompt": {
-            "uz": "眼睛 talaffuzini tanlang:",
-            "ru": "Выберите произношение 眼睛:",
-            "tj": "Талаффузи 眼睛-ро интихоб кунед:"
-          },
-          "title": {
-            "uz": "Qanday o'qiladi?",
-            "ru": "Как читается?",
-            "tj": "Чӣ хел хонда мешавад?"
-          },
-          "options": [
-            "juéde",
-            "lǚyóu",
-            "yǎnjing",
-            "zuì"
-          ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "眼睛 — yǎnjing",
-            "ru": "眼睛 — yǎnjing",
-            "tj": "眼睛 — yǎnjing"
-          }
-        },
-        {
-          "type": "meaning_guess",
-          "prompt": {
-            "uz": "它 so'zining ma'nosini tanlang:",
-            "ru": "Выберите значение слова 它:",
-            "tj": "Маънои калимаи 它-ро интихоб кунед:"
-          },
-          "title": {
-            "uz": "Ma'nosi nima?",
-            "ru": "Что означает?",
-            "tj": "Маъно чист?"
-          },
-          "options": [
-            {
-              "uz": "sayohat qilmoq",
-              "ru": "путешествовать",
-              "tj": "сафар кардан"
-            },
-            {
-              "uz": "eng, juda",
-              "ru": "самый, наиболее",
-              "tj": "аз ҳама, бештар"
-            },
-            {
-              "uz": "u (hayvon yoki narsa haqida)",
-              "ru": "оно, он/она (о животных и предметах)",
-              "tj": "он/он (дар бораи ҳайвон ё чиз)"
-            },
-            {
-              "uz": "deb o'ylash, his qilish",
-              "ru": "думать, считать, чувствовать",
-              "tj": "фикр кардан, ҳис кардан"
-            }
-          ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "它 = u (hayvon yoki narsa haqida) (tā)",
-            "ru": "它 = оно, он/она (о животных и предметах) (tā)",
-            "tj": "它 = он/он (дар бораи ҳайвон ё чиз) (tā)"
-          }
-        },
-        {
-          "type": "match_pairs",
-          "pairs": [
-            [
-              "旅游",
-              {
-                "uz": "sayohat qilmoq",
-                "ru": "путешествовать",
-                "tj": "сафар кардан"
-              }
-            ],
-            [
-              "觉得",
-              {
-                "uz": "deb o'ylash, his qilish",
-                "ru": "думать, считать, чувствовать",
-                "tj": "фикр кардан, ҳис кардан"
-              }
-            ],
-            [
-              "最",
-              {
-                "uz": "eng, juda",
-                "ru": "самый, наиболее",
-                "tj": "аз ҳама, бештар"
-              }
-            ],
-            [
-              "为什么",
-              {
-                "uz": "nega, nima uchun",
-                "ru": "почему, зачем",
-                "tj": "чаро, барои чӣ"
-              }
-            ]
-          ],
-          "explanation": {
-            "uz": "Juftliklar darsdagi yangi so'zlardan olindi.",
-            "ru": "Пары взяты из новых слов урока.",
-            "tj": "Ҷуфтҳо аз калимаҳои нави дарс гирифта шудаанд."
-          }
-        },
-        {
-          "type": "pronunciation",
-          "phrase": "旅游",
-          "pinyin": "lǚyóu",
-          "translation": {
-            "uz": "sayohat qilmoq",
-            "ru": "путешествовать",
-            "tj": "сафар кардан"
-          }
-        }
-      ]
+      {
+       "speaker": "B",
+       "zh": "",
+       "blank": true
+      }
+     ],
+     "options": [
+      "I was at home.",
+      "I am ten.",
+      "It is sunny.",
+      "Goodbye!"
+     ],
+     "correct_index": 0,
+     "explanation": {
+      "uz": "O'tgan zamon — I was ...",
+      "ru": "Прошедшее — I was ...",
+      "tj": "Гузашта — I was ..."
+     }
     },
     {
-      "section_no": 4,
-      "section_title": {
-        "uz": "Dialog",
-        "ru": "Диалог",
-        "tj": "Муколама"
-      },
-      "section_purpose": "dialog",
-      "cards": [
-        {
-          "type": "listening_choice",
-          "title": {
-            "uz": "Tinglang — nima dedi?",
-            "ru": "Послушайте — что сказали?",
-            "tj": "Гӯш кунед — чӣ гуфт?"
-          },
-          "audio_text": "我想去北京旅游，你觉得什么时候去最好？",
-          "pinyin": "Wǒ xiǎng qù Běijīng lǚyóu, nǐ juéde shénme shíhou qù zuì hǎo?",
-          "options": [
-            "我想去北京旅游，你觉得什么时候去最好？",
-            "九月去北京旅游最好。",
-            "九月的北京天气不冷也不热。",
-            "为什么？"
-          ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "我想去北京旅游，你觉得什么时候去最好？ — Men Pekinga sayohat qilmoqchiman, sen qachon borish eng yaxshi deb o'ylaysan?",
-            "ru": "我想去北京旅游，你觉得什么时候去最好？ — Я хочу поехать в Пекин, как ты думаешь, когда лучше всего ехать?",
-            "tj": "我想去北京旅游，你觉得什么时候去最好？ — Ман мехоҳам ба Пекин сафар кунам, ба назари ту кай рафтан беҳтар аст?"
-          }
-        },
-        {
-          "type": "quick_quiz",
-          "prompt": {
-            "uz": "Dialogda A avval nima deydi?",
-            "ru": "Что A говорит в начале диалога?",
-            "tj": "Дар муколама A аввал чӣ мегӯяд?"
-          },
-          "title": {
-            "uz": "Dialogdan savol:",
-            "ru": "Вопрос по диалогу:",
-            "tj": "Савол аз муколама:"
-          },
-          "options": [
-            "九月去北京旅游最好。",
-            "九月的北京天气不冷也不热。",
-            "为什么？",
-            "我想去北京旅游，你觉得什么时候去最好？"
-          ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "To'g'ri javob: 我想去北京旅游，你觉得什么时候去最好？",
-            "ru": "Правильный ответ: 我想去北京旅游，你觉得什么时候去最好？",
-            "tj": "Ҷавоби дуруст: 我想去北京旅游，你觉得什么时候去最好？"
-          }
-        },
-        {
-          "type": "quick_quiz",
-          "prompt": {
-            "uz": "Dialog oxirida B nima deydi?",
-            "ru": "Что B говорит в конце диалога?",
-            "tj": "Дар охири муколама B чӣ мегӯяд?"
-          },
-          "title": {
-            "uz": "Dialogdan savol:",
-            "ru": "Вопрос по диалогу:",
-            "tj": "Савол аз муколама:"
-          },
-          "options": [
-            "九月的北京天气不冷也不热。",
-            "为什么？",
-            "我想去北京旅游，你觉得什么时候去最好？",
-            "九月去北京旅游最好。"
-          ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "To'g'ri javob: 九月的北京天气不冷也不热。",
-            "ru": "Правильный ответ: 九月的北京天气不冷也不热。",
-            "tj": "Ҷавоби дуруст: 九月的北京天气不冷也不热。"
-          }
-        },
-        {
-          "type": "gap_fill",
-          "sentence": "____想去北京旅游，你觉得什么时候去最好？",
-          "prompt": {
-            "uz": "Bo'sh joyga mos ieroglifni tanlang:",
-            "ru": "Выберите подходящий иероглиф:",
-            "tj": "Иероглифи мувофиқро интихоб кунед:"
-          },
-          "options": [
-            "我",
-            "电",
-            "时",
-            "朋"
-          ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "To'g'ri: 我 — 我想去北京旅游，你觉得什么时候去最好？ (Men Pekinga sayohat qilmoqchiman, sen qachon borish eng yaxshi deb o'ylaysan?)",
-            "ru": "Верно: 我 — 我想去北京旅游，你觉得什么时候去最好？ (Я хочу поехать в Пекин, как ты думаешь, когда лучше всего ехать?)",
-            "tj": "Дуруст: 我 — 我想去北京旅游，你觉得什么时候去最好？ (Ман мехоҳам ба Пекин сафар кунам, ба назари ту кай рафтан беҳтар аст?)"
-          }
-        },
-        {
-          "type": "dialog_cloze",
-          "title": {
-            "uz": "Dialogni to'ldiring",
-            "ru": "Дополните диалог",
-            "tj": "Муколамаро пурра кунед"
-          },
-          "lines": [
-            {
-              "speaker": "A",
-              "zh": "我想去北京旅游，你觉得什么时候去最好？",
-              "blank": false
-            },
-            {
-              "speaker": "B",
-              "zh": "九月去北京旅游最好。",
-              "blank": false
-            },
-            {
-              "speaker": "A",
-              "zh": "为什么？",
-              "blank": false
-            },
-            {
-              "speaker": "B",
-              "zh": "",
-              "blank": true
-            }
-          ],
-          "options": [
-            "我想去北京旅游，你觉得什么时候去最好？",
-            "九月的北京天气不冷也不热。",
-            "为什么？",
-            "九月去北京旅游最好。"
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "To'g'ri javob: 九月的北京天气不冷也不热。",
-            "ru": "Правильный ответ: 九月的北京天气不冷也不热。",
-            "tj": "Ҷавоби дуруст: 九月的北京天气不冷也不热。"
-          }
-        }
-      ]
+     "type": "quick_quiz",
+     "prompt": {
+      "uz": "«Band» — inglizchada?",
+      "ru": "«Занятый» — как по-английски?",
+      "tj": "«Машғул» — ба англисӣ?"
+     },
+     "title": {
+      "uz": "To'g'ri javobni tanlang",
+      "ru": "Выберите правильный ответ",
+      "tj": "Ҷавоби дурустро интихоб кунед"
+     },
+     "options": [
+      "busy",
+      "ready",
+      "last",
+      "ago"
+     ],
+     "correct_index": 0
     }
-  ]
+   ]
+  }
+ ]
 }

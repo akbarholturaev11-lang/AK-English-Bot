@@ -567,7 +567,7 @@ COURSE_I18N = {
 
         "course_choose_lesson": "Аз кадом дарс мехоҳед оғоз кунед?",
         "course_no_lessons_available": "Дарсҳо барои ин сатҳ ҳоло дастрас нестанд.",
-        "choose_mode_after_level": "<b>🤖 Шумо мехоҳед англисиро бо кадом усул омӯзед?</b>\n\n<blockquote>💬 <b>Реҷаи одӣ</b> — ҷавобҳои зуд\n📸 <b>Кор бо сурат</b> — матн ва словоҳоро мефаҳмонам\n🗣 <b>Муоширати озод</b> — саволҳои оддӣ ва машқ</blockquote>\n\n<blockquote>📚 <b>Режими курс</b> — дарс ба дарс\n📝 <b>Машқ ва тест</b> — мустаҳкамкунӣ\n🎯 <b>Пешрафти пайдарпай</b> — омӯзиши тартибнок</blockquote>\n\n👇 <b>Режимро интихоб кунед</b>",
+        "choose_mode_after_level": "<b>🤖 Шумо мехоҳед англисиро бо кадом усул омӯзед?</b>\n\n<blockquote>💬 <b>Реҷаи одӣ</b> — ҷавобҳои зуд\n📸 <b>Кор бо сурат</b> — матн ва калимаҳоро мефаҳмонам\n🗣 <b>Муоширати озод</b> — саволҳои оддӣ ва машқ</blockquote>\n\n<blockquote>📚 <b>Режими курс</b> — дарс ба дарс\n📝 <b>Машқ ва тест</b> — мустаҳкамкунӣ\n🎯 <b>Пешрафти пайдарпай</b> — омӯзиши тартибнок</blockquote>\n\n👇 <b>Режимро интихоб кунед</b>",
         "course_lesson_satisfaction_question": "Мо ин дарсро пурра анҷом додем. Аз дарс қонеъ шудед?",
         "course_lesson_satisfied_yes": "✅ Ҳа",
         "course_lesson_satisfied_no": "❌ Не",
@@ -993,7 +993,7 @@ FEEDBACK_I18N = {
         "feedback_price_offer_expired": "Ин пешниҳоди махсус дигар дастрас нест.",
         "feedback_like_course": "📚 Режими курс қулай аст",
         "feedback_like_answers": "💬 Ҷавобҳо зуд ва фаҳмоанд",
-        "feedback_like_photo": "📸 Кор бо сурат/слово қулай аст",
+        "feedback_like_photo": "📸 Кор бо сурат/калима қулай аст",
         "feedback_like_practice": "🎯 Ҳар рӯз машқ кардан осон мешавад",
         "feedback_like_other": "✍️ Дигар",
         "feedback_dislike_price": "💳 Нархи обуна баланд аст",
@@ -1520,7 +1520,7 @@ ONBOARDING_TIP_I18N = {
             "<blockquote>So'zni daftarga 3 qatordan yozing. Yozayotgan paytda baland ovozda o'qing.\n\n"
             "Keyin har bir yangi so'z bilan kamida 3 ta gap tuzing. Iloji bo'lsa, gaplarni o'z hayotingizga bog'lang.\n\n"
             "Har kuni darsni boshlashdan oldin bir marta takrorlang.</blockquote>\n\n"
-            "So'z yozilish tartibini ko'rish uchun yuqoridagi 🀄 tugmasini bosing. Takrorlash uchun klaviatura yonidagi English ⭐ tugmasidan foydalaning."
+            "So'z yozilish tartibini ko'rish uchun yuqoridagi ✏️ tugmasini bosing. Takrorlash uchun klaviatura yonidagi English ⭐ tugmasidan foydalaning."
         ),
         "onboarding_tip_course_dialogue": (
             "💬 <b>Dialog bo'limi bo'yicha maslahat</b>\n\n"
@@ -1554,7 +1554,7 @@ ONBOARDING_TIP_I18N = {
             "<blockquote>Запишите слово в тетради по 3 строки. Пока пишете, произносите его вслух.\n\n"
             "Затем составьте минимум 3 предложения с каждым новым словом. По возможности связывайте примеры со своей жизнью.\n\n"
             "Перед началом каждого урока повторяйте один раз.</blockquote>\n\n"
-            "Чтобы посмотреть порядок написания слова, нажмите кнопку 🀄 сверху. Для повторения используйте кнопку English ⭐ рядом с клавиатурой."
+            "Чтобы посмотреть порядок написания слова, нажмите кнопку ✏️ сверху. Для повторения используйте кнопку English ⭐ рядом с клавиатурой."
         ),
         "onboarding_tip_course_dialogue": (
             "💬 <b>Совет по разделу диалога</b>\n\n"
@@ -1567,7 +1567,7 @@ ONBOARDING_TIP_I18N = {
         ),
         "onboarding_tip_normal_photo": (
             "📸 <b>Попробуйте отправить фото книги, слова или диалога</b>\n\n"
-            "<blockquote>Бот прочитает фото и объяснит: как это будет по-английски, talaffuz, перевод и примеры.\n\n"
+            "<blockquote>Бот прочитает фото и объяснит: как это будет по-английски, произношение, перевод и примеры.\n\n"
             "Можете прямо сейчас отправить страницу книги, тетрадь или слово.</blockquote>"
         ),
         "onboarding_tip_normal_voice": (
@@ -1585,10 +1585,10 @@ ONBOARDING_TIP_I18N = {
         "voice_trial_daily_limit_reached": "🎙 <b>Voice-и ройгони имрӯз истифода шуд</b>\n\n<blockquote>Пагоҳ боз 1 маротиба санҷида метавонед. Барои voice бе лимит обуна гиред.</blockquote>",
         "onboarding_tip_course_vocab": (
             "🧠 <b>Мехоҳед калимаҳои навро тезтар аз худ кунед?</b>\n\n"
-            "<blockquote>Иероглифро дар дафтар 3 қатор нависед. Ҳангоми навиштан онро бо овози баланд хонед.\n\n"
+            "<blockquote>Калимаро дар дафтар 3 қатор нависед. Ҳангоми навиштан онро бо овози баланд хонед.\n\n"
             "Баъд бо ҳар калимаи нав камаш 3 ҷумла созед. Агар шавад, ҷумлаҳоро ба ҳаёти худ пайваст кунед.\n\n"
             "Ҳар рӯз пеш аз оғози дарс як бор такрор кунед.</blockquote>\n\n"
-            "Барои дидани тартиби навишти слово тугмаи 🀄-ро аз боло пахш кунед. Барои такрор аз тугмаи English ⭐ назди клавиатура истифода баред."
+            "Барои дидани тартиби навишти калима тугмаи ✏️-ро аз боло пахш кунед. Барои такрор аз тугмаи English ⭐ назди клавиатура истифода баред."
         ),
         "onboarding_tip_course_dialogue": (
             "💬 <b>Маслиҳат барои қисми диалог</b>\n\n"
@@ -1600,9 +1600,9 @@ ONBOARDING_TIP_I18N = {
             "<blockquote>Агар қоида нофаҳмо бошад ё хоҳед бо мисолҳои бештар фаҳмонда шавад, танҳо ба чат нависед. AI аз рӯи ҳамин дарс мефаҳмонад.</blockquote>"
         ),
         "onboarding_tip_normal_photo": (
-            "📸 <b>Сурати китоб, слово ё диалогро фиристода бинед</b>\n\n"
-            "<blockquote>Бот суратро хонда мефаҳмонад: ба англисӣ чӣ мешавад, talaffuz, тарҷума ва мисолҳо медиҳад.\n\n"
-            "Ҳозир метавонед саҳифаи китоб, дафтар ё словоро фиристода санҷед.</blockquote>"
+            "📸 <b>Сурати китоб, калима ё диалогро фиристода бинед</b>\n\n"
+            "<blockquote>Бот суратро хонда мефаҳмонад: ба англисӣ чӣ мешавад, талаффуз, тарҷума ва мисолҳо медиҳад.\n\n"
+            "Ҳозир метавонед саҳифаи китоб, дафтар ё калимаро фиристода санҷед.</blockquote>"
         ),
         "onboarding_tip_normal_voice": (
             "🎙 <b>Voice-режим ҳам ҳаст</b>\n\n"

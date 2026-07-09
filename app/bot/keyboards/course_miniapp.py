@@ -130,7 +130,7 @@ def course_vocab_stroke_order_keyboard(
         inline_keyboard=[
             [
                 InlineKeyboardButton(
-                    text="🀄",
+                    text="✏️",
                     web_app=WebAppInfo(
                         url=course_stroke_order_url(
                             lesson,

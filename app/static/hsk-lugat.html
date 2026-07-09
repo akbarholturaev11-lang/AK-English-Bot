@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html class="theme-light" lang="uz">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
@@ -17,7 +17,7 @@
   --cjk:"PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;height:100%;background:var(--bg);color:var(--text);font-family:var(--font);overflow:hidden}
+html,body{width:100%;height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;overflow:hidden}
 button{font:inherit;border:none;background:none;color:inherit;touch-action:manipulation}
 button:active{transform:scale(.96)}
 #app{max-width:480px;margin:0 auto;height:100vh;position:relative;overflow:hidden;
@@ -26,39 +26,49 @@ button:active{transform:scale(.96)}
 .view.hidden{display:none}
 
 /* ---- list view ---- */
-.hero{padding:16px 16px 14px;flex-shrink:0}
-.hero-top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.hero-copy{min-width:0;flex:1}
-.eyebrow{font-size:12px;letter-spacing:1.6px;color:var(--text2);font-weight:700;text-transform:uppercase}
-.hero-title{font-size:20px;font-weight:800;margin-top:4px;line-height:1.15}
-.list-back-btn{width:38px;height:38px;border-radius:12px;background:var(--bg2);border:1px solid var(--border);font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.lang-switch{display:flex;gap:7px;margin-bottom:12px}
-.lang-btn{min-height:32px;padding:7px 11px;border-radius:999px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);font-size:11px;font-weight:800}
+.hero{padding:12px 16px 10px;flex-shrink:0}
+.hero-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.hero-copy{display:none}
+.eyebrow{font-size:10px;letter-spacing:1.2px;color:var(--text2);font-weight:700;text-transform:uppercase}
+.hero-title{font-size:17px;font-weight:800;margin-top:3px;line-height:1.18}
+.list-back-btn{width:34px;height:34px;border-radius:11px;background:var(--bg2);border:1px solid var(--border);font-size:17px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.lang-switch{display:none}
+.lang-btn{min-height:30px;padding:6px 10px;border-radius:999px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);font-size:10px;font-weight:800}
 .lang-btn.active{border-color:rgba(91,140,255,.62);background:var(--accent-dim);color:var(--accent)}
 .search-wrap{position:relative}
-#search{width:100%;padding:13px 16px;font-size:14px;font-weight:600;border-radius:16px;
+#search{width:100%;padding:11px 14px;font-size:13px;font-weight:600;border-radius:14px;
   background:var(--bg2);border:1.5px solid var(--border2);color:var(--text);outline:none;
   transition:border-color .15s ease, box-shadow .15s ease}
 #search::placeholder{color:var(--text2);font-weight:500}
 #search:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-dim)}
 .count{margin-top:10px;font-size:12px;color:var(--text2);font-weight:600}
 .list{flex:1;overflow-y:auto;padding-bottom:20px;-webkit-overflow-scrolling:touch}
-.row{display:flex;align-items:center;gap:13px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer}
+.row{display:grid;grid-template-columns:minmax(96px,1.05fr) minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border);cursor:pointer}
 .row:active{background:var(--bg2)}
-.row .h{font-family:var(--cjk);font-size:23px;font-weight:700;min-width:58px}
+.row .h{font-size:14px;font-weight:800;min-width:0;line-height:1.2;word-break:break-word}
 .row .info{flex:1;min-width:0}
-.row .p{font-size:12px;color:var(--accent);font-weight:700;margin-bottom:2px}
-.row .m{font-size:13px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .p{font-size:10px;color:var(--accent);font-weight:700;margin-bottom:2px}
+.row .m{font-size:11.5px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .row .lv{font-size:9px;color:var(--text2);background:var(--bg3);padding:3px 7px;border-radius:7px;font-weight:700;letter-spacing:.3px;flex-shrink:0}
 .empty{padding:40px 20px;text-align:center;color:var(--text2);font-size:14px;line-height:1.6}
 
 /* ---- detail view ---- */
-.detail-header{display:flex;align-items:center;justify-content:space-between;padding:16px;flex-shrink:0}
-.back-btn{width:38px;height:38px;border-radius:12px;background:var(--bg2);border:1px solid var(--border);font-size:18px;display:flex;align-items:center;justify-content:center}
+.detail-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;flex-shrink:0}
+.back-btn{width:34px;height:34px;border-radius:11px;background:var(--bg2);border:1px solid var(--border);font-size:17px;display:flex;align-items:center;justify-content:center}
 .detail-level{font-size:10px;color:var(--text2);background:var(--bg3);padding:5px 10px;border-radius:8px;font-weight:700;letter-spacing:.3px}
-.detail-body{flex:1;overflow-y:auto;padding:6px 16px 30px;display:flex;flex-direction:column;align-items:center}
+.detail-body{flex:1;overflow-y:auto;padding:2px 16px 28px;display:flex;flex-direction:column;align-items:center}
 
-.writer-card{margin-top:4px;width:100%;max-width:300px;display:flex;flex-direction:column;align-items:center}
+.word-hero-card{width:100%;max-width:360px;background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:18px;margin-top:6px;box-shadow:0 2px 0 rgba(33,29,23,.03)}
+.word-hero-main{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.word-hero-copy{min-width:0;flex:1}
+.word-hero-word{font-size:34px;font-weight:850;line-height:1.05;color:var(--text);word-break:break-word;letter-spacing:0}
+.word-hero-pron{font-size:14px;font-weight:800;color:var(--accent);margin-top:8px;letter-spacing:.2px}
+.word-hero-meaning{margin-top:14px;font-size:18px;font-weight:720;color:var(--text);line-height:1.35}
+.word-audio-btn{width:50px;height:50px;border-radius:16px;background:var(--accent-dim);border:1px solid rgba(91,140,255,.3);color:var(--accent);font-size:19px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.word-audio-btn:active{background:rgba(91,140,255,.23)}
+.writer-card{margin-top:2px;width:100%;max-width:360px;display:flex;flex-direction:column;align-items:center}
+.writer-card.hidden-writer{display:none}
+.writer-card.word-mode .writer-toolbar,.writer-card.word-mode .writer-controls{display:none}
 .writer-toolbar{display:flex;align-items:center;justify-content:space-between;width:100%}
 .nav-arrow{width:34px;height:34px;border-radius:11px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .nav-arrow:disabled{opacity:.25}
@@ -72,34 +82,44 @@ button:active{transform:scale(.96)}
 .char-box-lg .grid-bg line{stroke:rgba(255,255,255,.09);stroke-width:1}
 .char-box-lg .writer-target{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
 .char-box-lg .plain-char{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--cjk);font-size:64px;font-weight:600;color:var(--text2)}
+.char-box-lg.word-box{width:100%;max-width:360px;height:auto;min-height:118px;margin-top:4px;padding:14px;border-radius:16px}
+.word-card{width:100%;display:grid;gap:12px}
+.word-main{font-size:26px;font-weight:850;line-height:1.08;color:var(--text);word-break:break-word;letter-spacing:0}
+.word-sub{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11px;color:var(--text2);font-weight:700}
+.word-pos{color:var(--accent);background:var(--accent-dim);border-radius:8px;padding:4px 8px;text-transform:uppercase}
+.letter-row{display:flex;flex-wrap:wrap;gap:6px}
+.letter-chip{min-width:28px;height:30px;border-radius:9px;background:var(--bg3);border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--text)}
+.letter-chip.space{min-width:18px;color:var(--text2);background:transparent;border-color:transparent}
+.write-path{font-size:11.5px;line-height:1.45;color:var(--text2);font-weight:600}
 .writer-controls{display:flex;align-items:center;gap:16px;margin-top:16px}
 .ctrl-btn{width:48px;height:48px;border-radius:50%;background:var(--ink-dim);color:var(--ink);font-size:17px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(214,69,58,.34)}
 .ctrl-btn.ctrl-main{width:60px;height:60px;font-size:20px;background:var(--ink);color:#fff;border-color:var(--ink)}
 .ctrl-btn:active{transform:scale(.94)}
-.next-word-btn{margin-top:14px;display:flex;align-items:center;gap:8px;padding:8px 16px 8px 12px;border-radius:14px;background:var(--bg2);border:1px solid var(--border2);cursor:pointer;transition:background .14s}
+.next-word-btn{margin-top:14px;width:100%;max-width:360px;display:flex;align-items:center;gap:8px;padding:9px 16px 9px 12px;border-radius:14px;background:var(--bg2);border:1px solid var(--border2);cursor:pointer;transition:background .14s}
+.next-word-btn.hidden{display:none}
 .next-word-btn:active{background:var(--bg3)}
-.next-word-btn .nw-char{font-family:var(--cjk);font-size:26px;font-weight:700;color:var(--text);line-height:1}
+.next-word-btn .nw-char{font-family:var(--font);font-size:22px;font-weight:800;color:var(--text);line-height:1}
 .next-word-btn .nw-info{display:flex;flex-direction:column;gap:1px}
 .next-word-btn .nw-pin{font-size:11px;color:var(--accent);font-weight:700}
 .next-word-btn .nw-lbl{font-size:10px;color:var(--text2);font-weight:600}
 .next-word-btn .nw-arr{font-size:16px;color:var(--text2);margin-left:2px}
-.practice-block{margin-top:26px;width:100%;max-width:360px}
+.practice-block{margin-top:18px;width:100%;max-width:360px}
 .practice-block .pb-head{font-size:11px;letter-spacing:.4px;text-transform:uppercase;color:var(--text2);font-weight:800;margin:0 4px 10px}
 .practice-btn{width:100%;display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:14px;background:var(--bg2);border:1px solid var(--border);cursor:pointer;transition:background .14s;margin-bottom:10px;text-align:left}
 .practice-btn:last-child{margin-bottom:0}
 .practice-btn:active{background:var(--bg3)}
 .practice-btn .pb-ic{width:40px;height:40px;border-radius:11px;background:var(--accent-dim);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
 .practice-btn .pb-tx{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}
-.practice-btn .pb-t{font-size:14px;font-weight:700;color:var(--text)}
+.practice-btn .pb-t{font-size:13px;font-weight:700;color:var(--text)}
 .practice-btn .pb-s{font-size:11px;color:var(--text2);font-weight:600}
 .practice-btn .pb-arr{font-size:18px;color:var(--text2);flex-shrink:0}
 
 .pinyin-row{display:flex;align-items:center;gap:10px;margin-top:22px}
-.pinyin{font-size:22px;font-weight:700;color:var(--accent)}
+.pinyin{font-size:15.5px;font-weight:750;color:var(--accent)}
 .audio-btn{width:36px;height:36px;border-radius:50%;background:var(--accent-dim);color:var(--accent);font-size:15px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(91,140,255,.3);flex-shrink:0}
 .audio-btn:active{background:rgba(91,140,255,.26)}
 .audio-btn.small{width:26px;height:26px;font-size:12px}
-.meaning{margin-top:8px;font-size:15px;color:var(--text);text-align:center;line-height:1.5;padding:0 8px;max-width:360px}
+.meaning{margin-top:6px;font-size:12.8px;color:var(--text);text-align:center;line-height:1.45;padding:0 8px;max-width:360px}
 .example{margin-top:22px;width:100%;max-width:360px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px}
 .example.hidden{display:none}
 .example-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -116,8 +136,21 @@ button:active{transform:scale(.96)}
 /* ---- memo structured sections (data-driven, optional) ---- */
 .memo-wrap{width:100%;max-width:360px;margin-top:14px;display:flex;flex-direction:column;gap:10px}
 .memo-wrap:empty{display:none}
-.memo-sec{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px}
-.memo-sec .ms-h{font-size:10.5px;letter-spacing:.4px;text-transform:uppercase;color:var(--text2);font-weight:800;margin-bottom:10px}
+.memo-sec{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:12px 14px}
+.memo-sec .ms-h{font-size:10px;letter-spacing:.4px;text-transform:uppercase;color:var(--text2);font-weight:800;margin-bottom:10px}
+.related-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.related-word{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:9px;display:grid;gap:3px}
+.related-word .rw-h{font-size:12.5px;font-weight:800;color:var(--text);line-height:1.25}
+.related-word .rw-p{font-size:10.5px;font-weight:750;color:var(--accent)}
+.related-word .rw-m{font-size:11px;color:var(--text2);line-height:1.35}
+.example-list{display:grid;gap:9px}
+.ex-item{display:flex;align-items:flex-start;gap:10px;border-top:1px solid var(--border);padding-top:9px}
+.ex-item:first-child{border-top:none;padding-top:0}
+.ex-text{flex:1;min-width:0;display:grid;gap:4px}
+.ex-en{font-size:12.5px;font-weight:750;color:var(--text);line-height:1.35}
+.ex-tr{font-size:11.5px;color:var(--text2);line-height:1.4}
+.example-sound{width:30px;height:30px;border-radius:10px;background:var(--accent-dim);border:1px solid rgba(91,140,255,.26);color:var(--accent);font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.example-sound:active{background:rgba(91,140,255,.23)}
 .memo-parts{display:flex;gap:8px;flex-wrap:wrap}
 .memo-part{flex:1;min-width:92px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:10px 8px;text-align:center}
 .memo-part .mp-h{font-family:var(--cjk);font-size:26px;font-weight:700;color:var(--text);line-height:1}
@@ -144,9 +177,10 @@ button:active{transform:scale(.96)}
 .memo-word .mw-w{font-family:var(--cjk);font-size:16px;font-weight:700;color:var(--text)}
 .memo-word .mw-p{font-size:11px;color:var(--accent);font-weight:700}
 .memo-word .mw-m{font-size:12px;color:var(--text2)}
-/* ---- light theme (course-v3 ink-cinnabar) — opt-in via ?theme=light ---- */
+/* ---- light theme (course-v3 ink-cinnabar) ---- */
 html.theme-light{color-scheme:light;
   --bg:#FBF7EF;--bg2:#FFFFFF;--bg3:#F1ECE0;
+  --card:#FFFFFF;--line:rgba(33,29,23,.10);
   --border:rgba(33,29,23,.10);--border2:rgba(33,29,23,.18);
   --text:#211D17;--text2:#6E665B;
   --accent:#C2403A;--accent-dim:rgba(194,64,58,.10);
@@ -159,6 +193,9 @@ html.theme-light .lang-btn.active{border-color:rgba(194,64,58,.55);}
 html.theme-light .lang-switch{display:none;}
 html.theme-light .hero-copy{display:none;}
 html.theme-light .hero{padding-bottom:10px;}
+html.theme-light .row{margin:0 14px 8px;padding:10px 12px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 2px 0 rgba(33,29,23,.03)}
+html.theme-light .list{padding-top:2px}
+html.theme-light .row:active{background:#F7EFE4}
 </style>
 </head>
 <body>
@@ -175,7 +212,7 @@ html.theme-light .hero{padding-bottom:10px;}
       </div>
       <div class="lang-switch" id="lang-switch"></div>
       <div class="search-wrap">
-        <input id="search" type="text" placeholder="Mano, pinyin yoki ieroglif bo'yicha qidiring…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <input id="search" type="text" placeholder="So'z, talaffuz yoki ma'no bo'yicha qidiring…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
       </div>
       <div class="count" id="count"></div>
     </div>
@@ -188,7 +225,17 @@ html.theme-light .hero{padding-bottom:10px;}
       <span class="detail-level" id="detail-level"></span>
     </div>
     <div class="detail-body">
-      <div class="writer-card">
+      <div class="word-hero-card">
+        <div class="word-hero-main">
+          <div class="word-hero-copy">
+            <div class="word-hero-word" id="detail-word"></div>
+            <div class="word-hero-pron" id="detail-pinyin"></div>
+          </div>
+          <button class="word-audio-btn" id="audio-btn" aria-label="Tinglash">🔉</button>
+        </div>
+        <div class="word-hero-meaning" id="detail-meaning"></div>
+      </div>
+      <div class="writer-card word-mode hidden-writer" aria-hidden="true">
         <div class="writer-toolbar">
           <button class="nav-arrow" id="char-prev" aria-label="Oldingi belgi">‹</button>
           <div class="writer-info">
@@ -197,20 +244,15 @@ html.theme-light .hero{padding-bottom:10px;}
           </div>
           <button class="nav-arrow" id="char-next" aria-label="Keyingi belgi">›</button>
         </div>
-        <div class="char-box-lg" id="char-box-lg"></div>
+        <div class="char-box-lg word-box" id="char-box-lg"></div>
         <div class="writer-controls hidden">
           <button class="ctrl-btn" id="ctrl-restart" aria-label="Bir chiziq orqaga">«</button>
           <button class="ctrl-btn ctrl-main" id="ctrl-playpause" aria-label="Pauza / Davom">▶</button>
           <button class="ctrl-btn" id="ctrl-skip" aria-label="Bir chiziq oldinga">»</button>
         </div>
-        <div class="next-word-btn hidden" id="next-word-btn"></div>
       </div>
-      <div class="pinyin-row">
-        <div class="pinyin" id="detail-pinyin"></div>
-        <button class="audio-btn" id="audio-btn" aria-label="Tinglash">🔊</button>
-      </div>
-      <div class="meaning" id="detail-meaning"></div>
       <div class="memo-wrap" id="memo-block"></div>
+      <div class="next-word-btn hidden" id="next-word-btn"></div>
       <div class="example hidden" id="example-block">
         <div class="usage-pos" id="usage-pos"></div>
         <div class="example-row">
@@ -261,7 +303,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
   var params = new URLSearchParams(location.search || '');
   window.English_FAST_WRITER = params.get('fast') === '1';
   if(!window.English_FAST_WRITER){
-    document.write('<script src="hsk-data.js?v=20260625"><\/script>');
+    document.write('<script src="hsk-data.js?v=20260709"><\/script>');
   }
 })();
 </script>
@@ -274,7 +316,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
     uz: {
       title: "Yangi so'zlar lug'ati",
       placeholder: "So'z, talaffuz yoki ma'no bo'yicha qidiring…",
-      countAll: function(n, level){ return level + ' · ' + n + " so'z"; },
+      countAll: function(n){ return n + " so'z"; },
       countResults: function(n){ return n + " natija"; },
       strokes: function(n){ return n + " chiziq"; },
       emptyTitle: "Hech narsa topilmadi.",
@@ -285,7 +327,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
     ru: {
       title: "Словарь новых слов",
       placeholder: "Поиск по слову, произношению или значению…",
-      countAll: function(n, level){ return level + ' · ' + n + " слов"; },
+      countAll: function(n){ return n + " слов"; },
       countResults: function(n){ return n + " результатов"; },
       strokes: function(n){ return n + " черт"; },
       emptyTitle: "Ничего не найдено.",
@@ -296,7 +338,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
     tj: {
       title: "Луғати калимаҳои нав",
       placeholder: "Ҷустуҷӯ аз рӯи калима, талаффуз ё маъно…",
-      countAll: function(n, level){ return level + ' · ' + n + " калима"; },
+      countAll: function(n){ return n + " калима"; },
       countResults: function(n){ return n + " натиҷа"; },
       strokes: function(n){ return n + " хат"; },
       emptyTitle: "Чизе ёфт нашуд.",
@@ -322,9 +364,14 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
   };
 
   var memoLabels = {
-    uz:{tarkibi:'Tarkibi', belgi:"Ma'no va tovush belgisi", mano:"Ma'no belgisi", tovush:'Tovush qismi', eslab:'Eslab qolish', oxshash:"O'xshash iyerogliflar", misol:'Misol'},
-    ru:{tarkibi:'Состав', belgi:'Ключ значения и звука', mano:'Ключ значения', tovush:'Фонетик', eslab:'Как запомнить', oxshash:'Похожие иероглифы', misol:'Пример'},
-    tj:{tarkibi:'Таркиб', belgi:'Калиди маъно ва овоз', mano:'Калиди маъно', tovush:'Қисми овозӣ', eslab:'Чӣ тавр дар хотир монед', oxshash:'Иероглифҳои монанд', misol:'Мисол'}
+    uz:{tarkibi:'Tarkibi', belgi:"Ma'no va tovush belgisi", mano:"Ma'no belgisi", tovush:'Tovush qismi', eslab:'Eslab qolish', oxshash:"O'xshash so'zlar", misol:'Misol'},
+    ru:{tarkibi:'Состав', belgi:'Ключ значения и звука', mano:'Ключ значения', tovush:'Фонетик', eslab:'Как запомнить', oxshash:'Похожие слова', misol:'Пример'},
+    tj:{tarkibi:'Таркиб', belgi:'Калиди маъно ва овоз', mano:'Калиди маъно', tovush:'Қисми овозӣ', eslab:'Чӣ тавр дар хотир монед', oxshash:'Калимаҳои монанд', misol:'Мисол'}
+  };
+  var studyLabels = {
+    uz:{writing:'Yozish tartibi', path:'Harfma-harf yozing', letters:function(n){return n + ' harf';}, related:"Yaqin so'zlar", examples:'Misollar'},
+    ru:{writing:'Порядок написания', path:'Пишите по буквам', letters:function(n){return n + ' букв';}, related:'Близкие слова', examples:'Примеры'},
+    tj:{writing:'Тартиби навиштан', path:'Ҳарф ба ҳарф нависед', letters:function(n){return n + ' ҳарф';}, related:'Калимаҳои наздик', examples:'Мисолҳо'}
   };
 
   function normalizeLang(value){
@@ -343,8 +390,8 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
   }
   var currentLang = normalizeLang(params.get('lang')) || normalizeLang(localStorage.getItem('hsk_all_current_lang_v3')) || detectLang();
   var currentLevel = normalizeLevel(params.get('level'));
-  var isLight = params.get('theme') === 'light';
-  if(isLight) document.documentElement.classList.add('theme-light');
+  var isLight = params.get('theme') !== 'dark';
+  document.documentElement.classList.toggle('theme-light', isLight);
   var activeWords = [];
   var currentWord = null;
 
@@ -364,8 +411,8 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
   }
   function initFastWriter(fastParams){
     var lang = normalizeLang(fastParams.get('lang')) || detectLang();
-    var isFastLight = fastParams.get('theme') === 'light';
-    if(isFastLight) document.documentElement.classList.add('theme-light');
+    var isFastLight = fastParams.get('theme') !== 'dark';
+    document.documentElement.classList.toggle('theme-light', isFastLight);
     var labels = {
       uz:{close:'Yopish',play:'Ko\'rsatish',replay:'Qayta',dict:'Lug\'atda ochish',strokes:function(n){return n + ' chiziq';},fallback:'Yozilish animatsiyasi yuklanmadi'},
       ru:{close:'Закрыть',play:'Показать',replay:'Повторить',dict:'Открыть в словаре',strokes:function(n){return n + ' черт';},fallback:'Анимация написания не загрузилась'},
@@ -523,6 +570,8 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
   var listBackBtn = document.getElementById('list-back-btn');
   var viewList = document.getElementById('view-list');
   var viewDetail = document.getElementById('view-detail');
+  var detailBody = viewDetail.querySelector('.detail-body');
+  var detailWord = document.getElementById('detail-word');
   var detailPinyin = document.getElementById('detail-pinyin');
   var detailMeaning = document.getElementById('detail-meaning');
   var detailLevel = document.getElementById('detail-level');
@@ -634,8 +683,8 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
     try{
       window.speechSynthesis.cancel();
       var u = new SpeechSynthesisUtterance(textValue);
-      u.lang = 'zh-CN';
-      u.rate = 0.82;
+      u.lang = 'en-US';
+      u.rate = 0.92;
       window.speechSynthesis.speak(u);
     }catch(e){}
   }
@@ -660,13 +709,11 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
     var label = levelLabels.all;
     document.documentElement.lang = currentLang;
     document.title = t.title;
-    heroTitle.textContent = t.title;
-    heroEyebrow.textContent = 'Words · ' + label;
+    if(heroTitle) heroTitle.textContent = '';
+    if(heroEyebrow) heroEyebrow.textContent = '';
     searchEl.placeholder = t.placeholder;
     grammarLabel.textContent = t.grammar;
-    langSwitch.innerHTML = validLangs.map(function(value){
-      return '<button class="lang-btn '+(value === currentLang ? 'active' : '')+'" data-lang="'+value+'">'+value.toUpperCase()+'</button>';
-    }).join('');
+    langSwitch.innerHTML = '';
     var pl = practiceLabels[currentLang] || practiceLabels.uz;
     document.getElementById('practice-head').textContent = pl.head;
     document.getElementById('pr-pron-t').textContent = pl.pronT;
@@ -710,7 +757,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
           w._m.indexOf(qLower) !== -1 || text(w.m).toLowerCase().indexOf(qLower) !== -1;
       });
     }
-    countEl.textContent = q ? t.countResults(results.length) : t.countAll(activeWords.length, levelLabels.all);
+    countEl.textContent = q ? t.countResults(results.length) : t.countAll(activeWords.length);
     if(results.length === 0){
       listEl.innerHTML = '<div class="empty">'+escapeHtml(t.emptyTitle)+'<br>'+escapeHtml(t.emptySub)+'</div>';
       return;
@@ -756,49 +803,36 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
     });
   }
 
+  function renderSpellingCard(word){
+    var L = studyLabels[currentLang] || studyLabels.uz;
+    var raw = String((word && word.h) || '').trim();
+    var chars = Array.from(raw || 'word');
+    var letterCount = chars.filter(function(ch){ return ch.trim(); }).length;
+    var chips = chars.map(function(ch){
+      if(!ch.trim()) return '<span class="letter-chip space">·</span>';
+      return '<span class="letter-chip">'+escapeHtml(ch)+'</span>';
+    }).join('');
+    var pos = word && word.pos ? '<span class="word-pos">'+escapeHtml(word.pos)+'</span>' : '';
+    charBoxLg.innerHTML =
+      '<div class="word-card">'+
+        '<div class="word-main">'+escapeHtml(raw || 'word')+'</div>'+
+        '<div class="word-sub">'+pos+'<span>'+escapeHtml(L.writing)+'</span><span>·</span><span>'+escapeHtml(L.path)+'</span></div>'+
+        '<div class="letter-row">'+chips+'</div>'+
+      '</div>';
+    writerStrokes.textContent = L.letters(letterCount);
+  }
+
   function loadChar(idx){
-    currentCharIdx = idx;
-    var ch = currentChars[idx];
+    currentCharIdx = 0;
     currentWriter = null;
-    isPlaying = false; isFinished = false; isReshowing = false;
+    isPlaying = false; isFinished = true; isReshowing = false;
     currentStrokeShown = 0; totalStrokes = 0;
-    hideNextWordBtn();
     setPlayIcon();
-
-    var multi = currentChars.length > 1;
-    writerPos.classList.toggle('hidden', !multi);
-    charPrevBtn.classList.toggle('hidden', !multi);
-    charNextBtn.classList.toggle('hidden', !multi);
-    if(multi) writerPos.textContent = (idx + 1) + ' / ' + currentChars.length;
-    charPrevBtn.disabled = (idx === 0);
-    charNextBtn.disabled = (idx === currentChars.length - 1);
-
-    var data = STROKES[ch];
-    if(data){
-      totalStrokes = data.strokes.length;
-      currentStrokeShown = 0;
-      writerStrokes.textContent = (UI[currentLang] || UI.uz).strokes(totalStrokes);
-      charBoxLg.innerHTML = gridSvg();
-      var target = charBoxLg.querySelector('.writer-target');
-      currentWriter = HanziWriter.create(target, ch, {
-        width: 236, height: 236, padding: 12,
-        showOutline: true,
-        showCharacter: false,
-        outlineColor: isLight ? 'rgba(33,29,23,.14)' : 'rgba(255,255,255,.16)',
-        strokeColor: '#d6453a',
-        strokeAnimationSpeed: 1,
-        delayBetweenStrokes: 280,
-        charDataLoader: function(c, onComplete){
-          if(STROKES[c]) onComplete(STROKES[c]);
-        }
-      });
-      updateStepBtns();
-    } else {
-      writerStrokes.textContent = '';
-      charBoxLg.innerHTML = '<div class="plain-char">'+ch+'</div>';
-    }
-    // Show "next word" right away (it self-hides when there is no next word) so the
-    // button does not depend on finishing the stroke animation first.
+    writerPos.classList.add('hidden');
+    charPrevBtn.classList.add('hidden');
+    charNextBtn.classList.add('hidden');
+    renderSpellingCard(currentWord || {h: currentChars.join('')});
+    updateStepBtns();
     showNextWordBtn();
   }
 
@@ -824,84 +858,145 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
 
   /* ---------- detail view ---------- */
 
-  function memoText(value){
-    if(value && typeof value === 'object') return value[currentLang] || value.uz || value.ru || value.tj || '';
-    return value || '';
+  function posRoot(pos){
+    return String(pos || '').toLowerCase().split(/[./\s]+/)[0];
   }
-  var memoLoadPromise = null;
-  function loadMemoData(){
-    // Memorize (hanzi memo) moduli English uchun olib tashlandi — memo-block har doim bo'sh.
-    if(!window.MEMO_DATA) window.MEMO_DATA = {};
-    return Promise.resolve();
+
+  function wordTokens(value){
+    var raw = String(value || '').toLowerCase()
+      .replace(/[^a-z0-9а-яёғқҳӯӣўҷ'’-]+/gi, ' ');
+    var stop = {
+      the:1,a:1,an:1,to:1,and:1,or:1,of:1,in:1,on:1,for:1,with:1,
+      va:1,yoki:1,bilan:1,uchun:1,ham:1,бу:1,дар:1,ва:1,ё:1,бо:1,
+      и:1,или:1,в:1,на:1,для:1,с:1
+    };
+    return raw.split(/\s+/).filter(function(part){
+      return part && part.length > 1 && !stop[part];
+    });
   }
-  // Structured "fast memorization" sections — optional, only when memo data exists for the char.
+
+  function relatedWords(word){
+    if(!word) return [];
+    var baseIdx = typeof word.id === 'number' ? word.id : -1;
+    var basePos = posRoot(word.pos);
+    var baseLv = String(word.lv || '');
+    var baseText = String(word.h || '').toLowerCase();
+    var tokenMap = {};
+    wordTokens(word.h + ' ' + allText(word.m)).forEach(function(token){ tokenMap[token] = true; });
+    var scored = [];
+    WORDS.forEach(function(candidate){
+      if(!candidate || candidate === word || candidate.h === word.h) return;
+      var score = 0;
+      var candidateIdx = typeof candidate.id === 'number' ? candidate.id : -1;
+      var distance = (baseIdx >= 0 && candidateIdx >= 0) ? Math.abs(candidateIdx - baseIdx) : 9999;
+      if(distance > 0 && distance <= 12) score += Math.max(1, 9 - distance);
+      if(basePos && posRoot(candidate.pos) === basePos) score += 3;
+      if(baseLv && String(candidate.lv || '') === baseLv) score += 2;
+      var candidateText = String(candidate.h || '').toLowerCase();
+      if(baseText.length > 3 && candidateText.length > 2 &&
+        (candidateText.indexOf(baseText) !== -1 || baseText.indexOf(candidateText) !== -1)) {
+        score += 4;
+      }
+      wordTokens(candidate.h + ' ' + allText(candidate.m)).forEach(function(token){
+        if(tokenMap[token]) score += 2;
+      });
+      if(score > 2) scored.push({word:candidate, score:score, distance:distance});
+    });
+    scored.sort(function(a,b){
+      if(b.score !== a.score) return b.score - a.score;
+      if(a.distance !== b.distance) return a.distance - b.distance;
+      return (a.word.id || 0) - (b.word.id || 0);
+    });
+    var result = [];
+    var seen = {};
+    scored.forEach(function(item){
+      if(result.length >= 4 || seen[item.word.h]) return;
+      seen[item.word.h] = true;
+      result.push(item.word);
+    });
+    if(result.length < 4 && baseIdx >= 0){
+      WORDS.forEach(function(candidate){
+        if(result.length >= 4 || !candidate || candidate.h === word.h || seen[candidate.h]) return;
+        if(baseLv && String(candidate.lv || '') !== baseLv) return;
+        if(Math.abs((candidate.id || 0) - baseIdx) > 20) return;
+        seen[candidate.h] = true;
+        result.push(candidate);
+      });
+    }
+    return result;
+  }
+
+  function buildExamples(word){
+    var h = String((word && word.h) || 'word').trim() || 'word';
+    var meaning = text(word && word.m) || allText(word && word.m);
+    var examples = [
+      {
+        en:'I learned "' + h + '" today.',
+        tr:{
+          uz:'Bugun "' + h + '" so‘zini o‘rgandim.',
+          ru:'Сегодня я выучил(а) слово "' + h + '".',
+          tj:'Имрӯз калимаи "' + h + '"-ро омӯхтам.'
+        }
+      },
+      {
+        en:'What does "' + h + '" mean?',
+        tr:{
+          uz:'"' + h + '" nimani anglatadi?',
+          ru:'Что означает "' + h + '"?',
+          tj:'"' + h + '" чӣ маъно дорад?'
+        }
+      },
+      {
+        en:'Please say "' + h + '" clearly.',
+        tr:{
+          uz:'Iltimos, "' + h + '" so‘zini aniq ayting.',
+          ru:'Пожалуйста, произнесите "' + h + '" четко.',
+          tj:'Лутфан, "' + h + '"-ро равшан гӯед.'
+        }
+      }
+    ];
+    if(meaning){
+      examples.splice(1, 0, {
+        en:'"' + h + '" means "' + meaning + '".',
+        tr:{
+          uz:'"' + h + '" ma’nosi: "' + meaning + '".',
+          ru:'"' + h + '" означает: "' + meaning + '".',
+          tj:'Маънои "' + h + '": "' + meaning + '".'
+        }
+      });
+    }
+    return examples.slice(0, 4);
+  }
+
   function renderMemo(word){
     var memoBlock = document.getElementById('memo-block');
-    var D = (window.MEMO_DATA && word) ? window.MEMO_DATA[word.h] : null;
-    if(!window.MEMO_DATA){
-      memoBlock.innerHTML = '';
-      loadMemoData().then(function(){ if(currentWord === word) renderMemo(word); });
-      return;
-    }
-    if(!D){ memoBlock.innerHTML = ''; return; }
-    var L = memoLabels[currentLang] || memoLabels.uz;
+    if(!word){ memoBlock.innerHTML = ''; return; }
+    var L = studyLabels[currentLang] || studyLabels.uz;
+    var related = relatedWords(word);
     var html = '';
-    // 4 — Tarkibi (component breakdown)
-    if(Array.isArray(D.breakdown) && D.breakdown.length){
-      html += '<div class="memo-sec"><div class="ms-h">'+escapeHtml(L.tarkibi)+'</div><div class="memo-parts">'+
-        D.breakdown.map(function(p){
-          return '<div class="memo-part"><div class="mp-h">'+escapeHtml(p.part)+'</div><div class="mp-p">'+escapeHtml(p.p||'')+'</div><div class="mp-m">'+escapeHtml(memoText(p.m))+'</div></div>';
+    if(related.length){
+      html += '<div class="memo-sec"><div class="ms-h">'+escapeHtml(L.related)+'</div><div class="related-grid">'+
+        related.map(function(item){
+          return '<div class="related-word"><div class="rw-h">'+escapeHtml(item.h)+'</div>'+
+            '<div class="rw-p">'+escapeHtml(item.p || '')+'</div>'+
+            '<div class="rw-m">'+escapeHtml(text(item.m))+'</div></div>';
         }).join('')+'</div></div>';
     }
-    // 5 — Ma'no/tovush belgisi (phonetic-semantic roles + signal)
-    var radParts = Array.isArray(D.breakdown) ? D.breakdown.filter(function(p){return p.role==='radical';}) : [];
-    var hookParts = Array.isArray(D.breakdown) ? D.breakdown.filter(function(p){return p.role==='hook';}) : [];
-    var rows = '';
-    if(radParts.length){
-      rows += '<div class="memo-role"><span class="mr-k">'+escapeHtml(L.mano)+'</span><span class="mr-v"><b>'+escapeHtml(radParts.map(function(p){return p.part;}).join(''))+'</b> — '+escapeHtml(memoText(radParts[0].m))+'</span></div>';
-    } else if(D.radical && D.radical.r){
-      rows += '<div class="memo-role"><span class="mr-k">'+escapeHtml(L.mano)+'</span><span class="mr-v"><b>'+escapeHtml(D.radical.r)+'</b> — '+escapeHtml(memoText(D.radical.m))+'</span></div>';
-    }
-    if(hookParts.length){
-      rows += '<div class="memo-role"><span class="mr-k">'+escapeHtml(L.tovush)+'</span><span class="mr-v"><b>'+escapeHtml(hookParts.map(function(p){return p.part;}).join(''))+'</b> — '+escapeHtml(memoText(hookParts[0].m))+'</span></div>';
-    }
-    if(rows){
-      var signal = (D.radical && D.radical.signal) ? '<div class="memo-signal">'+escapeHtml(memoText(D.radical.signal))+'</div>' : '';
-      var disc = (D.etymology_honest === false && window.MEMO_UI && window.MEMO_UI.disclaimer) ? '<div class="memo-disc">'+escapeHtml(memoText(window.MEMO_UI.disclaimer))+'</div>' : '';
-      html += '<div class="memo-sec"><div class="ms-h">'+escapeHtml(L.belgi)+'</div><div class="memo-roles">'+rows+'</div>'+signal+disc+'</div>';
-    }
-    // 6 — Eslab qolish (mnemonic hooks)
-    if(Array.isArray(D.hooks) && D.hooks.length){
-      html += '<div class="memo-sec"><div class="ms-h">'+escapeHtml(L.eslab)+'</div><div class="memo-hooks">'+
-        D.hooks.map(function(hk){ return '<div class="memo-hook"><span class="mh-d">•</span><span>'+escapeHtml(memoText(hk.t))+'</span></div>'; }).join('')+'</div></div>';
-    }
-    // 7 — O'xshash iyerogliflar (confusables)
-    if(Array.isArray(D.confusables) && D.confusables.length){
-      html += '<div class="memo-sec"><div class="ms-h">'+escapeHtml(L.oxshash)+'</div><div class="memo-conf">'+
-        D.confusables.map(function(c){
-          return '<div class="memo-conf-row"><div class="mc-h">'+escapeHtml(c.h)+'</div><div class="mc-tx"><div class="mc-p">'+escapeHtml(c.p||'')+' · '+escapeHtml(memoText(c.m))+'</div><div class="mc-d">'+escapeHtml(memoText(c.diff))+'</div></div></div>';
-        }).join('')+'</div></div>';
-    }
-    // 8 — Misol (example words)
-    if(Array.isArray(D.words) && D.words.length){
-      html += '<div class="memo-sec"><div class="ms-h">'+escapeHtml(L.misol)+'</div><div class="memo-words">'+
-        D.words.map(function(w){ return '<div class="memo-word"><span class="mw-w">'+escapeHtml(w.w)+'</span><span class="mw-p">'+escapeHtml(w.p||'')+'</span><span class="mw-m">'+escapeHtml(memoText(w.m))+'</span></div>'; }).join('')+'</div></div>';
-    }
+    html += '<div class="memo-sec"><div class="ms-h">'+escapeHtml(L.examples)+'</div><div class="example-list">'+
+      buildExamples(word).map(function(item){
+        var tr = item.tr[currentLang] || item.tr.uz || '';
+        return '<div class="ex-item"><div class="ex-text"><div class="ex-en">'+escapeHtml(item.en)+'</div>'+
+          '<div class="ex-tr">'+escapeHtml(tr)+'</div></div>'+
+          '<button class="example-sound" type="button" data-say="'+escapeHtml(item.en)+'" aria-label="Tinglash">🔉</button></div>';
+      }).join('')+'</div></div>';
     memoBlock.innerHTML = html;
+    Array.prototype.forEach.call(memoBlock.querySelectorAll('.example-sound'), function(button){
+      button.onclick = function(){ speak(button.getAttribute('data-say') || ''); };
+    });
   }
 
   function renderExample(word){
-    var ex = (typeof EXAMPLES !== 'undefined') ? EXAMPLES[word.h] : null;
-    if(ex && ex.zh){
-      exampleBlock.classList.remove('hidden');
-      usagePos.textContent = ex.pos || '';
-      usagePos.classList.toggle('hidden', !ex.pos);
-      exampleZh.textContent = ex.zh || '';
-      exampleUz.textContent = localizedExample(ex);
-      exampleAudioBtn.onclick = function(){ speak(ex.zh); };
-    } else {
-      exampleBlock.classList.add('hidden');
-    }
+    exampleBlock.classList.add('hidden');
   }
 
   function renderGrammar(word){
@@ -929,6 +1024,8 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
 
   function refreshDetailText(){
     if(!currentWord) return;
+    detailWord.textContent = currentWord.h;
+    detailPinyin.textContent = currentWord.p;
     detailMeaning.textContent = text(currentWord.m);
     renderMemo(currentWord);
     renderExample(currentWord);
@@ -939,6 +1036,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
     scrollPos = listEl.scrollTop;
     currentWord = word;
     detailLevel.textContent = levelLabels[word.lv]||word.lv;
+    detailWord.textContent = word.h;
     detailPinyin.textContent = word.p;
     detailMeaning.textContent = text(word.m);
 
@@ -952,6 +1050,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
 
     viewList.classList.add('hidden');
     viewDetail.classList.remove('hidden');
+    detailBody.scrollTop = 0;
     speak(word.h);
   }
 

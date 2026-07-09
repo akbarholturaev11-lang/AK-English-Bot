@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "level": "hsk3",
-  "label": "HSK 3",
+  "label": "Intermediate",
   "authenticated": false,
   "progress": {
     "streak": 0,
@@ -20,48 +20,48 @@
       "lessons": [
         {
           "n": 1,
-          "zh": "周末你有什么打算",
-          "py": "zhōumò nǐ yǒu shénme dǎsuàn",
+          "zh": "Weekend plans",
+          "py": "WEEKEND",
           "tr": {
-            "uz": "Dam olish kunlari rejalari haqida gaplashish; 结果补语'好', '一……也/都+不/没……' va 那 bog'lovchisini o'zlashtirish.",
-            "ru": "Говорить о планах на выходные; освоить результативное дополнение '好', конструкцию '一……也/都+不/没……' и союз 那.",
-            "tj": "Сӯҳбат дар бораи нақшаҳои охири ҳафта; азхудкунии иловаи натиҷавии '好', сохтори '一……也/都+不/没……' ва пайвандаки 那."
+            "uz": "Weekend plans: so'zlar, gaplar va dialoglar.",
+            "ru": "Weekend plans: слова, фразы и диалоги.",
+            "tj": "Weekend plans: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "current",
           "content": "lesson_01"
         },
         {
           "n": 2,
-          "zh": "他什么时候回来",
-          "py": "tā shénme shíhou huílai",
+          "zh": "Returning and health",
+          "py": "RETURN",
           "tr": {
-            "uz": "Yo'nalish to'ldiruvchilari, ketma-ket harakatlar va ritorik so'roqlarni o'zlashtirish.",
-            "ru": "Освоить направленные дополнения, последовательные действия и риторические вопросы.",
-            "tj": "Азхудкунии иловаҳои самтнок, амалҳои пайдарпай ва саволҳои риторикӣ."
+            "uz": "Returning and health: so'zlar, gaplar va dialoglar.",
+            "ru": "Returning and health: слова, фразы и диалоги.",
+            "tj": "Returning and health: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_02"
         },
         {
           "n": 3,
-          "zh": "桌子上放着很多饮料",
-          "py": "zhuōzi shàng fàng zhe hěn duō yǐnliào",
+          "zh": "Choices and ordering",
+          "py": "CHOICE",
           "tr": {
-            "uz": "'还是' va '或者' farqini, mavjudlik gapini va '会' ehtimol ma'nosini o'zlashtirish.",
-            "ru": "Освоить разницу 还是/或者, предложение существования и значение вероятности 会.",
-            "tj": "Азхудкунии фарқи 还是/或者, ҷумлаи мавҷудият ва маънои эҳтимолии 会."
+            "uz": "Choices and ordering: so'zlar, gaplar va dialoglar.",
+            "ru": "Choices and ordering: слова, фразы и диалоги.",
+            "tj": "Choices and ordering: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_03"
         },
         {
           "n": 4,
-          "zh": "她总是笑着跟客人说话",
-          "py": "tā zǒngshì xiào zhe gēn kèrén shuōhuà",
+          "zh": "Service and customers",
+          "py": "CUSTOMER",
           "tr": {
-            "uz": "'又……又……', V₁着+V₂ hamroh harakat qolipini va '总是' ravishi bilan doim takrorlanadigan harakatlarni o'zlashtirish.",
-            "ru": "Освоить конструкцию 又……又……, сопутствующее действие V₁着+V₂ и привычные действия с наречием 总是.",
-            "tj": "Азхудкунии сохтори 又……又……, амали ҳамроҳ V₁着+V₂ ва амалҳои одатии бо қайди 总是."
+            "uz": "Service and customers: so'zlar, gaplar va dialoglar.",
+            "ru": "Service and customers: слова, фразы и диалоги.",
+            "tj": "Service and customers: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_04",
@@ -69,12 +69,12 @@
         },
         {
           "n": 5,
-          "zh": "我最近越来越胖了",
-          "py": "wǒ zuìjìn yuè lái yuè pàng le",
+          "zh": "Getting healthier",
+          "py": "HEALTHIER",
           "tr": {
-            "uz": "'了' o'zgarishni bildirishi, '越来越+Adj' va 'для (了)' maqsad qolipini o'zlashtirish.",
-            "ru": "Освоить 了 как изменение состояния, 越来越+Adj и конструкцию 为(了) для цели.",
-            "tj": "Азхудкунии 了 ҳамчун ифодаи тағйирот, 越来越+Adj ва сохтори мақсади 为(了)."
+            "uz": "Getting healthier: so'zlar, gaplar va dialoglar.",
+            "ru": "Getting healthier: слова, фразы и диалоги.",
+            "tj": "Getting healthier: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_05",
@@ -100,12 +100,12 @@
       "lessons": [
         {
           "n": 6,
-          "zh": "怎么突然找不到了",
-          "py": "zěnme tūrán zhǎo bù dào le",
+          "zh": "Lost items",
+          "py": "LOST",
           "tr": {
-            "uz": "Mumkinlik to'ldiruvchisi V得/不+natija, '呢' so'roqchi so'zi va 'just now' ma'nosidagi 刚/刚才 farqini o'zlashtirish.",
-            "ru": "Освоить потенциальное дополнение V得/不+результат, вопросительную частицу 呢 и разницу 刚/刚才.",
-            "tj": "Азхудкунии иловаи потенсиалии V得/不+натиҷа, зарраи саволии 呢 ва фарқи 刚/刚才."
+            "uz": "Lost items: so'zlar, gaplar va dialoglar.",
+            "ru": "Lost items: слова, фразы и диалоги.",
+            "tj": "Lost items: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_06",
@@ -113,12 +113,12 @@
         },
         {
           "n": 7,
-          "zh": "我跟她都认识五年了",
-          "py": "wǒ gēn tā dōu rènshi wǔ nián le",
+          "zh": "Long friendships",
+          "py": "COLLEAGUE",
           "tr": {
-            "uz": "Men u bilan tanishganimga besh yil bo'ldi",
-            "ru": "Мы знакомы уже пять лет",
-            "tj": "Ман бо вай панҷ сол боз ошно ҳастам"
+            "uz": "Long friendships: so'zlar, gaplar va dialoglar.",
+            "ru": "Long friendships: слова, фразы и диалоги.",
+            "tj": "Long friendships: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_07",
@@ -126,12 +126,12 @@
         },
         {
           "n": 8,
-          "zh": "你去哪儿我就去哪儿",
-          "py": "nǐ qù nǎr wǒ jiù qù nǎr",
+          "zh": "Conditions and rules",
+          "py": "CONDITION",
           "tr": {
-            "uz": "Siz qayerga borsangiz, men ham boraman",
-            "ru": "Куда ты, туда и я",
-            "tj": "Шумо ба куҷо равед, ман ҳам меравам"
+            "uz": "Conditions and rules: so'zlar, gaplar va dialoglar.",
+            "ru": "Conditions and rules: слова, фразы и диалоги.",
+            "tj": "Conditions and rules: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_08",
@@ -139,12 +139,12 @@
         },
         {
           "n": 9,
-          "zh": "她的汉语说得跟中国人一样好",
-          "py": "tā de Hànyǔ shuō de gēn Zhōngguó rén yíyàng hǎo",
+          "zh": "Fluent speaking",
+          "py": "FLUENTLY",
           "tr": {
-            "uz": "Uning xitoycha gapirishi xitoyliklarnikidek yaxshi",
-            "ru": "Она говорит по-китайски так же хорошо, как китайцы",
-            "tj": "Вай ба монанди чиниҳо хуб чинӣ ҳарф мезанад"
+            "uz": "Fluent speaking: so'zlar, gaplar va dialoglar.",
+            "ru": "Fluent speaking: слова, фразы и диалоги.",
+            "tj": "Fluent speaking: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_09",
@@ -152,12 +152,12 @@
         },
         {
           "n": 10,
-          "zh": "数学比历史难多了",
-          "py": "shùxué bǐ lìshǐ nán duō le",
+          "zh": "Comparing subjects",
+          "py": "MATH",
           "tr": {
-            "uz": "Matematika tarixdan ancha qiyin",
-            "ru": "Математика намного сложнее истории",
-            "tj": "Математика аз таърих хеле душвортар аст"
+            "uz": "Comparing subjects: so'zlar, gaplar va dialoglar.",
+            "ru": "Comparing subjects: слова, фразы и диалоги.",
+            "tj": "Comparing subjects: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_10",
@@ -184,12 +184,12 @@
       "lessons": [
         {
           "n": 11,
-          "zh": "别忘了把空调关了",
-          "py": "bié wàng le bǎ kōngtiáo guān le",
+          "zh": "Remember to switch off",
+          "py": "AIR-CONDITIONER",
           "tr": {
-            "uz": "Konditsionerni o'chirishni unutma",
-            "ru": "Не забудь выключить кондиционер",
-            "tj": "Фаромӯш накун ки кондитсионерро хомӯш кунӣ"
+            "uz": "Remember to switch off: so'zlar, gaplar va dialoglar.",
+            "ru": "Remember to switch off: слова, фразы и диалоги.",
+            "tj": "Remember to switch off: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_11",
@@ -197,12 +197,12 @@
         },
         {
           "n": 12,
-          "zh": "把重要的东西放在我这儿吧",
-          "py": "bǎ zhòngyào de dōngxi fàng zài wǒ zhèr ba",
+          "zh": "Leaving important things",
+          "py": "IMPORTANT",
           "tr": {
-            "uz": "Muhim narsalarni men oldimda qoldir",
-            "ru": "Оставь важные вещи у меня",
-            "tj": "Чизҳои муҳимро пеши ман монд"
+            "uz": "Leaving important things: so'zlar, gaplar va dialoglar.",
+            "ru": "Leaving important things: слова, фразы и диалоги.",
+            "tj": "Leaving important things: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_12",
@@ -210,12 +210,12 @@
         },
         {
           "n": 13,
-          "zh": "我是走回来的",
-          "py": "wǒ shì zǒu huílai de",
+          "zh": "Explaining what happened",
+          "py": "FINALLY",
           "tr": {
-            "uz": "Men piyoda qaytib keldim",
-            "ru": "Я вернулся пешком",
-            "tj": "Ман пиёда баргаштам"
+            "uz": "Explaining what happened: so'zlar, gaplar va dialoglar.",
+            "ru": "Explaining what happened: слова, фразы и диалоги.",
+            "tj": "Explaining what happened: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_13",
@@ -223,12 +223,12 @@
         },
         {
           "n": 14,
-          "zh": "你把水果拿过来",
-          "py": "nǐ bǎ shuǐguǒ ná guò lái",
+          "zh": "Bringing things over",
+          "py": "CLEAN",
           "tr": {
-            "uz": "Mevalarni olib keling",
-            "ru": "Принеси фрукты сюда",
-            "tj": "Меваҳоро ин ҷо биёр"
+            "uz": "Bringing things over: so'zlar, gaplar va dialoglar.",
+            "ru": "Bringing things over: слова, фразы и диалоги.",
+            "tj": "Bringing things over: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_14",
@@ -236,12 +236,12 @@
         },
         {
           "n": 15,
-          "zh": "其他都没什么问题",
-          "py": "qítā dōu méi shénme wèntí",
+          "zh": "Study abroad applications",
+          "py": "STUDY-ABROAD",
           "tr": {
-            "uz": "Boshqa hamma narsa muammosiz",
-            "ru": "Всё остальное без проблем",
-            "tj": "Ҳама чизи дигар мушкиле нест"
+            "uz": "Study abroad applications: so'zlar, gaplar va dialoglar.",
+            "ru": "Study abroad applications: слова, фразы и диалоги.",
+            "tj": "Study abroad applications: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_15",
@@ -268,12 +268,12 @@
       "lessons": [
         {
           "n": 16,
-          "zh": "我现在累得下了班就想睡觉",
-          "py": "wǒ xiànzài lèi de xià le bān jiù xiǎng shuì jiào",
+          "zh": "So tired that",
+          "py": "CITY",
           "tr": {
-            "uz": "Hozir shu qadar charchaganmanki, ishdan chiqqanimdan so'ng uxlashni xohlayman",
-            "ru": "Сейчас я так устал, что после работы сразу хочу спать",
-            "tj": "Ҳоло ман ончунон хастаам, ки баъд аз кор фавран хоб кардан мехоҳам"
+            "uz": "So tired that: so'zlar, gaplar va dialoglar.",
+            "ru": "So tired that: слова, фразы и диалоги.",
+            "tj": "So tired that: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_16",
@@ -281,12 +281,12 @@
         },
         {
           "n": 17,
-          "zh": "谁都有办法看好你的\"病\"",
-          "py": "shéi dōu yǒu bànfǎ kàn hǎo nǐ de bìng",
+          "zh": "Advice and solutions",
+          "py": "ADVICE",
           "tr": {
-            "uz": "Hammaning sizning \"kasalingizni\" davolashga yo'li bor",
-            "ru": "У каждого есть способ вылечить твою \"болезнь\"",
-            "tj": "Ҳар кас усул дорад \"бемориатонро\" табобат кунад"
+            "uz": "Advice and solutions: so'zlar, gaplar va dialoglar.",
+            "ru": "Advice and solutions: слова, фразы и диалоги.",
+            "tj": "Advice and solutions: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_17",
@@ -294,12 +294,12 @@
         },
         {
           "n": 18,
-          "zh": "我相信他们会同意的",
-          "py": "wǒ xiāngxìn tā men huì tóngyì de",
+          "zh": "Agreement and confidence",
+          "py": "AGREE",
           "tr": {
-            "uz": "Ularning rozi bo'lishiga ishonaman",
-            "ru": "Я верю, что они согласятся",
-            "tj": "Ман боварам дорам, ки онҳо розӣ мешаванд"
+            "uz": "Agreement and confidence: so'zlar, gaplar va dialoglar.",
+            "ru": "Agreement and confidence: слова, фразы и диалоги.",
+            "tj": "Agreement and confidence: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_18",
@@ -307,12 +307,12 @@
         },
         {
           "n": 19,
-          "zh": "你没看出来吗",
-          "py": "nǐ méi kàn chū lái ma",
+          "zh": "Noticing changes",
+          "py": "NOTICE",
           "tr": {
-            "uz": "Siz sezib qolmadingizmi",
-            "ru": "Ты разве не заметил?",
-            "tj": "Шумо пай набурдед?"
+            "uz": "Noticing changes: so'zlar, gaplar va dialoglar.",
+            "ru": "Noticing changes: слова, фразы и диалоги.",
+            "tj": "Noticing changes: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_19",
@@ -320,12 +320,12 @@
         },
         {
           "n": 20,
-          "zh": "我被他影响了",
-          "py": "wǒ bèi tā yǐngxiǎng le",
+          "zh": "Influence and passive voice",
+          "py": "CAMERA",
           "tr": {
-            "uz": "U meni ta'sirlantirdi",
-            "ru": "Он повлиял на меня",
-            "tj": "Вай ба ман таъсир кард"
+            "uz": "Influence and passive voice: so'zlar, gaplar va dialoglar.",
+            "ru": "Influence and passive voice: слова, фразы и диалоги.",
+            "tj": "Influence and passive voice: калимаҳо, ҷумлаҳо ва муколамаҳо."
           },
           "status": "locked",
           "content": "lesson_20",

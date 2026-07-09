@@ -42,6 +42,17 @@ class CourseMiniAppAdminAnalyticsService:
         order = {"beginner": 0, "hsk1": 1, "hsk2": 2, "hsk3": 3, "hsk4": 4}
         return (order.get(normalized, 99), normalized)
 
+    @staticmethod
+    def _level_label(level: str) -> str:
+        labels = {
+            "beginner": "Beginner",
+            "hsk1": "Beginner",
+            "hsk2": "Elementary",
+            "hsk3": "Intermediate",
+            "hsk4": "Advanced",
+        }
+        return labels.get((level or "").lower(), level or "English")
+
     @classmethod
     def format_lesson_dropoff(cls, rows: list[LessonDropoffRow], limit: int = 8) -> str:
         if not rows:
@@ -59,7 +70,7 @@ class CourseMiniAppAdminAnalyticsService:
         )
         parts = []
         for row in sorted_rows[:limit]:
-            label = f"{escape(row.level.upper())}-{row.lesson_order}"
+            label = f"{escape(cls._level_label(row.level))}-{row.lesson_order}"
             parts.append(f"{label}: <b>{row.started}</b>→<b>{row.completed}</b> ({cls._pct(row.completed, row.started)}%)")
         return " | ".join(parts)
 

@@ -2,156 +2,79 @@
   "schema_version": 2,
   "level": "hsk2",
   "lesson_id": 10,
-  "title": "别找了，手机在桌子上呢",
+  "title": "Finding things",
   "subtitle": {
-    "uz": "Buyruq gaplarini ('别……了'), 'duì' old ko'makchisini va 'zhèngzài' davom ko'rsatkichini ishlatishni o'rganish.",
-    "ru": "Научиться использовать побудительные предложения ('别……了'), предлог 'duì' и показатель продолжения 'zhèngzài'.",
-    "tj": "Омӯзиши истифодаи ҷумлаҳои фармоишӣ ('别……了'), пешоянди 'duì' ва нишондиҳандаи давомнокии 'zhèngzài'."
+    "uz": "Finding things: so'zlar, gaplar va dialoglar.",
+    "ru": "Finding things: слова, фразы и диалоги.",
+    "tj": "Finding things: калимаҳо, ҷумлаҳо ва муколамаҳо."
   },
   "intro_prebuilt": true,
   "grammar_prebuilt": true,
   "active_words": [
     {
       "no": 1,
-      "zh": "课",
-      "pinyin": "kè",
+      "zh": "phone",
+      "pinyin": "PHONE",
       "pos": "n.",
       "meaning": {
-        "uz": "dars, mashg'ulot",
-        "ru": "урок, занятие",
-        "tj": "дарс, машғулот"
+        "uz": "telefon",
+        "ru": "телефон",
+        "tj": "телефон"
       }
     },
     {
       "no": 2,
-      "zh": "帮助",
-      "pinyin": "bāngzhù",
-      "pos": "v.",
+      "zh": "table",
+      "pinyin": "TABLE",
+      "pos": "n.",
       "meaning": {
-        "uz": "yordam bermoq",
-        "ru": "помогать",
-        "tj": "кӯмак кардан"
+        "uz": "stol",
+        "ru": "стол",
+        "tj": "миз"
       }
     },
     {
       "no": 3,
-      "zh": "别",
-      "pinyin": "bié",
-      "pos": "adv.",
+      "zh": "under",
+      "pinyin": "UNDER",
+      "pos": "prep.",
       "meaning": {
-        "uz": "…qilma (taqiq)",
-        "ru": "не (запрет)",
-        "tj": "накун (манъ)"
+        "uz": "tagida",
+        "ru": "под",
+        "tj": "зери"
       }
     },
     {
       "no": 4,
-      "zh": "哥哥",
-      "pinyin": "gēge",
-      "pos": "n.",
+      "zh": "beside",
+      "pinyin": "BESIDE",
+      "pos": "prep.",
       "meaning": {
-        "uz": "aka",
-        "ru": "старший брат",
-        "tj": "бародари калонӣ"
+        "uz": "yonida",
+        "ru": "рядом с",
+        "tj": "назди"
       }
     },
     {
       "no": 5,
-      "zh": "鸡蛋",
-      "pinyin": "jīdàn",
-      "pos": "n.",
+      "zh": "look for",
+      "pinyin": "LOOK-FOR",
+      "pos": "v.",
       "meaning": {
-        "uz": "tuxum",
-        "ru": "яйцо",
-        "tj": "тухм"
+        "uz": "qidirmoq",
+        "ru": "искать",
+        "tj": "ҷустуҷӯ кардан"
       }
     },
     {
       "no": 6,
-      "zh": "西瓜",
-      "pinyin": "xīguā",
-      "pos": "n.",
-      "meaning": {
-        "uz": "tarvuz",
-        "ru": "арбуз",
-        "tj": "тарбуз"
-      }
-    },
-    {
-      "no": 7,
-      "zh": "正在",
-      "pinyin": "zhèngzài",
-      "pos": "adv.",
-      "meaning": {
-        "uz": "hozir …qilmoqda (davom etayotgan harakat)",
-        "ru": "сейчас … (продолжающееся действие)",
-        "tj": "ҳоло …қилмоқда (амали ҷорӣ)"
-      }
-    },
-    {
-      "no": 8,
-      "zh": "手机",
-      "pinyin": "shǒujī",
-      "pos": "n.",
-      "meaning": {
-        "uz": "mobil telefon",
-        "ru": "мобильный телефон",
-        "tj": "телефони мобилӣ"
-      }
-    },
-    {
-      "no": 9,
-      "zh": "洗",
-      "pinyin": "xǐ",
+      "zh": "forget",
+      "pinyin": "FORGET",
       "pos": "v.",
       "meaning": {
-        "uz": "yuvmoq",
-        "ru": "мыть, стирать",
-        "tj": "шустан"
-      }
-    },
-    {
-      "no": 10,
-      "zh": "药",
-      "pinyin": "yào",
-      "pos": "n.",
-      "meaning": {
-        "uz": "dori-darmon",
-        "ru": "лекарство",
-        "tj": "дору"
-      }
-    },
-    {
-      "no": 11,
-      "zh": "身体",
-      "pinyin": "shēntǐ",
-      "pos": "n.",
-      "meaning": {
-        "uz": "tana, sog'liq",
-        "ru": "тело, здоровье",
-        "tj": "тан, саломатӣ"
-      }
-    },
-    {
-      "no": 12,
-      "zh": "准备",
-      "pinyin": "zhǔnbèi",
-      "pos": "v.",
-      "meaning": {
-        "uz": "tayyorlanmoq, tayyorlamoq",
-        "ru": "готовиться, подготавливать",
-        "tj": "омода шудан, тайёр кардан"
-      }
-    },
-    {
-      "no": 13,
-      "zh": "报纸",
-      "pinyin": "bàozhǐ",
-      "pos": "n.",
-      "meaning": {
-        "uz": "gazeta",
-        "ru": "газета",
-        "tj": "рӯзнома"
+        "uz": "unutmoq",
+        "ru": "забывать",
+        "tj": "фаромӯш кардан"
       }
     }
   ],
@@ -159,33 +82,24 @@
     {
       "no": 1,
       "title": {
-        "uz": "Buyruq gapi: 不要……了; 别……了 (endi …qilma)",
-        "ru": "Побудительное предложение: 不要……了; 别……了 (хватит, не делай)",
-        "tj": "Ҷумлаи фармоишӣ: 不要……了; 别……了 (дигар накун)"
+        "uz": "look for + object",
+        "ru": "look for + object",
+        "tj": "look for + object"
       },
-      "title_zh": "祈使句：不要……了；别……了",
+      "title_zh": "look for + object",
       "rule": {
-        "uz": "Biror harakatni to'xtatishni buyurish uchun 'bié……le' yoki 'búyào……le' ishlatiladi.\nBu ikkalasi ham 'endi …qilma' ma'nosini beradi.\n'Bié' so'zlashuv tilida ko'proq qo'llanadi.\nGap oxiridagi 'le' holatning o'zgarganligini yoki da'vatni kuchaytiradi.",
-        "ru": "Для приказания прекратить действие используется 'bié……le' или 'búyào……le'.\nОба означают 'больше не делай, хватит'.\n'Bié' чаще используется в разговорной речи.\nЧастица 'le' в конце предложения усиливает призыв или сигнализирует об изменении ситуации.",
-        "tj": "Барои дастур додан ба қатъи амал 'bié……le' ё 'búyào……le' истифода мешавад.\nҲар ду маъноии 'дигар накун' доранд.\n'Bié' дар забони гуфтугӯӣ бештар истифода мешавад.\nҶузъаи 'le' дар охири ҷумла даъватро тақвият медиҳад ё тағйири вазъиятро нишон медиҳад."
+        "uz": "Qolip: look for + object. Misol: I am looking for my phone. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+        "ru": "Шаблон: look for + object. Пример: I am looking for my phone. Используйте его в коротких естественных фразах.",
+        "tj": "Қолаб: look for + object. Мисол: I am looking for my phone. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
       },
       "examples": [
         {
-          "zh": "别看电视了，去睡觉吧。",
-          "pinyin": "Bié kàn diànshì le, qù shuìjiào ba.",
+          "zh": "I am looking for my phone.",
+          "pinyin": "",
           "translation": {
-            "uz": "Endi televizor ko'rma, uxlash vaqti.",
-            "ru": "Хватит смотреть телевизор, иди спать.",
-            "tj": "Дигар телевизор нагард, барав бихоб."
-          }
-        },
-        {
-          "zh": "不要喝茶了，吃药吧。",
-          "pinyin": "Búyào hē chá le, chī yào ba.",
-          "translation": {
-            "uz": "Choy ichmay, dori ich.",
-            "ru": "Не пей чай, прими лекарство.",
-            "tj": "Дигар чой нанӯш, дору хӯр."
+            "uz": "I am looking for my phone.",
+            "ru": "I am looking for my phone.",
+            "tj": "I am looking for my phone."
           }
         }
       ]
@@ -193,67 +107,24 @@
     {
       "no": 2,
       "title": {
-        "uz": "Old ko'makchi 对 (uchun, bo'yicha, nisbatan)",
-        "ru": "Предлог 对 (для, по отношению к, относительно)",
-        "tj": "Пешоянди 对 (барои, нисбат ба)"
+        "uz": "expanded sentence",
+        "ru": "expanded sentence",
+        "tj": "expanded sentence"
       },
-      "title_zh": "介词\"对\"",
+      "title_zh": "expanded sentence",
       "rule": {
-        "uz": "'Duì' old ko'makchisi 'uchun, bo'yicha, nisbatan' ma'nolarini beradi.\n'A duì B (yǒu) C' ko'rinishida: A B uchun C (ta'sirga ega/yaxshi/yomon).\nMasalan: 看电视对眼睛不好 (televizor ko'rish ko'z uchun yaxshi emas).",
-        "ru": "Предлог '对' означает 'для, по отношению к, относительно'.\nВ конструкции 'A 对 B (有) C': A для B (имеет влияние/хорошо/плохо).\nНапример: 看电视对眼睛不好 (смотреть телевизор вредно для глаз).",
-        "tj": "Пешоянди '对' маъноии 'барои, нисбат ба'-ро медиҳад.\nДар сохтори 'A 对 B (有) C': A барои B (таъсир дорад/хуб аст/бад аст).\nМасалан: 看电视对眼睛不好 (тамошои телевизор барои чашм зиёновар аст)."
+        "uz": "Qolip: add time, place, or reason. Misol: I am looking for my phone. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+        "ru": "Шаблон: add time, place, or reason. Пример: I am looking for my phone. Используйте его в коротких естественных фразах.",
+        "tj": "Қолаб: add time, place, or reason. Мисол: I am looking for my phone. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
       },
       "examples": [
         {
-          "zh": "看电视对学汉语有帮助。",
-          "pinyin": "Kàn diànshì duì xué Hànyǔ yǒu bāngzhù.",
+          "zh": "I am looking for my phone.",
+          "pinyin": "",
           "translation": {
-            "uz": "Televizor ko'rish xitoy tili o'rganishga yordam beradi.",
-            "ru": "Просмотр телевизора помогает в изучении китайского.",
-            "tj": "Тамошои телевизор дар омӯхтани чинӣ кӯмак мекунад."
-          }
-        },
-        {
-          "zh": "早睡早起对身体好。",
-          "pinyin": "Zǎo shuì zǎo qǐ duì shēntǐ hǎo.",
-          "translation": {
-            "uz": "Erta yotib erta turish sog'liq uchun foydali.",
-            "ru": "Ложиться и вставать рано полезно для здоровья.",
-            "tj": "Барвақт хобидан ва барвақт хестан барои саломатӣ хуб аст."
-          }
-        }
-      ]
-    },
-    {
-      "no": 3,
-      "title": {
-        "uz": "'Zhèngzài' ravishi va 'ne' yuklama (davom etayotgan harakat)",
-        "ru": "Наречие 'zhèngzài' и частица 'ne' (продолжающееся действие)",
-        "tj": "Зарфи 'zhèngzài' ва зарраи 'ne' (амали ҷорӣ)"
-      },
-      "title_zh": "副词\"正在\"和语气助词\"呢\"",
-      "rule": {
-        "uz": "'正在' ravishi fe'l oldidan kelib, harakatning aynan hozir davom etayotganini bildiradi.\nIngliz tilidagi 'am/is/are …-ing' ga o'xshaydi.\nGap oxiriga '呢' yuklama qo'shilsa, davom etayotgan holat yanada ta'kidlanadi.\nTuzilish: 正在 + fe'l (+呢). Shuningdek, faqat '在 + fe'l' yoki 'fe'l + 着 + 呢' ham ishlatiladi.",
-        "ru": "Наречие '正在' стоит перед глаголом и указывает, что действие происходит прямо сейчас.\nАналог английского 'am/is/are …-ing'.\nЕсли в конце добавляется частица '呢', продолжение состояния подчёркивается.\nСтруктура: 正在 + глагол (+呢). Также используется: 在 + глагол или глагол + 着 + 呢.",
-        "tj": "Зарфи '正在' пеш аз феъл меояд ва нишон медиҳад амал айни ҳол ҷараён дорад.\nБа 'am/is/are …-ing' дар забони англисӣ монанд аст.\nАгар дар охири ҷумла зарраи '呢' илова шавад, ҷараёни ҳолат бештар таъкид мешавад.\nСохтор: 正在 + феъл (+呢). Инчунин: 在 + феъл ё феъл + 着 + 呢 истифода мешавад."
-      },
-      "examples": [
-        {
-          "zh": "妈妈正在准备午饭呢！",
-          "pinyin": "Māma zhèngzài zhǔnbèi wǔfàn ne!",
-          "translation": {
-            "uz": "Ona hozir tushlikni tayyorlayapti!",
-            "ru": "Мама сейчас готовит обед!",
-            "tj": "Модар ҳоло нисфирӯзиро тайёр мекунад!"
-          }
-        },
-        {
-          "zh": "你在找什么？",
-          "pinyin": "Nǐ zài zhǎo shénme?",
-          "translation": {
-            "uz": "Siz nima qidiryapsiz?",
-            "ru": "Что ты ищешь?",
-            "tj": "Ту чӣ мекобӣ?"
+            "uz": "I am looking for my phone.",
+            "ru": "I am looking for my phone.",
+            "tj": "I am looking for my phone."
           }
         }
       ]
@@ -262,216 +133,87 @@
   "dialogues": [
     {
       "scene": {
-        "uz": "Uyda",
-        "ru": "Дома",
-        "tj": "Дар хона"
+        "uz": "Dars boshida",
+        "ru": "В начале урока",
+        "tj": "Дар оғози дарс"
       },
       "dialogue": [
         {
           "speaker": "A",
-          "zh": "别看电视了，明天上午还有汉语课呢。",
-          "pinyin": "Bié kàn diànshì le，míngtiān shàngwǔ hái yǒu Hànyǔ kè ne.",
+          "zh": "What are we learning today?",
+          "pinyin": "",
           "text": {
-            "uz": "Televizor ko'rishni bas qil, ertaga ertalab yana xitoy tili darsi bor.",
-            "ru": "Хватит смотреть телевизор, завтра утром ещё есть урок китайского.",
-            "tj": "Дигар телевизор нагард, фардо субҳ боз дарси чинӣ аст."
+            "uz": "Bugun nimani o‘rganamiz?",
+            "ru": "Что мы сегодня изучаем?",
+            "tj": "Имрӯз чиро меомӯзем?"
           }
         },
         {
           "speaker": "B",
-          "zh": "看电视对学汉语有帮助。",
-          "pinyin": "Kàn diànshì duì xué Hànyǔ yǒu bāngzhù.",
+          "zh": "We are learning Finding things.",
+          "pinyin": "",
           "text": {
-            "uz": "Televizor ko'rish xitoy tili o'rganishga yordam beradi.",
-            "ru": "Просмотр телевизора помогает в изучении китайского.",
-            "tj": "Тамошои телевизор дар омӯхтани чинӣ кӯмак мекунад."
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "明天的课你都准备好了吗？",
-          "pinyin": "Míngtiān de kè nǐ dōu zhǔnbèi hǎo le ma?",
-          "text": {
-            "uz": "Ertangi darsga to'liq tayyorlandingizmi?",
-            "ru": "Ты полностью подготовился к завтрашнему уроку?",
-            "tj": "Оё ту ба дарси фардо пурра омода шудӣ?"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "都准备好了。",
-          "pinyin": "Dōu zhǔnbèi hǎo le.",
-          "text": {
-            "uz": "Hammasi tayyor.",
-            "ru": "Всё готово.",
-            "tj": "Ҳама омода."
+            "uz": "Bugun Finding things mavzusini o‘rganamiz.",
+            "ru": "Мы изучаем тему Finding things.",
+            "tj": "Мо мавзӯи Finding things-ро меомӯзем."
           }
         }
       ]
     },
     {
       "scene": {
-        "uz": "Kasalxonada",
-        "ru": "В больнице",
-        "tj": "Дар беморхона"
+        "uz": "Misol gap",
+        "ru": "Пример фразы",
+        "tj": "Ҷумлаи намуна"
       },
       "dialogue": [
         {
           "speaker": "A",
-          "zh": "别看报纸了，医生说你要多休息。",
-          "pinyin": "Bié kàn bàozhǐ le，yīshēng shuō nǐ yào duō xiūxi.",
+          "zh": "Can you give an example?",
+          "pinyin": "",
           "text": {
-            "uz": "Gazeta o'qishni bas qil, shifokor ko'proq dam olishing kerak dedi.",
-            "ru": "Хватит читать газету, доктор сказал, что тебе нужно больше отдыхать.",
-            "tj": "Дигар рӯзнома нахон, духтур гуфт, ки ту бояд бештар истироҳат кунӣ."
+            "uz": "Misol keltira olasizmi?",
+            "ru": "Можете привести пример?",
+            "tj": "Метавонед мисол диҳед?"
           }
         },
         {
           "speaker": "B",
-          "zh": "好，不看了。给我一杯茶吧。",
-          "pinyin": "Hǎo，bù kàn le. Gěi wǒ yì bēi chá ba.",
+          "zh": "I am looking for my phone.",
+          "pinyin": "",
           "text": {
-            "uz": "Yaxshi, o'qimayman. Menga bir piyola choy bering.",
-            "ru": "Хорошо, не буду читать. Дайте мне чашку чая.",
-            "tj": "Хуб, нахонам. Ба ман як коса чой диҳед."
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "医生说吃药后的两个小时不要喝茶。",
-          "pinyin": "Yīshēng shuō chī yàohòu de liǎng ge xiǎoshí búyào hē chá.",
-          "text": {
-            "uz": "Shifokor dori ichganidan keyin ikki soat choy ichmaslik kerak dedi.",
-            "ru": "Доктор сказал, что два часа после приёма лекарства нельзя пить чай.",
-            "tj": "Духтур гуфт, ки ду соат баъд аз доруи хӯрдан чой нӯшидан мумкин нест."
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "医生还说什么了？",
-          "pinyin": "Yīshēng hái shuō shénme le?",
-          "text": {
-            "uz": "Shifokor yana nima dedi?",
-            "ru": "Что ещё сказал доктор?",
-            "tj": "Духтур боз чӣ гуфт?"
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "医生让你听我的。",
-          "pinyin": "Yīshēng ràng nǐ tīng wǒ de.",
-          "text": {
-            "uz": "Shifokor menga quloq soling dedi.",
-            "ru": "Доктор сказал слушаться меня.",
-            "tj": "Духтур гуфт, ки ба ман гӯш кун."
+            "uz": "I am looking for my phone.",
+            "ru": "I am looking for my phone.",
+            "tj": "I am looking for my phone."
           }
         }
       ]
     },
     {
       "scene": {
-        "uz": "Uyda",
-        "ru": "Дома",
-        "tj": "Дар хона"
+        "uz": "Qisqa suhbat",
+        "ru": "Короткий разговор",
+        "tj": "Суҳбати кӯтоҳ"
       },
       "dialogue": [
         {
           "speaker": "A",
-          "zh": "你怎么买了这么多东西啊？",
-          "pinyin": "Nǐ zěnme mǎi le zhème duō dōngxi a?",
+          "zh": "Do you know the word \"phone\"?",
+          "pinyin": "",
           "text": {
-            "uz": "Nima uchun bu qadar ko'p narsa sotib oldingiz?",
-            "ru": "Почему ты купил так много всего?",
-            "tj": "Чаро ту ин қадар зиёд чиз харидӣ?"
+            "uz": "“phone” so‘zini bilasizmi?",
+            "ru": "Вы знаете слово “phone”?",
+            "tj": "Оё калимаи “phone”-ро медонед?"
           }
         },
         {
           "speaker": "B",
-          "zh": "哥哥今天中午回来吃饭。",
-          "pinyin": "Gēge jīntiān zhōngwǔ huílái chīfàn.",
+          "zh": "Yes. It means telefon.",
+          "pinyin": "",
           "text": {
-            "uz": "Aka bugun tushlikka keladi.",
-            "ru": "Старший брат сегодня придёт на обед.",
-            "tj": "Бародари калонӣ имрӯз барои нисфирӯзӣ меояд."
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "我看看买什么了。羊肉，鸡蛋，面条，西瓜……真不少！妈妈呢？",
-          "pinyin": "Wǒ kànkan mǎi shénme le. Yángròu，jīdàn，miàntiáo，xīguā…… zhēn bù shǎo! Māma ne?",
-          "text": {
-            "uz": "Ko'ray-chi nima olibsiz. Qo'y go'shti, tuxum, erişta, tarvuz… juda ko'p! Ona-chi?",
-            "ru": "Дай посмотрю, что купил. Баранина, яйца, лапша, арбуз… действительно много! А мама?",
-            "tj": "Биё бинам чӣ харидӣ. Гӯшти гӯсфанд, тухм, лоғмон, тарбуз… воқеан зиёд! Модар чӣ?"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "正在准备午饭呢！",
-          "pinyin": "Zhèngzài zhǔnbèi wǔfàn ne!",
-          "text": {
-            "uz": "Hozir tushlikni tayyorlayapti!",
-            "ru": "Сейчас готовит обед!",
-            "tj": "Ҳоло нисфирӯзиро тайёр мекунад!"
-          }
-        }
-      ]
-    },
-    {
-      "scene": {
-        "uz": "Uyda",
-        "ru": "Дома",
-        "tj": "Дар хона"
-      },
-      "dialogue": [
-        {
-          "speaker": "A",
-          "zh": "你在找什么？",
-          "pinyin": "Nǐ zài zhǎo shénme?",
-          "text": {
-            "uz": "Siz nima qidiryapsiz?",
-            "ru": "Что ты ищешь?",
-            "tj": "Ту чӣ мекобӣ?"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "你看见我的手机了吗？白色的。",
-          "pinyin": "Nǐ kànjian wǒ de shǒujī le ma? Báisè de.",
-          "text": {
-            "uz": "Mening telefonim ko'rdingizmi? Oq rangli.",
-            "ru": "Ты видел мой телефон? Белый.",
-            "tj": "Ту телефони маро дидӣ? Сафеди."
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "别找了，手机在桌子上呢，电脑旁边。",
-          "pinyin": "Bié zhǎo le，shǒujī zài zhuōzi shang ne，diànnǎo pángbiān.",
-          "text": {
-            "uz": "Qidirishni bas qil, telefon stol ustida, kompyuter yonida.",
-            "ru": "Хватит искать, телефон на столе, рядом с компьютером.",
-            "tj": "Дигар накоб, телефон рӯи мизи аст, паҳлӯи компютер."
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "你看见我的衣服了吗？红色的那件。",
-          "pinyin": "Nǐ kànjian wǒ de yīfu le ma? Hóngsè de nà jiàn.",
-          "text": {
-            "uz": "Kiyimlarimni ko'rdingizmi? O'sha qizil ranglisini.",
-            "ru": "Ты видел мою одежду? Ту красную.",
-            "tj": "Ту либосамро дидӣ? Онро, ки сурх аст."
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "那件衣服我帮你洗了，在外边呢。",
-          "pinyin": "Nà jiàn yīfu wǒ bāng nǐ xǐ le，zài wàibian ne.",
-          "text": {
-            "uz": "O'sha kiyimni sizga yuvib qo'ydim, tashqarida.",
-            "ru": "Я постирал ту одежду за тебя, она на улице.",
-            "tj": "Ман он либосро барои ту шустам, берун аст."
+            "uz": "Ha. Ma’nosi: telefon.",
+            "ru": "Да. Значение: телефон.",
+            "tj": "Бале. Маънояш: телефон."
           }
         }
       ]
@@ -491,13 +233,13 @@
           "type": "active_word",
           "word": {
             "no": 1,
-            "zh": "课",
-            "pinyin": "kè",
+            "zh": "phone",
+            "pinyin": "PHONE",
             "pos": "n.",
             "meaning": {
-              "uz": "dars, mashg'ulot",
-              "ru": "урок, занятие",
-              "tj": "дарс, машғулот"
+              "uz": "telefon",
+              "ru": "телефон",
+              "tj": "телефон"
             }
           }
         },
@@ -505,68 +247,27 @@
           "type": "active_word",
           "word": {
             "no": 2,
-            "zh": "帮助",
-            "pinyin": "bāngzhù",
-            "pos": "v.",
+            "zh": "table",
+            "pinyin": "TABLE",
+            "pos": "n.",
             "meaning": {
-              "uz": "yordam bermoq",
-              "ru": "помогать",
-              "tj": "кӯмак кардан"
+              "uz": "stol",
+              "ru": "стол",
+              "tj": "миз"
             }
-          }
-        },
-        {
-          "type": "meaning_guess",
-          "prompt": {
-            "uz": "帮助 so'zining ma'nosini tanlang:",
-            "ru": "Выберите значение слова 帮助:",
-            "tj": "Маънои калимаи 帮助-ро интихоб кунед:"
-          },
-          "title": {
-            "uz": "Ma'nosi nima?",
-            "ru": "Что означает?",
-            "tj": "Маъно чист?"
-          },
-          "options": [
-            {
-              "uz": "…qilma (taqiq)",
-              "ru": "не (запрет)",
-              "tj": "накун (манъ)"
-            },
-            {
-              "uz": "yordam bermoq",
-              "ru": "помогать",
-              "tj": "кӯмак кардан"
-            },
-            {
-              "uz": "dars, mashg'ulot",
-              "ru": "урок, занятие",
-              "tj": "дарс, машғулот"
-            },
-            {
-              "uz": "aka",
-              "ru": "старший брат",
-              "tj": "бародари калонӣ"
-            }
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "帮助 = yordam bermoq (bāngzhù)",
-            "ru": "帮助 = помогать (bāngzhù)",
-            "tj": "帮助 = кӯмак кардан (bāngzhù)"
           }
         },
         {
           "type": "active_word",
           "word": {
             "no": 3,
-            "zh": "别",
-            "pinyin": "bié",
-            "pos": "adv.",
+            "zh": "under",
+            "pinyin": "UNDER",
+            "pos": "prep.",
             "meaning": {
-              "uz": "…qilma (taqiq)",
-              "ru": "не (запрет)",
-              "tj": "накун (манъ)"
+              "uz": "tagida",
+              "ru": "под",
+              "tj": "зери"
             }
           }
         },
@@ -574,128 +275,22 @@
           "type": "active_word",
           "word": {
             "no": 4,
-            "zh": "哥哥",
-            "pinyin": "gēge",
-            "pos": "n.",
+            "zh": "beside",
+            "pinyin": "BESIDE",
+            "pos": "prep.",
             "meaning": {
-              "uz": "aka",
-              "ru": "старший брат",
-              "tj": "бародари калонӣ"
-            }
-          }
-        },
-        {
-          "type": "hanzi_choice",
-          "prompt": {
-            "uz": "gēge qaysi ieroglif?",
-            "ru": "Какой иероглиф читается gēge?",
-            "tj": "gēge кадом иероглиф аст?"
-          },
-          "title": {
-            "uz": "Ieroglifni tanlang",
-            "ru": "Выберите иероглиф",
-            "tj": "Иероглифро интихоб кунед"
-          },
-          "options": [
-            "帮助",
-            "课",
-            "哥哥",
-            "别"
-          ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "哥哥 = aka (gēge)",
-            "ru": "哥哥 = старший брат (gēge)",
-            "tj": "哥哥 = бародари калонӣ (gēge)"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 5,
-            "zh": "鸡蛋",
-            "pinyin": "jīdàn",
-            "pos": "n.",
-            "meaning": {
-              "uz": "tuxum",
-              "ru": "яйцо",
-              "tj": "тухм"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 6,
-            "zh": "西瓜",
-            "pinyin": "xīguā",
-            "pos": "n.",
-            "meaning": {
-              "uz": "tarvuz",
-              "ru": "арбуз",
-              "tj": "тарбуз"
-            }
-          }
-        },
-        {
-          "type": "pinyin_choice",
-          "prompt": {
-            "uz": "西瓜 talaffuzini tanlang:",
-            "ru": "Выберите произношение 西瓜:",
-            "tj": "Талаффузи 西瓜-ро интихоб кунед:"
-          },
-          "title": {
-            "uz": "Qanday o'qiladi?",
-            "ru": "Как читается?",
-            "tj": "Чӣ хел хонда мешавад?"
-          },
-          "options": [
-            "xīguā",
-            "kè",
-            "bié",
-            "bāngzhù"
-          ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "西瓜 — xīguā",
-            "ru": "西瓜 — xīguā",
-            "tj": "西瓜 — xīguā"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 7,
-            "zh": "正在",
-            "pinyin": "zhèngzài",
-            "pos": "adv.",
-            "meaning": {
-              "uz": "hozir …qilmoqda (davom etayotgan harakat)",
-              "ru": "сейчас … (продолжающееся действие)",
-              "tj": "ҳоло …қилмоқда (амали ҷорӣ)"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 8,
-            "zh": "手机",
-            "pinyin": "shǒujī",
-            "pos": "n.",
-            "meaning": {
-              "uz": "mobil telefon",
-              "ru": "мобильный телефон",
-              "tj": "телефони мобилӣ"
+              "uz": "yonida",
+              "ru": "рядом с",
+              "tj": "назди"
             }
           }
         },
         {
           "type": "meaning_guess",
           "prompt": {
-            "uz": "手机 so'zining ma'nosini tanlang:",
-            "ru": "Выберите значение слова 手机:",
-            "tj": "Маънои калимаи 手机-ро интихоб кунед:"
+            "uz": "«phone» ma'nosini tanlang:",
+            "ru": "Выберите значение «phone»:",
+            "tj": "Маънои «phone»-ро интихоб кунед:"
           },
           "title": {
             "uz": "Ma'nosi nima?",
@@ -704,127 +299,104 @@
           },
           "options": [
             {
-              "uz": "mobil telefon",
-              "ru": "мобильный телефон",
-              "tj": "телефони мобилӣ"
+              "uz": "telefon",
+              "ru": "телефон",
+              "tj": "телефон"
             },
             {
-              "uz": "…qilma (taqiq)",
-              "ru": "не (запрет)",
-              "tj": "накун (манъ)"
+              "uz": "stol",
+              "ru": "стол",
+              "tj": "миз"
             },
             {
-              "uz": "dars, mashg'ulot",
-              "ru": "урок, занятие",
-              "tj": "дарс, машғулот"
+              "uz": "tagida",
+              "ru": "под",
+              "tj": "зери"
             },
             {
-              "uz": "yordam bermoq",
-              "ru": "помогать",
-              "tj": "кӯмак кардан"
+              "uz": "yonida",
+              "ru": "рядом с",
+              "tj": "назди"
             }
           ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "手机 = mobil telefon (shǒujī)",
-            "ru": "手机 = мобильный телефон (shǒujī)",
-            "tj": "手机 = телефони мобилӣ (shǒujī)"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 9,
-            "zh": "洗",
-            "pinyin": "xǐ",
-            "pos": "v.",
-            "meaning": {
-              "uz": "yuvmoq",
-              "ru": "мыть, стирать",
-              "tj": "шустан"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 10,
-            "zh": "药",
-            "pinyin": "yào",
-            "pos": "n.",
-            "meaning": {
-              "uz": "dori-darmon",
-              "ru": "лекарство",
-              "tj": "дору"
-            }
-          }
+          "correct_index": 0
         },
         {
           "type": "hanzi_choice",
           "prompt": {
-            "uz": "jīdàn qaysi ieroglif?",
-            "ru": "Какой иероглиф читается jīdàn?",
-            "tj": "jīdàn кадом иероглиф аст?"
+            "uz": "«TABLE» qaysi so'z?",
+            "ru": "Какое слово читается «TABLE»?",
+            "tj": "«TABLE» кадом калима аст?"
           },
           "title": {
-            "uz": "Ieroglifni tanlang",
-            "ru": "Выберите иероглиф",
-            "tj": "Иероглифро интихоб кунед"
+            "uz": "So'zni tanlang",
+            "ru": "Выберите слово",
+            "tj": "Калимаро интихоб кунед"
           },
           "options": [
-            "鸡蛋",
-            "别",
-            "课",
-            "帮助"
+            "table",
+            "phone",
+            "under",
+            "beside"
           ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "鸡蛋 = tuxum (jīdàn)",
-            "ru": "鸡蛋 = яйцо (jīdàn)",
-            "tj": "鸡蛋 = тухм (jīdàn)"
-          }
+          "correct_index": 0
+        },
+        {
+          "type": "pinyin_choice",
+          "prompt": {
+            "uz": "«phone» talaffuzini tanlang:",
+            "ru": "Выберите произношение «phone»:",
+            "tj": "Талаффузи «phone»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Qanday o'qiladi?",
+            "ru": "Как читается?",
+            "tj": "Чӣ хел хонда мешавад?"
+          },
+          "options": [
+            "PHONE",
+            "TABLE",
+            "UNDER",
+            "BESIDE"
+          ],
+          "correct_index": 0
         },
         {
           "type": "match_pairs",
           "pairs": [
             [
-              "课",
+              "phone",
               {
-                "uz": "dars, mashg'ulot",
-                "ru": "урок, занятие",
-                "tj": "дарс, машғулот"
+                "uz": "telefon",
+                "ru": "телефон",
+                "tj": "телефон"
               }
             ],
             [
-              "帮助",
+              "table",
               {
-                "uz": "yordam bermoq",
-                "ru": "помогать",
-                "tj": "кӯмак кардан"
+                "uz": "stol",
+                "ru": "стол",
+                "tj": "миз"
               }
             ],
             [
-              "别",
+              "under",
               {
-                "uz": "…qilma (taqiq)",
-                "ru": "не (запрет)",
-                "tj": "накун (манъ)"
+                "uz": "tagida",
+                "ru": "под",
+                "tj": "зери"
               }
             ],
             [
-              "哥哥",
+              "beside",
               {
-                "uz": "aka",
-                "ru": "старший брат",
-                "tj": "бародари калонӣ"
+                "uz": "yonida",
+                "ru": "рядом с",
+                "tj": "назди"
               }
             ]
-          ],
-          "explanation": {
-            "uz": "Juftliklar darsdagi yangi so'zlardan olindi.",
-            "ru": "Пары взяты из новых слов урока.",
-            "tj": "Ҷуфтҳо аз калимаҳои нави дарс гирифта шудаанд."
-          }
+          ]
         }
       ]
     },
@@ -842,69 +414,27 @@
           "g": {
             "no": 1,
             "title": {
-              "uz": "Buyruq gapi: 不要……了; 别……了 (endi …qilma)",
-              "ru": "Побудительное предложение: 不要……了; 别……了 (хватит, не делай)",
-              "tj": "Ҷумлаи фармоишӣ: 不要……了; 别……了 (дигар накун)"
+              "uz": "look for + object",
+              "ru": "look for + object",
+              "tj": "look for + object"
             },
-            "title_zh": "祈使句：不要……了；别……了",
+            "title_zh": "look for + object",
             "rule": {
-              "uz": "Biror harakatni to'xtatishni buyurish uchun 'bié……le' yoki 'búyào……le' ishlatiladi.\nBu ikkalasi ham 'endi …qilma' ma'nosini beradi.\n'Bié' so'zlashuv tilida ko'proq qo'llanadi.\nGap oxiridagi 'le' holatning o'zgarganligini yoki da'vatni kuchaytiradi.",
-              "ru": "Для приказания прекратить действие используется 'bié……le' или 'búyào……le'.\nОба означают 'больше не делай, хватит'.\n'Bié' чаще используется в разговорной речи.\nЧастица 'le' в конце предложения усиливает призыв или сигнализирует об изменении ситуации.",
-              "tj": "Барои дастур додан ба қатъи амал 'bié……le' ё 'búyào……le' истифода мешавад.\nҲар ду маъноии 'дигар накун' доранд.\n'Bié' дар забони гуфтугӯӣ бештар истифода мешавад.\nҶузъаи 'le' дар охири ҷумла даъватро тақвият медиҳад ё тағйири вазъиятро нишон медиҳад."
+              "uz": "Qolip: look for + object. Misol: I am looking for my phone. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+              "ru": "Шаблон: look for + object. Пример: I am looking for my phone. Используйте его в коротких естественных фразах.",
+              "tj": "Қолаб: look for + object. Мисол: I am looking for my phone. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
             },
             "examples": [
               {
-                "zh": "别看电视了，去睡觉吧。",
-                "pinyin": "Bié kàn diànshì le, qù shuìjiào ba.",
+                "zh": "I am looking for my phone.",
+                "pinyin": "",
                 "translation": {
-                  "uz": "Endi televizor ko'rma, uxlash vaqti.",
-                  "ru": "Хватит смотреть телевизор, иди спать.",
-                  "tj": "Дигар телевизор нагард, барав бихоб."
-                }
-              },
-              {
-                "zh": "不要喝茶了，吃药吧。",
-                "pinyin": "Búyào hē chá le, chī yào ba.",
-                "translation": {
-                  "uz": "Choy ichmay, dori ich.",
-                  "ru": "Не пей чай, прими лекарство.",
-                  "tj": "Дигар чой нанӯш, дору хӯр."
+                  "uz": "I am looking for my phone.",
+                  "ru": "I am looking for my phone.",
+                  "tj": "I am looking for my phone."
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "sentence_builder",
-          "sentence": {
-            "uz": "Endi televizor ko'rma, uxlash vaqti.",
-            "ru": "Хватит смотреть телевизор, иди спать.",
-            "tj": "Дигар телевизор нагард, барав бихоб."
-          },
-          "tokens": [
-            "电视",
-            "睡觉",
-            "帮助",
-            "了",
-            "课",
-            "吧",
-            "去",
-            "看",
-            "别"
-          ],
-          "answer_tokens": [
-            "别",
-            "看",
-            "电视",
-            "了",
-            "去",
-            "睡觉",
-            "吧"
-          ],
-          "explanation": {
-            "uz": "别看电视了，去睡觉吧。 — Bié kàn diànshì le, qù shuìjiào ba.",
-            "ru": "别看电视了，去睡觉吧。 — Bié kàn diànshì le, qù shuìjiào ba.",
-            "tj": "别看电视了，去睡觉吧。 — Bié kàn diànshì le, qù shuìjiào ba."
           }
         },
         {
@@ -912,91 +442,24 @@
           "g": {
             "no": 2,
             "title": {
-              "uz": "Old ko'makchi 对 (uchun, bo'yicha, nisbatan)",
-              "ru": "Предлог 对 (для, по отношению к, относительно)",
-              "tj": "Пешоянди 对 (барои, нисбат ба)"
+              "uz": "expanded sentence",
+              "ru": "expanded sentence",
+              "tj": "expanded sentence"
             },
-            "title_zh": "介词\"对\"",
+            "title_zh": "expanded sentence",
             "rule": {
-              "uz": "'Duì' old ko'makchisi 'uchun, bo'yicha, nisbatan' ma'nolarini beradi.\n'A duì B (yǒu) C' ko'rinishida: A B uchun C (ta'sirga ega/yaxshi/yomon).\nMasalan: 看电视对眼睛不好 (televizor ko'rish ko'z uchun yaxshi emas).",
-              "ru": "Предлог '对' означает 'для, по отношению к, относительно'.\nВ конструкции 'A 对 B (有) C': A для B (имеет влияние/хорошо/плохо).\nНапример: 看电视对眼睛不好 (смотреть телевизор вредно для глаз).",
-              "tj": "Пешоянди '对' маъноии 'барои, нисбат ба'-ро медиҳад.\nДар сохтори 'A 对 B (有) C': A барои B (таъсир дорад/хуб аст/бад аст).\nМасалан: 看电视对眼睛不好 (тамошои телевизор барои чашм зиёновар аст)."
+              "uz": "Qolip: add time, place, or reason. Misol: I am looking for my phone. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+              "ru": "Шаблон: add time, place, or reason. Пример: I am looking for my phone. Используйте его в коротких естественных фразах.",
+              "tj": "Қолаб: add time, place, or reason. Мисол: I am looking for my phone. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
             },
             "examples": [
               {
-                "zh": "看电视对学汉语有帮助。",
-                "pinyin": "Kàn diànshì duì xué Hànyǔ yǒu bāngzhù.",
+                "zh": "I am looking for my phone.",
+                "pinyin": "",
                 "translation": {
-                  "uz": "Televizor ko'rish xitoy tili o'rganishga yordam beradi.",
-                  "ru": "Просмотр телевизора помогает в изучении китайского.",
-                  "tj": "Тамошои телевизор дар омӯхтани чинӣ кӯмак мекунад."
-                }
-              },
-              {
-                "zh": "早睡早起对身体好。",
-                "pinyin": "Zǎo shuì zǎo qǐ duì shēntǐ hǎo.",
-                "translation": {
-                  "uz": "Erta yotib erta turish sog'liq uchun foydali.",
-                  "ru": "Ложиться и вставать рано полезно для здоровья.",
-                  "tj": "Барвақт хобидан ва барвақт хестан барои саломатӣ хуб аст."
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "gap_fill",
-          "sentence": "看电视对学汉语有____。",
-          "prompt": {
-            "uz": "Bo'sh joyga mos so'zni tanlang:",
-            "ru": "Выберите слово для пропуска:",
-            "tj": "Калимаи мувофиқро барои ҷойи холӣ интихоб кунед:"
-          },
-          "options": [
-            "课",
-            "帮助",
-            "哥哥",
-            "别"
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "To'g'ri: 帮助 (bāngzhù) — yordam bermoq",
-            "ru": "Верно: 帮助 (bāngzhù) — помогать",
-            "tj": "Дуруст: 帮助 (bāngzhù) — кӯмак кардан"
-          }
-        },
-        {
-          "type": "_grammar",
-          "g": {
-            "no": 3,
-            "title": {
-              "uz": "'Zhèngzài' ravishi va 'ne' yuklama (davom etayotgan harakat)",
-              "ru": "Наречие 'zhèngzài' и частица 'ne' (продолжающееся действие)",
-              "tj": "Зарфи 'zhèngzài' ва зарраи 'ne' (амали ҷорӣ)"
-            },
-            "title_zh": "副词\"正在\"和语气助词\"呢\"",
-            "rule": {
-              "uz": "'正在' ravishi fe'l oldidan kelib, harakatning aynan hozir davom etayotganini bildiradi.\nIngliz tilidagi 'am/is/are …-ing' ga o'xshaydi.\nGap oxiriga '呢' yuklama qo'shilsa, davom etayotgan holat yanada ta'kidlanadi.\nTuzilish: 正在 + fe'l (+呢). Shuningdek, faqat '在 + fe'l' yoki 'fe'l + 着 + 呢' ham ishlatiladi.",
-              "ru": "Наречие '正在' стоит перед глаголом и указывает, что действие происходит прямо сейчас.\nАналог английского 'am/is/are …-ing'.\nЕсли в конце добавляется частица '呢', продолжение состояния подчёркивается.\nСтруктура: 正在 + глагол (+呢). Также используется: 在 + глагол или глагол + 着 + 呢.",
-              "tj": "Зарфи '正在' пеш аз феъл меояд ва нишон медиҳад амал айни ҳол ҷараён дорад.\nБа 'am/is/are …-ing' дар забони англисӣ монанд аст.\nАгар дар охири ҷумла зарраи '呢' илова шавад, ҷараёни ҳолат бештар таъкид мешавад.\nСохтор: 正在 + феъл (+呢). Инчунин: 在 + феъл ё феъл + 着 + 呢 истифода мешавад."
-            },
-            "examples": [
-              {
-                "zh": "妈妈正在准备午饭呢！",
-                "pinyin": "Māma zhèngzài zhǔnbèi wǔfàn ne!",
-                "translation": {
-                  "uz": "Ona hozir tushlikni tayyorlayapti!",
-                  "ru": "Мама сейчас готовит обед!",
-                  "tj": "Модар ҳоло нисфирӯзиро тайёр мекунад!"
-                }
-              },
-              {
-                "zh": "你在找什么？",
-                "pinyin": "Nǐ zài zhǎo shénme?",
-                "translation": {
-                  "uz": "Siz nima qidiryapsiz?",
-                  "ru": "Что ты ищешь?",
-                  "tj": "Ту чӣ мекобӣ?"
+                  "uz": "I am looking for my phone.",
+                  "ru": "I am looking for my phone.",
+                  "tj": "I am looking for my phone."
                 }
               }
             ]
@@ -1005,54 +468,52 @@
         {
           "type": "sentence_builder",
           "sentence": {
-            "uz": "Siz nima qidiryapsiz?",
-            "ru": "Что ты ищешь?",
-            "tj": "Ту чӣ мекобӣ?"
+            "uz": "I am looking for my phone.",
+            "ru": "I am looking for my phone.",
+            "tj": "I am looking for my phone."
           },
           "tokens": [
-            "课",
-            "什么",
-            "找",
-            "你",
-            "在",
-            "帮助"
+            "phone",
+            "my",
+            "for",
+            "looking",
+            "am",
+            "I",
+            "not"
           ],
           "answer_tokens": [
-            "你",
-            "在",
-            "找",
-            "什么"
+            "I",
+            "am",
+            "looking",
+            "for",
+            "my",
+            "phone"
           ],
           "explanation": {
-            "uz": "你在找什么？ — Nǐ zài zhǎo shénme?",
-            "ru": "你在找什么？ — Nǐ zài zhǎo shénme?",
-            "tj": "你在找什么？ — Nǐ zài zhǎo shénme?"
+            "uz": "So‘z tartibiga e’tibor bering.",
+            "ru": "Обратите внимание на порядок слов.",
+            "tj": "Ба тартиби калимаҳо диққат диҳед."
           }
         },
         {
           "type": "quick_quiz",
           "prompt": {
-            "uz": "«Ona hozir tushlikni tayyorlayapti!» — xitoychada qaysi biri?",
-            "ru": "«Мама сейчас готовит обед!» — какое предложение по-китайски?",
-            "tj": "«Модар ҳоло нисфирӯзиро тайёр мекунад!» — кадом ҷумла ба хитоӣ аст?"
+            "uz": "“telefon” inglizchada qaysi?",
+            "ru": "“телефон” — как по-английски?",
+            "tj": "“телефон” ба англисӣ кадом аст?"
           },
           "title": {
-            "uz": "To'g'ri gapni tanlang",
-            "ru": "Выберите верное предложение",
-            "tj": "Ҷумлаи дурустро интихоб кунед"
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
           },
           "options": [
-            "看电视对学汉语有帮助。",
-            "妈妈正在准备午饭呢！",
-            "你在找什么？",
-            "不要喝茶了，吃药吧。"
+            "phone",
+            "table",
+            "under",
+            "beside"
           ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "妈妈正在准备午饭呢！ — Māma zhèngzài zhǔnbèi wǔfàn ne!",
-            "ru": "妈妈正在准备午饭呢！ — Māma zhèngzài zhǔnbèi wǔfàn ne!",
-            "tj": "妈妈正在准备午饭呢！ — Māma zhèngzài zhǔnbèi wǔfàn ne!"
-          }
+          "correct_index": 0
         }
       ]
     },
@@ -1060,39 +521,17 @@
       "section_no": 3,
       "section_title": {
         "uz": "Mashq",
-        "ru": "Упражнение",
+        "ru": "Практика",
         "tj": "Машқ"
       },
       "section_purpose": "practice",
       "cards": [
         {
-          "type": "listening_choice",
-          "title": {
-            "uz": "Eshitganingizni tanlang",
-            "ru": "Выберите, что вы услышали",
-            "tj": "Он чи шунидед, интихоб кунед"
-          },
-          "audio_text": "别看电视了，明天上午还有汉语课呢。",
-          "pinyin": "Bié kàn diànshì le，míngtiān shàngwǔ hái yǒu Hànyǔ kè ne.",
-          "options": [
-            "别看电视了，明天上午还有汉语课呢。",
-            "看电视对学汉语有帮助。",
-            "都准备好了。",
-            "明天的课你都准备好了吗？"
-          ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "别看电视了，明天上午还有汉语课呢。 — Televizor ko'rishni bas qil, ertaga ertalab yana xitoy tili darsi bor.",
-            "ru": "别看电视了，明天上午还有汉语课呢。 — Хватит смотреть телевизор, завтра утром ещё есть урок китайского.",
-            "tj": "别看电视了，明天上午还有汉语课呢。 — Дигар телевизор нагард, фардо субҳ боз дарси чинӣ аст."
-          }
-        },
-        {
           "type": "pinyin_choice",
           "prompt": {
-            "uz": "准备 talaffuzini tanlang:",
-            "ru": "Выберите произношение 准备:",
-            "tj": "Талаффузи 准备-ро интихоб кунед:"
+            "uz": "«under» talaffuzini tanlang:",
+            "ru": "Выберите произношение «under»:",
+            "tj": "Талаффузи «under»-ро интихоб кунед:"
           },
           "title": {
             "uz": "Qanday o'qiladi?",
@@ -1100,120 +539,116 @@
             "tj": "Чӣ хел хонда мешавад?"
           },
           "options": [
-            "zhǔnbèi",
-            "bié",
-            "kè",
-            "bāngzhù"
+            "UNDER",
+            "PHONE",
+            "TABLE",
+            "BESIDE"
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "meaning_guess",
+          "prompt": {
+            "uz": "«beside» ma'nosini tanlang:",
+            "ru": "Выберите значение «beside»:",
+            "tj": "Маънои «beside»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Ma'nosi nima?",
+            "ru": "Что означает?",
+            "tj": "Маъно чист?"
+          },
+          "options": [
+            {
+              "uz": "yonida",
+              "ru": "рядом с",
+              "tj": "назди"
+            },
+            {
+              "uz": "telefon",
+              "ru": "телефон",
+              "tj": "телефон"
+            },
+            {
+              "uz": "stol",
+              "ru": "стол",
+              "tj": "миз"
+            },
+            {
+              "uz": "tagida",
+              "ru": "под",
+              "tj": "зери"
+            }
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "listening_choice",
+          "title": {
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
+          },
+          "audio_text": "I am looking for my phone.",
+          "pinyin": "",
+          "options": [
+            "I am looking for my phone.",
+            "I need table.",
+            "This is phone.",
+            "Please wait."
           ],
           "correct_index": 0,
           "explanation": {
-            "uz": "准备 — zhǔnbèi",
-            "ru": "准备 — zhǔnbèi",
-            "tj": "准备 — zhǔnbèi"
-          }
-        },
-        {
-          "type": "sentence_builder",
-          "sentence": {
-            "uz": "Hammasi tayyor.",
-            "ru": "Всё готово.",
-            "tj": "Ҳама омода."
-          },
-          "tokens": [
-            "帮助",
-            "准备",
-            "都",
-            "好",
-            "了",
-            "课"
-          ],
-          "answer_tokens": [
-            "都",
-            "准备",
-            "好",
-            "了"
-          ],
-          "explanation": {
-            "uz": "都准备好了。 — Dōu zhǔnbèi hǎo le.",
-            "ru": "都准备好了。 — Dōu zhǔnbèi hǎo le.",
-            "tj": "都准备好了。 — Dōu zhǔnbèi hǎo le."
+            "uz": "I am looking for my phone.",
+            "ru": "I am looking for my phone.",
+            "tj": "I am looking for my phone."
           }
         },
         {
           "type": "match_pairs",
           "pairs": [
             [
-              "课",
+              "under",
               {
-                "uz": "dars, mashg'ulot",
-                "ru": "урок, занятие",
-                "tj": "дарс, машғулот"
+                "uz": "tagida",
+                "ru": "под",
+                "tj": "зери"
               }
             ],
             [
-              "帮助",
+              "beside",
               {
-                "uz": "yordam bermoq",
-                "ru": "помогать",
-                "tj": "кӯмак кардан"
+                "uz": "yonida",
+                "ru": "рядом с",
+                "tj": "назди"
               }
             ],
             [
-              "别",
+              "look for",
               {
-                "uz": "…qilma (taqiq)",
-                "ru": "не (запрет)",
-                "tj": "накун (манъ)"
+                "uz": "qidirmoq",
+                "ru": "искать",
+                "tj": "ҷустуҷӯ кардан"
               }
             ],
             [
-              "哥哥",
+              "forget",
               {
-                "uz": "aka",
-                "ru": "старший брат",
-                "tj": "бародари калонӣ"
+                "uz": "unutmoq",
+                "ru": "забывать",
+                "tj": "фаромӯш кардан"
               }
             ]
-          ],
-          "explanation": {
-            "uz": "Juftliklar darsdagi yangi so'zlardan olindi.",
-            "ru": "Пары взяты из новых слов урока.",
-            "tj": "Ҷуфтҳо аз калимаҳои нави дарс гирифта шудаанд."
-          }
-        },
-        {
-          "type": "translation_choice",
-          "prompt": {
-            "uz": "'gazeta' xitoycha qaysi?",
-            "ru": "'газета' по-китайски?",
-            "tj": "'рӯзнома' ба хитоӣ кадом аст?"
-          },
-          "title": {
-            "uz": "Xitoycha qanday?",
-            "ru": "Как по-китайски?",
-            "tj": "Ба хитоӣ чӣ тавр?"
-          },
-          "options": [
-            "帮助",
-            "报纸",
-            "别",
-            "课"
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "gazeta = 报纸 (bàozhǐ)",
-            "ru": "газета = 报纸 (bàozhǐ)",
-            "tj": "рӯзнома = 报纸 (bàozhǐ)"
-          }
+          ]
         },
         {
           "type": "pronunciation",
-          "phrase": "课",
-          "pinyin": "kè",
+          "phrase": "I am looking for my phone.",
+          "pinyin": "",
           "translation": {
-            "uz": "dars, mashg'ulot",
-            "ru": "урок, занятие",
-            "tj": "дарс, машғулот"
+            "uz": "I am looking for my phone.",
+            "ru": "I am looking for my phone.",
+            "tj": "I am looking for my phone."
           }
         }
       ]
@@ -1230,44 +665,44 @@
         {
           "type": "listening_choice",
           "title": {
-            "uz": "Tinglang — nima dedi?",
-            "ru": "Послушайте — что сказали?",
-            "tj": "Гӯш кунед — чӣ гуфт?"
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
           },
-          "audio_text": "别看电视了，明天上午还有汉语课呢。",
-          "pinyin": "Bié kàn diànshì le，míngtiān shàngwǔ hái yǒu Hànyǔ kè ne.",
+          "audio_text": "I am looking for my phone.",
+          "pinyin": "",
           "options": [
-            "别看电视了，明天上午还有汉语课呢。",
-            "都准备好了。",
-            "看电视对学汉语有帮助。",
-            "明天的课你都准备好了吗？"
+            "I am looking for my phone.",
+            "I have phone.",
+            "Where is table?",
+            "No problem."
           ],
           "correct_index": 0,
           "explanation": {
-            "uz": "别看电视了，明天上午还有汉语课呢。 — Televizor ko'rishni bas qil, ertaga ertalab yana xitoy tili darsi bor.",
-            "ru": "别看电视了，明天上午还有汉语课呢。 — Хватит смотреть телевизор, завтра утром ещё есть урок китайского.",
-            "tj": "别看电视了，明天上午还有汉语课呢。 — Дигар телевизор нагард, фардо субҳ боз дарси чинӣ аст."
+            "uz": "I am looking for my phone.",
+            "ru": "I am looking for my phone.",
+            "tj": "I am looking for my phone."
           }
         },
         {
           "type": "gap_fill",
-          "sentence": "____看电视了，明天上午还有汉语课呢。",
+          "sentence": "I am looking for my ____.",
           "prompt": {
-            "uz": "Bo'sh joyga mos ieroglifni tanlang:",
-            "ru": "Выберите подходящий иероглиф:",
-            "tj": "Иероглифи мувофиқро интихоб кунед:"
+            "uz": "Bo'sh joyga mos so'zni tanlang:",
+            "ru": "Выберите подходящее слово:",
+            "tj": "Калимаи мувофиқро интихоб кунед:"
           },
           "options": [
-            "下",
-            "电",
-            "夫",
-            "别"
+            "phone",
+            "table",
+            "under",
+            "not"
           ],
-          "correct_index": 3,
+          "correct_index": 0,
           "explanation": {
-            "uz": "To'g'ri: 别 — 别看电视了，明天上午还有汉语课呢。 (Televizor ko'rishni bas qil, ertaga ertalab yana xitoy tili darsi bor.)",
-            "ru": "Верно: 别 — 别看电视了，明天上午还有汉语课呢。 (Хватит смотреть телевизор, завтра утром ещё есть урок китайского.)",
-            "tj": "Дуруст: 别 — 别看电视了，明天上午还有汉语课呢。 (Дигар телевизор нагард, фардо субҳ боз дарси чинӣ аст.)"
+            "uz": "To‘g‘ri javob: phone.",
+            "ru": "Правильный ответ: phone.",
+            "tj": "Ҷавоби дуруст: phone."
           }
         },
         {
@@ -1280,17 +715,7 @@
           "lines": [
             {
               "speaker": "A",
-              "zh": "别看电视了，明天上午还有汉语课呢。",
-              "blank": false
-            },
-            {
-              "speaker": "B",
-              "zh": "看电视对学汉语有帮助。",
-              "blank": false
-            },
-            {
-              "speaker": "A",
-              "zh": "明天的课你都准备好了吗？",
+              "zh": "Can you give an example?",
               "blank": false
             },
             {
@@ -1300,67 +725,37 @@
             }
           ],
           "options": [
-            "别看电视了，明天上午还有汉语课呢。",
-            "明天的课你都准备好了吗？",
-            "都准备好了。",
-            "看电视对学汉语有帮助。"
+            "I am looking for my phone.",
+            "I like phone.",
+            "Good morning!",
+            "Thank you!"
           ],
-          "correct_index": 2,
+          "correct_index": 0,
           "explanation": {
-            "uz": "To'g'ri javob: 都准备好了。",
-            "ru": "Правильный ответ: 都准备好了。",
-            "tj": "Ҷавоби дуруст: 都准备好了。"
+            "uz": "I am looking for my phone.",
+            "ru": "I am looking for my phone.",
+            "tj": "I am looking for my phone."
           }
         },
         {
           "type": "quick_quiz",
           "prompt": {
-            "uz": "Dialog oxirida B nima deydi?",
-            "ru": "Что B говорит в конце диалога?",
-            "tj": "Дар охири муколама B чӣ мегӯяд?"
+            "uz": "“telefon” inglizchada qaysi?",
+            "ru": "“телефон” — как по-английски?",
+            "tj": "“телефон” ба англисӣ кадом аст?"
           },
           "title": {
-            "uz": "Dialogdan savol:",
-            "ru": "Вопрос по диалогу:",
-            "tj": "Савол аз муколама:"
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
           },
           "options": [
-            "看电视对学汉语有帮助。",
-            "别看电视了，明天上午还有汉语课呢。",
-            "明天的课你都准备好了吗？",
-            "都准备好了。"
+            "phone",
+            "table",
+            "under",
+            "beside"
           ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "To'g'ri javob: 都准备好了。",
-            "ru": "Правильный ответ: 都准备好了。",
-            "tj": "Ҷавоби дуруст: 都准备好了。"
-          }
-        },
-        {
-          "type": "quick_quiz",
-          "prompt": {
-            "uz": "Dialogda A avval nima deydi?",
-            "ru": "Что A говорит в начале диалога?",
-            "tj": "Дар муколама A аввал чӣ мегӯяд?"
-          },
-          "title": {
-            "uz": "Dialogdan savol:",
-            "ru": "Вопрос по диалогу:",
-            "tj": "Савол аз муколама:"
-          },
-          "options": [
-            "看电视对学汉语有帮助。",
-            "明天的课你都准备好了吗？",
-            "都准备好了。",
-            "别看电视了，明天上午还有汉语课呢。"
-          ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "To'g'ri javob: 别看电视了，明天上午还有汉语课呢。",
-            "ru": "Правильный ответ: 别看电视了，明天上午还有汉语课呢。",
-            "tj": "Ҷавоби дуруст: 别看电视了，明天上午还有汉语课呢。"
-          }
+          "correct_index": 0
         }
       ]
     }

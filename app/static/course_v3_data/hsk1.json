@@ -1,262 +1,262 @@
 {
- "schema_version": 2,
- "level": "hsk1",
- "label": "Beginner",
- "authenticated": false,
- "progress": {
-  "streak": 0,
-  "xp": 0,
-  "completed": 0,
-  "league": "Bronze"
- },
- "units": [
-  {
-   "no": 1,
-   "title": {
-    "uz": "1-bo'lim",
-    "ru": "Раздел 1",
-    "tj": "Боби 1"
-   },
-   "lessons": [
-    {
-     "n": 1,
-     "zh": "Greetings",
-     "py": "/ˈɡriːtɪŋz/",
-     "tr": {
-      "uz": "Salomlashish, xayrlashish va xushmuomala so'zlar",
-      "ru": "Приветствия, прощания и вежливые слова",
-      "tj": "Салом, хайрухуш ва калимаҳои хушмуомила"
-     },
-     "status": "current",
-     "content": "lesson_01"
-    },
-    {
-     "n": 2,
-     "zh": "Introducing yourself",
-     "py": "/ˌɪntrəˈdjuːsɪŋ/",
-     "tr": {
-      "uz": "Ism, tanishuv va to be feli",
-      "ru": "Имя, знакомство и глагол to be",
-      "tj": "Ном, шиносоӣ ва феъли to be"
-     },
-     "status": "locked",
-     "content": "lesson_02"
-    },
-    {
-     "n": 3,
-     "zh": "Numbers & age",
-     "py": "/ˈnʌmbərz/",
-     "tr": {
-      "uz": "1-10 raqamlari va yoshni aytish",
-      "ru": "Числа 1-10 и возраст",
-      "tj": "Рақамҳои 1-10 ва син"
-     },
-     "status": "locked",
-     "content": "lesson_03"
-    },
-    {
-     "n": 4,
-     "zh": "Family",
-     "py": "/ˈfæməli/",
-     "tr": {
-      "uz": "Oila a'zolari, he/she va my",
-      "ru": "Члены семьи, he/she и my",
-      "tj": "Аъзои оила, he/she ва my"
-     },
-     "status": "locked",
-     "content": "lesson_04",
-     "locked_premium": true
-    },
-    {
-     "n": 5,
-     "zh": "Food & drink",
-     "py": "/fuːd/",
-     "tr": {
-      "uz": "Ovqat, ichimlik va I want",
-      "ru": "Еда, напитки и I want",
-      "tj": "Хӯрок, нӯшокӣ ва I want"
-     },
-     "status": "locked",
-     "content": "lesson_05",
-     "locked_premium": true
-    }
-   ],
-   "milestone": {
-    "title": {
-     "uz": "1-bo‘lim takrori",
-     "ru": "Повторение раздела 1",
-     "tj": "Такрори фасли 1"
-    },
-    "status": "locked"
-   }
+  "schema_version": 2,
+  "level": "hsk1",
+  "label": "Beginner",
+  "authenticated": false,
+  "progress": {
+    "streak": 0,
+    "xp": 0,
+    "completed": 0,
+    "league": "Bronze"
   },
-  {
-   "no": 2,
-   "title": {
-    "uz": "2-bo'lim",
-    "ru": "Раздел 2",
-    "tj": "Боби 2"
-   },
-   "lessons": [
+  "units": [
     {
-     "n": 6,
-     "zh": "Days & week",
-     "py": "/deɪz/",
-     "tr": {
-      "uz": "Kunlar, hafta va vaqt so'zlari",
-      "ru": "Дни, неделя и слова времени",
-      "tj": "Рӯзҳо, ҳафта ва калимаҳои вақт"
-     },
-     "status": "locked",
-     "content": "lesson_06",
-     "locked_premium": true
+      "no": 1,
+      "title": {
+        "uz": "1-bo'lim",
+        "ru": "Раздел 1",
+        "tj": "Боби 1"
+      },
+      "lessons": [
+        {
+          "n": 1,
+          "zh": "Greetings",
+          "py": "huh-LOH",
+          "tr": {
+            "uz": "Salomlashish, xayrlashish va xushmuomala so'zlar",
+            "ru": "Приветствия, прощания и вежливые слова",
+            "tj": "Салом, хайрухуш ва калимаҳои хушмуомила"
+          },
+          "status": "current",
+          "content": "lesson_01"
+        },
+        {
+          "n": 2,
+          "zh": "Introducing yourself",
+          "py": "NAYM",
+          "tr": {
+            "uz": "Ism, tanishuv va 'to be' fe'li",
+            "ru": "Имя, знакомство и глагол 'to be'",
+            "tj": "Ном, шиносоӣ ва феъли 'to be'"
+          },
+          "status": "locked",
+          "content": "lesson_02"
+        },
+        {
+          "n": 3,
+          "zh": "Numbers & age",
+          "py": "WUN",
+          "tr": {
+            "uz": "1-10 raqamlari va yoshni aytish",
+            "ru": "Числа 1-10 и как назвать возраст",
+            "tj": "Рақамҳои 1-10 ва гуфтани син"
+          },
+          "status": "locked",
+          "content": "lesson_03"
+        },
+        {
+          "n": 4,
+          "zh": "Family",
+          "py": "FAM-uh-lee",
+          "tr": {
+            "uz": "Oila a'zolari, he/she va 'my' egalik",
+            "ru": "Члены семьи, he/she и притяжательное 'my'",
+            "tj": "Аъзои оила, he/she ва 'my'"
+          },
+          "status": "locked",
+          "content": "lesson_04",
+          "locked_premium": true
+        },
+        {
+          "n": 5,
+          "zh": "Food & drink",
+          "py": "WAW-tur",
+          "tr": {
+            "uz": "Ovqat, ichimlik va 'I want' iborasi",
+            "ru": "Еда, напитки и фраза 'I want'",
+            "tj": "Хӯрок, нӯшокӣ ва ибораи 'I want'"
+          },
+          "status": "locked",
+          "content": "lesson_05",
+          "locked_premium": true
+        }
+      ],
+      "milestone": {
+        "title": {
+          "uz": "1-bo‘lim takrori",
+          "ru": "Повторение раздела 1",
+          "tj": "Такрори фасли 1"
+        },
+        "status": "locked"
+      }
     },
     {
-     "n": 7,
-     "zh": "Colors",
-     "py": "/ˈkʌlərz/",
-     "tr": {
-      "uz": "Ranglar va sifatlar",
-      "ru": "Цвета и прилагательные",
-      "tj": "Рангҳо ва сифатҳо"
-     },
-     "status": "locked",
-     "content": "lesson_07",
-     "locked_premium": true
+      "no": 2,
+      "title": {
+        "uz": "2-bo'lim",
+        "ru": "Раздел 2",
+        "tj": "Боби 2"
+      },
+      "lessons": [
+        {
+          "n": 6,
+          "zh": "Days & week",
+          "py": "DAY",
+          "tr": {
+            "uz": "Kunlar, hafta va today/tomorrow/yesterday",
+            "ru": "Дни, неделя и today/tomorrow/yesterday",
+            "tj": "Рӯзҳо, ҳафта ва today/tomorrow/yesterday"
+          },
+          "status": "locked",
+          "content": "lesson_06",
+          "locked_premium": true
+        },
+        {
+          "n": 7,
+          "zh": "Colors",
+          "py": "KUL-ur",
+          "tr": {
+            "uz": "Ranglar va sifat sifatida ishlatish",
+            "ru": "Цвета и их использование",
+            "tj": "Рангҳо ва истифодаи онҳо"
+          },
+          "status": "locked",
+          "content": "lesson_07",
+          "locked_premium": true
+        },
+        {
+          "n": 8,
+          "zh": "Common verbs",
+          "py": "GOH",
+          "tr": {
+            "uz": "Kundalik fe'llar va Present Simple",
+            "ru": "Повседневные глаголы и Present Simple",
+            "tj": "Феълҳои ҳаррӯза ва Present Simple"
+          },
+          "status": "locked",
+          "content": "lesson_08",
+          "locked_premium": true
+        },
+        {
+          "n": 9,
+          "zh": "Places",
+          "py": "HOHM",
+          "tr": {
+            "uz": "Joylar va 'go to' iborasi",
+            "ru": "Места и фраза 'go to'",
+            "tj": "Ҷойҳо ва ибораи 'go to'"
+          },
+          "status": "locked",
+          "content": "lesson_09",
+          "locked_premium": true
+        },
+        {
+          "n": 10,
+          "zh": "Time",
+          "py": "TYM",
+          "tr": {
+            "uz": "Vaqt, soat va 'What time'",
+            "ru": "Время, часы и 'What time'",
+            "tj": "Вақт, соат ва 'What time'"
+          },
+          "status": "locked",
+          "content": "lesson_10",
+          "locked_premium": true
+        }
+      ],
+      "milestone": {
+        "title": {
+          "uz": "2-bo‘lim takrori",
+          "ru": "Повторение раздела 2",
+          "tj": "Такрори фасли 2"
+        },
+        "status": "locked"
+      },
+      "status": "locked"
     },
     {
-     "n": 8,
-     "zh": "Common verbs",
-     "py": "/vɜːrbz/",
-     "tr": {
-      "uz": "Kundalik fe'llar",
-      "ru": "Повседневные глаголы",
-      "tj": "Феълҳои ҳаррӯза"
-     },
-     "status": "locked",
-     "content": "lesson_08",
-     "locked_premium": true
-    },
-    {
-     "n": 9,
-     "zh": "Places",
-     "py": "/ˈpleɪsɪz/",
-     "tr": {
-      "uz": "Joylar va go to",
-      "ru": "Места и go to",
-      "tj": "Ҷойҳо ва go to"
-     },
-     "status": "locked",
-     "content": "lesson_09",
-     "locked_premium": true
-    },
-    {
-     "n": 10,
-     "zh": "Time",
-     "py": "/taɪm/",
-     "tr": {
-      "uz": "Vaqt va soat",
-      "ru": "Время и часы",
-      "tj": "Вақт ва соат"
-     },
-     "status": "locked",
-     "content": "lesson_10",
-     "locked_premium": true
+      "no": 3,
+      "title": {
+        "uz": "3-bo'lim",
+        "ru": "Раздел 3",
+        "tj": "Боби 3"
+      },
+      "lessons": [
+        {
+          "n": 11,
+          "zh": "Weather",
+          "py": "WETH-ur",
+          "tr": {
+            "uz": "Ob-havo va 'It is' bilan tavsif",
+            "ru": "Погода и описание через 'It is'",
+            "tj": "Обу ҳаво ва тавсиф бо 'It is'"
+          },
+          "status": "locked",
+          "content": "lesson_11",
+          "locked_premium": true
+        },
+        {
+          "n": 12,
+          "zh": "Body & health",
+          "py": "BOD-ee",
+          "tr": {
+            "uz": "Tana a'zolari va 'I feel ...' bilan holat",
+            "ru": "Части тела и состояние с 'I feel ...'",
+            "tj": "Аъзои бадан ва ҳолат бо 'I feel ...'"
+          },
+          "status": "locked",
+          "content": "lesson_12",
+          "locked_premium": true
+        },
+        {
+          "n": 13,
+          "zh": "Clothes & shopping",
+          "py": "KLOHZ",
+          "tr": {
+            "uz": "Kiyim va narx so'rash: 'How much is it?'",
+            "ru": "Одежда и вопрос о цене: 'How much is it?'",
+            "tj": "Либос ва пурсиши нарх: 'How much is it?'"
+          },
+          "status": "locked",
+          "content": "lesson_13",
+          "locked_premium": true
+        },
+        {
+          "n": 14,
+          "zh": "Hobbies & free time",
+          "py": "HOB-ee",
+          "tr": {
+            "uz": "Sevimli mashg'ulotlar: 'I like ...' va 'Do you like ...?'",
+            "ru": "Хобби: 'I like ...' и 'Do you like ...?'",
+            "tj": "Машғулиятҳо: 'I like ...' ва 'Do you like ...?'"
+          },
+          "status": "locked",
+          "content": "lesson_14",
+          "locked_premium": true
+        },
+        {
+          "n": 15,
+          "zh": "Daily routine",
+          "py": "WAYK-up",
+          "tr": {
+            "uz": "Kunlik tartib va 'every day' bilan odat",
+            "ru": "Распорядок дня и привычка с 'every day'",
+            "tj": "Тартиби рӯзона ва одат бо 'every day'"
+          },
+          "status": "locked",
+          "content": "lesson_15",
+          "locked_premium": true
+        }
+      ],
+      "milestone": {
+        "title": {
+          "uz": "3-bo‘lim takrori",
+          "ru": "Повторение раздела 3",
+          "tj": "Такрори фасли 3"
+        },
+        "status": "locked"
+      },
+      "status": "locked"
     }
-   ],
-   "milestone": {
-    "title": {
-     "uz": "2-bo‘lim takrori",
-     "ru": "Повторение раздела 2",
-     "tj": "Такрори фасли 2"
-    },
-    "status": "locked"
-   },
-   "status": "locked"
-  },
-  {
-   "no": 3,
-   "title": {
-    "uz": "3-bo'lim",
-    "ru": "Раздел 3",
-    "tj": "Боби 3"
-   },
-   "lessons": [
-    {
-     "n": 11,
-     "zh": "Weather",
-     "py": "/ˈweðər/",
-     "tr": {
-      "uz": "Ob-havo so'zlari",
-      "ru": "Слова о погоде",
-      "tj": "Калимаҳои обу ҳаво"
-     },
-     "status": "locked",
-     "content": "lesson_11",
-     "locked_premium": true
-    },
-    {
-     "n": 12,
-     "zh": "Body & health",
-     "py": "/ˈbɒdi/",
-     "tr": {
-      "uz": "Tana a'zolari va 'I feel ...' bilan holat",
-      "ru": "Части тела и состояние с 'I feel ...'",
-      "tj": "Аъзои бадан ва ҳолат бо 'I feel ...'"
-     },
-     "status": "locked",
-     "content": "lesson_12",
-     "locked_premium": true
-    },
-    {
-     "n": 13,
-     "zh": "Clothes & shopping",
-     "py": "/kloʊðz/",
-     "tr": {
-      "uz": "Kiyim va narx so'rash: 'How much is it?'",
-      "ru": "Одежда и вопрос о цене: 'How much is it?'",
-      "tj": "Либос ва пурсиши нарх: 'How much is it?'"
-     },
-     "status": "locked",
-     "content": "lesson_13",
-     "locked_premium": true
-    },
-    {
-     "n": 14,
-     "zh": "Hobbies & free time",
-     "py": "/ˈhɒbiz/",
-     "tr": {
-      "uz": "Sevimli mashg'ulotlar: 'I like ...' va 'Do you like ...?'",
-      "ru": "Хобби: 'I like ...' и 'Do you like ...?'",
-      "tj": "Машғулиятҳо: 'I like ...' ва 'Do you like ...?'"
-     },
-     "status": "locked",
-     "content": "lesson_14",
-     "locked_premium": true
-    },
-    {
-     "n": 15,
-     "zh": "Daily routine",
-     "py": "/ˈdeɪli ruːˈtiːn/",
-     "tr": {
-      "uz": "Kunlik tartib va 'every day' bilan odat",
-      "ru": "Распорядок дня и привычка с 'every day'",
-      "tj": "Тартиби рӯзона ва одат бо 'every day'"
-     },
-     "status": "locked",
-     "content": "lesson_15",
-     "locked_premium": true
-    }
-   ],
-   "milestone": {
-    "title": {
-     "uz": "3-bo‘lim takrori",
-     "ru": "Повторение раздела 3",
-     "tj": "Такрори фасли 3"
-    },
-    "status": "locked"
-   },
-   "status": "locked"
-  }
- ]
+  ]
 }

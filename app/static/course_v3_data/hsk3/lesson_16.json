@@ -2,19 +2,19 @@
   "schema_version": 2,
   "level": "hsk3",
   "lesson_id": 16,
-  "title": "我现在累得下了班就想睡觉",
+  "title": "So tired that",
   "subtitle": {
-    "uz": "'Agar…u holda…' shartli gap, murakkab holat to'ldiruvchisi va bir bo'g'inli sifat takrori o'rganish",
-    "ru": "Условные предложения 'если…то…', сложное дополнение состояния и удвоение односложных прилагательных",
-    "tj": "Ҷумлаҳои шартии 'агар…пас…', пуркунандаи мураккаби ҳол ва такрори сифатҳои яктарафа"
+    "uz": "So tired that: so'zlar, gaplar va dialoglar.",
+    "ru": "So tired that: слова, фразы и диалоги.",
+    "tj": "So tired that: калимаҳо, ҷумлаҳо ва муколамаҳо."
   },
   "intro_prebuilt": true,
   "grammar_prebuilt": true,
   "active_words": [
     {
       "no": 1,
-      "zh": "城市",
-      "pinyin": "chéngshì",
+      "zh": "city",
+      "pinyin": "CITY",
       "pos": "n.",
       "meaning": {
         "uz": "shahar",
@@ -24,167 +24,57 @@
     },
     {
       "no": 2,
-      "zh": "如果",
-      "pinyin": "rúguǒ",
-      "pos": "conj.",
+      "zh": "so tired",
+      "pinyin": "SO-TIRED",
+      "pos": "adj.",
       "meaning": {
-        "uz": "agar",
-        "ru": "если",
-        "tj": "агар"
+        "uz": "juda charchagan",
+        "ru": "так устал",
+        "tj": "хеле хаста"
       }
     },
     {
       "no": 3,
-      "zh": "认为",
-      "pinyin": "rènwéi",
-      "pos": "v.",
+      "zh": "stress",
+      "pinyin": "STRESS",
+      "pos": "n.",
       "meaning": {
-        "uz": "deb o'ylamoq, hisoblamoq",
-        "ru": "считать, полагать",
-        "tj": "фикр кардан, ҳисобидан"
+        "uz": "stress",
+        "ru": "стресс",
+        "tj": "стресс"
       }
     },
     {
       "no": 4,
-      "zh": "皮鞋",
-      "pinyin": "píxié",
+      "zh": "meeting",
+      "pinyin": "MEETING",
       "pos": "n.",
       "meaning": {
-        "uz": "charm tufli",
-        "ru": "кожаная обувь",
-        "tj": "пойафзоли чармӣ"
+        "uz": "uchrashuv",
+        "ru": "встреча",
+        "tj": "вохӯрӣ"
       }
     },
     {
       "no": 5,
-      "zh": "帽子",
-      "pinyin": "màozi",
+      "zh": "deadline",
+      "pinyin": "DEADLINE",
       "pos": "n.",
       "meaning": {
-        "uz": "shlyapa, bosh kiyim",
-        "ru": "шапка, шляпа",
-        "tj": "кулоҳ"
+        "uz": "muddat",
+        "ru": "срок",
+        "tj": "муҳлат"
       }
     },
     {
       "no": 6,
-      "zh": "长",
-      "pinyin": "zhǎng",
-      "pos": "v.",
-      "meaning": {
-        "uz": "o'smoq, ulg'aymoq",
-        "ru": "расти, развиваться",
-        "tj": "калон шудан, рушд кардан"
-      }
-    },
-    {
-      "no": 7,
-      "zh": "可爱",
-      "pinyin": "kě'ài",
-      "pos": "adj.",
-      "meaning": {
-        "uz": "yoqimli, shirin",
-        "ru": "милый, очаровательный",
-        "tj": "дилрабо, ширин"
-      }
-    },
-    {
-      "no": 8,
-      "zh": "米",
-      "pinyin": "mǐ",
+      "zh": "break",
+      "pinyin": "BREAK",
       "pos": "n.",
       "meaning": {
-        "uz": "metr",
-        "ru": "метр",
-        "tj": "метр"
-      }
-    },
-    {
-      "no": 9,
-      "zh": "公斤",
-      "pinyin": "gōngjīn",
-      "pos": "n.",
-      "meaning": {
-        "uz": "kilogramm",
-        "ru": "килограмм",
-        "tj": "килограмм"
-      }
-    },
-    {
-      "no": 10,
-      "zh": "鼻子",
-      "pinyin": "bízi",
-      "pos": "n.",
-      "meaning": {
-        "uz": "burun",
-        "ru": "нос",
-        "tj": "бинӣ"
-      }
-    },
-    {
-      "no": 11,
-      "zh": "头发",
-      "pinyin": "tóufa",
-      "pos": "n.",
-      "meaning": {
-        "uz": "soch",
-        "ru": "волосы",
-        "tj": "мӯй"
-      }
-    },
-    {
-      "no": 12,
-      "zh": "检查",
-      "pinyin": "jiǎnchá",
-      "pos": "v.",
-      "meaning": {
-        "uz": "tekshirmoq, ko'rikdan o'tkazmoq",
-        "ru": "проверять, осматривать",
-        "tj": "санҷидан, муоина кардан"
-      }
-    },
-    {
-      "no": 13,
-      "zh": "刷牙",
-      "pinyin": "shuā yá",
-      "pos": "v.",
-      "meaning": {
-        "uz": "tish yuvmoq",
-        "ru": "чистить зубы",
-        "tj": "дандон шустан"
-      }
-    },
-    {
-      "no": 14,
-      "zh": "关系",
-      "pinyin": "guānxì",
-      "pos": "n.",
-      "meaning": {
-        "uz": "munosabat, aloqa",
-        "ru": "отношение, связь",
-        "tj": "муносибат, робита"
-      }
-    },
-    {
-      "no": 15,
-      "zh": "别人",
-      "pinyin": "biérén",
-      "pos": "n.",
-      "meaning": {
-        "uz": "boshqa odamlar",
-        "ru": "другие люди",
-        "tj": "дигарон"
-      }
-    },
-    {
-      "no": 16,
-      "zh": "词语",
-      "pinyin": "cíyǔ",
-      "pos": "n.",
-      "meaning": {
-        "uz": "so'z, ibora",
-        "ru": "слово, выражение",
-        "tj": "калима, ибора"
+        "uz": "tanaffus",
+        "ru": "перерыв",
+        "tj": "танаффус"
       }
     }
   ],
@@ -192,33 +82,24 @@
     {
       "no": 1,
       "title": {
-        "uz": "Agar……u holda/bo'lsa……（shartli gap）",
-        "ru": "Если……то……（условное предложение）",
-        "tj": "Агар……пас……（ҷумлаи шартӣ）"
+        "uz": "so ... that",
+        "ru": "so ... that",
+        "tj": "so ... that"
       },
-      "title_zh": "如果……就……（条件句）",
+      "title_zh": "so ... that",
       "rule": {
-        "uz": "'如果…就…' tuzilmasi agar-u holda shartli gaplarni ifodalaydi. '如果' = agar, '就' = u holda/shunda. '如果' ko'pincha gapning avvalida, '就' esa natijaning avvalida keladi.",
-        "ru": "Конструкция '如果…就…' выражает условные предложения 'если-то'. '如果' = если, '就' = то. '如果' обычно стоит в начале предложения, '就' — перед следствием.",
-        "tj": "Сохтори '如果…就…' ҷумлаҳои шартии 'агар-пас'-ро ифода мекунад. '如果' = агар, '就' = пас. '如果' одатан аввали ҷумла, '就' — пеш аз натиҷа меояд."
+        "uz": "Qolip: so ... that. Misol: I was so tired that I fell asleep. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+        "ru": "Шаблон: so ... that. Пример: I was so tired that I fell asleep. Используйте его в коротких естественных фразах.",
+        "tj": "Қолаб: so ... that. Мисол: I was so tired that I fell asleep. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
       },
       "examples": [
         {
-          "zh": "如果你每天锻炼，就会很健康！",
-          "pinyin": "Rúguǒ nǐ měitiān duànliàn, jiù huì hěn jiànkāng!",
+          "zh": "I was so tired that I fell asleep.",
+          "pinyin": "",
           "translation": {
-            "uz": "Agar har kuni mashq qilsangiz, juda sog'lom bo'lasiz!",
-            "ru": "Если будешь заниматься каждый день, будешь очень здоровым!",
-            "tj": "Агар ҳар рӯз варзиш кунед, хеле солим мешавед!"
-          }
-        },
-        {
-          "zh": "如果天气好，我就去公园。",
-          "pinyin": "Rúguǒ tiānqì hǎo, wǒ jiù qù gōngyuán.",
-          "translation": {
-            "uz": "Agar havo yaxshi bo'lsa, parkka boraman.",
-            "ru": "Если погода будет хорошей, пойду в парк.",
-            "tj": "Агар ҳаво хуб бошад, ба боғ меравам."
+            "uz": "I was so tired that I fell asleep.",
+            "ru": "I was so tired that I fell asleep.",
+            "tj": "I was so tired that I fell asleep."
           }
         }
       ]
@@ -226,67 +107,24 @@
     {
       "no": 2,
       "title": {
-        "uz": "Murakkab holat to'ldiruvchisi: charchashdan……",
-        "ru": "Сложное дополнение состояния: устал настолько, что……",
-        "tj": "Пуркунандаи мураккаби ҳол: хаста аз……"
+        "uz": "expanded sentence",
+        "ru": "expanded sentence",
+        "tj": "expanded sentence"
       },
-      "title_zh": "复杂状态补语：累得……（极端状态）",
+      "title_zh": "expanded sentence",
       "rule": {
-        "uz": "'F+得+gap/murakkab ifoda' tuzilmasi harakatning natijasidagi holatni ifodalaydi. Oddiy holatdan farqli ravishda, bu yerda bir butun gap kelishi mumkin. Masalan: 累得睡不着 = charchashdan uxlolmayman.",
-        "ru": "Конструкция 'Гл+得+предложение/сложное выражение' описывает состояние в результате действия. В отличие от простого дополнения, здесь может быть целое предложение. Например: 累得睡不着 = так устал, что не могу спать.",
-        "tj": "Сохтори 'Ф+得+ҷумла/ибораи мураккаб' ҳолати натиҷаи амалро тасвир мекунад. Баръакси пуркунандаи оддӣ, ин ҷо ҷумлаи пурра омада метавонад. Масалан: 累得睡不着 = ончунон хастаам, ки хобам намебарад."
+        "uz": "Qolip: add time, place, or reason. Misol: I was so tired that I fell asleep. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+        "ru": "Шаблон: add time, place, or reason. Пример: I was so tired that I fell asleep. Используйте его в коротких естественных фразах.",
+        "tj": "Қолаб: add time, place, or reason. Мисол: I was so tired that I fell asleep. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
       },
       "examples": [
         {
-          "zh": "我累得下了班就想睡觉。",
-          "pinyin": "Wǒ lèi de xià le bān jiù xiǎng shuìjiào.",
+          "zh": "I was so tired that I fell asleep.",
+          "pinyin": "",
           "translation": {
-            "uz": "Shu qadar charchaganmanki, ishdan chiqqanimdan so'ng uxlashni xohlayman.",
-            "ru": "Я так устал, что после работы сразу хочу спать.",
-            "tj": "Ман ончунон хастаам, ки баъд аз кор фавран хоб кардан мехоҳам."
-          }
-        },
-        {
-          "zh": "他高兴得跳起来了！",
-          "pinyin": "Tā gāoxìng de tiào qǐlái le!",
-          "translation": {
-            "uz": "U shu qadar xurshandki, sakrab ketdi!",
-            "ru": "Он так обрадовался, что подпрыгнул!",
-            "tj": "Вай ончунон хурсанд шуд, ки ҷаҳид!"
-          }
-        }
-      ]
-    },
-    {
-      "no": 3,
-      "title": {
-        "uz": "Bir bo'g'inli sifat takrori: AA shakli (yaxshi-yaxshi, sekin-sekin...)",
-        "ru": "Удвоение односложных прилагательных: форма AA (хорошенько, медленно-медленно...)",
-        "tj": "Такрори сифатҳои яктаяко: шакли AA (хуб-хуб, оҳиста-оҳиста...)"
-      },
-      "title_zh": "单音节形容词重叠：AA式（好好、慢慢……）",
-      "rule": {
-        "uz": "Bir bo'g'inli sifat takrorlanib ravish sifatida ishlatilsa, kuchaytiruvchi ma'no beradi: 好好 = yaxshilab, 慢慢 = sekin-sekin, 早早 = ertaroq, 快快 = tezroq. Bu shakl ko'pincha fe'ldan oldin keladi.",
-        "ru": "Если односложное прилагательное удваивается и используется как наречие, оно приобретает усилительное значение: 好好 = хорошенько, 慢慢 = медленно-медленно, 早早 = пораньше, 快快 = побыстрее. Эта форма обычно стоит перед глаголом.",
-        "tj": "Агар сифати яктаяко такрор шуда ба сифати зарф истифода шавад, маънои тақвияткунанда пайдо мекунад: 好好 = хуб-хуб, 慢慢 = оҳиста-оҳиста, 早早 = барвақт-барвақт, 快快 = зуд-зуд. Ин шакл одатан пеш аз феъл меояд."
-      },
-      "examples": [
-        {
-          "zh": "你要好好休息！",
-          "pinyin": "Nǐ yào hǎohǎo xiūxi!",
-          "translation": {
-            "uz": "Yaxshilab dam oling!",
-            "ru": "Вам нужно хорошенько отдохнуть!",
-            "tj": "Шумо бояд хуб-хуб истироҳат кунед!"
-          }
-        },
-        {
-          "zh": "慢慢走，别着急！",
-          "pinyin": "Mànmàn zǒu, bié zháojí!",
-          "translation": {
-            "uz": "Sekin-sekin yuring, shoshilmang!",
-            "ru": "Идите медленно, не торопитесь!",
-            "tj": "Оҳиста-оҳиста равед, шитоб накунед!"
+            "uz": "I was so tired that I fell asleep.",
+            "ru": "I was so tired that I fell asleep.",
+            "tj": "I was so tired that I fell asleep."
           }
         }
       ]
@@ -295,206 +133,87 @@
   "dialogues": [
     {
       "scene": {
-        "uz": "Kompaniyada",
-        "ru": "В компании",
-        "tj": "Дар ширкат"
+        "uz": "Dars boshida",
+        "ru": "В начале урока",
+        "tj": "Дар оғози дарс"
       },
       "dialogue": [
         {
-          "speaker": "小丽",
-          "zh": "我不喜欢一直住在同一个城市，想去其他城市看一看。",
-          "pinyin": "Wǒ bù xǐhuan yìzhí zhù zài tóng yí ge chéngshì, xiǎng qù qítā chéngshì kàn yi kàn.",
+          "speaker": "A",
+          "zh": "What are we learning today?",
+          "pinyin": "",
           "text": {
-            "uz": "Men doim bir shaharda yashashni yoqtirmayman, boshqa shaharlarga borib ko'rmoqchiman.",
-            "ru": "Мне не нравится всё время жить в одном городе, хочу съездить посмотреть другие города.",
-            "tj": "Ман ҳамеша дар як шаҳр зиндагӣ карданро дӯст намедорам, мехоҳам ба шаҳрҳои дигар рафта бинам."
+            "uz": "Bugun nimani o‘rganamiz?",
+            "ru": "Что мы сегодня изучаем?",
+            "tj": "Имрӯз чиро меомӯзем?"
           }
         },
         {
-          "speaker": "周明",
-          "zh": "我年轻的时候也这么想，但是那时候没有钱，如果有钱，就去了。",
-          "pinyin": "Wǒ niánqīng de shíhou yě zhème xiǎng, dànshì nà shíhou méiyǒu qián, rúguǒ yǒu qián, jiù qù le.",
+          "speaker": "B",
+          "zh": "We are learning So tired that.",
+          "pinyin": "",
           "text": {
-            "uz": "Men yoshligimda ham shunday o'ylardim, lekin o'shanda pul yo'q edi, agar pul bo'lganida, ketardim.",
-            "ru": "Когда я был молодым, тоже так думал, но тогда не было денег. Если бы были деньги, я бы поехал.",
-            "tj": "Ман дар ҷавонӣ ҳам ҳамин тавр фикр мекардам, аммо он вақт пул набуд, агар пул мебуд, мерафтам."
-          }
-        },
-        {
-          "speaker": "小丽",
-          "zh": "那您现在为什么不去？",
-          "pinyin": "Nà nín xiànzài wèi shénme bù qù?",
-          "text": {
-            "uz": "Unda hozir nega bormaysiz?",
-            "ru": "Тогда почему вы сейчас не едете?",
-            "tj": "Пас ҳоло чаро намеравед?"
-          }
-        },
-        {
-          "speaker": "周明",
-          "zh": "现在钱不是问题了，主要是没有时间。",
-          "pinyin": "Xiànzài qián bú shì wèntí le, zhǔyào shì méiyǒu shíjiān.",
-          "text": {
-            "uz": "Hozir pul muammo emas, asosiysi vaqt yo'q.",
-            "ru": "Сейчас деньги уже не проблема, главное - нет времени.",
-            "tj": "Ҳоло пул мушкил нест, асосан вақт нест."
-          }
-        },
-        {
-          "speaker": "小丽",
-          "zh": "我认为现在您有时间也不会出去玩儿。",
-          "pinyin": "Wǒ rènwéi xiànzài nín yǒu shíjiān yě bú huì chūqu wánr.",
-          "text": {
-            "uz": "Menimcha, hozir vaqtingiz bo'lsa ham sayrga chiqmasdingiz.",
-            "ru": "Я думаю, что сейчас, даже если у вас будет время, вы не поедете отдыхать.",
-            "tj": "Ба фикрам, ҳоло агар вақт ҳам дошта бошед, берун истироҳат кардан намеравед."
-          }
-        },
-        {
-          "speaker": "周明",
-          "zh": "你说得对，我现在累得下了班就想睡觉。",
-          "pinyin": "Nǐ shuō de duì, wǒ xiànzài lèi de xià le bān jiù xiǎng shuìjiào.",
-          "text": {
-            "uz": "To'g'ri aytding, men hozir shunchalik charchaganmanki, ishdan chiqqach faqat uxlashni xohlayman.",
-            "ru": "Ты права, я сейчас так устаю, что после работы сразу хочу спать.",
-            "tj": "Дуруст гуфтӣ, ман ҳоло чунон хастаам, ки баъди кор танҳо хоб кардан мехоҳам."
+            "uz": "Bugun So tired that mavzusini o‘rganamiz.",
+            "ru": "Мы изучаем тему So tired that.",
+            "tj": "Мо мавзӯи So tired that-ро меомӯзем."
           }
         }
       ]
     },
     {
       "scene": {
-        "uz": "Hamkasb uyida",
-        "ru": "У коллеги дома",
-        "tj": "Дар хонаи ҳамкор"
+        "uz": "Misol gap",
+        "ru": "Пример фразы",
+        "tj": "Ҷумлаи намуна"
       },
       "dialogue": [
         {
-          "speaker": "同事",
-          "zh": "谢谢你们来看我女儿。你送的小皮鞋和小帽子真漂亮！",
-          "pinyin": "Xièxie nǐmen lái kàn wǒ nǚ'ér. Nǐ sòng de xiǎo píxié hé xiǎo màozi zhēn piàoliang!",
+          "speaker": "A",
+          "zh": "Can you give an example?",
+          "pinyin": "",
           "text": {
-            "uz": "Qizimni ko'rgani kelganingiz uchun rahmat. Siz sovg'a qilgan kichik charm tufli va kichik shlyapa juda chiroyli!",
-            "ru": "Спасибо, что пришли посмотреть мою дочь. Маленькие кожаные туфельки и шапочка, которые ты подарила, очень красивые!",
-            "tj": "Ташаккур, ки духтарамро дидан омадед. Пойафзоли чармии хурд ва кулоҳи хурде, ки ту додӣ, хеле зебо аст!"
+            "uz": "Misol keltira olasizmi?",
+            "ru": "Можете привести пример?",
+            "tj": "Метавонед мисол диҳед?"
           }
         },
         {
-          "speaker": "小丽",
-          "zh": "别客气，你女儿长得白白的、胖胖的，真可爱！现在多高了？",
-          "pinyin": "Bié kèqi, nǐ nǚ'ér zhǎng de báibái de, pàngpàng de, zhēn kě'ài! Xiànzài duō gāo le?",
+          "speaker": "B",
+          "zh": "I was so tired that I fell asleep.",
+          "pinyin": "",
           "text": {
-            "uz": "Arzimaydi, qizingiz oppoq, dumaloqqina bo'lib o'syapti, juda yoqimli! Hozir bo'yi qancha?",
-            "ru": "Не за что, ваша дочь такая беленькая и пухленькая, очень милая! Какого она сейчас роста?",
-            "tj": "Марҳамат, духтаратон сафедча ва фарбеҳча калон мешавад, хеле дилрабо! Ҳоло қаддаш чанд аст?"
-          }
-        },
-        {
-          "speaker": "同事",
-          "zh": "快1米了，25公斤。",
-          "pinyin": "Kuài yì mǐ le, èrshíwǔ gōngjīn.",
-          "text": {
-            "uz": "Deyarli bir metr, 25 kilogramm.",
-            "ru": "Почти один метр, 25 килограммов.",
-            "tj": "Қариб як метр, 25 килограмм."
-          }
-        },
-        {
-          "speaker": "小丽",
-          "zh": "你看她鼻子小小的，头发黑黑的，长得像谁？",
-          "pinyin": "Nǐ kàn tā bízi xiǎoxiǎo de, tóufa hēihēi de, zhǎng de xiàng shéi?",
-          "text": {
-            "uz": "Qarang, burni kichkinagina, sochi qop-qora, kimga o'xshab o'syapti?",
-            "ru": "Посмотри, у неё маленький носик, чёрные волосы, на кого она похожа?",
-            "tj": "Бин, биниаш хурдча, мӯяш сиёҳча, ба кӣ монанд калон мешавад?"
-          }
-        },
-        {
-          "speaker": "同事",
-          "zh": "像她爸爸，刚出生时她爸爸高兴得一个晚上都没睡着。",
-          "pinyin": "Xiàng tā bàba, gāng chūshēng shí tā bàba gāoxìng de yí ge wǎnshang dōu méi shuì zháo.",
-          "text": {
-            "uz": "Dadasiga o'xshaydi, endi tug'ilganida dadasi xursandligidan butun kecha uxlay olmagan.",
-            "ru": "На её папу. Когда она только родилась, её папа так радовался, что всю ночь не мог уснуть.",
-            "tj": "Ба падараш монанд. Вақте нав таваллуд шуд, падараш аз хурсандӣ тамоми шаб хоб карда натавонист."
+            "uz": "I was so tired that I fell asleep.",
+            "ru": "I was so tired that I fell asleep.",
+            "tj": "I was so tired that I fell asleep."
           }
         }
       ]
     },
     {
       "scene": {
-        "uz": "Kompaniyada",
-        "ru": "В компании",
-        "tj": "Дар ширкат"
+        "uz": "Qisqa suhbat",
+        "ru": "Короткий разговор",
+        "tj": "Суҳбати кӯтоҳ"
       },
       "dialogue": [
         {
-          "speaker": "小刚",
-          "zh": "我的牙还是很疼。",
-          "pinyin": "Wǒ de yá háishi hěn téng.",
+          "speaker": "A",
+          "zh": "Do you know the word \"city\"?",
+          "pinyin": "",
           "text": {
-            "uz": "Tishim hali ham juda og'riyapti.",
-            "ru": "У меня зуб всё ещё сильно болит.",
-            "tj": "Дандонам ҳоло ҳам сахт дард мекунад."
+            "uz": "“city” so‘zini bilasizmi?",
+            "ru": "Вы знаете слово “city”?",
+            "tj": "Оё калимаи “city”-ро медонед?"
           }
         },
         {
-          "speaker": "同事",
-          "zh": "如果不舒服，就去医院检查一下吧。",
-          "pinyin": "Rúguǒ bù shūfu, jiù qù yīyuàn jiǎnchá yíxià ba.",
+          "speaker": "B",
+          "zh": "Yes. It means shahar.",
+          "pinyin": "",
           "text": {
-            "uz": "Agar noqulay bo'lsa, kasalxonaga borib tekshirtir.",
-            "ru": "Если плохо себя чувствуешь, сходи в больницу провериться.",
-            "tj": "Агар нороҳат бошӣ, ба беморхона рафта як бор муоина кун."
-          }
-        },
-        {
-          "speaker": "小刚",
-          "zh": "检查好几次了，但是没什么用。",
-          "pinyin": "Jiǎnchá hǎo jǐ cì le, dànshì méi shénme yòng.",
-          "text": {
-            "uz": "Bir necha marta tekshirtirdim, lekin foydasi bo'lmadi.",
-            "ru": "Проверял уже несколько раз, но толку нет.",
-            "tj": "Чанд бор муоина кардам, аммо фоида надошт."
-          }
-        },
-        {
-          "speaker": "同事",
-          "zh": "大夫怎么说的？",
-          "pinyin": "Dàifu zěnme shuō de?",
-          "text": {
-            "uz": "Shifokor nima dedi?",
-            "ru": "Что сказал врач?",
-            "tj": "Духтур чӣ гуфт?"
-          }
-        },
-        {
-          "speaker": "小刚",
-          "zh": "每次医生都告诉我，回家好好儿刷牙。",
-          "pinyin": "Měi cì yīshēng dōu gàosu wǒ, huí jiā hǎohāor shuā yá.",
-          "text": {
-            "uz": "Har safar shifokor uyga borib tishimni yaxshilab yuvishimni aytadi.",
-            "ru": "Каждый раз врач говорит мне вернуться домой и хорошенько чистить зубы.",
-            "tj": "Ҳар дафъа духтур мегӯяд, ки ба хона баргашта дандонҳоро хуб шуям."
-          }
-        }
-      ]
-    },
-    {
-      "scene": {
-        "uz": "Insonlar munosabati haqida matn",
-        "ru": "Текст об отношениях между людьми",
-        "tj": "Матн дар бораи муносибати одамон"
-      },
-      "dialogue": [
-        {
-          "speaker": "旁白",
-          "zh": "很多人都觉得现在人和人的关系冷冷的，这可能是因为工作太忙，忙得没时间跟别人见面，累得不愿意和别人多说话。其实，我们应该多对别人笑笑，说话时如果能多用一些“您好”“谢谢”这样的词语，和别人的关系就会变得更好。",
-          "pinyin": "Hěn duō rén dōu juéde xiànzài rén hé rén de guānxì lěnglěng de, zhè kěnéng shì yīnwèi gōngzuò tài máng, máng de méi shíjiān gēn biérén jiàn miàn, lèi de bù yuànyì hé biérén duō shuō huà. Qíshí, wǒmen yīnggāi duō duì biérén xiàoxiao, shuō huà shí rúguǒ néng duō yòng yìxiē 'nín hǎo' 'xièxie' zhèyàng de cíyǔ, hé biérén de guānxì jiù huì biàn de gèng hǎo.",
-          "text": {
-            "uz": "Ko'p odamlar hozir insonlar o'rtasidagi munosabatlar sovuqlashgan deb o'ylaydi. Buning sababi ish juda bandligi bo'lishi mumkin: bandlikdan boshqalar bilan uchrashishga vaqt yo'q, charchoqdan boshqalar bilan ko'p gaplashishni xohlamaydi. Aslida, biz boshqalarga ko'proq tabassum qilishimiz kerak. Gaplashayotganda “您好”, “谢谢” kabi so'zlarni ko'proq ishlatsak, boshqalar bilan munosabatimiz yanada yaxshilanadi.",
-            "ru": "Многие считают, что сейчас отношения между людьми стали холодными. Возможно, это из-за того, что работа слишком занятая: из-за занятости нет времени встречаться с другими, из-за усталости не хочется много разговаривать. На самом деле нам следует чаще улыбаться другим. Если в разговоре чаще использовать такие выражения, как “您好” и “谢谢”, отношения с другими станут лучше.",
-            "tj": "Бисёр одамон фикр мекунанд, ки ҳоло муносибати байни одамон сард шудааст. Ин шояд аз он бошад, ки кор хеле банд аст: аз бандӣ вақт барои вохӯрӣ бо дигарон нест, аз хастагӣ бо дигарон зиёд гап задан намехоҳанд. Дар асл, мо бояд ба дигарон бештар табассум кунем. Агар ҳангоми гап задан бештар калимаҳои монанди “您好” ва “谢谢”-ро истифода барем, муносибат бо дигарон беҳтар мешавад."
+            "uz": "Ha. Ma’nosi: shahar.",
+            "ru": "Да. Значение: город.",
+            "tj": "Бале. Маънояш: шаҳр."
           }
         }
       ]
@@ -514,8 +233,8 @@
           "type": "active_word",
           "word": {
             "no": 1,
-            "zh": "城市",
-            "pinyin": "chéngshì",
+            "zh": "city",
+            "pinyin": "CITY",
             "pos": "n.",
             "meaning": {
               "uz": "shahar",
@@ -528,68 +247,27 @@
           "type": "active_word",
           "word": {
             "no": 2,
-            "zh": "如果",
-            "pinyin": "rúguǒ",
-            "pos": "conj.",
+            "zh": "so tired",
+            "pinyin": "SO-TIRED",
+            "pos": "adj.",
             "meaning": {
-              "uz": "agar",
-              "ru": "если",
-              "tj": "агар"
+              "uz": "juda charchagan",
+              "ru": "так устал",
+              "tj": "хеле хаста"
             }
-          }
-        },
-        {
-          "type": "meaning_guess",
-          "prompt": {
-            "uz": "如果 so'zining ma'nosini tanlang:",
-            "ru": "Выберите значение слова 如果:",
-            "tj": "Маънои калимаи 如果-ро интихоб кунед:"
-          },
-          "title": {
-            "uz": "Ma'nosi nima?",
-            "ru": "Что означает?",
-            "tj": "Маъно чист?"
-          },
-          "options": [
-            {
-              "uz": "deb o'ylamoq, hisoblamoq",
-              "ru": "считать, полагать",
-              "tj": "фикр кардан, ҳисобидан"
-            },
-            {
-              "uz": "agar",
-              "ru": "если",
-              "tj": "агар"
-            },
-            {
-              "uz": "charm tufli",
-              "ru": "кожаная обувь",
-              "tj": "пойафзоли чармӣ"
-            },
-            {
-              "uz": "shahar",
-              "ru": "город",
-              "tj": "шаҳр"
-            }
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "如果 = agar (rúguǒ)",
-            "ru": "如果 = если (rúguǒ)",
-            "tj": "如果 = агар (rúguǒ)"
           }
         },
         {
           "type": "active_word",
           "word": {
             "no": 3,
-            "zh": "认为",
-            "pinyin": "rènwéi",
-            "pos": "v.",
+            "zh": "stress",
+            "pinyin": "STRESS",
+            "pos": "n.",
             "meaning": {
-              "uz": "deb o'ylamoq, hisoblamoq",
-              "ru": "считать, полагать",
-              "tj": "фикр кардан, ҳисобидан"
+              "uz": "stress",
+              "ru": "стресс",
+              "tj": "стресс"
             }
           }
         },
@@ -597,128 +275,22 @@
           "type": "active_word",
           "word": {
             "no": 4,
-            "zh": "皮鞋",
-            "pinyin": "píxié",
+            "zh": "meeting",
+            "pinyin": "MEETING",
             "pos": "n.",
             "meaning": {
-              "uz": "charm tufli",
-              "ru": "кожаная обувь",
-              "tj": "пойафзоли чармӣ"
-            }
-          }
-        },
-        {
-          "type": "hanzi_choice",
-          "prompt": {
-            "uz": "píxié qaysi ieroglif?",
-            "ru": "Какой иероглиф читается píxié?",
-            "tj": "píxié кадом иероглиф аст?"
-          },
-          "title": {
-            "uz": "Ieroglifni tanlang",
-            "ru": "Выберите иероглиф",
-            "tj": "Иероглифро интихоб кунед"
-          },
-          "options": [
-            "认为",
-            "如果",
-            "皮鞋",
-            "城市"
-          ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "皮鞋 = charm tufli (píxié)",
-            "ru": "皮鞋 = кожаная обувь (píxié)",
-            "tj": "皮鞋 = пойафзоли чармӣ (píxié)"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 5,
-            "zh": "帽子",
-            "pinyin": "màozi",
-            "pos": "n.",
-            "meaning": {
-              "uz": "shlyapa, bosh kiyim",
-              "ru": "шапка, шляпа",
-              "tj": "кулоҳ"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 6,
-            "zh": "长",
-            "pinyin": "zhǎng",
-            "pos": "v.",
-            "meaning": {
-              "uz": "o'smoq, ulg'aymoq",
-              "ru": "расти, развиваться",
-              "tj": "калон шудан, рушд кардан"
-            }
-          }
-        },
-        {
-          "type": "pinyin_choice",
-          "prompt": {
-            "uz": "长 talaffuzini tanlang:",
-            "ru": "Выберите произношение 长:",
-            "tj": "Талаффузи 长-ро интихоб кунед:"
-          },
-          "title": {
-            "uz": "Qanday o'qiladi?",
-            "ru": "Как читается?",
-            "tj": "Чӣ хел хонда мешавад?"
-          },
-          "options": [
-            "rúguǒ",
-            "zhǎng",
-            "rènwéi",
-            "chéngshì"
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "长 — zhǎng",
-            "ru": "长 — zhǎng",
-            "tj": "长 — zhǎng"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 7,
-            "zh": "可爱",
-            "pinyin": "kě'ài",
-            "pos": "adj.",
-            "meaning": {
-              "uz": "yoqimli, shirin",
-              "ru": "милый, очаровательный",
-              "tj": "дилрабо, ширин"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 8,
-            "zh": "米",
-            "pinyin": "mǐ",
-            "pos": "n.",
-            "meaning": {
-              "uz": "metr",
-              "ru": "метр",
-              "tj": "метр"
+              "uz": "uchrashuv",
+              "ru": "встреча",
+              "tj": "вохӯрӣ"
             }
           }
         },
         {
           "type": "meaning_guess",
           "prompt": {
-            "uz": "可爱 so'zining ma'nosini tanlang:",
-            "ru": "Выберите значение слова 可爱:",
-            "tj": "Маънои калимаи 可爱-ро интихоб кунед:"
+            "uz": "«city» ma'nosini tanlang:",
+            "ru": "Выберите значение «city»:",
+            "tj": "Маънои «city»-ро интихоб кунед:"
           },
           "title": {
             "uz": "Ma'nosi nima?",
@@ -727,91 +299,73 @@
           },
           "options": [
             {
-              "uz": "agar",
-              "ru": "если",
-              "tj": "агар"
-            },
-            {
-              "uz": "yoqimli, shirin",
-              "ru": "милый, очаровательный",
-              "tj": "дилрабо, ширин"
-            },
-            {
-              "uz": "deb o'ylamoq, hisoblamoq",
-              "ru": "считать, полагать",
-              "tj": "фикр кардан, ҳисобидан"
-            },
-            {
               "uz": "shahar",
               "ru": "город",
               "tj": "шаҳр"
+            },
+            {
+              "uz": "juda charchagan",
+              "ru": "так устал",
+              "tj": "хеле хаста"
+            },
+            {
+              "uz": "stress",
+              "ru": "стресс",
+              "tj": "стресс"
+            },
+            {
+              "uz": "uchrashuv",
+              "ru": "встреча",
+              "tj": "вохӯрӣ"
             }
           ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "可爱 = yoqimli, shirin (kě'ài)",
-            "ru": "可爱 = милый, очаровательный (kě'ài)",
-            "tj": "可爱 = дилрабо, ширин (kě'ài)"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 9,
-            "zh": "公斤",
-            "pinyin": "gōngjīn",
-            "pos": "n.",
-            "meaning": {
-              "uz": "kilogramm",
-              "ru": "килограмм",
-              "tj": "килограмм"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 10,
-            "zh": "鼻子",
-            "pinyin": "bízi",
-            "pos": "n.",
-            "meaning": {
-              "uz": "burun",
-              "ru": "нос",
-              "tj": "бинӣ"
-            }
-          }
+          "correct_index": 0
         },
         {
           "type": "hanzi_choice",
           "prompt": {
-            "uz": "mǐ qaysi ieroglif?",
-            "ru": "Какой иероглиф читается mǐ?",
-            "tj": "mǐ кадом иероглиф аст?"
+            "uz": "«SO-TIRED» qaysi so'z?",
+            "ru": "Какое слово читается «SO-TIRED»?",
+            "tj": "«SO-TIRED» кадом калима аст?"
           },
           "title": {
-            "uz": "Ieroglifni tanlang",
-            "ru": "Выберите иероглиф",
-            "tj": "Иероглифро интихоб кунед"
+            "uz": "So'zni tanlang",
+            "ru": "Выберите слово",
+            "tj": "Калимаро интихоб кунед"
           },
           "options": [
-            "如果",
-            "认为",
-            "城市",
-            "米"
+            "so tired",
+            "city",
+            "stress",
+            "meeting"
           ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "米 = metr (mǐ)",
-            "ru": "米 = метр (mǐ)",
-            "tj": "米 = метр (mǐ)"
-          }
+          "correct_index": 0
+        },
+        {
+          "type": "pinyin_choice",
+          "prompt": {
+            "uz": "«city» talaffuzini tanlang:",
+            "ru": "Выберите произношение «city»:",
+            "tj": "Талаффузи «city»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Qanday o'qiladi?",
+            "ru": "Как читается?",
+            "tj": "Чӣ хел хонда мешавад?"
+          },
+          "options": [
+            "CITY",
+            "SO-TIRED",
+            "STRESS",
+            "MEETING"
+          ],
+          "correct_index": 0
         },
         {
           "type": "match_pairs",
           "pairs": [
             [
-              "城市",
+              "city",
               {
                 "uz": "shahar",
                 "ru": "город",
@@ -819,35 +373,30 @@
               }
             ],
             [
-              "如果",
+              "so tired",
               {
-                "uz": "agar",
-                "ru": "если",
-                "tj": "агар"
+                "uz": "juda charchagan",
+                "ru": "так устал",
+                "tj": "хеле хаста"
               }
             ],
             [
-              "认为",
+              "stress",
               {
-                "uz": "deb o'ylamoq, hisoblamoq",
-                "ru": "считать, полагать",
-                "tj": "фикр кардан, ҳисобидан"
+                "uz": "stress",
+                "ru": "стресс",
+                "tj": "стресс"
               }
             ],
             [
-              "皮鞋",
+              "meeting",
               {
-                "uz": "charm tufli",
-                "ru": "кожаная обувь",
-                "tj": "пойафзоли чармӣ"
+                "uz": "uchrashuv",
+                "ru": "встреча",
+                "tj": "вохӯрӣ"
               }
             ]
-          ],
-          "explanation": {
-            "uz": "Juftliklar darsdagi yangi so'zlardan olindi.",
-            "ru": "Пары взяты из новых слов урока.",
-            "tj": "Ҷуфтҳо аз калимаҳои нави дарс гирифта шудаанд."
-          }
+          ]
         }
       ]
     },
@@ -865,69 +414,27 @@
           "g": {
             "no": 1,
             "title": {
-              "uz": "Agar……u holda/bo'lsa……（shartli gap）",
-              "ru": "Если……то……（условное предложение）",
-              "tj": "Агар……пас……（ҷумлаи шартӣ）"
+              "uz": "so ... that",
+              "ru": "so ... that",
+              "tj": "so ... that"
             },
-            "title_zh": "如果……就……（条件句）",
+            "title_zh": "so ... that",
             "rule": {
-              "uz": "'如果…就…' tuzilmasi agar-u holda shartli gaplarni ifodalaydi. '如果' = agar, '就' = u holda/shunda. '如果' ko'pincha gapning avvalida, '就' esa natijaning avvalida keladi.",
-              "ru": "Конструкция '如果…就…' выражает условные предложения 'если-то'. '如果' = если, '就' = то. '如果' обычно стоит в начале предложения, '就' — перед следствием.",
-              "tj": "Сохтори '如果…就…' ҷумлаҳои шартии 'агар-пас'-ро ифода мекунад. '如果' = агар, '就' = пас. '如果' одатан аввали ҷумла, '就' — пеш аз натиҷа меояд."
+              "uz": "Qolip: so ... that. Misol: I was so tired that I fell asleep. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+              "ru": "Шаблон: so ... that. Пример: I was so tired that I fell asleep. Используйте его в коротких естественных фразах.",
+              "tj": "Қолаб: so ... that. Мисол: I was so tired that I fell asleep. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
             },
             "examples": [
               {
-                "zh": "如果你每天锻炼，就会很健康！",
-                "pinyin": "Rúguǒ nǐ měitiān duànliàn, jiù huì hěn jiànkāng!",
+                "zh": "I was so tired that I fell asleep.",
+                "pinyin": "",
                 "translation": {
-                  "uz": "Agar har kuni mashq qilsangiz, juda sog'lom bo'lasiz!",
-                  "ru": "Если будешь заниматься каждый день, будешь очень здоровым!",
-                  "tj": "Агар ҳар рӯз варзиш кунед, хеле солим мешавед!"
-                }
-              },
-              {
-                "zh": "如果天气好，我就去公园。",
-                "pinyin": "Rúguǒ tiānqì hǎo, wǒ jiù qù gōngyuán.",
-                "translation": {
-                  "uz": "Agar havo yaxshi bo'lsa, parkka boraman.",
-                  "ru": "Если погода будет хорошей, пойду в парк.",
-                  "tj": "Агар ҳаво хуб бошад, ба боғ меравам."
+                  "uz": "I was so tired that I fell asleep.",
+                  "ru": "I was so tired that I fell asleep.",
+                  "tj": "I was so tired that I fell asleep."
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "sentence_builder",
-          "sentence": {
-            "uz": "Agar havo yaxshi bo'lsa, parkka boraman.",
-            "ru": "Если погода будет хорошей, пойду в парк.",
-            "tj": "Агар ҳаво хуб бошад, ба боғ меравам."
-          },
-          "tokens": [
-            "我",
-            "公园",
-            "就",
-            "城市",
-            "去",
-            "认为",
-            "天气",
-            "好",
-            "如果"
-          ],
-          "answer_tokens": [
-            "如果",
-            "天气",
-            "好",
-            "我",
-            "就",
-            "去",
-            "公园"
-          ],
-          "explanation": {
-            "uz": "如果天气好，我就去公园。 — Rúguǒ tiānqì hǎo, wǒ jiù qù gōngyuán.",
-            "ru": "如果天气好，我就去公园。 — Rúguǒ tiānqì hǎo, wǒ jiù qù gōngyuán.",
-            "tj": "如果天气好，我就去公园。 — Rúguǒ tiānqì hǎo, wǒ jiù qù gōngyuán."
           }
         },
         {
@@ -935,70 +442,24 @@
           "g": {
             "no": 2,
             "title": {
-              "uz": "Murakkab holat to'ldiruvchisi: charchashdan……",
-              "ru": "Сложное дополнение состояния: устал настолько, что……",
-              "tj": "Пуркунандаи мураккаби ҳол: хаста аз……"
+              "uz": "expanded sentence",
+              "ru": "expanded sentence",
+              "tj": "expanded sentence"
             },
-            "title_zh": "复杂状态补语：累得……（极端状态）",
+            "title_zh": "expanded sentence",
             "rule": {
-              "uz": "'F+得+gap/murakkab ifoda' tuzilmasi harakatning natijasidagi holatni ifodalaydi. Oddiy holatdan farqli ravishda, bu yerda bir butun gap kelishi mumkin. Masalan: 累得睡不着 = charchashdan uxlolmayman.",
-              "ru": "Конструкция 'Гл+得+предложение/сложное выражение' описывает состояние в результате действия. В отличие от простого дополнения, здесь может быть целое предложение. Например: 累得睡不着 = так устал, что не могу спать.",
-              "tj": "Сохтори 'Ф+得+ҷумла/ибораи мураккаб' ҳолати натиҷаи амалро тасвир мекунад. Баръакси пуркунандаи оддӣ, ин ҷо ҷумлаи пурра омада метавонад. Масалан: 累得睡不着 = ончунон хастаам, ки хобам намебарад."
+              "uz": "Qolip: add time, place, or reason. Misol: I was so tired that I fell asleep. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+              "ru": "Шаблон: add time, place, or reason. Пример: I was so tired that I fell asleep. Используйте его в коротких естественных фразах.",
+              "tj": "Қолаб: add time, place, or reason. Мисол: I was so tired that I fell asleep. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
             },
             "examples": [
               {
-                "zh": "我累得下了班就想睡觉。",
-                "pinyin": "Wǒ lèi de xià le bān jiù xiǎng shuìjiào.",
+                "zh": "I was so tired that I fell asleep.",
+                "pinyin": "",
                 "translation": {
-                  "uz": "Shu qadar charchaganmanki, ishdan chiqqanimdan so'ng uxlashni xohlayman.",
-                  "ru": "Я так устал, что после работы сразу хочу спать.",
-                  "tj": "Ман ончунон хастаам, ки баъд аз кор фавран хоб кардан мехоҳам."
-                }
-              },
-              {
-                "zh": "他高兴得跳起来了！",
-                "pinyin": "Tā gāoxìng de tiào qǐlái le!",
-                "translation": {
-                  "uz": "U shu qadar xurshandki, sakrab ketdi!",
-                  "ru": "Он так обрадовался, что подпрыгнул!",
-                  "tj": "Вай ончунон хурсанд шуд, ки ҷаҳид!"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "_grammar",
-          "g": {
-            "no": 3,
-            "title": {
-              "uz": "Bir bo'g'inli sifat takrori: AA shakli (yaxshi-yaxshi, sekin-sekin...)",
-              "ru": "Удвоение односложных прилагательных: форма AA (хорошенько, медленно-медленно...)",
-              "tj": "Такрори сифатҳои яктаяко: шакли AA (хуб-хуб, оҳиста-оҳиста...)"
-            },
-            "title_zh": "单音节形容词重叠：AA式（好好、慢慢……）",
-            "rule": {
-              "uz": "Bir bo'g'inli sifat takrorlanib ravish sifatida ishlatilsa, kuchaytiruvchi ma'no beradi: 好好 = yaxshilab, 慢慢 = sekin-sekin, 早早 = ertaroq, 快快 = tezroq. Bu shakl ko'pincha fe'ldan oldin keladi.",
-              "ru": "Если односложное прилагательное удваивается и используется как наречие, оно приобретает усилительное значение: 好好 = хорошенько, 慢慢 = медленно-медленно, 早早 = пораньше, 快快 = побыстрее. Эта форма обычно стоит перед глаголом.",
-              "tj": "Агар сифати яктаяко такрор шуда ба сифати зарф истифода шавад, маънои тақвияткунанда пайдо мекунад: 好好 = хуб-хуб, 慢慢 = оҳиста-оҳиста, 早早 = барвақт-барвақт, 快快 = зуд-зуд. Ин шакл одатан пеш аз феъл меояд."
-            },
-            "examples": [
-              {
-                "zh": "你要好好休息！",
-                "pinyin": "Nǐ yào hǎohǎo xiūxi!",
-                "translation": {
-                  "uz": "Yaxshilab dam oling!",
-                  "ru": "Вам нужно хорошенько отдохнуть!",
-                  "tj": "Шумо бояд хуб-хуб истироҳат кунед!"
-                }
-              },
-              {
-                "zh": "慢慢走，别着急！",
-                "pinyin": "Mànmàn zǒu, bié zháojí!",
-                "translation": {
-                  "uz": "Sekin-sekin yuring, shoshilmang!",
-                  "ru": "Идите медленно, не торопитесь!",
-                  "tj": "Оҳиста-оҳиста равед, шитоб накунед!"
+                  "uz": "I was so tired that I fell asleep.",
+                  "ru": "I was so tired that I fell asleep.",
+                  "tj": "I was so tired that I fell asleep."
                 }
               }
             ]
@@ -1007,56 +468,56 @@
         {
           "type": "sentence_builder",
           "sentence": {
-            "uz": "Yaxshilab dam oling!",
-            "ru": "Вам нужно хорошенько отдохнуть!",
-            "tj": "Шумо бояд хуб-хуб истироҳат кунед!"
+            "uz": "I was so tired that I fell asleep.",
+            "ru": "I was so tired that I fell asleep.",
+            "tj": "I was so tired that I fell asleep."
           },
           "tokens": [
-            "要",
-            "好",
-            "好",
-            "城市",
-            "你",
-            "休息",
-            "如果"
+            "asleep",
+            "fell",
+            "I",
+            "that",
+            "tired",
+            "so",
+            "was",
+            "I",
+            "not"
           ],
           "answer_tokens": [
-            "你",
-            "要",
-            "好",
-            "好",
-            "休息"
+            "I",
+            "was",
+            "so",
+            "tired",
+            "that",
+            "I",
+            "fell",
+            "asleep"
           ],
           "explanation": {
-            "uz": "你要好好休息！ — Nǐ yào hǎohǎo xiūxi!",
-            "ru": "你要好好休息！ — Nǐ yào hǎohǎo xiūxi!",
-            "tj": "你要好好休息！ — Nǐ yào hǎohǎo xiūxi!"
+            "uz": "So‘z tartibiga e’tibor bering.",
+            "ru": "Обратите внимание на порядок слов.",
+            "tj": "Ба тартиби калимаҳо диққат диҳед."
           }
         },
         {
           "type": "quick_quiz",
           "prompt": {
-            "uz": "«U shu qadar xurshandki, sakrab ketdi!» — xitoychada qaysi biri?",
-            "ru": "«Он так обрадовался, что подпрыгнул!» — какое предложение по-китайски?",
-            "tj": "«Вай ончунон хурсанд шуд, ки ҷаҳид!» — кадом ҷумла ба хитоӣ аст?"
+            "uz": "“shahar” inglizchada qaysi?",
+            "ru": "“город” — как по-английски?",
+            "tj": "“шаҳр” ба англисӣ кадом аст?"
           },
           "title": {
-            "uz": "To'g'ri gapni tanlang",
-            "ru": "Выберите верное предложение",
-            "tj": "Ҷумлаи дурустро интихоб кунед"
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
           },
           "options": [
-            "他高兴得跳起来了！",
-            "慢慢走，别着急！",
-            "你要好好休息！",
-            "如果你每天锻炼，就会很健康！"
+            "city",
+            "so tired",
+            "stress",
+            "meeting"
           ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "他高兴得跳起来了！ — Tā gāoxìng de tiào qǐlái le!",
-            "ru": "他高兴得跳起来了！ — Tā gāoxìng de tiào qǐlái le!",
-            "tj": "他高兴得跳起来了！ — Tā gāoxìng de tiào qǐlái le!"
-          }
+          "correct_index": 0
         }
       ]
     },
@@ -1064,17 +525,37 @@
       "section_no": 3,
       "section_title": {
         "uz": "Mashq",
-        "ru": "Упражнение",
+        "ru": "Практика",
         "tj": "Машқ"
       },
       "section_purpose": "practice",
       "cards": [
         {
+          "type": "pinyin_choice",
+          "prompt": {
+            "uz": "«stress» talaffuzini tanlang:",
+            "ru": "Выберите произношение «stress»:",
+            "tj": "Талаффузи «stress»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Qanday o'qiladi?",
+            "ru": "Как читается?",
+            "tj": "Чӣ хел хонда мешавад?"
+          },
+          "options": [
+            "STRESS",
+            "CITY",
+            "SO-TIRED",
+            "MEETING"
+          ],
+          "correct_index": 0
+        },
+        {
           "type": "meaning_guess",
           "prompt": {
-            "uz": "别人 so'zining ma'nosini tanlang:",
-            "ru": "Выберите значение слова 别人:",
-            "tj": "Маънои калимаи 别人-ро интихоб кунед:"
+            "uz": "«meeting» ma'nosini tanlang:",
+            "ru": "Выберите значение «meeting»:",
+            "tj": "Маънои «meeting»-ро интихоб кунед:"
           },
           "title": {
             "uz": "Ma'nosi nima?",
@@ -1083,32 +564,27 @@
           },
           "options": [
             {
+              "uz": "uchrashuv",
+              "ru": "встреча",
+              "tj": "вохӯрӣ"
+            },
+            {
               "uz": "shahar",
               "ru": "город",
               "tj": "шаҳр"
             },
             {
-              "uz": "boshqa odamlar",
-              "ru": "другие люди",
-              "tj": "дигарон"
+              "uz": "juda charchagan",
+              "ru": "так устал",
+              "tj": "хеле хаста"
             },
             {
-              "uz": "deb o'ylamoq, hisoblamoq",
-              "ru": "считать, полагать",
-              "tj": "фикр кардан, ҳисобидан"
-            },
-            {
-              "uz": "agar",
-              "ru": "если",
-              "tj": "агар"
+              "uz": "stress",
+              "ru": "стресс",
+              "tj": "стресс"
             }
           ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "别人 = boshqa odamlar (biérén)",
-            "ru": "别人 = другие люди (biérén)",
-            "tj": "别人 = дигарон (biérén)"
-          }
+          "correct_index": 0
         },
         {
           "type": "listening_choice",
@@ -1117,127 +593,66 @@
             "ru": "Выберите, что вы услышали",
             "tj": "Он чи шунидед, интихоб кунед"
           },
-          "audio_text": "我不喜欢一直住在同一个城市，想去其他城市看一看。",
-          "pinyin": "Wǒ bù xǐhuan yìzhí zhù zài tóng yí ge chéngshì, xiǎng qù qítā chéngshì kàn yi kàn.",
+          "audio_text": "I was so tired that I fell asleep.",
+          "pinyin": "",
           "options": [
-            "我年轻的时候也这么想，但是那时候没有钱，如果有钱，就去了。",
-            "那您现在为什么不去？",
-            "我不喜欢一直住在同一个城市，想去其他城市看一看。",
-            "现在钱不是问题了，主要是没有时间。"
+            "I was so tired that I fell asleep.",
+            "I need so tired.",
+            "This is city.",
+            "Please wait."
           ],
-          "correct_index": 2,
+          "correct_index": 0,
           "explanation": {
-            "uz": "我不喜欢一直住在同一个城市，想去其他城市看一看。 — Men doim bir shaharda yashashni yoqtirmayman, boshqa shaharlarga borib ko'rmoqchiman.",
-            "ru": "我不喜欢一直住在同一个城市，想去其他城市看一看。 — Мне не нравится всё время жить в одном городе, хочу съездить посмотреть другие города.",
-            "tj": "我不喜欢一直住在同一个城市，想去其他城市看一看。 — Ман ҳамеша дар як шаҳр зиндагӣ карданро дӯст намедорам, мехоҳам ба шаҳрҳои дигар рафта бинам."
-          }
-        },
-        {
-          "type": "hanzi_choice",
-          "prompt": {
-            "uz": "guānxì qaysi ieroglif?",
-            "ru": "Какой иероглиф читается guānxì?",
-            "tj": "guānxì кадом иероглиф аст?"
-          },
-          "title": {
-            "uz": "Ieroglifni tanlang",
-            "ru": "Выберите иероглиф",
-            "tj": "Иероглифро интихоб кунед"
-          },
-          "options": [
-            "城市",
-            "认为",
-            "如果",
-            "关系"
-          ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "关系 = munosabat, aloqa (guānxì)",
-            "ru": "关系 = отношение, связь (guānxì)",
-            "tj": "关系 = муносибат, робита (guānxì)"
-          }
-        },
-        {
-          "type": "sentence_builder",
-          "sentence": {
-            "uz": "Unda hozir nega bormaysiz?",
-            "ru": "Тогда почему вы сейчас не едете?",
-            "tj": "Пас ҳоло чаро намеравед?"
-          },
-          "tokens": [
-            "您",
-            "不",
-            "去",
-            "城市",
-            "那",
-            "为什么",
-            "如果",
-            "现在"
-          ],
-          "answer_tokens": [
-            "那",
-            "您",
-            "现在",
-            "为什么",
-            "不",
-            "去"
-          ],
-          "explanation": {
-            "uz": "那您现在为什么不去？ — Nà nín xiànzài wèi shénme bù qù?",
-            "ru": "那您现在为什么不去？ — Nà nín xiànzài wèi shénme bù qù?",
-            "tj": "那您现在为什么不去？ — Nà nín xiànzài wèi shénme bù qù?"
+            "uz": "I was so tired that I fell asleep.",
+            "ru": "I was so tired that I fell asleep.",
+            "tj": "I was so tired that I fell asleep."
           }
         },
         {
           "type": "match_pairs",
           "pairs": [
             [
-              "城市",
+              "stress",
               {
-                "uz": "shahar",
-                "ru": "город",
-                "tj": "шаҳр"
+                "uz": "stress",
+                "ru": "стресс",
+                "tj": "стресс"
               }
             ],
             [
-              "如果",
+              "meeting",
               {
-                "uz": "agar",
-                "ru": "если",
-                "tj": "агар"
+                "uz": "uchrashuv",
+                "ru": "встреча",
+                "tj": "вохӯрӣ"
               }
             ],
             [
-              "认为",
+              "deadline",
               {
-                "uz": "deb o'ylamoq, hisoblamoq",
-                "ru": "считать, полагать",
-                "tj": "фикр кардан, ҳисобидан"
+                "uz": "muddat",
+                "ru": "срок",
+                "tj": "муҳлат"
               }
             ],
             [
-              "皮鞋",
+              "break",
               {
-                "uz": "charm tufli",
-                "ru": "кожаная обувь",
-                "tj": "пойафзоли чармӣ"
+                "uz": "tanaffus",
+                "ru": "перерыв",
+                "tj": "танаффус"
               }
             ]
-          ],
-          "explanation": {
-            "uz": "Juftliklar darsdagi yangi so'zlardan olindi.",
-            "ru": "Пары взяты из новых слов урока.",
-            "tj": "Ҷуфтҳо аз калимаҳои нави дарс гирифта шудаанд."
-          }
+          ]
         },
         {
           "type": "pronunciation",
-          "phrase": "城市",
-          "pinyin": "chéngshì",
+          "phrase": "I was so tired that I fell asleep.",
+          "pinyin": "",
           "translation": {
-            "uz": "shahar",
-            "ru": "город",
-            "tj": "шаҳр"
+            "uz": "I was so tired that I fell asleep.",
+            "ru": "I was so tired that I fell asleep.",
+            "tj": "I was so tired that I fell asleep."
           }
         }
       ]
@@ -1254,23 +669,44 @@
         {
           "type": "listening_choice",
           "title": {
-            "uz": "Tinglang — nima dedi?",
-            "ru": "Послушайте — что сказали?",
-            "tj": "Гӯш кунед — чӣ гуфт?"
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
           },
-          "audio_text": "我不喜欢一直住在同一个城市，想去其他城市看一看。",
-          "pinyin": "Wǒ bù xǐhuan yìzhí zhù zài tóng yí ge chéngshì, xiǎng qù qítā chéngshì kàn yi kàn.",
+          "audio_text": "I was so tired that I fell asleep.",
+          "pinyin": "",
           "options": [
-            "现在钱不是问题了，主要是没有时间。",
-            "那您现在为什么不去？",
-            "我不喜欢一直住在同一个城市，想去其他城市看一看。",
-            "我年轻的时候也这么想，但是那时候没有钱，如果有钱，就去了。"
+            "I was so tired that I fell asleep.",
+            "I have city.",
+            "Where is so tired?",
+            "No problem."
           ],
-          "correct_index": 2,
+          "correct_index": 0,
           "explanation": {
-            "uz": "我不喜欢一直住在同一个城市，想去其他城市看一看。 — Men doim bir shaharda yashashni yoqtirmayman, boshqa shaharlarga borib ko'rmoqchiman.",
-            "ru": "我不喜欢一直住在同一个城市，想去其他城市看一看。 — Мне не нравится всё время жить в одном городе, хочу съездить посмотреть другие города.",
-            "tj": "我不喜欢一直住在同一个城市，想去其他城市看一看。 — Ман ҳамеша дар як шаҳр зиндагӣ карданро дӯст намедорам, мехоҳам ба шаҳрҳои дигар рафта бинам."
+            "uz": "I was so tired that I fell asleep.",
+            "ru": "I was so tired that I fell asleep.",
+            "tj": "I was so tired that I fell asleep."
+          }
+        },
+        {
+          "type": "gap_fill",
+          "sentence": "____ was so tired that I fell asleep.",
+          "prompt": {
+            "uz": "Bo'sh joyga mos so'zni tanlang:",
+            "ru": "Выберите подходящее слово:",
+            "tj": "Калимаи мувофиқро интихоб кунед:"
+          },
+          "options": [
+            "city",
+            "so tired",
+            "stress",
+            "not"
+          ],
+          "correct_index": 0,
+          "explanation": {
+            "uz": "To‘g‘ri javob: city.",
+            "ru": "Правильный ответ: city.",
+            "tj": "Ҷавоби дуруст: city."
           }
         },
         {
@@ -1282,119 +718,48 @@
           },
           "lines": [
             {
-              "speaker": "小丽",
-              "zh": "我不喜欢一直住在同一个城市，想去其他城市看一看。",
+              "speaker": "A",
+              "zh": "Can you give an example?",
               "blank": false
             },
             {
-              "speaker": "周明",
-              "zh": "我年轻的时候也这么想，但是那时候没有钱，如果有钱，就去了。",
-              "blank": false
-            },
-            {
-              "speaker": "小丽",
-              "zh": "那您现在为什么不去？",
-              "blank": false
-            },
-            {
-              "speaker": "周明",
-              "zh": "现在钱不是问题了，主要是没有时间。",
-              "blank": false
-            },
-            {
-              "speaker": "小丽",
-              "zh": "我认为现在您有时间也不会出去玩儿。",
-              "blank": false
-            },
-            {
-              "speaker": "周明",
+              "speaker": "B",
               "zh": "",
               "blank": true
             }
           ],
           "options": [
-            "那您现在为什么不去？",
-            "我年轻的时候也这么想，但是那时候没有钱，如果有钱，就去了。",
-            "我不喜欢一直住在同一个城市，想去其他城市看一看。",
-            "你说得对，我现在累得下了班就想睡觉。"
+            "I was so tired that I fell asleep.",
+            "I like city.",
+            "Good morning!",
+            "Thank you!"
           ],
-          "correct_index": 3,
+          "correct_index": 0,
           "explanation": {
-            "uz": "To'g'ri javob: 你说得对，我现在累得下了班就想睡觉。",
-            "ru": "Правильный ответ: 你说得对，我现在累得下了班就想睡觉。",
-            "tj": "Ҷавоби дуруст: 你说得对，我现在累得下了班就想睡觉。"
+            "uz": "I was so tired that I fell asleep.",
+            "ru": "I was so tired that I fell asleep.",
+            "tj": "I was so tired that I fell asleep."
           }
         },
         {
           "type": "quick_quiz",
           "prompt": {
-            "uz": "Dialogda 小丽 avval nima deydi?",
-            "ru": "Что 小丽 говорит в начале диалога?",
-            "tj": "Дар муколама 小丽 аввал чӣ мегӯяд?"
+            "uz": "“shahar” inglizchada qaysi?",
+            "ru": "“город” — как по-английски?",
+            "tj": "“шаҳр” ба англисӣ кадом аст?"
           },
           "title": {
-            "uz": "Dialogdan savol:",
-            "ru": "Вопрос по диалогу:",
-            "tj": "Савол аз муколама:"
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
           },
           "options": [
-            "那您现在为什么不去？",
-            "我不喜欢一直住在同一个城市，想去其他城市看一看。",
-            "我年轻的时候也这么想，但是那时候没有钱，如果有钱，就去了。",
-            "现在钱不是问题了，主要是没有时间。"
+            "city",
+            "so tired",
+            "stress",
+            "meeting"
           ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "To'g'ri javob: 我不喜欢一直住在同一个城市，想去其他城市看一看。",
-            "ru": "Правильный ответ: 我不喜欢一直住在同一个城市，想去其他城市看一看。",
-            "tj": "Ҷавоби дуруст: 我不喜欢一直住在同一个城市，想去其他城市看一看。"
-          }
-        },
-        {
-          "type": "gap_fill",
-          "sentence": "____不喜欢一直住在同一个城市，想去其他城市看一看。",
-          "prompt": {
-            "uz": "Bo'sh joyga mos ieroglifni tanlang:",
-            "ru": "Выберите подходящий иероглиф:",
-            "tj": "Иероглифи мувофиқро интихоб кунед:"
-          },
-          "options": [
-            "电",
-            "我",
-            "旧",
-            "下"
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "To'g'ri: 我 — 我不喜欢一直住在同一个城市，想去其他城市看一看。 (Men doim bir shaharda yashashni yoqtirmayman, boshqa shaharlarga borib ko'rmoqchiman.)",
-            "ru": "Верно: 我 — 我不喜欢一直住在同一个城市，想去其他城市看一看。 (Мне не нравится всё время жить в одном городе, хочу съездить посмотреть другие города.)",
-            "tj": "Дуруст: 我 — 我不喜欢一直住在同一个城市，想去其他城市看一看。 (Ман ҳамеша дар як шаҳр зиндагӣ карданро дӯст намедорам, мехоҳам ба шаҳрҳои дигар рафта бинам.)"
-          }
-        },
-        {
-          "type": "quick_quiz",
-          "prompt": {
-            "uz": "Dialog oxirida 周明 nima deydi?",
-            "ru": "Что 周明 говорит в конце диалога?",
-            "tj": "Дар охири муколама 周明 чӣ мегӯяд?"
-          },
-          "title": {
-            "uz": "Dialogdan savol:",
-            "ru": "Вопрос по диалогу:",
-            "tj": "Савол аз муколама:"
-          },
-          "options": [
-            "我年轻的时候也这么想，但是那时候没有钱，如果有钱，就去了。",
-            "你说得对，我现在累得下了班就想睡觉。",
-            "那您现在为什么不去？",
-            "我不喜欢一直住在同一个城市，想去其他城市看一看。"
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "To'g'ri javob: 你说得对，我现在累得下了班就想睡觉。",
-            "ru": "Правильный ответ: 你说得对，我现在累得下了班就想睡觉。",
-            "tj": "Ҷавоби дуруст: 你说得对，我现在累得下了班就想睡觉。"
-          }
+          "correct_index": 0
         }
       ]
     }

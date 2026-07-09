@@ -130,8 +130,19 @@ def _language_label(value: str, lang: str) -> str:
 def _level_label(value: str, lang: str) -> str:
     if not value:
         return "—"
-    if value.startswith("hsk"):
-        return value.upper()
+    level_labels = {
+        "beginner": {
+            "tj": "Оғозӣ",
+            "uz": "Boshlang'ich",
+            "ru": "Начальный",
+        },
+        "hsk1": {"tj": "Beginner", "uz": "Beginner", "ru": "Beginner"},
+        "hsk2": {"tj": "Elementary", "uz": "Elementary", "ru": "Elementary"},
+        "hsk3": {"tj": "Intermediate", "uz": "Intermediate", "ru": "Intermediate"},
+        "hsk4": {"tj": "Advanced", "uz": "Advanced", "ru": "Advanced"},
+    }
+    if value in level_labels:
+        return level_labels[value].get(lang, level_labels[value]["ru"])
     beginner = {
         "tj": "Оғозӣ",
         "uz": "Boshlang'ich",
@@ -585,7 +596,7 @@ async def command_level_callback_handler(callback: CallbackQuery, session):
     except Exception:
         pass
 
-    level_label = level.upper() if level.startswith("hsk") else level
+    level_label = _level_label(level, lang)
 
     if lang == "tj":
         msg = f"✅ Дараҷа нав шуд: {level_label}"

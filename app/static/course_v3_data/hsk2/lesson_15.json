@@ -2,30 +2,19 @@
   "schema_version": 2,
   "level": "hsk2",
   "lesson_id": 15,
-  "title": "新年就要到了",
+  "title": "Holidays and travel",
   "subtitle": {
-    "uz": "Yaqin kelajakda bo'ladigan voqeani bildiruvchi '要……了' / '快要……了' va '都……了' konstruktsiyalarini o'rganish.",
-    "ru": "Изучение конструкций '要……了' / '快要……了' для выражения ближайшего будущего и конструкции '都……了'.",
-    "tj": "Омӯзиши конструксияҳои '要……了' / '快要……了' барои ифодаи оянда ва '都……了'."
+    "uz": "Holidays and travel: so'zlar, gaplar va dialoglar.",
+    "ru": "Holidays and travel: слова, фразы и диалоги.",
+    "tj": "Holidays and travel: калимаҳо, ҷумлаҳо ва муколамаҳо."
   },
   "intro_prebuilt": true,
   "grammar_prebuilt": true,
   "active_words": [
     {
       "no": 1,
-      "zh": "日",
-      "pinyin": "rì",
-      "pos": "n.",
-      "meaning": {
-        "uz": "kun, sana",
-        "ru": "день, дата",
-        "tj": "рӯз, сана"
-      }
-    },
-    {
-      "no": 2,
-      "zh": "新年",
-      "pinyin": "xīnnián",
+      "zh": "new year",
+      "pinyin": "NEW-YEAR",
       "pos": "n.",
       "meaning": {
         "uz": "yangi yil",
@@ -34,124 +23,58 @@
       }
     },
     {
-      "no": 3,
-      "zh": "票",
-      "pinyin": "piào",
+      "no": 2,
+      "zh": "holiday",
+      "pinyin": "HOLIDAY",
       "pos": "n.",
       "meaning": {
-        "uz": "chipta, bilet",
+        "uz": "bayram / ta’til",
+        "ru": "праздник / каникулы",
+        "tj": "ид / таътил"
+      }
+    },
+    {
+      "no": 3,
+      "zh": "ticket",
+      "pinyin": "TICKET",
+      "pos": "n.",
+      "meaning": {
+        "uz": "chipta",
         "ru": "билет",
-        "tj": "чиптаи сафар"
+        "tj": "чипта"
       }
     },
     {
       "no": 4,
-      "zh": "火车站",
-      "pinyin": "huǒchēzhàn",
-      "pos": "n.",
+      "zh": "soon",
+      "pinyin": "SOON",
+      "pos": "adv.",
       "meaning": {
-        "uz": "temir yo'l stantsiyasi, vokzal",
-        "ru": "железнодорожная станция, вокзал",
-        "tj": "истгоҳи роҳи оҳан, вокзал"
+        "uz": "tez orada",
+        "ru": "скоро",
+        "tj": "ба зудӣ"
       }
     },
     {
       "no": 5,
-      "zh": "大家",
-      "pinyin": "dàjiā",
-      "pos": "pron.",
-      "meaning": {
-        "uz": "hamma, barchalar",
-        "ru": "все, каждый",
-        "tj": "ҳама, тамоми"
-      }
-    },
-    {
-      "no": 6,
-      "zh": "更",
-      "pinyin": "gèng",
-      "pos": "adv.",
-      "meaning": {
-        "uz": "yanada, bundan ham ko'proq",
-        "ru": "ещё более, ещё больше",
-        "tj": "ҳатто бештар, боз ҳам зиёдтар"
-      }
-    },
-    {
-      "no": 7,
-      "zh": "妹妹",
-      "pinyin": "mèimei",
-      "pos": "n.",
-      "meaning": {
-        "uz": "singil",
-        "ru": "младшая сестра",
-        "tj": "хоҳари хурдӣ"
-      }
-    },
-    {
-      "no": 8,
-      "zh": "阴",
-      "pinyin": "yīn",
-      "pos": "adj.",
-      "meaning": {
-        "uz": "bulutli, quyosh ko'rinmaydi",
-        "ru": "пасмурный, облачный",
-        "tj": "абрнок, офтоб намоён нест"
-      }
-    },
-    {
-      "no": 9,
-      "zh": "旅游",
-      "pinyin": "lǚyóu",
+      "zh": "travel",
+      "pinyin": "TRAVEL",
       "pos": "v.",
       "meaning": {
         "uz": "sayohat qilmoq",
         "ru": "путешествовать",
-        "tj": "сафар кардан, гашт кардан"
+        "tj": "сафар кардан"
       }
     },
     {
-      "no": 10,
-      "zh": "伞",
-      "pinyin": "sǎn",
+      "no": 6,
+      "zh": "gift",
+      "pinyin": "GIFT",
       "pos": "n.",
       "meaning": {
-        "uz": "soyabon, qoʻldagi yomg'irdan saqlash",
-        "ru": "зонт",
-        "tj": "чатр"
-      }
-    },
-    {
-      "no": 11,
-      "zh": "月",
-      "pinyin": "yuè",
-      "pos": "n.",
-      "meaning": {
-        "uz": "oy (vaqt o'lchovi)",
-        "ru": "месяц",
-        "tj": "моҳ (вақти ченкунӣ)"
-      }
-    },
-    {
-      "no": 12,
-      "zh": "节日",
-      "pinyin": "jiérì",
-      "pos": "n.",
-      "meaning": {
-        "uz": "bayram, tantana",
-        "ru": "праздник",
-        "tj": "ид, ҷашн"
-      }
-    },
-    {
-      "no": 13,
-      "zh": "祝",
-      "pinyin": "zhù",
-      "pos": "v.",
-      "meaning": {
-        "uz": "tilak bildirmoq, tabriklamoq",
-        "ru": "желать, поздравлять",
-        "tj": "орзу кардан, табрик гуфтан"
+        "uz": "sovg‘a",
+        "ru": "подарок",
+        "tj": "туҳфа"
       }
     }
   ],
@@ -159,33 +82,24 @@
     {
       "no": 1,
       "title": {
-        "uz": "'Yào……le' yaqin kelajak konstruktsiyasi",
-        "ru": "Конструкция '要……了' ближайшего будущего",
-        "tj": "Конструксияи '要……了' ояндаи наздик"
+        "uz": "be going to + verb",
+        "ru": "be going to + verb",
+        "tj": "be going to + verb"
       },
-      "title_zh": "动作的状态\"要……了\"",
+      "title_zh": "be going to + verb",
       "rule": {
-        "uz": "'Yào……le' yoki 'jiù yào……le' yoki 'kuài yào……le' konstruktsiyasi yaqin kelajakda bo'ladigan voqeani bildiradi: 'tez orada …bo'ladi / …qilmoqchi'. 'Jiù yào' aniqroq vaqt bilan, 'kuài yào' esa umumiy 'tez orada' ma'nosida ishlatiladi. Gap oxiridagi 'le' o'zgarish yoki yangi holat yaqinligini ko'rsatadi.",
-        "ru": "Конструкции '要……了', '就要……了' или '快要……了' обозначают события ближайшего будущего: 'вот-вот произойдёт'. '就要' используется с более конкретным временем, '快要' — в общем смысле 'скоро'. Частица 'le' в конце указывает на близость изменения или нового состояния.",
-        "tj": "Конструксияҳои '要……了', '就要……了' ё '快要……了' рӯйдодҳои оянда наздикро нишон медиҳанд: 'зуд мешавад / қариб'. '就要' бо вақти мушаххастар, '快要' дар маъноии умумии 'зуд' истифода мешавад. Зарраи 'le' дар охири ҷумла наздикии тағйирот ё ҳолати навро нишон медиҳад."
+        "uz": "Qolip: be going to + verb. Misol: New Year is coming soon. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+        "ru": "Шаблон: be going to + verb. Пример: New Year is coming soon. Используйте его в коротких естественных фразах.",
+        "tj": "Қолаб: be going to + verb. Мисол: New Year is coming soon. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
       },
       "examples": [
         {
-          "zh": "新年就要到了。",
-          "pinyin": "Xīnnián jiù yào dào le.",
+          "zh": "New Year is coming soon.",
+          "pinyin": "",
           "translation": {
-            "uz": "Yangi yil yaqinlashib qoldi.",
-            "ru": "Новый год уже совсем близко.",
-            "tj": "Соли нав наздик шуд."
-          }
-        },
-        {
-          "zh": "快要下雨了，带上伞吧。",
-          "pinyin": "Kuài yào xiàyǔ le, dài shàng sǎn ba.",
-          "translation": {
-            "uz": "Tez orada yomg'ir yog'adi, soyabon oling.",
-            "ru": "Скоро пойдёт дождь, возьмите зонт.",
-            "tj": "Зуд борон мешавад, чатр гиред."
+            "uz": "New Year is coming soon.",
+            "ru": "New Year is coming soon.",
+            "tj": "New Year is coming soon."
           }
         }
       ]
@@ -193,67 +107,24 @@
     {
       "no": 2,
       "title": {
-        "uz": "'Dōu……le' ta'kid konstruktsiyasi",
-        "ru": "Конструкция '都……了' для выражения удивления",
-        "tj": "Конструксияи '都……了' барои таъкид"
+        "uz": "expanded sentence",
+        "ru": "expanded sentence",
+        "tj": "expanded sentence"
       },
-      "title_zh": "\"都……了\"",
+      "title_zh": "expanded sentence",
       "rule": {
-        "uz": "'Dōu……le' konstruktsiyasi ta'kid bildiradi: vaqt yoki miqdor allaqachon ancha ko'p yoki kutilgandan ortiq bo'lib qoldi. O'zbek tilidagi '…bo'lib ketdi!' yoki '…bo'lib qoldi-ku!' iborasiga o'xshaydi. Ko'pincha hayrat yoki norozilik ifodalamoqda qo'llanadi.",
-        "ru": "Конструкция '都……了' выражает акцент: время или количество уже достигло неожиданного или чрезмерного уровня. Аналог русского 'уже … же!' или 'ну и…!'. Часто выражает удивление или недовольство.",
-        "tj": "Конструксияи '都……了' таъкид мекунад: вақт ё миқдор аллакай ба сатҳи ғайричашмдошт ё аз ҳад зиёд расидааст. Ба ибораҳои '…шуду рафт!' ё '…шуд-ку!' дар тоҷикӣ монанд аст. Аксар вақт ҳайрат ё норозигиро ифода мекунад."
+        "uz": "Qolip: add time, place, or reason. Misol: New Year is coming soon. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+        "ru": "Шаблон: add time, place, or reason. Пример: New Year is coming soon. Используйте его в коротких естественных фразах.",
+        "tj": "Қолаб: add time, place, or reason. Мисол: New Year is coming soon. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
       },
       "examples": [
         {
-          "zh": "都八点四十了！",
-          "pinyin": "Dōu bā diǎn sìshí le!",
+          "zh": "New Year is coming soon.",
+          "pinyin": "",
           "translation": {
-            "uz": "Soat sakkiz qirq bo'lib qoldi!",
-            "ru": "Уже восемь сорок!",
-            "tj": "Дигар соати ҳашту чил шуд!"
-          }
-        },
-        {
-          "zh": "都等她半个小时了！",
-          "pinyin": "Dōu děng tā bàn ge xiǎoshí le!",
-          "translation": {
-            "uz": "Uni yarim soatdan beri kutib turibmiz!",
-            "ru": "Мы уже полчаса её ждём!",
-            "tj": "Мо нимсоат интизораш шудем!"
-          }
-        }
-      ]
-    },
-    {
-      "no": 3,
-      "title": {
-        "uz": "'Gèng' (yanada, bundan ham ko'proq) ravishining ishlatilishi",
-        "ru": "Использование наречия '更' (ещё более, ещё больше)",
-        "tj": "Истифодаи зарфи '更' (ҳатто бештар, боз ҳам зиёдтар)"
-      },
-      "title_zh": "副词\"更\"的用法",
-      "rule": {
-        "uz": "'更' ravishi sifat yoki ravish oldidan kelib, qiyoslashni kuchaytiradi: 'yanada, bundan ham ko'proq'.\nTuzilish: A 比 B 更 + sifat (A dan B dan yanada …).\n'更' mustaqil ham qo'llanadi: '我希望明年更好' (Umid qilamanki keyingi yil yanada yaxshi bo'lsin).\n'还' (hái) bilan almashtirib ham ishlatilishi mumkin.",
-        "ru": "Наречие '更' стоит перед прилагательным или наречием и усиливает сравнение: 'ещё более, ещё больше'.\nСтруктура: A 比 B 更 + прилагательное (A ещё более … чем B).\n'更' употребляется и самостоятельно: '我希望明年更好' (Надеюсь, в следующем году будет ещё лучше).\nМожет взаимозаменяться с '还' (hái) в некоторых контекстах.",
-        "tj": "Зарфи '更' пеш аз сифат ё зарф меояд ва муқоисаро тақвият медиҳад: 'ҳатто бештар, боз ҳам зиёдтар'.\nСохтор: A 比 B 更 + сифат (A аз B ҳатто … бештар).\n'更' мустақилона ҳам истифода мешавад: '我希望明年更好' (Умедворам соли оянда боз ҳам беҳтар шавад).\nДар баъзе контекстҳо бо '还' (hái) иваз шуда метавонад."
-      },
-      "examples": [
-        {
-          "zh": "希望我们的公司明年更好！",
-          "pinyin": "Xīwàng wǒmen de gōngsī míngnián gèng hǎo!",
-          "translation": {
-            "uz": "Umid qilamanki kompaniyamiz kelasi yil yanada yaxshilansin!",
-            "ru": "Надеюсь, в следующем году наша компания будет ещё лучше!",
-            "tj": "Умедворам ширкати мо соли оянда боз ҳам беҳтар шавад!"
-          }
-        },
-        {
-          "zh": "北京比这儿更好玩儿。",
-          "pinyin": "Běijīng bǐ zhèr gèng hǎo wánr.",
-          "translation": {
-            "uz": "Pekin bu yerdan yanada qiziqarliroq.",
-            "ru": "В Пекине ещё интереснее, чем здесь.",
-            "tj": "Пекин аз ин ҷо боз ҳам ҷолибтар аст."
+            "uz": "New Year is coming soon.",
+            "ru": "New Year is coming soon.",
+            "tj": "New Year is coming soon."
           }
         }
       ]
@@ -262,196 +133,87 @@
   "dialogues": [
     {
       "scene": {
-        "uz": "Do'st uyida",
-        "ru": "В доме друга",
-        "tj": "Дар хонаи дӯст"
+        "uz": "Dars boshida",
+        "ru": "В начале урока",
+        "tj": "Дар оғози дарс"
       },
       "dialogue": [
         {
           "speaker": "A",
-          "zh": "今天是12月20日，新年就要到了。",
-          "pinyin": "Jīntiān shì shí'èr yuè èrshí rì, xīnnián jiù yào dào le.",
+          "zh": "What are we learning today?",
+          "pinyin": "",
           "text": {
-            "uz": "Bugun 20-dekabr, yangi yil yaqinlashib qoldi.",
-            "ru": "Сегодня 20 декабря, новый год уже совсем скоро.",
-            "tj": "Имрӯз 20 декабр аст, соли нав наздик шуд."
+            "uz": "Bugun nimani o‘rganamiz?",
+            "ru": "Что мы сегодня изучаем?",
+            "tj": "Имрӯз чиро меомӯзем?"
           }
         },
         {
           "speaker": "B",
-          "zh": "新年你准备做什么？",
-          "pinyin": "Xīnnián nǐ zhǔnbèi zuò shénme?",
+          "zh": "We are learning Holidays and travel.",
+          "pinyin": "",
           "text": {
-            "uz": "Yangi yilda nima qilishni rejalashtirganmisiz?",
-            "ru": "Что ты планируешь делать на новый год?",
-            "tj": "Дар соли нав чӣ кор карданӣ ҳастед?"
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "我想去北京旅游，北京很不错，我去过一次。",
-          "pinyin": "Wǒ xiǎng qù Běijīng lǚyóu, Běijīng hěn búcuò, wǒ qùguo yí cì.",
-          "text": {
-            "uz": "Pekinga sayohat qilmoqchiman, Pekin juda yaxshi joy, bir marta borgan edim.",
-            "ru": "Хочу съездить в Пекин, там очень хорошо, я уже был(а) там один раз.",
-            "tj": "Мехоҳам ба Пекин сафар кунам, Пекин хеле хуб аст, як маротиба рафтаам."
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "你买票了吗？",
-          "pinyin": "Nǐ mǎi piào le ma?",
-          "text": {
-            "uz": "Chipta oldingizmi?",
-            "ru": "Ты уже купил(а) билет?",
-            "tj": "Оё шумо чиптаи сафар харидаед?"
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "还没有呢，明天就去火车站买票。",
-          "pinyin": "Hái méiyǒu ne, míngtiān jiù qù huǒchēzhàn mǎi piào.",
-          "text": {
-            "uz": "Hali olmadim, ertaga vokzalga borib chipta olaman.",
-            "ru": "Ещё нет, завтра пойду на вокзал за билетом.",
-            "tj": "Ҳанӯз не, фардо ба вокзал мераваму чипта мехарам."
+            "uz": "Bugun Holidays and travel mavzusini o‘rganamiz.",
+            "ru": "Мы изучаем тему Holidays and travel.",
+            "tj": "Мо мавзӯи Holidays and travel-ро меомӯзем."
           }
         }
       ]
     },
     {
       "scene": {
-        "uz": "Kompaniyada",
-        "ru": "В компании",
-        "tj": "Дар ширкат"
+        "uz": "Misol gap",
+        "ru": "Пример фразы",
+        "tj": "Ҷумлаи намуна"
       },
       "dialogue": [
         {
           "speaker": "A",
-          "zh": "时间过得真快，新的一年快要到了！",
-          "pinyin": "Shíjiān guò de zhēn kuài, xīn de yì nián kuài yào dào le!",
+          "zh": "Can you give an example?",
+          "pinyin": "",
           "text": {
-            "uz": "Vaqt juda tez o'tar ekan, yangi yil ham tez orada keladi!",
-            "ru": "Время летит так быстро, новый год уже вот-вот!",
-            "tj": "Вақт хеле зуд мегузарад, соли нав ҳам наздик шуд!"
+            "uz": "Misol keltira olasizmi?",
+            "ru": "Можете привести пример?",
+            "tj": "Метавонед мисол диҳед?"
           }
         },
         {
           "speaker": "B",
-          "zh": "是啊，谢谢大家这一年对我的帮助！",
-          "pinyin": "Shì a, xièxie dàjiā zhè yì nián duì wǒ de bāngzhù!",
+          "zh": "New Year is coming soon.",
+          "pinyin": "",
           "text": {
-            "uz": "Ha, hammaga bu yil menga bergan yordamlari uchun katta rahmat!",
-            "ru": "Да, спасибо всем за помощь в этом году!",
-            "tj": "Бале, ташаккур ба ҳама барои ёрии ин сол!"
-          }
-        },
-        {
-          "speaker": "C",
-          "zh": "希望我们的公司明年更好！",
-          "pinyin": "Xīwàng wǒmen de gōngsī míngnián gèng hǎo!",
-          "text": {
-            "uz": "Umid qilamanki kompaniyamiz kelasi yil yanada yaxshilansin!",
-            "ru": "Надеюсь, в следующем году наша компания будет ещё лучше!",
-            "tj": "Умедворам ширкати мо соли оянда боз ҳам беҳтар шавад!"
+            "uz": "New Year is coming soon.",
+            "ru": "New Year is coming soon.",
+            "tj": "New Year is coming soon."
           }
         }
       ]
     },
     {
       "scene": {
-        "uz": "Stantsiyada",
-        "ru": "На станции",
-        "tj": "Дар истгоҳ"
+        "uz": "Qisqa suhbat",
+        "ru": "Короткий разговор",
+        "tj": "Суҳбати кӯтоҳ"
       },
       "dialogue": [
         {
           "speaker": "A",
-          "zh": "你妹妹怎么还没来？都八点四十了！",
-          "pinyin": "Nǐ mèimei zěnme hái méi lái? Dōu bā diǎn sìshí le!",
+          "zh": "Do you know the word \"new year\"?",
+          "pinyin": "",
           "text": {
-            "uz": "Singling nima uchun hali kelmadi? Soat sakkiz qirq bo'lib qoldi!",
-            "ru": "Почему твоя сестра ещё не пришла? Уже восемь сорок!",
-            "tj": "Чаро хоҳари хурдиат ҳанӯз наомад? Дигар соати ҳашту чил шуд!"
+            "uz": "“new year” so‘zini bilasizmi?",
+            "ru": "Вы знаете слово “new year”?",
+            "tj": "Оё калимаи “new year”-ро медонед?"
           }
         },
         {
           "speaker": "B",
-          "zh": "我们再等她几分钟吧。",
-          "pinyin": "Wǒmen zài děng tā jǐ fēnzhōng ba.",
+          "zh": "Yes. It means yangi yil.",
+          "pinyin": "",
           "text": {
-            "uz": "Uni yana bir necha daqiqa kutaylik.",
-            "ru": "Давай подождём её ещё несколько минут.",
-            "tj": "Биёед чанд дақиқаи дигар интизораш шавем."
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "都等她半个小时了！",
-          "pinyin": "Dōu děng tā bàn ge xiǎoshí le!",
-          "text": {
-            "uz": "Uni yarim soatdan beri kutib turibmiz!",
-            "ru": "Мы уже полчаса её ждём!",
-            "tj": "Мо нимсоат интизораш шудем!"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "她来了，我听见她说话了。",
-          "pinyin": "Tā lái le, wǒ tīngjiàn tā shuōhuà le.",
-          "text": {
-            "uz": "U keldi, uning gapirayotganini eshitdim.",
-            "ru": "Она пришла, я слышу, как она говорит.",
-            "tj": "Вай омад, ман садои ӯро шунидам."
-          }
-        }
-      ]
-    },
-    {
-      "scene": {
-        "uz": "Qahvaxona oldida",
-        "ru": "У входа в кафе",
-        "tj": "Дар пеши қаҳвахона"
-      },
-      "dialogue": [
-        {
-          "speaker": "A",
-          "zh": "天阴了，我要回去了。",
-          "pinyin": "Tiān yīn le, wǒ yào huíqù le.",
-          "text": {
-            "uz": "Osmon bulutlandi, ketishim kerak.",
-            "ru": "Небо затянулось тучами, мне нужно идти.",
-            "tj": "Осмон абрнок шуд, бояд бираваm."
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "好的，快要下雨了，你路上慢点儿。",
-          "pinyin": "Hǎo de, kuài yào xiàyǔ le, nǐ lùshang màn diǎnr.",
-          "text": {
-            "uz": "Yaxshi, tez orada yomg'ir yog'adi, yo'lda ehtiyot bo'ling.",
-            "ru": "Хорошо, скоро пойдёт дождь, будьте осторожны в дороге.",
-            "tj": "Хуб, зуд борон мешавад, дар роҳ эҳтиёт шавед."
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "没关系，我坐公共汽车。",
-          "pinyin": "Méi guānxi, wǒ zuò gōnggòng qìchē.",
-          "text": {
-            "uz": "Muammo yo'q, men avtobus bilan boraman.",
-            "ru": "Ничего, я поеду на автобусе.",
-            "tj": "Мушкил нест, ман бо автобус мераваm."
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "好的，再见。",
-          "pinyin": "Hǎo de, zàijiàn.",
-          "text": {
-            "uz": "Yaxshi, xayr.",
-            "ru": "Хорошо, до свидания.",
-            "tj": "Хуб, хайр."
+            "uz": "Ha. Ma’nosi: yangi yil.",
+            "ru": "Да. Значение: новый год.",
+            "tj": "Бале. Маънояш: соли нав."
           }
         }
       ]
@@ -471,13 +233,13 @@
           "type": "active_word",
           "word": {
             "no": 1,
-            "zh": "日",
-            "pinyin": "rì",
+            "zh": "new year",
+            "pinyin": "NEW-YEAR",
             "pos": "n.",
             "meaning": {
-              "uz": "kun, sana",
-              "ru": "день, дата",
-              "tj": "рӯз, сана"
+              "uz": "yangi yil",
+              "ru": "новый год",
+              "tj": "соли нав"
             }
           }
         },
@@ -485,52 +247,27 @@
           "type": "active_word",
           "word": {
             "no": 2,
-            "zh": "新年",
-            "pinyin": "xīnnián",
+            "zh": "holiday",
+            "pinyin": "HOLIDAY",
             "pos": "n.",
             "meaning": {
-              "uz": "yangi yil",
-              "ru": "новый год",
-              "tj": "соли нав"
+              "uz": "bayram / ta’til",
+              "ru": "праздник / каникулы",
+              "tj": "ид / таътил"
             }
-          }
-        },
-        {
-          "type": "pinyin_choice",
-          "prompt": {
-            "uz": "日 talaffuzini tanlang:",
-            "ru": "Выберите произношение 日:",
-            "tj": "Талаффузи 日-ро интихоб кунед:"
-          },
-          "title": {
-            "uz": "Qanday o'qiladi?",
-            "ru": "Как читается?",
-            "tj": "Чӣ хел хонда мешавад?"
-          },
-          "options": [
-            "xīnnián",
-            "piào",
-            "huǒchēzhàn",
-            "rì"
-          ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "日 — rì",
-            "ru": "日 — rì",
-            "tj": "日 — rì"
           }
         },
         {
           "type": "active_word",
           "word": {
             "no": 3,
-            "zh": "票",
-            "pinyin": "piào",
+            "zh": "ticket",
+            "pinyin": "TICKET",
             "pos": "n.",
             "meaning": {
-              "uz": "chipta, bilet",
+              "uz": "chipta",
               "ru": "билет",
-              "tj": "чиптаи сафар"
+              "tj": "чипта"
             }
           }
         },
@@ -538,22 +275,22 @@
           "type": "active_word",
           "word": {
             "no": 4,
-            "zh": "火车站",
-            "pinyin": "huǒchēzhàn",
-            "pos": "n.",
+            "zh": "soon",
+            "pinyin": "SOON",
+            "pos": "adv.",
             "meaning": {
-              "uz": "temir yo'l stantsiyasi, vokzal",
-              "ru": "железнодорожная станция, вокзал",
-              "tj": "истгоҳи роҳи оҳан, вокзал"
+              "uz": "tez orada",
+              "ru": "скоро",
+              "tj": "ба зудӣ"
             }
           }
         },
         {
           "type": "meaning_guess",
           "prompt": {
-            "uz": "火车站 so'zining ma'nosini tanlang:",
-            "ru": "Выберите значение слова 火车站:",
-            "tj": "Маънои калимаи 火车站-ро интихоб кунед:"
+            "uz": "«new year» ma'nosini tanlang:",
+            "ru": "Выберите значение «new year»:",
+            "tj": "Маънои «new year»-ро интихоб кунед:"
           },
           "title": {
             "uz": "Ma'nosi nima?",
@@ -562,120 +299,54 @@
           },
           "options": [
             {
-              "uz": "temir yo'l stantsiyasi, vokzal",
-              "ru": "железнодорожная станция, вокзал",
-              "tj": "истгоҳи роҳи оҳан, вокзал"
-            },
-            {
-              "uz": "kun, sana",
-              "ru": "день, дата",
-              "tj": "рӯз, сана"
-            },
-            {
-              "uz": "chipta, bilet",
-              "ru": "билет",
-              "tj": "чиптаи сафар"
-            },
-            {
               "uz": "yangi yil",
               "ru": "новый год",
               "tj": "соли нав"
+            },
+            {
+              "uz": "bayram / ta’til",
+              "ru": "праздник / каникулы",
+              "tj": "ид / таътил"
+            },
+            {
+              "uz": "chipta",
+              "ru": "билет",
+              "tj": "чипта"
+            },
+            {
+              "uz": "tez orada",
+              "ru": "скоро",
+              "tj": "ба зудӣ"
             }
           ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "火车站 = temir yo'l stantsiyasi, vokzal (huǒchēzhàn)",
-            "ru": "火车站 = железнодорожная станция, вокзал (huǒchēzhàn)",
-            "tj": "火车站 = истгоҳи роҳи оҳан, вокзал (huǒchēzhàn)"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 5,
-            "zh": "大家",
-            "pinyin": "dàjiā",
-            "pos": "pron.",
-            "meaning": {
-              "uz": "hamma, barchalar",
-              "ru": "все, каждый",
-              "tj": "ҳама, тамоми"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 6,
-            "zh": "更",
-            "pinyin": "gèng",
-            "pos": "adv.",
-            "meaning": {
-              "uz": "yanada, bundan ham ko'proq",
-              "ru": "ещё более, ещё больше",
-              "tj": "ҳатто бештар, боз ҳам зиёдтар"
-            }
-          }
+          "correct_index": 0
         },
         {
           "type": "hanzi_choice",
           "prompt": {
-            "uz": "rì qaysi ieroglif?",
-            "ru": "Какой иероглиф читается rì?",
-            "tj": "rì кадом иероглиф аст?"
+            "uz": "«HOLIDAY» qaysi so'z?",
+            "ru": "Какое слово читается «HOLIDAY»?",
+            "tj": "«HOLIDAY» кадом калима аст?"
           },
           "title": {
-            "uz": "Ieroglifni tanlang",
-            "ru": "Выберите иероглиф",
-            "tj": "Иероглифро интихоб кунед"
+            "uz": "So'zni tanlang",
+            "ru": "Выберите слово",
+            "tj": "Калимаро интихоб кунед"
           },
           "options": [
-            "火车站",
-            "新年",
-            "票",
-            "日"
+            "holiday",
+            "new year",
+            "ticket",
+            "soon"
           ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "日 = kun, sana (rì)",
-            "ru": "日 = день, дата (rì)",
-            "tj": "日 = рӯз, сана (rì)"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 7,
-            "zh": "妹妹",
-            "pinyin": "mèimei",
-            "pos": "n.",
-            "meaning": {
-              "uz": "singil",
-              "ru": "младшая сестра",
-              "tj": "хоҳари хурдӣ"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 8,
-            "zh": "阴",
-            "pinyin": "yīn",
-            "pos": "adj.",
-            "meaning": {
-              "uz": "bulutli, quyosh ko'rinmaydi",
-              "ru": "пасмурный, облачный",
-              "tj": "абрнок, офтоб намоён нест"
-            }
-          }
+          "correct_index": 0
         },
         {
           "type": "pinyin_choice",
           "prompt": {
-            "uz": "妹妹 talaffuzini tanlang:",
-            "ru": "Выберите произношение 妹妹:",
-            "tj": "Талаффузи 妹妹-ро интихоб кунед:"
+            "uz": "«new year» talaffuzini tanlang:",
+            "ru": "Выберите произношение «new year»:",
+            "tj": "Талаффузи «new year»-ро интихоб кунед:"
           },
           "title": {
             "uz": "Qanday o'qiladi?",
@@ -683,100 +354,18 @@
             "tj": "Чӣ хел хонда мешавад?"
           },
           "options": [
-            "xīnnián",
-            "piào",
-            "mèimei",
-            "rì"
+            "NEW-YEAR",
+            "HOLIDAY",
+            "TICKET",
+            "SOON"
           ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "妹妹 — mèimei",
-            "ru": "妹妹 — mèimei",
-            "tj": "妹妹 — mèimei"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 9,
-            "zh": "旅游",
-            "pinyin": "lǚyóu",
-            "pos": "v.",
-            "meaning": {
-              "uz": "sayohat qilmoq",
-              "ru": "путешествовать",
-              "tj": "сафар кардан, гашт кардан"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 10,
-            "zh": "伞",
-            "pinyin": "sǎn",
-            "pos": "n.",
-            "meaning": {
-              "uz": "soyabon, qoʻldagi yomg'irdan saqlash",
-              "ru": "зонт",
-              "tj": "чатр"
-            }
-          }
-        },
-        {
-          "type": "meaning_guess",
-          "prompt": {
-            "uz": "票 so'zining ma'nosini tanlang:",
-            "ru": "Выберите значение слова 票:",
-            "tj": "Маънои калимаи 票-ро интихоб кунед:"
-          },
-          "title": {
-            "uz": "Ma'nosi nima?",
-            "ru": "Что означает?",
-            "tj": "Маъно чист?"
-          },
-          "options": [
-            {
-              "uz": "yangi yil",
-              "ru": "новый год",
-              "tj": "соли нав"
-            },
-            {
-              "uz": "temir yo'l stantsiyasi, vokzal",
-              "ru": "железнодорожная станция, вокзал",
-              "tj": "истгоҳи роҳи оҳан, вокзал"
-            },
-            {
-              "uz": "chipta, bilet",
-              "ru": "билет",
-              "tj": "чиптаи сафар"
-            },
-            {
-              "uz": "kun, sana",
-              "ru": "день, дата",
-              "tj": "рӯз, сана"
-            }
-          ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "票 = chipta, bilet (piào)",
-            "ru": "票 = билет (piào)",
-            "tj": "票 = чиптаи сафар (piào)"
-          }
+          "correct_index": 0
         },
         {
           "type": "match_pairs",
           "pairs": [
             [
-              "日",
-              {
-                "uz": "kun, sana",
-                "ru": "день, дата",
-                "tj": "рӯз, сана"
-              }
-            ],
-            [
-              "新年",
+              "new year",
               {
                 "uz": "yangi yil",
                 "ru": "новый год",
@@ -784,27 +373,30 @@
               }
             ],
             [
-              "票",
+              "holiday",
               {
-                "uz": "chipta, bilet",
-                "ru": "билет",
-                "tj": "чиптаи сафар"
+                "uz": "bayram / ta’til",
+                "ru": "праздник / каникулы",
+                "tj": "ид / таътил"
               }
             ],
             [
-              "火车站",
+              "ticket",
               {
-                "uz": "temir yo'l stantsiyasi, vokzal",
-                "ru": "железнодорожная станция, вокзал",
-                "tj": "истгоҳи роҳи оҳан, вокзал"
+                "uz": "chipta",
+                "ru": "билет",
+                "tj": "чипта"
+              }
+            ],
+            [
+              "soon",
+              {
+                "uz": "tez orada",
+                "ru": "скоро",
+                "tj": "ба зудӣ"
               }
             ]
-          ],
-          "explanation": {
-            "uz": "Juftliklar darsdagi yangi so'zlardan olindi.",
-            "ru": "Пары взяты из новых слов урока.",
-            "tj": "Ҷуфтҳо аз калимаҳои нави дарс гирифта шудаанд."
-          }
+          ]
         }
       ]
     },
@@ -822,65 +414,27 @@
           "g": {
             "no": 1,
             "title": {
-              "uz": "'Yào……le' yaqin kelajak konstruktsiyasi",
-              "ru": "Конструкция '要……了' ближайшего будущего",
-              "tj": "Конструксияи '要……了' ояндаи наздик"
+              "uz": "be going to + verb",
+              "ru": "be going to + verb",
+              "tj": "be going to + verb"
             },
-            "title_zh": "动作的状态\"要……了\"",
+            "title_zh": "be going to + verb",
             "rule": {
-              "uz": "'Yào……le' yoki 'jiù yào……le' yoki 'kuài yào……le' konstruktsiyasi yaqin kelajakda bo'ladigan voqeani bildiradi: 'tez orada …bo'ladi / …qilmoqchi'. 'Jiù yào' aniqroq vaqt bilan, 'kuài yào' esa umumiy 'tez orada' ma'nosida ishlatiladi. Gap oxiridagi 'le' o'zgarish yoki yangi holat yaqinligini ko'rsatadi.",
-              "ru": "Конструкции '要……了', '就要……了' или '快要……了' обозначают события ближайшего будущего: 'вот-вот произойдёт'. '就要' используется с более конкретным временем, '快要' — в общем смысле 'скоро'. Частица 'le' в конце указывает на близость изменения или нового состояния.",
-              "tj": "Конструксияҳои '要……了', '就要……了' ё '快要……了' рӯйдодҳои оянда наздикро нишон медиҳанд: 'зуд мешавад / қариб'. '就要' бо вақти мушаххастар, '快要' дар маъноии умумии 'зуд' истифода мешавад. Зарраи 'le' дар охири ҷумла наздикии тағйирот ё ҳолати навро нишон медиҳад."
+              "uz": "Qolip: be going to + verb. Misol: New Year is coming soon. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+              "ru": "Шаблон: be going to + verb. Пример: New Year is coming soon. Используйте его в коротких естественных фразах.",
+              "tj": "Қолаб: be going to + verb. Мисол: New Year is coming soon. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
             },
             "examples": [
               {
-                "zh": "新年就要到了。",
-                "pinyin": "Xīnnián jiù yào dào le.",
+                "zh": "New Year is coming soon.",
+                "pinyin": "",
                 "translation": {
-                  "uz": "Yangi yil yaqinlashib qoldi.",
-                  "ru": "Новый год уже совсем близко.",
-                  "tj": "Соли нав наздик шуд."
-                }
-              },
-              {
-                "zh": "快要下雨了，带上伞吧。",
-                "pinyin": "Kuài yào xiàyǔ le, dài shàng sǎn ba.",
-                "translation": {
-                  "uz": "Tez orada yomg'ir yog'adi, soyabon oling.",
-                  "ru": "Скоро пойдёт дождь, возьмите зонт.",
-                  "tj": "Зуд борон мешавад, чатр гиред."
+                  "uz": "New Year is coming soon.",
+                  "ru": "New Year is coming soon.",
+                  "tj": "New Year is coming soon."
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "sentence_builder",
-          "sentence": {
-            "uz": "Yangi yil yaqinlashib qoldi.",
-            "ru": "Новый год уже совсем близко.",
-            "tj": "Соли нав наздик шуд."
-          },
-          "tokens": [
-            "就",
-            "要",
-            "到",
-            "票",
-            "日",
-            "了",
-            "新年"
-          ],
-          "answer_tokens": [
-            "新年",
-            "就",
-            "要",
-            "到",
-            "了"
-          ],
-          "explanation": {
-            "uz": "新年就要到了。 — Xīnnián jiù yào dào le.",
-            "ru": "新年就要到了。 — Xīnnián jiù yào dào le.",
-            "tj": "新年就要到了。 — Xīnnián jiù yào dào le."
           }
         },
         {
@@ -888,70 +442,24 @@
           "g": {
             "no": 2,
             "title": {
-              "uz": "'Dōu……le' ta'kid konstruktsiyasi",
-              "ru": "Конструкция '都……了' для выражения удивления",
-              "tj": "Конструксияи '都……了' барои таъкид"
+              "uz": "expanded sentence",
+              "ru": "expanded sentence",
+              "tj": "expanded sentence"
             },
-            "title_zh": "\"都……了\"",
+            "title_zh": "expanded sentence",
             "rule": {
-              "uz": "'Dōu……le' konstruktsiyasi ta'kid bildiradi: vaqt yoki miqdor allaqachon ancha ko'p yoki kutilgandan ortiq bo'lib qoldi. O'zbek tilidagi '…bo'lib ketdi!' yoki '…bo'lib qoldi-ku!' iborasiga o'xshaydi. Ko'pincha hayrat yoki norozilik ifodalamoqda qo'llanadi.",
-              "ru": "Конструкция '都……了' выражает акцент: время или количество уже достигло неожиданного или чрезмерного уровня. Аналог русского 'уже … же!' или 'ну и…!'. Часто выражает удивление или недовольство.",
-              "tj": "Конструксияи '都……了' таъкид мекунад: вақт ё миқдор аллакай ба сатҳи ғайричашмдошт ё аз ҳад зиёд расидааст. Ба ибораҳои '…шуду рафт!' ё '…шуд-ку!' дар тоҷикӣ монанд аст. Аксар вақт ҳайрат ё норозигиро ифода мекунад."
+              "uz": "Qolip: add time, place, or reason. Misol: New Year is coming soon. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+              "ru": "Шаблон: add time, place, or reason. Пример: New Year is coming soon. Используйте его в коротких естественных фразах.",
+              "tj": "Қолаб: add time, place, or reason. Мисол: New Year is coming soon. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
             },
             "examples": [
               {
-                "zh": "都八点四十了！",
-                "pinyin": "Dōu bā diǎn sìshí le!",
+                "zh": "New Year is coming soon.",
+                "pinyin": "",
                 "translation": {
-                  "uz": "Soat sakkiz qirq bo'lib qoldi!",
-                  "ru": "Уже восемь сорок!",
-                  "tj": "Дигар соати ҳашту чил шуд!"
-                }
-              },
-              {
-                "zh": "都等她半个小时了！",
-                "pinyin": "Dōu děng tā bàn ge xiǎoshí le!",
-                "translation": {
-                  "uz": "Uni yarim soatdan beri kutib turibmiz!",
-                  "ru": "Мы уже полчаса её ждём!",
-                  "tj": "Мо нимсоат интизораш шудем!"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "_grammar",
-          "g": {
-            "no": 3,
-            "title": {
-              "uz": "'Gèng' (yanada, bundan ham ko'proq) ravishining ishlatilishi",
-              "ru": "Использование наречия '更' (ещё более, ещё больше)",
-              "tj": "Истифодаи зарфи '更' (ҳатто бештар, боз ҳам зиёдтар)"
-            },
-            "title_zh": "副词\"更\"的用法",
-            "rule": {
-              "uz": "'更' ravishi sifat yoki ravish oldidan kelib, qiyoslashni kuchaytiradi: 'yanada, bundan ham ko'proq'.\nTuzilish: A 比 B 更 + sifat (A dan B dan yanada …).\n'更' mustaqil ham qo'llanadi: '我希望明年更好' (Umid qilamanki keyingi yil yanada yaxshi bo'lsin).\n'还' (hái) bilan almashtirib ham ishlatilishi mumkin.",
-              "ru": "Наречие '更' стоит перед прилагательным или наречием и усиливает сравнение: 'ещё более, ещё больше'.\nСтруктура: A 比 B 更 + прилагательное (A ещё более … чем B).\n'更' употребляется и самостоятельно: '我希望明年更好' (Надеюсь, в следующем году будет ещё лучше).\nМожет взаимозаменяться с '还' (hái) в некоторых контекстах.",
-              "tj": "Зарфи '更' пеш аз сифат ё зарф меояд ва муқоисаро тақвият медиҳад: 'ҳатто бештар, боз ҳам зиёдтар'.\nСохтор: A 比 B 更 + сифат (A аз B ҳатто … бештар).\n'更' мустақилона ҳам истифода мешавад: '我希望明年更好' (Умедворам соли оянда боз ҳам беҳтар шавад).\nДар баъзе контекстҳо бо '还' (hái) иваз шуда метавонад."
-            },
-            "examples": [
-              {
-                "zh": "希望我们的公司明年更好！",
-                "pinyin": "Xīwàng wǒmen de gōngsī míngnián gèng hǎo!",
-                "translation": {
-                  "uz": "Umid qilamanki kompaniyamiz kelasi yil yanada yaxshilansin!",
-                  "ru": "Надеюсь, в следующем году наша компания будет ещё лучше!",
-                  "tj": "Умедворам ширкати мо соли оянда боз ҳам беҳтар шавад!"
-                }
-              },
-              {
-                "zh": "北京比这儿更好玩儿。",
-                "pinyin": "Běijīng bǐ zhèr gèng hǎo wánr.",
-                "translation": {
-                  "uz": "Pekin bu yerdan yanada qiziqarliroq.",
-                  "ru": "В Пекине ещё интереснее, чем здесь.",
-                  "tj": "Пекин аз ин ҷо боз ҳам ҷолибтар аст."
+                  "uz": "New Year is coming soon.",
+                  "ru": "New Year is coming soon.",
+                  "tj": "New Year is coming soon."
                 }
               }
             ]
@@ -960,58 +468,50 @@
         {
           "type": "sentence_builder",
           "sentence": {
-            "uz": "Pekin bu yerdan yanada qiziqarliroq.",
-            "ru": "В Пекине ещё интереснее, чем здесь.",
-            "tj": "Пекин аз ин ҷо боз ҳам ҷолибтар аст."
+            "uz": "New Year is coming soon.",
+            "ru": "New Year is coming soon.",
+            "tj": "New Year is coming soon."
           },
           "tokens": [
-            "日",
-            "玩儿",
-            "比",
-            "新年",
-            "更",
-            "这儿",
-            "北京",
-            "好"
+            "soon",
+            "coming",
+            "is",
+            "Year",
+            "New",
+            "not"
           ],
           "answer_tokens": [
-            "北京",
-            "比",
-            "这儿",
-            "更",
-            "好",
-            "玩儿"
+            "New",
+            "Year",
+            "is",
+            "coming",
+            "soon"
           ],
           "explanation": {
-            "uz": "北京比这儿更好玩儿。 — Běijīng bǐ zhèr gèng hǎo wánr.",
-            "ru": "北京比这儿更好玩儿。 — Běijīng bǐ zhèr gèng hǎo wánr.",
-            "tj": "北京比这儿更好玩儿。 — Běijīng bǐ zhèr gèng hǎo wánr."
+            "uz": "So‘z tartibiga e’tibor bering.",
+            "ru": "Обратите внимание на порядок слов.",
+            "tj": "Ба тартиби калимаҳо диққат диҳед."
           }
         },
         {
           "type": "quick_quiz",
           "prompt": {
-            "uz": "«Yangi yil yaqinlashib qoldi.» — xitoychada qaysi biri?",
-            "ru": "«Новый год уже совсем близко.» — какое предложение по-китайски?",
-            "tj": "«Соли нав наздик шуд.» — кадом ҷумла ба хитоӣ аст?"
+            "uz": "“yangi yil” inglizchada qaysi?",
+            "ru": "“новый год” — как по-английски?",
+            "tj": "“соли нав” ба англисӣ кадом аст?"
           },
           "title": {
-            "uz": "To'g'ri gapni tanlang",
-            "ru": "Выберите верное предложение",
-            "tj": "Ҷумлаи дурустро интихоб кунед"
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
           },
           "options": [
-            "北京比这儿更好玩儿。",
-            "新年就要到了。",
-            "都八点四十了！",
-            "快要下雨了，带上伞吧。"
+            "new year",
+            "holiday",
+            "ticket",
+            "soon"
           ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "新年就要到了。 — Xīnnián jiù yào dào le.",
-            "ru": "新年就要到了。 — Xīnnián jiù yào dào le.",
-            "tj": "新年就要到了。 — Xīnnián jiù yào dào le."
-          }
+          "correct_index": 0
         }
       ]
     },
@@ -1019,89 +519,66 @@
       "section_no": 3,
       "section_title": {
         "uz": "Mashq",
-        "ru": "Упражнение",
+        "ru": "Практика",
         "tj": "Машқ"
       },
       "section_purpose": "practice",
       "cards": [
         {
-          "type": "translation_choice",
+          "type": "pinyin_choice",
           "prompt": {
-            "uz": "'tilak bildirmoq, tabriklamoq' xitoycha qaysi?",
-            "ru": "'желать, поздравлять' по-китайски?",
-            "tj": "'орзу кардан, табрик гуфтан' ба хитоӣ кадом аст?"
+            "uz": "«ticket» talaffuzini tanlang:",
+            "ru": "Выберите произношение «ticket»:",
+            "tj": "Талаффузи «ticket»-ро интихоб кунед:"
           },
           "title": {
-            "uz": "Xitoycha qanday?",
-            "ru": "Как по-китайски?",
-            "tj": "Ба хитоӣ чӣ тавр?"
+            "uz": "Qanday o'qiladi?",
+            "ru": "Как читается?",
+            "tj": "Чӣ хел хонда мешавад?"
           },
           "options": [
-            "祝",
-            "日",
-            "新年",
-            "票"
+            "TICKET",
+            "NEW-YEAR",
+            "HOLIDAY",
+            "SOON"
           ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "tilak bildirmoq, tabriklamoq = 祝 (zhù)",
-            "ru": "желать, поздравлять = 祝 (zhù)",
-            "tj": "орзу кардан, табрик гуфтан = 祝 (zhù)"
-          }
+          "correct_index": 0
         },
         {
-          "type": "hanzi_choice",
+          "type": "meaning_guess",
           "prompt": {
-            "uz": "yuè qaysi ieroglif?",
-            "ru": "Какой иероглиф читается yuè?",
-            "tj": "yuè кадом иероглиф аст?"
+            "uz": "«soon» ma'nosini tanlang:",
+            "ru": "Выберите значение «soon»:",
+            "tj": "Маънои «soon»-ро интихоб кунед:"
           },
           "title": {
-            "uz": "Ieroglifni tanlang",
-            "ru": "Выберите иероглиф",
-            "tj": "Иероглифро интихоб кунед"
+            "uz": "Ma'nosi nima?",
+            "ru": "Что означает?",
+            "tj": "Маъно чист?"
           },
           "options": [
-            "票",
-            "月",
-            "日",
-            "新年"
+            {
+              "uz": "tez orada",
+              "ru": "скоро",
+              "tj": "ба зудӣ"
+            },
+            {
+              "uz": "yangi yil",
+              "ru": "новый год",
+              "tj": "соли нав"
+            },
+            {
+              "uz": "bayram / ta’til",
+              "ru": "праздник / каникулы",
+              "tj": "ид / таътил"
+            },
+            {
+              "uz": "chipta",
+              "ru": "билет",
+              "tj": "чипта"
+            }
           ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "月 = oy (vaqt o'lchovi) (yuè)",
-            "ru": "月 = месяц (yuè)",
-            "tj": "月 = моҳ (вақти ченкунӣ) (yuè)"
-          }
-        },
-        {
-          "type": "sentence_builder",
-          "sentence": {
-            "uz": "Yangi yilda nima qilishni rejalashtirganmisiz?",
-            "ru": "Что ты планируешь делать на новый год?",
-            "tj": "Дар соли нав чӣ кор карданӣ ҳастед?"
-          },
-          "tokens": [
-            "什么",
-            "日",
-            "做",
-            "你",
-            "票",
-            "新年",
-            "准备"
-          ],
-          "answer_tokens": [
-            "新年",
-            "你",
-            "准备",
-            "做",
-            "什么"
-          ],
-          "explanation": {
-            "uz": "新年你准备做什么？ — Xīnnián nǐ zhǔnbèi zuò shénme?",
-            "ru": "新年你准备做什么？ — Xīnnián nǐ zhǔnbèi zuò shénme?",
-            "tj": "新年你准备做什么？ — Xīnnián nǐ zhǔnbèi zuò shénme?"
-          }
+          "correct_index": 0
         },
         {
           "type": "listening_choice",
@@ -1110,71 +587,66 @@
             "ru": "Выберите, что вы услышали",
             "tj": "Он чи шунидед, интихоб кунед"
           },
-          "audio_text": "今天是12月20日，新年就要到了。",
-          "pinyin": "Jīntiān shì shí'èr yuè èrshí rì, xīnnián jiù yào dào le.",
+          "audio_text": "New Year is coming soon.",
+          "pinyin": "",
           "options": [
-            "今天是12月20日，新年就要到了。",
-            "新年你准备做什么？",
-            "你买票了吗？",
-            "我想去北京旅游，北京很不错，我去过一次。"
+            "New Year is coming soon.",
+            "I need holiday.",
+            "This is new year.",
+            "Please wait."
           ],
           "correct_index": 0,
           "explanation": {
-            "uz": "今天是12月20日，新年就要到了。 — Bugun 20-dekabr, yangi yil yaqinlashib qoldi.",
-            "ru": "今天是12月20日，新年就要到了。 — Сегодня 20 декабря, новый год уже совсем скоро.",
-            "tj": "今天是12月20日，新年就要到了。 — Имрӯз 20 декабр аст, соли нав наздик шуд."
+            "uz": "New Year is coming soon.",
+            "ru": "New Year is coming soon.",
+            "tj": "New Year is coming soon."
           }
         },
         {
           "type": "match_pairs",
           "pairs": [
             [
-              "日",
+              "ticket",
               {
-                "uz": "kun, sana",
-                "ru": "день, дата",
-                "tj": "рӯз, сана"
-              }
-            ],
-            [
-              "新年",
-              {
-                "uz": "yangi yil",
-                "ru": "новый год",
-                "tj": "соли нав"
-              }
-            ],
-            [
-              "票",
-              {
-                "uz": "chipta, bilet",
+                "uz": "chipta",
                 "ru": "билет",
-                "tj": "чиптаи сафар"
+                "tj": "чипта"
               }
             ],
             [
-              "火车站",
+              "soon",
               {
-                "uz": "temir yo'l stantsiyasi, vokzal",
-                "ru": "железнодорожная станция, вокзал",
-                "tj": "истгоҳи роҳи оҳан, вокзал"
+                "uz": "tez orada",
+                "ru": "скоро",
+                "tj": "ба зудӣ"
+              }
+            ],
+            [
+              "travel",
+              {
+                "uz": "sayohat qilmoq",
+                "ru": "путешествовать",
+                "tj": "сафар кардан"
+              }
+            ],
+            [
+              "gift",
+              {
+                "uz": "sovg‘a",
+                "ru": "подарок",
+                "tj": "туҳфа"
               }
             ]
-          ],
-          "explanation": {
-            "uz": "Juftliklar darsdagi yangi so'zlardan olindi.",
-            "ru": "Пары взяты из новых слов урока.",
-            "tj": "Ҷуфтҳо аз калимаҳои нави дарс гирифта шудаанд."
-          }
+          ]
         },
         {
           "type": "pronunciation",
-          "phrase": "日",
-          "pinyin": "rì",
+          "phrase": "New Year is coming soon.",
+          "pinyin": "",
           "translation": {
-            "uz": "kun, sana",
-            "ru": "день, дата",
-            "tj": "рӯз, сана"
+            "uz": "New Year is coming soon.",
+            "ru": "New Year is coming soon.",
+            "tj": "New Year is coming soon."
           }
         }
       ]
@@ -1191,23 +663,44 @@
         {
           "type": "listening_choice",
           "title": {
-            "uz": "Tinglang — nima dedi?",
-            "ru": "Послушайте — что сказали?",
-            "tj": "Гӯш кунед — чӣ гуфт?"
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
           },
-          "audio_text": "今天是12月20日，新年就要到了。",
-          "pinyin": "Jīntiān shì shí'èr yuè èrshí rì, xīnnián jiù yào dào le.",
+          "audio_text": "New Year is coming soon.",
+          "pinyin": "",
           "options": [
-            "今天是12月20日，新年就要到了。",
-            "我想去北京旅游，北京很不错，我去过一次。",
-            "你买票了吗？",
-            "新年你准备做什么？"
+            "New Year is coming soon.",
+            "I have new year.",
+            "Where is holiday?",
+            "No problem."
           ],
           "correct_index": 0,
           "explanation": {
-            "uz": "今天是12月20日，新年就要到了。 — Bugun 20-dekabr, yangi yil yaqinlashib qoldi.",
-            "ru": "今天是12月20日，新年就要到了。 — Сегодня 20 декабря, новый год уже совсем скоро.",
-            "tj": "今天是12月20日，新年就要到了。 — Имрӯз 20 декабр аст, соли нав наздик шуд."
+            "uz": "New Year is coming soon.",
+            "ru": "New Year is coming soon.",
+            "tj": "New Year is coming soon."
+          }
+        },
+        {
+          "type": "gap_fill",
+          "sentence": "____ Year is coming soon.",
+          "prompt": {
+            "uz": "Bo'sh joyga mos so'zni tanlang:",
+            "ru": "Выберите подходящее слово:",
+            "tj": "Калимаи мувофиқро интихоб кунед:"
+          },
+          "options": [
+            "new year",
+            "holiday",
+            "ticket",
+            "not"
+          ],
+          "correct_index": 0,
+          "explanation": {
+            "uz": "To‘g‘ri javob: new year.",
+            "ru": "Правильный ответ: new year.",
+            "tj": "Ҷавоби дуруст: new year."
           }
         },
         {
@@ -1220,113 +713,47 @@
           "lines": [
             {
               "speaker": "A",
-              "zh": "今天是12月20日，新年就要到了。",
+              "zh": "Can you give an example?",
               "blank": false
             },
             {
               "speaker": "B",
-              "zh": "新年你准备做什么？",
-              "blank": false
-            },
-            {
-              "speaker": "A",
-              "zh": "我想去北京旅游，北京很不错，我去过一次。",
-              "blank": false
-            },
-            {
-              "speaker": "B",
-              "zh": "你买票了吗？",
-              "blank": false
-            },
-            {
-              "speaker": "A",
               "zh": "",
               "blank": true
             }
           ],
           "options": [
-            "新年你准备做什么？",
-            "还没有呢，明天就去火车站买票。",
-            "今天是12月20日，新年就要到了。",
-            "我想去北京旅游，北京很不错，我去过一次。"
+            "New Year is coming soon.",
+            "I like new year.",
+            "Good morning!",
+            "Thank you!"
           ],
-          "correct_index": 1,
+          "correct_index": 0,
           "explanation": {
-            "uz": "To'g'ri javob: 还没有呢，明天就去火车站买票。",
-            "ru": "Правильный ответ: 还没有呢，明天就去火车站买票。",
-            "tj": "Ҷавоби дуруст: 还没有呢，明天就去火车站买票。"
+            "uz": "New Year is coming soon.",
+            "ru": "New Year is coming soon.",
+            "tj": "New Year is coming soon."
           }
         },
         {
           "type": "quick_quiz",
           "prompt": {
-            "uz": "Dialog oxirida A nima deydi?",
-            "ru": "Что A говорит в конце диалога?",
-            "tj": "Дар охири муколама A чӣ мегӯяд?"
+            "uz": "“yangi yil” inglizchada qaysi?",
+            "ru": "“новый год” — как по-английски?",
+            "tj": "“соли нав” ба англисӣ кадом аст?"
           },
           "title": {
-            "uz": "Dialogdan savol:",
-            "ru": "Вопрос по диалогу:",
-            "tj": "Савол аз муколама:"
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
           },
           "options": [
-            "我想去北京旅游，北京很不错，我去过一次。",
-            "新年你准备做什么？",
-            "今天是12月20日，新年就要到了。",
-            "还没有呢，明天就去火车站买票。"
+            "new year",
+            "holiday",
+            "ticket",
+            "soon"
           ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "To'g'ri javob: 还没有呢，明天就去火车站买票。",
-            "ru": "Правильный ответ: 还没有呢，明天就去火车站买票。",
-            "tj": "Ҷавоби дуруст: 还没有呢，明天就去火车站买票。"
-          }
-        },
-        {
-          "type": "quick_quiz",
-          "prompt": {
-            "uz": "Dialogda A avval nima deydi?",
-            "ru": "Что A говорит в начале диалога?",
-            "tj": "Дар муколама A аввал чӣ мегӯяд?"
-          },
-          "title": {
-            "uz": "Dialogdan savol:",
-            "ru": "Вопрос по диалогу:",
-            "tj": "Савол аз муколама:"
-          },
-          "options": [
-            "新年你准备做什么？",
-            "我想去北京旅游，北京很不错，我去过一次。",
-            "今天是12月20日，新年就要到了。",
-            "你买票了吗？"
-          ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "To'g'ri javob: 今天是12月20日，新年就要到了。",
-            "ru": "Правильный ответ: 今天是12月20日，新年就要到了。",
-            "tj": "Ҷавоби дуруст: 今天是12月20日，新年就要到了。"
-          }
-        },
-        {
-          "type": "gap_fill",
-          "sentence": "____天是12月20日，新年就要到了。",
-          "prompt": {
-            "uz": "Bo'sh joyga mos ieroglifni tanlang:",
-            "ru": "Выберите подходящий иероглиф:",
-            "tj": "Иероглифи мувофиқро интихоб кунед:"
-          },
-          "options": [
-            "电",
-            "今",
-            "夫",
-            "下"
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "To'g'ri: 今 — 今天是12月20日，新年就要到了。 (Bugun 20-dekabr, yangi yil yaqinlashib qoldi.)",
-            "ru": "Верно: 今 — 今天是12月20日，新年就要到了。 (Сегодня 20 декабря, новый год уже совсем скоро.)",
-            "tj": "Дуруст: 今 — 今天是12月20日，新年就要到了。 (Имрӯз 20 декабр аст, соли нав наздик шуд.)"
-          }
+          "correct_index": 0
         }
       ]
     }

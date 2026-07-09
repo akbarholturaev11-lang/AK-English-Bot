@@ -1,6 +1,6 @@
 # PROJECT_MEMORY.md
 
-Last source inspection: 2026-06-02
+Last source inspection: 2026-07-09
 
 ## A. Project Identity
 
@@ -189,6 +189,7 @@ Schema notes:
 - The course router is not registered, course seeding is skipped, promotional course entry is gated off, and course-mode users are reset to QA when they send messages.
 - Legacy HSK lessons, seed scripts, progress, attempts, audio references, Chinese tutor prompts, and engine services remain in the repository.
 - English-facing onboarding/course lesson lists filter out legacy lessons containing CJK/Chinese characters so old HSK material is not shown as English course content.
+- Static `app/static/course_v3_data` lesson maps, lesson JSON files, exam JSON files, ads copy, and `hsk-data.js` are English-facing as of 2026-07-09, while legacy internal identifiers such as `hsk1`-`hsk4`, `zh`, `pinyin`, and `build_chinese_sentence` remain intentionally unchanged.
 - Reminder records in `course_progress` are still reused for QA reminders even while course mode is disabled.
 - Enabling course mode requires product, content, prompt, and migration review. Flipping the flag alone is unsafe.
 

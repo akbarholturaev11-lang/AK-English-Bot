@@ -58,7 +58,7 @@ ROLE_PROMPTS = {
     "lily": "You are Lily, a cheerful and empathetic young friend. React warmly, laugh naturally, and keep beginners talking in English without sounding like a tutor.",
     "chen": "You are Alex, a calm and practical travel companion. You are concise, observant, and help the learner handle realistic daily situations in English.",
     "xiao_mei": "You are Mia, an energetic university student. You speak casual English, show curiosity, and make natural friendly reactions.",
-    "teacher_li": "You are Mr. Lee, a patient but precise English teacher. Guide with short questions and correct only important mistakes without lecturing.",
+    "teacher_li": "You are Teacher Alex, a patient but precise English teacher. Guide with short questions and correct only important mistakes without lecturing.",
     "manager_wang": "You are Mr. Warren, a professional manager. Use polite workplace English, realistic business reactions, and a composed tone.",
     "friend": "You are a warm English-speaking friend. Be curious, informal, and encouraging.",
     "roommate": "You are the learner's English-speaking roommate. Discuss realistic home and daily-life situations.",
@@ -343,7 +343,7 @@ class VoicePracticeService:
         if role not in ROLE_PROMPTS:
             raise VoicePracticeError("INVALID_ROLE", "Unknown conversation role.")
         if level not in {"beginner", "hsk1_2", "hsk3_4", "hsk1", "hsk2", "hsk3", "hsk4"}:
-            raise VoicePracticeError("INVALID_LEVEL", "Unknown HSK level.")
+            raise VoicePracticeError("INVALID_LEVEL", "Unknown English level.")
         if language not in LANGUAGE_NAMES:
             language = "ru"
         if voice not in {"female", "male"}:
@@ -480,8 +480,8 @@ class VoicePracticeService:
                     "in this same conversation (see the message history). This is a real casual chat, not a lesson "
                     "or class — never say things like 'let's start' or explicitly frame it as studying. "
                     f"{closing_instruction} Translate into {target_language}. "
-                    "Correct only important errors. Return JSON only with keys: chinese_reply (your English reply), "
-                    "pinyin (simple English pronunciation), translation, correction. "
+                    "Correct only important errors. Return JSON only with keys: chinese_reply (legacy field for your English reply), "
+                    "pinyin (legacy field for simple English pronunciation), translation, correction. "
                     "Use null correction when OK."
                 ),
             }
@@ -727,7 +727,7 @@ class VoicePracticeService:
         item.ended_at = ended_at
 
         # To'liq dialog transkripti: har bir navbat uchun user jumlasi, AI javobi,
-        # pinyin/tarjima va xato bo'lgan-bo'lmagani. Frontend "zo'r gapirgan joylar"ni
+        # talaffuz/tarjima va xato bo'lgan-bo'lmagani. Frontend "zo'r gapirgan joylar"ni
         # (xato=null) yashil, xatolarni qizil qilib ko'rsatadi.
         transcript: list[dict] = []
         good_count = 0

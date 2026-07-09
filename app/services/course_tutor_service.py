@@ -241,8 +241,8 @@ DIALOG MA'LUMOTI:
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Ingliz: <b>...</b>, pinyin: <code>...</code>
-- Har bir qator: <b>Inglizcha</b> [<code>pinyin</code>] — {user_language}dagi ma'nosi
+- Ingliz: <b>...</b>, talaffuz: <code>...</code>
+- Har bir qator: <b>Inglizcha</b> [<code>talaffuz</code>] — {user_language}dagi ma'nosi
 - Taqdimotdan keyin kontekstni qisqacha tushuntir (bu suhbat qayerda/qachon bo'ladi)
 - Dialogdan 1-2 ta foydali iboralarni amaliy hayot bilan solishtirgan holda tushuntir
 - Jami 12 qatordan oshmasin
@@ -269,7 +269,7 @@ GRAMMATIKA MA'LUMOTI:
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Ingliz: <b>...</b>, pinyin: <code>...</code>
+- Ingliz: <b>...</b>, talaffuz: <code>...</code>
 - Har bir grammatika nuqtasi 4-5 qatordan oshmasin
 - Format: qolip → qachon ishlatiladi → 1 aniq misol → bitta foydali ehtiyot nuqtasi
 - Misol dars lug'ati yoki darsdagi gaplardan bo'lsin
@@ -308,18 +308,18 @@ MASHQ MA'LUMOTI:
 {json.dumps(data, ensure_ascii=False, indent=2)}
 
 ASOSIY VAZIFA — JAVOBNI MAZMUN BO'YICHA TEKSHIR (FORMAT BO'YICHA EMAS):
-- Foydalanuvchi ingliz belgilari, pinyin yoki ma'no yozishi mumkin — BARCHASI QABUL QILINADI
+- Foydalanuvchi ingliz so'zi, talaffuz yoki ma'no yozishi mumkin — BARCHASI QABUL QILINADI
 - HTML teglari (<b>, <code>) talab qilinmaydi — foydalanuvchi oddiy matn yozadi
 - Har bir javobni FAQAT MAZMUN bo'yicha tekshir:
   * ✅ — ma'no/so'z to'g'ri bo'lsa
   * ❌ — ma'no/so'z noto'g'ri bo'lsa
-- Noto'g'ri bo'lsa: TO'G'RI JAVOBNI ko'rsat (faqat bot o'zi <b>word</b> [<code>pinyin</code>] — ma'no formatida yozadi)
+- Noto'g'ri bo'lsa: TO'G'RI JAVOBNI ko'rsat (faqat bot o'zi <b>word</b> [<code>talaffuz</code>] — ma'no formatida yozadi)
 - Xatolarni qisqa tushuntir
 - Rag'batlantiruvchi bo'l: "Yaxshi! 👏" yoki "Deyarli to'g'ri! Mana maslahat..."
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Bot o'z javobida ingliz: <b>...</b>, pinyin: <code>...</code> ishlatadi
+- Bot o'z javobida ingliz: <b>...</b>, talaffuz: <code>...</code> ishlatadi
 - Jami 10 qatordan oshmasin
 - Keyingi bo'limga o'tish haqida HECH NARSA dema — tizim o'zi o'tkazadi"""
 
@@ -343,7 +343,7 @@ TEST MA'LUMOTI:
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Ingliz: <b>...</b>, pinyin: <code>...</code>
+- Ingliz: <b>...</b>, talaffuz: <code>...</code>
 - BIRINCHI CHAQIRUVDA (foydalanuvchi xabari yo'q bo'lsa):
   * FAQAT 3-4 ta TEST SAVOLI ber — raqamlangan (1, 2, 3, 4)
   * Savol turlari: ko'p tanlovli (A/B/C/D) YOKI bo'sh to'ldirish
@@ -400,7 +400,7 @@ QOIDALAR:
 - Homework answers/feedback bo'lsa: talabaning javobidagi xatoni aniq tuzat
 - Lesson_blocks yangi format: har bir block ichida dialogue, vocabulary, grammar_points, mini_quiz, mini_homework bor
 - Javobda aynan xato qilingan block/dialog/vocabulary/grammar bilan bog'lab tushuntir
-- Ingliz: <b>...</b>, pinyin: <code>...</code>
+- Ingliz: <b>...</b>, talaffuz: <code>...</code>
 - Yangi test, mashq yoki homework berma
 - Maksimal 10 qator
 - Oxirida qo'shimcha savol yozma
@@ -444,7 +444,7 @@ ASOSIY VAZIFA — FOYDALANUVCHI JAVOBINI TEKSHIR:
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Ingliz: <b>...</b>, pinyin: <code>...</code>
+- Ingliz: <b>...</b>, talaffuz: <code>...</code>
 - Yangi block formatdagi mini_homework mavjud bo'lsa, aynan shu topshiriqlarga tayan
 - Maksimal 8 qator"""
 
@@ -509,8 +509,8 @@ DIALOG MA'LUMOTI (YANGI BLOCK FORMAT):
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Ingliz: <b>...</b>, pinyin: <code>...</code>
-- Har bir qator: <b>Inglizcha</b> [<code>pinyin</code>] — tarjima
+- Ingliz: <b>...</b>, talaffuz: <code>...</code>
+- Har bir qator: <b>Inglizcha</b> [<code>talaffuz</code>] — tarjima
 - Faqat dialogue_block, block_vocabulary va grammar_points dan foydalan
 - Dialogdan 1-2 ta foydali ibora va grammar_points ni qisqa tushuntir
 - Jami 12 qatordan oshmasin
@@ -558,7 +558,7 @@ GRAMMATIKA MA'LUMOTI:
 
 QOIDALAR:
 - Faqat {user_language} tilida javob ber, {user_level} darajasi
-- Ingliz: <b>...</b>, pinyin: <code>...</code>
+- Ingliz: <b>...</b>, talaffuz: <code>...</code>
 - Har bir qoida 5-7 qatordan oshmasin
 - Format: qolip → oddiy ma'no → shu dialogda nima vazifa bajaryapti → 1 misol → bitta ehtiyot nuqtasi
 - Uzun nazariya, kitobcha uslub va keraksiz umumiy gaplar yozma
@@ -670,7 +670,7 @@ QOIDALAR:
             "student_submission": submission_text,
         }
 
-        return f"""You are evaluating a student's homework for an HSK lesson.
+        return f"""You are evaluating a student's homework for an English lesson.
 
 DATA:
 {json.dumps(payload, ensure_ascii=False, indent=2)}

@@ -448,6 +448,19 @@ def _mini_method_label(value: str | None) -> str:
     return _mini_label(value, {"visa": "Visa/karta", "alipay": "Alipay", "wechat": "WeChat"})
 
 
+def _mini_level_label(value: str | None) -> str:
+    return _mini_label(
+        value,
+        {
+            "beginner": "Beginner",
+            "hsk1": "Beginner",
+            "hsk2": "Elementary",
+            "hsk3": "Intermediate",
+            "hsk4": "Advanced",
+        },
+    )
+
+
 def _mini_dt(value) -> str:
     if not value:
         return "—"
@@ -577,7 +590,7 @@ async def _admin_miniapp_management_payload(session) -> dict:
     audio_summary = []
     for level in ("hsk1", "hsk2", "hsk3", "hsk4"):
         audio_summary.append({
-            "level": level.upper(),
+            "level": _mini_level_label(level),
             "lessons": int(await audio_repo.count_uploaded_lessons(level)),
         })
 

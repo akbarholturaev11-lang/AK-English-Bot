@@ -2,156 +2,79 @@
   "schema_version": 2,
   "level": "hsk2",
   "lesson_id": 6,
-  "title": "你怎么不吃了",
+  "title": "Because and reasons",
   "subtitle": {
-    "uz": "Sabab va oqibat haqida gapira olish, 怎么 so'roq olmoshi, miqdor ko'makchilarining takrorlanishi va 因为……所以…… bog'lovchi qolipini o'zlashtirish.",
-    "ru": "Научиться говорить о причине и следствии, вопросительное местоимение 怎么, удвоение счётных слов и союзная конструкция 因为……所以……",
-    "tj": "Омӯзиши гуфтан дар бораи сабаб ва натиҷа, исми саволии 怎么, такрори калимаҳои шуморавӣ ва сохтори пайвандакии 因为……所以……"
+    "uz": "Because and reasons: so'zlar, gaplar va dialoglar.",
+    "ru": "Because and reasons: слова, фразы и диалоги.",
+    "tj": "Because and reasons: калимаҳо, ҷумлаҳо ва муколамаҳо."
   },
   "intro_prebuilt": true,
   "grammar_prebuilt": true,
   "active_words": [
     {
       "no": 1,
-      "zh": "门",
-      "pinyin": "mén",
+      "zh": "reason",
+      "pinyin": "REASON",
       "pos": "n.",
       "meaning": {
-        "uz": "eshik, darvoza",
-        "ru": "дверь, ворота",
-        "tj": "дар, дарвоза"
+        "uz": "sabab",
+        "ru": "причина",
+        "tj": "сабаб"
       }
     },
     {
       "no": 2,
-      "zh": "外",
-      "pinyin": "wài",
-      "pos": "n.",
+      "zh": "because",
+      "pinyin": "BECAUSE",
+      "pos": "conj.",
       "meaning": {
-        "uz": "tashqarisi, tashqi tomon",
-        "ru": "снаружи, внешняя сторона",
-        "tj": "берун, тарафи берун"
+        "uz": "chunki",
+        "ru": "потому что",
+        "tj": "зеро"
       }
     },
     {
       "no": 3,
-      "zh": "自行车",
-      "pinyin": "zìxíngchē",
-      "pos": "n.",
+      "zh": "so",
+      "pinyin": "SO",
+      "pos": "conj.",
       "meaning": {
-        "uz": "velosiped",
-        "ru": "велосипед",
-        "tj": "велосипед"
+        "uz": "shuning uchun",
+        "ru": "поэтому",
+        "tj": "бинобар ин"
       }
     },
     {
       "no": 4,
-      "zh": "羊肉",
-      "pinyin": "yángròu",
+      "zh": "problem",
+      "pinyin": "PROBLEM",
       "pos": "n.",
       "meaning": {
-        "uz": "qo'y go'shti",
-        "ru": "баранина",
-        "tj": "гӯшти гӯсфанд"
+        "uz": "muammo",
+        "ru": "проблема",
+        "tj": "мушкил"
       }
     },
     {
       "no": 5,
-      "zh": "好吃",
-      "pinyin": "hǎochī",
+      "zh": "tired",
+      "pinyin": "TIRED",
       "pos": "adj.",
       "meaning": {
-        "uz": "mazali (ovqat haqida)",
-        "ru": "вкусный (о еде)",
-        "tj": "хӯрданӣ, болаззат (дар бораи хӯрок)"
+        "uz": "charchagan",
+        "ru": "уставший",
+        "tj": "хаста"
       }
     },
     {
       "no": 6,
-      "zh": "面条",
-      "pinyin": "miàntiáo",
-      "pos": "n.",
+      "zh": "busy",
+      "pinyin": "BUSY",
+      "pos": "adj.",
       "meaning": {
-        "uz": "makaron, lag'mon",
-        "ru": "лапша",
-        "tj": "лоғмон, макарон"
-      }
-    },
-    {
-      "no": 7,
-      "zh": "打篮球",
-      "pinyin": "dǎ lánqiú",
-      "pos": "v.",
-      "meaning": {
-        "uz": "basketbol o'ynamoq",
-        "ru": "играть в баскетбол",
-        "tj": "баскетбол бозӣ кардан"
-      }
-    },
-    {
-      "no": 8,
-      "zh": "因为",
-      "pinyin": "yīnwèi",
-      "pos": "conj.",
-      "meaning": {
-        "uz": "chunki, sababi",
-        "ru": "потому что, так как",
-        "tj": "зеро, чунки"
-      }
-    },
-    {
-      "no": 9,
-      "zh": "所以",
-      "pinyin": "suǒyǐ",
-      "pos": "conj.",
-      "meaning": {
-        "uz": "shuning uchun, shunday qilib",
-        "ru": "поэтому, вот почему",
-        "tj": "аз ин сабаб, бинобар ин"
-      }
-    },
-    {
-      "no": 10,
-      "zh": "游泳",
-      "pinyin": "yóuyǒng",
-      "pos": "v.",
-      "meaning": {
-        "uz": "suzmoq",
-        "ru": "плавать",
-        "tj": "шино кардан"
-      }
-    },
-    {
-      "no": 11,
-      "zh": "经常",
-      "pinyin": "jīngcháng",
-      "pos": "adv.",
-      "meaning": {
-        "uz": "tez-tez, ko'pincha",
-        "ru": "часто, постоянно",
-        "tj": "зуд-зуд, аксар вақт"
-      }
-    },
-    {
-      "no": 12,
-      "zh": "公斤",
-      "pinyin": "gōngjīn",
-      "pos": "m.",
-      "meaning": {
-        "uz": "kilogram",
-        "ru": "килограмм",
-        "tj": "килограмм"
-      }
-    },
-    {
-      "no": 13,
-      "zh": "姐姐",
-      "pinyin": "jiějie",
-      "pos": "n.",
-      "meaning": {
-        "uz": "katta singl (aka-ukaniki), opa",
-        "ru": "старшая сестра",
-        "tj": "хоҳари калонӣ"
+        "uz": "band",
+        "ru": "занятый",
+        "tj": "банд"
       }
     }
   ],
@@ -159,33 +82,24 @@
     {
       "no": 1,
       "title": {
-        "uz": "So'roq olmoshi 怎么",
-        "ru": "Вопросительное местоимение 怎么",
-        "tj": "Исми саволии 怎么"
+        "uz": "because + reason",
+        "ru": "because + reason",
+        "tj": "because + reason"
       },
-      "title_zh": "疑问代词“怎么”",
+      "title_zh": "because + reason",
       "rule": {
-        "uz": "'怎么' so'roq olmoshi ikki xil ma'noda ishlatiladi:\n1) 'Qanday qilib? Qanday yo'l bilan?' — usul yoki harakat tarzini so'rashda;\n2) 'Nega? Nima uchun?' — hayrat yoki tushunmovchilik bildiruvchi savolda.\nIkkinchi ma'noda ko'pincha salbiy gaplarda uchraydi.",
-        "ru": "Вопросительное местоимение '怎么' используется в двух значениях:\n1) 'Как? Каким образом?' — для вопроса о способе или методе действия;\n2) 'Почему? Как так?' — для выражения удивления или непонимания.\nВо втором значении часто встречается в отрицательных предложениях.",
-        "tj": "Исми саволии '怎么' дар ду маъно истифода мешавад:\n1) 'Чӣ тавр? Бо кадом роҳ?' — барои пурсидани усул ё тарзи амал;\n2) 'Чаро? Чи хел?' — барои ифодаи шигифт ё нофаҳмӣ.\nДар маъноии дуввум аксар вақт дар ҷумлаҳои инкорӣ истифода мешавад."
+        "uz": "Qolip: because + reason. Misol: I am late because I am busy. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+        "ru": "Шаблон: because + reason. Пример: I am late because I am busy. Используйте его в коротких естественных фразах.",
+        "tj": "Қолаб: because + reason. Мисол: I am late because I am busy. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
       },
       "examples": [
         {
-          "zh": "你怎么知道他来了？",
-          "pinyin": "Nǐ zěnme zhīdào tā lái le?",
+          "zh": "I am late because I am busy.",
+          "pinyin": "",
           "translation": {
-            "uz": "U kelganini qanday bilding?",
-            "ru": "Как ты узнал, что он пришёл?",
-            "tj": "Ту чӣ тавр донистӣ, ки вай омад?"
-          }
-        },
-        {
-          "zh": "你怎么不吃了？",
-          "pinyin": "Nǐ zěnme bù chī le?",
-          "translation": {
-            "uz": "Nega yemayapsan?",
-            "ru": "Почему ты не ешь?",
-            "tj": "Ту чаро намехӯрӣ?"
+            "uz": "I am late because I am busy.",
+            "ru": "I am late because I am busy.",
+            "tj": "I am late because I am busy."
           }
         }
       ]
@@ -193,67 +107,24 @@
     {
       "no": 2,
       "title": {
-        "uz": "Miqdor ko'makchilarining takrorlanishi",
-        "ru": "Удвоение счётных слов",
-        "tj": "Такрори калимаҳои шуморавӣ"
+        "uz": "expanded sentence",
+        "ru": "expanded sentence",
+        "tj": "expanded sentence"
       },
-      "title_zh": "量词的重叠",
+      "title_zh": "expanded sentence",
       "rule": {
-        "uz": "Miqdor ko'makchilarini takrorlash orqali 'har bir, har qaysi' ma'nosi hosil qilinadi.\nMasalan, 天天 = har kuni, 年年 = har yili.\nBu qolip davomiylik va takrorlanuvchilikni ta'kidlaydi.",
-        "ru": "Удвоение счётных слов образует значение 'каждый, любой'.\nНапример, 天天 = каждый день, 年年 = каждый год.\nЭта конструкция подчёркивает постоянство и повторяемость.",
-        "tj": "Такрори калимаҳои шуморавӣ маъноии 'ҳар, ҳар як'-ро месозад.\nМасалан, 天天 = ҳар рӯз, 年年 = ҳар сол.\nИн сохтор давомнокӣ ва такрорпазириро таъкид мекунад."
+        "uz": "Qolip: add time, place, or reason. Misol: I am late because I am busy. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+        "ru": "Шаблон: add time, place, or reason. Пример: I am late because I am busy. Используйте его в коротких естественных фразах.",
+        "tj": "Қолаб: add time, place, or reason. Мисол: I am late because I am busy. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
       },
       "examples": [
         {
-          "zh": "这个星期我天天都吃羊肉。",
-          "pinyin": "Zhège xīngqī wǒ tiāntiān dōu chī yángròu.",
+          "zh": "I am late because I am busy.",
+          "pinyin": "",
           "translation": {
-            "uz": "Bu hafta har kuni qo'y go'shti edim.",
-            "ru": "На этой неделе я ел баранину каждый день.",
-            "tj": "Ин ҳафта ман ҳар рӯз гӯшти гӯсфанд хӯрдам."
-          }
-        },
-        {
-          "zh": "这个月我天天都游泳。",
-          "pinyin": "Zhège yuè wǒ tiāntiān dōu yóuyǒng.",
-          "translation": {
-            "uz": "Bu oy har kuni suzaman.",
-            "ru": "В этом месяце я плаваю каждый день.",
-            "tj": "Ин моҳ ман ҳар рӯз шино мекунам."
-          }
-        }
-      ]
-    },
-    {
-      "no": 3,
-      "title": {
-        "uz": "Bog'lovchi 因为……所以…… (chunki...shuning uchun...)",
-        "ru": "Союзная конструкция 因为……所以…… (потому что...поэтому...)",
-        "tj": "Пайвандаки 因为……所以…… (зеро...аз ин сабаб...)"
-      },
-      "title_zh": "关联词“因为……，所以……”",
-      "rule": {
-        "uz": "'因为……所以……' qolipida sabab va oqibat ko'rsatiladi.\n因为 sabab gapini, 所以 esa oqibat gapini boshlab keladi.\nO'zbek tilidagi 'chunki…, shuning uchun…' iborasiga to'g'ri keladi.\nIkkala qism ham birgalikda yoki alohida ishlatilishi mumkin.",
-        "ru": "Конструкция '因为……所以……' выражает причину и следствие.\n因为 вводит предложение с причиной, 所以 — со следствием.\nСоответствует русскому 'потому что…, поэтому…'.\nОбе части могут использоваться вместе или по отдельности.",
-        "tj": "Дар сохтори '因为……所以……' сабаб ва натиҷа нишон дода мешавад.\n因为 ҷумлаи сабабро, 所以 ҷумлаи натиҷаро мебарад.\nБа форсии тоҷикӣ 'зеро…, аз ин сабаб…' мувофиқат мекунад.\nҲар ду қисм метавонанд якҷоя ё алоҳида истифода шаванд."
-      },
-      "examples": [
-        {
-          "zh": "因为昨天下雨，所以我们都没去。",
-          "pinyin": "Yīnwèi zuótiān xiàyǔ, suǒyǐ wǒmen dōu méi qù.",
-          "translation": {
-            "uz": "Chunki kecha yomg'ir yog'di, shuning uchun barchimiz bormadik.",
-            "ru": "Потому что вчера шёл дождь, поэтому мы все не пошли.",
-            "tj": "Зеро дирӯз борон меборид, аз ин сабаб мо ҳама наравон."
-          }
-        },
-        {
-          "zh": "因为他很忙，所以没来。",
-          "pinyin": "Yīnwèi tā hěn máng, suǒyǐ méi lái.",
-          "translation": {
-            "uz": "Chunki u juda band edi, shuning uchun kelmadi.",
-            "ru": "Потому что он был очень занят, поэтому не пришёл.",
-            "tj": "Зеро вай бисёр машғул буд, аз ин сабаб наомад."
+            "uz": "I am late because I am busy.",
+            "ru": "I am late because I am busy.",
+            "tj": "I am late because I am busy."
           }
         }
       ]
@@ -262,196 +133,87 @@
   "dialogues": [
     {
       "scene": {
-        "uz": "Maktabda",
-        "ru": "В школе",
-        "tj": "Дар мактаб"
+        "uz": "Dars boshida",
+        "ru": "В начале урока",
+        "tj": "Дар оғози дарс"
       },
       "dialogue": [
         {
           "speaker": "A",
-          "zh": "你知道小王今天什么时候来学校吗？",
-          "pinyin": "Nǐ zhīdào Xiǎo Wáng jīntiān shénme shíhou lái xuéxiào ma?",
+          "zh": "What are we learning today?",
+          "pinyin": "",
           "text": {
-            "uz": "Kichik Vang bugun qachon maktabga kelishini bilasanmi?",
-            "ru": "Ты знаешь, когда Маленький Ван придёт в школу сегодня?",
-            "tj": "Оё медонӣ, ки Сяо Ван имрӯз кай ба мактаб меояд?"
+            "uz": "Bugun nimani o‘rganamiz?",
+            "ru": "Что мы сегодня изучаем?",
+            "tj": "Имрӯз чиро меомӯзем?"
           }
         },
         {
           "speaker": "B",
-          "zh": "他已经来了。",
-          "pinyin": "Tā yǐjīng lái le.",
+          "zh": "We are learning Because and reasons.",
+          "pinyin": "",
           "text": {
-            "uz": "U allaqachon keldi.",
-            "ru": "Он уже пришёл.",
-            "tj": "Вай аллакай омадааст."
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "你怎么知道他来了？",
-          "pinyin": "Nǐ zěnme zhīdào tā lái le?",
-          "text": {
-            "uz": "U kelganini qanday bilding?",
-            "ru": "Как ты узнал, что он пришёл?",
-            "tj": "Ту чӣ тавр донистӣ, ки вай омад?"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "我在门外看见他的自行车了。",
-          "pinyin": "Wǒ zài mén wài kànjian tā de zìxíngchē le.",
-          "text": {
-            "uz": "Eshik tashqarisida uning velosipedini ko'rdim.",
-            "ru": "Я увидел его велосипед за дверью.",
-            "tj": "Ман берун аз дар велосипеди ӯро дидам."
+            "uz": "Bugun Because and reasons mavzusini o‘rganamiz.",
+            "ru": "Мы изучаем тему Because and reasons.",
+            "tj": "Мо мавзӯи Because and reasons-ро меомӯзем."
           }
         }
       ]
     },
     {
       "scene": {
-        "uz": "Restoranda",
-        "ru": "В ресторане",
-        "tj": "Дар тарабхона"
+        "uz": "Misol gap",
+        "ru": "Пример фразы",
+        "tj": "Ҷумлаи намуна"
       },
       "dialogue": [
         {
           "speaker": "A",
-          "zh": "今天的羊肉很好吃，你怎么不吃了？",
-          "pinyin": "Jīntiān de yángròu hěn hǎochī, nǐ zěnme bù chī le?",
+          "zh": "Can you give an example?",
+          "pinyin": "",
           "text": {
-            "uz": "Bugungi qo'y go'shti juda mazali, nega yemayapsan?",
-            "ru": "Сегодняшняя баранина очень вкусная, почему ты не ешь?",
-            "tj": "Гӯшти гӯсфанди имрӯз бисёр болаззат аст, ту чаро намехӯрӣ?"
+            "uz": "Misol keltira olasizmi?",
+            "ru": "Можете привести пример?",
+            "tj": "Метавонед мисол диҳед?"
           }
         },
         {
           "speaker": "B",
-          "zh": "这个星期我天天都吃羊肉，不想吃了。",
-          "pinyin": "Zhège xīngqī wǒ tiāntiān dōu chī yángròu, bù xiǎng chī le.",
+          "zh": "I am late because I am busy.",
+          "pinyin": "",
           "text": {
-            "uz": "Bu hafta har kuni qo'y go'shti edim, endi yeygim kelmayapti.",
-            "ru": "На этой неделе я ел баранину каждый день, больше не хочу.",
-            "tj": "Ин ҳафта ман ҳар рӯз гӯшти гӯсфанд хӯрдам, дигар намехоҳам."
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "那你想吃什么？",
-          "pinyin": "Nà nǐ xiǎng chī shénme?",
-          "text": {
-            "uz": "Unda nima yemoqchisan?",
-            "ru": "Тогда что ты хочешь поесть?",
-            "tj": "Пас ту чӣ хӯрдан мехоҳӣ?"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "来一点儿面条吧。",
-          "pinyin": "Lái yìdiǎnr miàntiáo ba.",
-          "text": {
-            "uz": "Bir oz lag'mon gapirtiraylik.",
-            "ru": "Давай закажем немного лапши.",
-            "tj": "Каме лоғмон оварем."
+            "uz": "I am late because I am busy.",
+            "ru": "I am late because I am busy.",
+            "tj": "I am late because I am busy."
           }
         }
       ]
     },
     {
       "scene": {
-        "uz": "Sport zalida",
-        "ru": "В спортзале",
-        "tj": "Дар толори варзиш"
+        "uz": "Qisqa suhbat",
+        "ru": "Короткий разговор",
+        "tj": "Суҳбати кӯтоҳ"
       },
       "dialogue": [
         {
           "speaker": "A",
-          "zh": "昨天你们怎么都没去打篮球？",
-          "pinyin": "Zuótiān nǐmen zěnme dōu méi qù dǎ lánqiú?",
+          "zh": "Do you know the word \"reason\"?",
+          "pinyin": "",
           "text": {
-            "uz": "Kecha nega barchang basketbol o'ynamaganga bormadinglar?",
-            "ru": "Почему вы все вчера не пошли играть в баскетбол?",
-            "tj": "Дирӯз шумо чаро ҳама наравон бозии баскетбол накардед?"
+            "uz": "“reason” so‘zini bilasizmi?",
+            "ru": "Вы знаете слово “reason”?",
+            "tj": "Оё калимаи “reason”-ро медонед?"
           }
         },
         {
           "speaker": "B",
-          "zh": "因为昨天下雨，所以我们都没去。我去游泳了。",
-          "pinyin": "Yīnwèi zuótiān xiàyǔ, suǒyǐ wǒmen dōu méi qù. Wǒ qù yóuyǒng le.",
+          "zh": "Yes. It means sabab.",
+          "pinyin": "",
           "text": {
-            "uz": "Chunki kecha yomg'ir yog'di, shuning uchun barchimiz bormadik. Men suzgani bordim.",
-            "ru": "Потому что вчера шёл дождь, поэтому мы все не пошли. Я пошёл плавать.",
-            "tj": "Зеро дирӯз борон меборид, аз ин сабаб мо ҳама наравон. Ман рафтам шино кардам."
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "你经常游泳吗？",
-          "pinyin": "Nǐ jīngcháng yóuyǒng ma?",
-          "text": {
-            "uz": "Sen tez-tez suzasanmi?",
-            "ru": "Ты часто плаваешь?",
-            "tj": "Оё ту зуд-зуд шино мекунӣ?"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "这个月我天天都游泳，我现在七十公斤了。",
-          "pinyin": "Zhège yuè wǒ tiāntiān dōu yóuyǒng, wǒ xiànzài qīshí gōngjīn le.",
-          "text": {
-            "uz": "Bu oy har kuni suzaman, hozir yetmish kilogram bo'ldim.",
-            "ru": "В этом месяце я плаваю каждый день, сейчас вешу семьдесят килограмм.",
-            "tj": "Ин моҳ ман ҳар рӯз шино мекунам, ҳоло ҳафтод килограмм шудам."
-          }
-        }
-      ]
-    },
-    {
-      "scene": {
-        "uz": "Idorada",
-        "ru": "В офисе",
-        "tj": "Дар идора"
-      },
-      "dialogue": [
-        {
-          "speaker": "A",
-          "zh": "这两天怎么没看见小张？",
-          "pinyin": "Zhè liǎng tiān zěnme méi kànjian Xiǎo Zhāng?",
-          "text": {
-            "uz": "Bu ikki kunda nega Kichik Jangni ko'rmadim?",
-            "ru": "Почему я не видел Маленького Чжана эти два дня?",
-            "tj": "Ин ду рӯз чаро Сяо Чжанро надидам?"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "他去北京了。",
-          "pinyin": "Tā qù Běijīng le.",
-          "text": {
-            "uz": "U Pekinga ketdi.",
-            "ru": "Он уехал в Пекин.",
-            "tj": "Вай ба Пекин рафтааст."
-          }
-        },
-        {
-          "speaker": "A",
-          "zh": "去北京了？是去旅游吗？",
-          "pinyin": "Qù Běijīng le? Shì qù lǚyóu ma?",
-          "text": {
-            "uz": "Pekinga ketdimi? Sayohatgami?",
-            "ru": "Уехал в Пекин? На экскурсию?",
-            "tj": "Ба Пекин рафт? Сайёҳӣ?"
-          }
-        },
-        {
-          "speaker": "B",
-          "zh": "不是，听说是去看他姐姐。",
-          "pinyin": "Bú shì, tīngshuō shì qù kàn tā jiějie.",
-          "text": {
-            "uz": "Yo'q, eshitdim, opasini ko'rgani ketgan.",
-            "ru": "Нет, говорят, поехал навестить старшую сестру.",
-            "tj": "Не, шунидам, рафтааст хоҳари калониашро бинад."
+            "uz": "Ha. Ma’nosi: sabab.",
+            "ru": "Да. Значение: причина.",
+            "tj": "Бале. Маънояш: сабаб."
           }
         }
       ]
@@ -471,13 +233,13 @@
           "type": "active_word",
           "word": {
             "no": 1,
-            "zh": "门",
-            "pinyin": "mén",
+            "zh": "reason",
+            "pinyin": "REASON",
             "pos": "n.",
             "meaning": {
-              "uz": "eshik, darvoza",
-              "ru": "дверь, ворота",
-              "tj": "дар, дарвоза"
+              "uz": "sabab",
+              "ru": "причина",
+              "tj": "сабаб"
             }
           }
         },
@@ -485,52 +247,27 @@
           "type": "active_word",
           "word": {
             "no": 2,
-            "zh": "外",
-            "pinyin": "wài",
-            "pos": "n.",
+            "zh": "because",
+            "pinyin": "BECAUSE",
+            "pos": "conj.",
             "meaning": {
-              "uz": "tashqarisi, tashqi tomon",
-              "ru": "снаружи, внешняя сторона",
-              "tj": "берун, тарафи берун"
+              "uz": "chunki",
+              "ru": "потому что",
+              "tj": "зеро"
             }
-          }
-        },
-        {
-          "type": "pinyin_choice",
-          "prompt": {
-            "uz": "门 talaffuzini tanlang:",
-            "ru": "Выберите произношение 门:",
-            "tj": "Талаффузи 门-ро интихоб кунед:"
-          },
-          "title": {
-            "uz": "Qanday o'qiladi?",
-            "ru": "Как читается?",
-            "tj": "Чӣ хел хонда мешавад?"
-          },
-          "options": [
-            "yángròu",
-            "wài",
-            "mén",
-            "zìxíngchē"
-          ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "门 — mén",
-            "ru": "门 — mén",
-            "tj": "门 — mén"
           }
         },
         {
           "type": "active_word",
           "word": {
             "no": 3,
-            "zh": "自行车",
-            "pinyin": "zìxíngchē",
-            "pos": "n.",
+            "zh": "so",
+            "pinyin": "SO",
+            "pos": "conj.",
             "meaning": {
-              "uz": "velosiped",
-              "ru": "велосипед",
-              "tj": "велосипед"
+              "uz": "shuning uchun",
+              "ru": "поэтому",
+              "tj": "бинобар ин"
             }
           }
         },
@@ -538,22 +275,22 @@
           "type": "active_word",
           "word": {
             "no": 4,
-            "zh": "羊肉",
-            "pinyin": "yángròu",
+            "zh": "problem",
+            "pinyin": "PROBLEM",
             "pos": "n.",
             "meaning": {
-              "uz": "qo'y go'shti",
-              "ru": "баранина",
-              "tj": "гӯшти гӯсфанд"
+              "uz": "muammo",
+              "ru": "проблема",
+              "tj": "мушкил"
             }
           }
         },
         {
           "type": "meaning_guess",
           "prompt": {
-            "uz": "门 so'zining ma'nosini tanlang:",
-            "ru": "Выберите значение слова 门:",
-            "tj": "Маънои калимаи 门-ро интихоб кунед:"
+            "uz": "«reason» ma'nosini tanlang:",
+            "ru": "Выберите значение «reason»:",
+            "tj": "Маънои «reason»-ро интихоб кунед:"
           },
           "title": {
             "uz": "Ma'nosi nima?",
@@ -562,120 +299,54 @@
           },
           "options": [
             {
-              "uz": "qo'y go'shti",
-              "ru": "баранина",
-              "tj": "гӯшти гӯсфанд"
+              "uz": "sabab",
+              "ru": "причина",
+              "tj": "сабаб"
             },
             {
-              "uz": "eshik, darvoza",
-              "ru": "дверь, ворота",
-              "tj": "дар, дарвоза"
+              "uz": "chunki",
+              "ru": "потому что",
+              "tj": "зеро"
             },
             {
-              "uz": "tashqarisi, tashqi tomon",
-              "ru": "снаружи, внешняя сторона",
-              "tj": "берун, тарафи берун"
+              "uz": "shuning uchun",
+              "ru": "поэтому",
+              "tj": "бинобар ин"
             },
             {
-              "uz": "velosiped",
-              "ru": "велосипед",
-              "tj": "велосипед"
+              "uz": "muammo",
+              "ru": "проблема",
+              "tj": "мушкил"
             }
           ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "门 = eshik, darvoza (mén)",
-            "ru": "门 = дверь, ворота (mén)",
-            "tj": "门 = дар, дарвоза (mén)"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 5,
-            "zh": "好吃",
-            "pinyin": "hǎochī",
-            "pos": "adj.",
-            "meaning": {
-              "uz": "mazali (ovqat haqida)",
-              "ru": "вкусный (о еде)",
-              "tj": "хӯрданӣ, болаззат (дар бораи хӯрок)"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 6,
-            "zh": "面条",
-            "pinyin": "miàntiáo",
-            "pos": "n.",
-            "meaning": {
-              "uz": "makaron, lag'mon",
-              "ru": "лапша",
-              "tj": "лоғмон, макарон"
-            }
-          }
+          "correct_index": 0
         },
         {
           "type": "hanzi_choice",
           "prompt": {
-            "uz": "miàntiáo qaysi ieroglif?",
-            "ru": "Какой иероглиф читается miàntiáo?",
-            "tj": "miàntiáo кадом иероглиф аст?"
+            "uz": "«BECAUSE» qaysi so'z?",
+            "ru": "Какое слово читается «BECAUSE»?",
+            "tj": "«BECAUSE» кадом калима аст?"
           },
           "title": {
-            "uz": "Ieroglifni tanlang",
-            "ru": "Выберите иероглиф",
-            "tj": "Иероглифро интихоб кунед"
+            "uz": "So'zni tanlang",
+            "ru": "Выберите слово",
+            "tj": "Калимаро интихоб кунед"
           },
           "options": [
-            "自行车",
-            "门",
-            "面条",
-            "外"
+            "because",
+            "reason",
+            "so",
+            "problem"
           ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "面条 = makaron, lag'mon (miàntiáo)",
-            "ru": "面条 = лапша (miàntiáo)",
-            "tj": "面条 = лоғмон, макарон (miàntiáo)"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 7,
-            "zh": "打篮球",
-            "pinyin": "dǎ lánqiú",
-            "pos": "v.",
-            "meaning": {
-              "uz": "basketbol o'ynamoq",
-              "ru": "играть в баскетбол",
-              "tj": "баскетбол бозӣ кардан"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 8,
-            "zh": "因为",
-            "pinyin": "yīnwèi",
-            "pos": "conj.",
-            "meaning": {
-              "uz": "chunki, sababi",
-              "ru": "потому что, так как",
-              "tj": "зеро, чунки"
-            }
-          }
+          "correct_index": 0
         },
         {
           "type": "pinyin_choice",
           "prompt": {
-            "uz": "外 talaffuzini tanlang:",
-            "ru": "Выберите произношение 外:",
-            "tj": "Талаффузи 外-ро интихоб кунед:"
+            "uz": "«reason» talaffuzini tanlang:",
+            "ru": "Выберите произношение «reason»:",
+            "tj": "Талаффузи «reason»-ро интихоб кунед:"
           },
           "title": {
             "uz": "Qanday o'qiladi?",
@@ -683,128 +354,49 @@
             "tj": "Чӣ хел хонда мешавад?"
           },
           "options": [
-            "mén",
-            "zìxíngchē",
-            "yángròu",
-            "wài"
+            "REASON",
+            "BECAUSE",
+            "SO",
+            "PROBLEM"
           ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "外 — wài",
-            "ru": "外 — wài",
-            "tj": "外 — wài"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 9,
-            "zh": "所以",
-            "pinyin": "suǒyǐ",
-            "pos": "conj.",
-            "meaning": {
-              "uz": "shuning uchun, shunday qilib",
-              "ru": "поэтому, вот почему",
-              "tj": "аз ин сабаб, бинобар ин"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 10,
-            "zh": "游泳",
-            "pinyin": "yóuyǒng",
-            "pos": "v.",
-            "meaning": {
-              "uz": "suzmoq",
-              "ru": "плавать",
-              "tj": "шино кардан"
-            }
-          }
-        },
-        {
-          "type": "meaning_guess",
-          "prompt": {
-            "uz": "羊肉 so'zining ma'nosini tanlang:",
-            "ru": "Выберите значение слова 羊肉:",
-            "tj": "Маънои калимаи 羊肉-ро интихоб кунед:"
-          },
-          "title": {
-            "uz": "Ma'nosi nima?",
-            "ru": "Что означает?",
-            "tj": "Маъно чист?"
-          },
-          "options": [
-            {
-              "uz": "velosiped",
-              "ru": "велосипед",
-              "tj": "велосипед"
-            },
-            {
-              "uz": "tashqarisi, tashqi tomon",
-              "ru": "снаружи, внешняя сторона",
-              "tj": "берун, тарафи берун"
-            },
-            {
-              "uz": "eshik, darvoza",
-              "ru": "дверь, ворота",
-              "tj": "дар, дарвоза"
-            },
-            {
-              "uz": "qo'y go'shti",
-              "ru": "баранина",
-              "tj": "гӯшти гӯсфанд"
-            }
-          ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "羊肉 = qo'y go'shti (yángròu)",
-            "ru": "羊肉 = баранина (yángròu)",
-            "tj": "羊肉 = гӯшти гӯсфанд (yángròu)"
-          }
+          "correct_index": 0
         },
         {
           "type": "match_pairs",
           "pairs": [
             [
-              "门",
+              "reason",
               {
-                "uz": "eshik, darvoza",
-                "ru": "дверь, ворота",
-                "tj": "дар, дарвоза"
+                "uz": "sabab",
+                "ru": "причина",
+                "tj": "сабаб"
               }
             ],
             [
-              "外",
+              "because",
               {
-                "uz": "tashqarisi, tashqi tomon",
-                "ru": "снаружи, внешняя сторона",
-                "tj": "берун, тарафи берун"
+                "uz": "chunki",
+                "ru": "потому что",
+                "tj": "зеро"
               }
             ],
             [
-              "自行车",
+              "so",
               {
-                "uz": "velosiped",
-                "ru": "велосипед",
-                "tj": "велосипед"
+                "uz": "shuning uchun",
+                "ru": "поэтому",
+                "tj": "бинобар ин"
               }
             ],
             [
-              "羊肉",
+              "problem",
               {
-                "uz": "qo'y go'shti",
-                "ru": "баранина",
-                "tj": "гӯшти гӯсфанд"
+                "uz": "muammo",
+                "ru": "проблема",
+                "tj": "мушкил"
               }
             ]
-          ],
-          "explanation": {
-            "uz": "Juftliklar darsdagi yangi so'zlardan olindi.",
-            "ru": "Пары взяты из новых слов урока.",
-            "tj": "Ҷуфтҳо аз калимаҳои нави дарс гирифта шудаанд."
-          }
+          ]
         }
       ]
     },
@@ -822,67 +414,27 @@
           "g": {
             "no": 1,
             "title": {
-              "uz": "So'roq olmoshi 怎么",
-              "ru": "Вопросительное местоимение 怎么",
-              "tj": "Исми саволии 怎么"
+              "uz": "because + reason",
+              "ru": "because + reason",
+              "tj": "because + reason"
             },
-            "title_zh": "疑问代词“怎么”",
+            "title_zh": "because + reason",
             "rule": {
-              "uz": "'怎么' so'roq olmoshi ikki xil ma'noda ishlatiladi:\n1) 'Qanday qilib? Qanday yo'l bilan?' — usul yoki harakat tarzini so'rashda;\n2) 'Nega? Nima uchun?' — hayrat yoki tushunmovchilik bildiruvchi savolda.\nIkkinchi ma'noda ko'pincha salbiy gaplarda uchraydi.",
-              "ru": "Вопросительное местоимение '怎么' используется в двух значениях:\n1) 'Как? Каким образом?' — для вопроса о способе или методе действия;\n2) 'Почему? Как так?' — для выражения удивления или непонимания.\nВо втором значении часто встречается в отрицательных предложениях.",
-              "tj": "Исми саволии '怎么' дар ду маъно истифода мешавад:\n1) 'Чӣ тавр? Бо кадом роҳ?' — барои пурсидани усул ё тарзи амал;\n2) 'Чаро? Чи хел?' — барои ифодаи шигифт ё нофаҳмӣ.\nДар маъноии дуввум аксар вақт дар ҷумлаҳои инкорӣ истифода мешавад."
+              "uz": "Qolip: because + reason. Misol: I am late because I am busy. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+              "ru": "Шаблон: because + reason. Пример: I am late because I am busy. Используйте его в коротких естественных фразах.",
+              "tj": "Қолаб: because + reason. Мисол: I am late because I am busy. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
             },
             "examples": [
               {
-                "zh": "你怎么知道他来了？",
-                "pinyin": "Nǐ zěnme zhīdào tā lái le?",
+                "zh": "I am late because I am busy.",
+                "pinyin": "",
                 "translation": {
-                  "uz": "U kelganini qanday bilding?",
-                  "ru": "Как ты узнал, что он пришёл?",
-                  "tj": "Ту чӣ тавр донистӣ, ки вай омад?"
-                }
-              },
-              {
-                "zh": "你怎么不吃了？",
-                "pinyin": "Nǐ zěnme bù chī le?",
-                "translation": {
-                  "uz": "Nega yemayapsan?",
-                  "ru": "Почему ты не ешь?",
-                  "tj": "Ту чаро намехӯрӣ?"
+                  "uz": "I am late because I am busy.",
+                  "ru": "I am late because I am busy.",
+                  "tj": "I am late because I am busy."
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "sentence_builder",
-          "sentence": {
-            "uz": "U kelganini qanday bilding?",
-            "ru": "Как ты узнал, что он пришёл?",
-            "tj": "Ту чӣ тавр донистӣ, ки вай омад?"
-          },
-          "tokens": [
-            "来",
-            "你",
-            "他",
-            "怎么",
-            "了",
-            "外",
-            "门",
-            "知道"
-          ],
-          "answer_tokens": [
-            "你",
-            "怎么",
-            "知道",
-            "他",
-            "来",
-            "了"
-          ],
-          "explanation": {
-            "uz": "你怎么知道他来了？ — Nǐ zěnme zhīdào tā lái le?",
-            "ru": "你怎么知道他来了？ — Nǐ zěnme zhīdào tā lái le?",
-            "tj": "你怎么知道他来了？ — Nǐ zěnme zhīdào tā lái le?"
           }
         },
         {
@@ -890,141 +442,80 @@
           "g": {
             "no": 2,
             "title": {
-              "uz": "Miqdor ko'makchilarining takrorlanishi",
-              "ru": "Удвоение счётных слов",
-              "tj": "Такрори калимаҳои шуморавӣ"
+              "uz": "expanded sentence",
+              "ru": "expanded sentence",
+              "tj": "expanded sentence"
             },
-            "title_zh": "量词的重叠",
+            "title_zh": "expanded sentence",
             "rule": {
-              "uz": "Miqdor ko'makchilarini takrorlash orqali 'har bir, har qaysi' ma'nosi hosil qilinadi.\nMasalan, 天天 = har kuni, 年年 = har yili.\nBu qolip davomiylik va takrorlanuvchilikni ta'kidlaydi.",
-              "ru": "Удвоение счётных слов образует значение 'каждый, любой'.\nНапример, 天天 = каждый день, 年年 = каждый год.\nЭта конструкция подчёркивает постоянство и повторяемость.",
-              "tj": "Такрори калимаҳои шуморавӣ маъноии 'ҳар, ҳар як'-ро месозад.\nМасалан, 天天 = ҳар рӯз, 年年 = ҳар сол.\nИн сохтор давомнокӣ ва такрорпазириро таъкид мекунад."
+              "uz": "Qolip: add time, place, or reason. Misol: I am late because I am busy. Shu qolip bilan qisqa va tabiiy gap tuzing.",
+              "ru": "Шаблон: add time, place, or reason. Пример: I am late because I am busy. Используйте его в коротких естественных фразах.",
+              "tj": "Қолаб: add time, place, or reason. Мисол: I am late because I am busy. Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
             },
             "examples": [
               {
-                "zh": "这个星期我天天都吃羊肉。",
-                "pinyin": "Zhège xīngqī wǒ tiāntiān dōu chī yángròu.",
+                "zh": "I am late because I am busy.",
+                "pinyin": "",
                 "translation": {
-                  "uz": "Bu hafta har kuni qo'y go'shti edim.",
-                  "ru": "На этой неделе я ел баранину каждый день.",
-                  "tj": "Ин ҳафта ман ҳар рӯз гӯшти гӯсфанд хӯрдам."
-                }
-              },
-              {
-                "zh": "这个月我天天都游泳。",
-                "pinyin": "Zhège yuè wǒ tiāntiān dōu yóuyǒng.",
-                "translation": {
-                  "uz": "Bu oy har kuni suzaman.",
-                  "ru": "В этом месяце я плаваю каждый день.",
-                  "tj": "Ин моҳ ман ҳар рӯз шино мекунам."
+                  "uz": "I am late because I am busy.",
+                  "ru": "I am late because I am busy.",
+                  "tj": "I am late because I am busy."
                 }
               }
             ]
           }
         },
         {
-          "type": "gap_fill",
-          "sentence": "这个星期我天天都吃____。",
-          "prompt": {
-            "uz": "Bo'sh joyga mos so'zni tanlang:",
-            "ru": "Выберите слово для пропуска:",
-            "tj": "Калимаи мувофиқро барои ҷойи холӣ интихоб кунед:"
+          "type": "sentence_builder",
+          "sentence": {
+            "uz": "I am late because I am busy.",
+            "ru": "I am late because I am busy.",
+            "tj": "I am late because I am busy."
           },
-          "options": [
-            "外",
-            "门",
-            "自行车",
-            "羊肉"
+          "tokens": [
+            "busy",
+            "am",
+            "I",
+            "because",
+            "late",
+            "am",
+            "I",
+            "not"
           ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "To'g'ri: 羊肉 (yángròu) — qo'y go'shti",
-            "ru": "Верно: 羊肉 (yángròu) — баранина",
-            "tj": "Дуруст: 羊肉 (yángròu) — гӯшти гӯсфанд"
-          }
-        },
-        {
-          "type": "_grammar",
-          "g": {
-            "no": 3,
-            "title": {
-              "uz": "Bog'lovchi 因为……所以…… (chunki...shuning uchun...)",
-              "ru": "Союзная конструкция 因为……所以…… (потому что...поэтому...)",
-              "tj": "Пайвандаки 因为……所以…… (зеро...аз ин сабаб...)"
-            },
-            "title_zh": "关联词“因为……，所以……”",
-            "rule": {
-              "uz": "'因为……所以……' qolipida sabab va oqibat ko'rsatiladi.\n因为 sabab gapini, 所以 esa oqibat gapini boshlab keladi.\nO'zbek tilidagi 'chunki…, shuning uchun…' iborasiga to'g'ri keladi.\nIkkala qism ham birgalikda yoki alohida ishlatilishi mumkin.",
-              "ru": "Конструкция '因为……所以……' выражает причину и следствие.\n因为 вводит предложение с причиной, 所以 — со следствием.\nСоответствует русскому 'потому что…, поэтому…'.\nОбе части могут использоваться вместе или по отдельности.",
-              "tj": "Дар сохтори '因为……所以……' сабаб ва натиҷа нишон дода мешавад.\n因为 ҷумлаи сабабро, 所以 ҷумлаи натиҷаро мебарад.\nБа форсии тоҷикӣ 'зеро…, аз ин сабаб…' мувофиқат мекунад.\nҲар ду қисм метавонанд якҷоя ё алоҳида истифода шаванд."
-            },
-            "examples": [
-              {
-                "zh": "因为昨天下雨，所以我们都没去。",
-                "pinyin": "Yīnwèi zuótiān xiàyǔ, suǒyǐ wǒmen dōu méi qù.",
-                "translation": {
-                  "uz": "Chunki kecha yomg'ir yog'di, shuning uchun barchimiz bormadik.",
-                  "ru": "Потому что вчера шёл дождь, поэтому мы все не пошли.",
-                  "tj": "Зеро дирӯз борон меборид, аз ин сабаб мо ҳама наравон."
-                }
-              },
-              {
-                "zh": "因为他很忙，所以没来。",
-                "pinyin": "Yīnwèi tā hěn máng, suǒyǐ méi lái.",
-                "translation": {
-                  "uz": "Chunki u juda band edi, shuning uchun kelmadi.",
-                  "ru": "Потому что он был очень занят, поэтому не пришёл.",
-                  "tj": "Зеро вай бисёр машғул буд, аз ин сабаб наомад."
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "gap_fill",
-          "sentence": "____昨天下雨，所以我们都没去。",
-          "prompt": {
-            "uz": "Bo'sh joyga mos so'zni tanlang:",
-            "ru": "Выберите слово для пропуска:",
-            "tj": "Калимаи мувофиқро барои ҷойи холӣ интихоб кунед:"
-          },
-          "options": [
-            "外",
-            "自行车",
-            "门",
-            "因为"
+          "answer_tokens": [
+            "I",
+            "am",
+            "late",
+            "because",
+            "I",
+            "am",
+            "busy"
           ],
-          "correct_index": 3,
           "explanation": {
-            "uz": "To'g'ri: 因为 (yīnwèi) — chunki, sababi",
-            "ru": "Верно: 因为 (yīnwèi) — потому что, так как",
-            "tj": "Дуруст: 因为 (yīnwèi) — зеро, чунки"
+            "uz": "So‘z tartibiga e’tibor bering.",
+            "ru": "Обратите внимание на порядок слов.",
+            "tj": "Ба тартиби калимаҳо диққат диҳед."
           }
         },
         {
           "type": "quick_quiz",
           "prompt": {
-            "uz": "«Chunki kecha yomg'ir yog'di, shuning uchun barchimiz bormadik.» — xitoychada qaysi biri?",
-            "ru": "«Потому что вчера шёл дождь, поэтому мы все не пошли.» — какое предложение по-китайски?",
-            "tj": "«Зеро дирӯз борон меборид, аз ин сабаб мо ҳама наравон.» — кадом ҷумла ба хитоӣ аст?"
+            "uz": "“sabab” inglizchada qaysi?",
+            "ru": "“причина” — как по-английски?",
+            "tj": "“сабаб” ба англисӣ кадом аст?"
           },
           "title": {
-            "uz": "To'g'ri gapni tanlang",
-            "ru": "Выберите верное предложение",
-            "tj": "Ҷумлаи дурустро интихоб кунед"
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
           },
           "options": [
-            "因为昨天下雨，所以我们都没去。",
-            "因为他很忙，所以没来。",
-            "你怎么不吃了？",
-            "这个月我天天都游泳。"
+            "reason",
+            "because",
+            "so",
+            "problem"
           ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "因为昨天下雨，所以我们都没去。 — Yīnwèi zuótiān xiàyǔ, suǒyǐ wǒmen dōu méi qù.",
-            "ru": "因为昨天下雨，所以我们都没去。 — Yīnwèi zuótiān xiàyǔ, suǒyǐ wǒmen dōu méi qù.",
-            "tj": "因为昨天下雨，所以我们都没去。 — Yīnwèi zuótiān xiàyǔ, suǒyǐ wǒmen dōu méi qù."
-          }
+          "correct_index": 0
         }
       ]
     },
@@ -1032,84 +523,17 @@
       "section_no": 3,
       "section_title": {
         "uz": "Mashq",
-        "ru": "Упражнение",
+        "ru": "Практика",
         "tj": "Машқ"
       },
       "section_purpose": "practice",
       "cards": [
         {
-          "type": "translation_choice",
-          "prompt": {
-            "uz": "'katta singl (aka-ukaniki), opa' xitoycha qaysi?",
-            "ru": "'старшая сестра' по-китайски?",
-            "tj": "'хоҳари калонӣ' ба хитоӣ кадом аст?"
-          },
-          "title": {
-            "uz": "Xitoycha qanday?",
-            "ru": "Как по-китайски?",
-            "tj": "Ба хитоӣ чӣ тавр?"
-          },
-          "options": [
-            "姐姐",
-            "自行车",
-            "外",
-            "门"
-          ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "katta singl (aka-ukaniki), opa = 姐姐 (jiějie)",
-            "ru": "старшая сестра = 姐姐 (jiějie)",
-            "tj": "хоҳари калонӣ = 姐姐 (jiějie)"
-          }
-        },
-        {
-          "type": "match_pairs",
-          "pairs": [
-            [
-              "门",
-              {
-                "uz": "eshik, darvoza",
-                "ru": "дверь, ворота",
-                "tj": "дар, дарвоза"
-              }
-            ],
-            [
-              "外",
-              {
-                "uz": "tashqarisi, tashqi tomon",
-                "ru": "снаружи, внешняя сторона",
-                "tj": "берун, тарафи берун"
-              }
-            ],
-            [
-              "自行车",
-              {
-                "uz": "velosiped",
-                "ru": "велосипед",
-                "tj": "велосипед"
-              }
-            ],
-            [
-              "羊肉",
-              {
-                "uz": "qo'y go'shti",
-                "ru": "баранина",
-                "tj": "гӯшти гӯсфанд"
-              }
-            ]
-          ],
-          "explanation": {
-            "uz": "Juftliklar darsdagi yangi so'zlardan olindi.",
-            "ru": "Пары взяты из новых слов урока.",
-            "tj": "Ҷуфтҳо аз калимаҳои нави дарс гирифта шудаанд."
-          }
-        },
-        {
           "type": "pinyin_choice",
           "prompt": {
-            "uz": "公斤 talaffuzini tanlang:",
-            "ru": "Выберите произношение 公斤:",
-            "tj": "Талаффузи 公斤-ро интихоб кунед:"
+            "uz": "«so» talaffuzini tanlang:",
+            "ru": "Выберите произношение «so»:",
+            "tj": "Талаффузи «so»-ро интихоб кунед:"
           },
           "title": {
             "uz": "Qanday o'qiladi?",
@@ -1117,44 +541,48 @@
             "tj": "Чӣ хел хонда мешавад?"
           },
           "options": [
-            "mén",
-            "gōngjīn",
-            "wài",
-            "zìxíngchē"
+            "SO",
+            "REASON",
+            "BECAUSE",
+            "PROBLEM"
           ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "公斤 — gōngjīn",
-            "ru": "公斤 — gōngjīn",
-            "tj": "公斤 — gōngjīn"
-          }
+          "correct_index": 0
         },
         {
-          "type": "sentence_builder",
-          "sentence": {
-            "uz": "U allaqachon keldi.",
-            "ru": "Он уже пришёл.",
-            "tj": "Вай аллакай омадааст."
+          "type": "meaning_guess",
+          "prompt": {
+            "uz": "«problem» ma'nosini tanlang:",
+            "ru": "Выберите значение «problem»:",
+            "tj": "Маънои «problem»-ро интихоб кунед:"
           },
-          "tokens": [
-            "已经",
-            "门",
-            "了",
-            "来",
-            "他",
-            "外"
+          "title": {
+            "uz": "Ma'nosi nima?",
+            "ru": "Что означает?",
+            "tj": "Маъно чист?"
+          },
+          "options": [
+            {
+              "uz": "muammo",
+              "ru": "проблема",
+              "tj": "мушкил"
+            },
+            {
+              "uz": "sabab",
+              "ru": "причина",
+              "tj": "сабаб"
+            },
+            {
+              "uz": "chunki",
+              "ru": "потому что",
+              "tj": "зеро"
+            },
+            {
+              "uz": "shuning uchun",
+              "ru": "поэтому",
+              "tj": "бинобар ин"
+            }
           ],
-          "answer_tokens": [
-            "他",
-            "已经",
-            "来",
-            "了"
-          ],
-          "explanation": {
-            "uz": "他已经来了。 — Tā yǐjīng lái le.",
-            "ru": "他已经来了。 — Tā yǐjīng lái le.",
-            "tj": "他已经来了。 — Tā yǐjīng lái le."
-          }
+          "correct_index": 0
         },
         {
           "type": "listening_choice",
@@ -1163,29 +591,66 @@
             "ru": "Выберите, что вы услышали",
             "tj": "Он чи шунидед, интихоб кунед"
           },
-          "audio_text": "你知道小王今天什么时候来学校吗？",
-          "pinyin": "Nǐ zhīdào Xiǎo Wáng jīntiān shénme shíhou lái xuéxiào ma?",
+          "audio_text": "I am late because I am busy.",
+          "pinyin": "",
           "options": [
-            "我在门外看见他的自行车了。",
-            "他已经来了。",
-            "你知道小王今天什么时候来学校吗？",
-            "你怎么知道他来了？"
+            "I am late because I am busy.",
+            "I need because.",
+            "This is reason.",
+            "Please wait."
           ],
-          "correct_index": 2,
+          "correct_index": 0,
           "explanation": {
-            "uz": "你知道小王今天什么时候来学校吗？ — Kichik Vang bugun qachon maktabga kelishini bilasanmi?",
-            "ru": "你知道小王今天什么时候来学校吗？ — Ты знаешь, когда Маленький Ван придёт в школу сегодня?",
-            "tj": "你知道小王今天什么时候来学校吗？ — Оё медонӣ, ки Сяо Ван имрӯз кай ба мактаб меояд?"
+            "uz": "I am late because I am busy.",
+            "ru": "I am late because I am busy.",
+            "tj": "I am late because I am busy."
           }
         },
         {
+          "type": "match_pairs",
+          "pairs": [
+            [
+              "so",
+              {
+                "uz": "shuning uchun",
+                "ru": "поэтому",
+                "tj": "бинобар ин"
+              }
+            ],
+            [
+              "problem",
+              {
+                "uz": "muammo",
+                "ru": "проблема",
+                "tj": "мушкил"
+              }
+            ],
+            [
+              "tired",
+              {
+                "uz": "charchagan",
+                "ru": "уставший",
+                "tj": "хаста"
+              }
+            ],
+            [
+              "busy",
+              {
+                "uz": "band",
+                "ru": "занятый",
+                "tj": "банд"
+              }
+            ]
+          ]
+        },
+        {
           "type": "pronunciation",
-          "phrase": "门",
-          "pinyin": "mén",
+          "phrase": "I am late because I am busy.",
+          "pinyin": "",
           "translation": {
-            "uz": "eshik, darvoza",
-            "ru": "дверь, ворота",
-            "tj": "дар, дарвоза"
+            "uz": "I am late because I am busy.",
+            "ru": "I am late because I am busy.",
+            "tj": "I am late because I am busy."
           }
         }
       ]
@@ -1202,23 +667,44 @@
         {
           "type": "listening_choice",
           "title": {
-            "uz": "Tinglang — nima dedi?",
-            "ru": "Послушайте — что сказали?",
-            "tj": "Гӯш кунед — чӣ гуфт?"
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
           },
-          "audio_text": "你知道小王今天什么时候来学校吗？",
-          "pinyin": "Nǐ zhīdào Xiǎo Wáng jīntiān shénme shíhou lái xuéxiào ma?",
+          "audio_text": "I am late because I am busy.",
+          "pinyin": "",
           "options": [
-            "你知道小王今天什么时候来学校吗？",
-            "我在门外看见他的自行车了。",
-            "他已经来了。",
-            "你怎么知道他来了？"
+            "I am late because I am busy.",
+            "I have reason.",
+            "Where is because?",
+            "No problem."
           ],
           "correct_index": 0,
           "explanation": {
-            "uz": "你知道小王今天什么时候来学校吗？ — Kichik Vang bugun qachon maktabga kelishini bilasanmi?",
-            "ru": "你知道小王今天什么时候来学校吗？ — Ты знаешь, когда Маленький Ван придёт в школу сегодня?",
-            "tj": "你知道小王今天什么时候来学校吗？ — Оё медонӣ, ки Сяо Ван имрӯз кай ба мактаб меояд?"
+            "uz": "I am late because I am busy.",
+            "ru": "I am late because I am busy.",
+            "tj": "I am late because I am busy."
+          }
+        },
+        {
+          "type": "gap_fill",
+          "sentence": "____ am late because I am busy.",
+          "prompt": {
+            "uz": "Bo'sh joyga mos so'zni tanlang:",
+            "ru": "Выберите подходящее слово:",
+            "tj": "Калимаи мувофиқро интихоб кунед:"
+          },
+          "options": [
+            "reason",
+            "because",
+            "so",
+            "not"
+          ],
+          "correct_index": 0,
+          "explanation": {
+            "uz": "To‘g‘ri javob: reason.",
+            "ru": "Правильный ответ: reason.",
+            "tj": "Ҷавоби дуруст: reason."
           }
         },
         {
@@ -1231,17 +717,7 @@
           "lines": [
             {
               "speaker": "A",
-              "zh": "你知道小王今天什么时候来学校吗？",
-              "blank": false
-            },
-            {
-              "speaker": "B",
-              "zh": "他已经来了。",
-              "blank": false
-            },
-            {
-              "speaker": "A",
-              "zh": "你怎么知道他来了？",
+              "zh": "Can you give an example?",
               "blank": false
             },
             {
@@ -1251,88 +727,37 @@
             }
           ],
           "options": [
-            "他已经来了。",
-            "你知道小王今天什么时候来学校吗？",
-            "你怎么知道他来了？",
-            "我在门外看见他的自行车了。"
-          ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "To'g'ri javob: 我在门外看见他的自行车了。",
-            "ru": "Правильный ответ: 我在门外看见他的自行车了。",
-            "tj": "Ҷавоби дуруст: 我在门外看见他的自行车了。"
-          }
-        },
-        {
-          "type": "quick_quiz",
-          "prompt": {
-            "uz": "Dialogda A avval nima deydi?",
-            "ru": "Что A говорит в начале диалога?",
-            "tj": "Дар муколама A аввал чӣ мегӯяд?"
-          },
-          "title": {
-            "uz": "Dialogdan savol:",
-            "ru": "Вопрос по диалогу:",
-            "tj": "Савол аз муколама:"
-          },
-          "options": [
-            "他已经来了。",
-            "你知道小王今天什么时候来学校吗？",
-            "我在门外看见他的自行车了。",
-            "你怎么知道他来了？"
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "To'g'ri javob: 你知道小王今天什么时候来学校吗？",
-            "ru": "Правильный ответ: 你知道小王今天什么时候来学校吗？",
-            "tj": "Ҷавоби дуруст: 你知道小王今天什么时候来学校吗？"
-          }
-        },
-        {
-          "type": "gap_fill",
-          "sentence": "____知道小王今天什么时候来学校吗？",
-          "prompt": {
-            "uz": "Bo'sh joyga mos ieroglifni tanlang:",
-            "ru": "Выберите подходящий иероглиф:",
-            "tj": "Иероглифи мувофиқро интихоб кунед:"
-          },
-          "options": [
-            "你",
-            "时",
-            "电",
-            "朋"
+            "I am late because I am busy.",
+            "I like reason.",
+            "Good morning!",
+            "Thank you!"
           ],
           "correct_index": 0,
           "explanation": {
-            "uz": "To'g'ri: 你 — 你知道小王今天什么时候来学校吗？ (Kichik Vang bugun qachon maktabga kelishini bilasanmi?)",
-            "ru": "Верно: 你 — 你知道小王今天什么时候来学校吗？ (Ты знаешь, когда Маленький Ван придёт в школу сегодня?)",
-            "tj": "Дуруст: 你 — 你知道小王今天什么时候来学校吗？ (Оё медонӣ, ки Сяо Ван имрӯз кай ба мактаб меояд?)"
+            "uz": "I am late because I am busy.",
+            "ru": "I am late because I am busy.",
+            "tj": "I am late because I am busy."
           }
         },
         {
           "type": "quick_quiz",
           "prompt": {
-            "uz": "Dialog oxirida B nima deydi?",
-            "ru": "Что B говорит в конце диалога?",
-            "tj": "Дар охири муколама B чӣ мегӯяд?"
+            "uz": "“sabab” inglizchada qaysi?",
+            "ru": "“причина” — как по-английски?",
+            "tj": "“сабаб” ба англисӣ кадом аст?"
           },
           "title": {
-            "uz": "Dialogdan savol:",
-            "ru": "Вопрос по диалогу:",
-            "tj": "Савол аз муколама:"
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
           },
           "options": [
-            "你怎么知道他来了？",
-            "我在门外看见他的自行车了。",
-            "他已经来了。",
-            "你知道小王今天什么时候来学校吗？"
+            "reason",
+            "because",
+            "so",
+            "problem"
           ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "To'g'ri javob: 我在门外看见他的自行车了。",
-            "ru": "Правильный ответ: 我在门外看见他的自行车了。",
-            "tj": "Ҷавоби дуруст: 我在门外看见他的自行车了。"
-          }
+          "correct_index": 0
         }
       ]
     }

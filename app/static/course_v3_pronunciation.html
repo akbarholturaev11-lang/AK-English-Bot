@@ -130,7 +130,7 @@ function load(){
   document.getElementById('cnt').textContent=(i+1)+' / '+list.length;document.getElementById('hint').textContent=L.hint;
 }
 function toast(t){var el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(function(){el.classList.remove('show')},1100)}
-// Real pronunciation check: record mic -> server speech-to-text -> character-match score.
+// Real pronunciation check: record mic -> server speech-to-text -> word-match score.
 function initData(){return (tg&&tg.initData)?tg.initData:""}
 var mediaStream=null,mediaRecorder=null,chunks=[],autoStop=null,MAX_REC_MS=4000,MIN_BYTES=1200;
 function setRec(on){var mw=document.getElementById('micwrap');if(on){mw.classList.add('rec');document.getElementById('mic').classList.add('rec')}else{mw.classList.remove('rec');document.getElementById('mic').classList.remove('rec')}}

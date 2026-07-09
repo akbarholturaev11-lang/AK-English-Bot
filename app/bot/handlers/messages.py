@@ -31,6 +31,7 @@ from app.bot.handlers.course import (
     _send_trial_completed_offer,
     _ensure_trial_lesson_access,
     send_course_miniapp_entry,
+    _course_level_label,
 )
 from app.bot.keyboards.course import (
     lesson_selection_keyboard,
@@ -1547,7 +1548,7 @@ async def handle_text_message(message: Message, state: FSMContext, session):
             if not lessons:
                 await message.answer(t("course_no_lessons_available", user_lang))
                 return
-            level_label = resolved_level.upper() if resolved_level else "English"
+            level_label = _course_level_label(resolved_level) if resolved_level else "English"
             reply_markup = (
                 hsk4_part_selection_keyboard()
                 if resolved_level == "hsk4"

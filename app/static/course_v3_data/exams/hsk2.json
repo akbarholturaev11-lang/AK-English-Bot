@@ -6,92 +6,448 @@
   "sections": [
     {
       "key": "listening",
-      "title": { "uz": "Tinglash", "ru": "Аудирование", "tj": "Шунидан" },
-      "title_zh": "听力",
+      "title": {
+        "uz": "Tinglash",
+        "ru": "Аудирование",
+        "tj": "Шунидан"
+      },
+      "title_zh": "Listening",
       "questions": [
-        { "no": 1, "type": "audio_truefalse", "audio_text": "我已经吃饭了。", "prompt_zh": "我还没吃饭。",
-          "stem": { "uz": "Eshiting: yozilgan gap to'g'rimi?", "ru": "Послушайте: верно ли написанное?", "tj": "Гӯш кунед: ҷумлаи навишташуда дуруст аст?" },
-          "answer": false },
-        { "no": 2, "type": "audio_choice", "audio_text": "因为下雨，所以我没去。",
-          "stem": { "uz": "Nega bormadim?", "ru": "Почему я не пошёл?", "tj": "Чаро нарафтам?" },
+        {
+          "no": 1,
+          "type": "audio_truefalse",
+          "audio_text": "I have already eaten.",
+          "prompt_zh": "I have not eaten yet.",
+          "stem": {
+            "uz": "Eshiting: yozilgan gap to'g'rimi?",
+            "ru": "Послушайте: верно ли написанное?",
+            "tj": "Гӯш кунед: ҷумлаи навишташуда дуруст аст?"
+          },
+          "answer": false
+        },
+        {
+          "no": 2,
+          "type": "audio_choice",
+          "audio_text": "I did not go because it was raining.",
+          "stem": {
+            "uz": "Nega bormadim?",
+            "ru": "Почему я не пошёл?",
+            "tj": "Чаро нарафтам?"
+          },
           "options": [
-            { "zh": "因为下雨", "py": "yīnwèi xiàyǔ", "label": { "uz": "Yomg'ir yog'gani uchun", "ru": "Потому что шёл дождь", "tj": "Барои борон" }, "ok": 1 },
-            { "zh": "因为很忙", "py": "yīnwèi hěn máng", "label": { "uz": "Band bo'lganim uchun", "ru": "Потому что был занят", "tj": "Барои машғул будан" } },
-            { "zh": "因为生病", "py": "yīnwèi shēngbìng", "label": { "uz": "Kasal bo'lganim uchun", "ru": "Потому что заболел", "tj": "Барои бемор шудан" } }
-          ] },
-        { "no": 3, "type": "audio_choice", "audio_text": "这件衣服太贵了。",
-          "stem": { "uz": "Kiyim haqida nima deyildi?", "ru": "Что сказано об одежде?", "tj": "Дар бораи либос чӣ гуфта шуд?" },
+            {
+              "zh": "because it was raining",
+              "py": "bee-KUZ-it-wuz-RAY-ning",
+              "label": {
+                "uz": "Yomg'ir yog'gani uchun",
+                "ru": "Потому что шёл дождь",
+                "tj": "Барои борон"
+              },
+              "ok": 1
+            },
+            {
+              "zh": "because I was busy",
+              "py": "bee-KUZ-eye-wuz-BIZ-ee",
+              "label": {
+                "uz": "Band bo'lganim uchun",
+                "ru": "Потому что был занят",
+                "tj": "Барои машғул будан"
+              }
+            },
+            {
+              "zh": "because I was sick",
+              "py": "bee-KUZ-eye-wuz-SIK",
+              "label": {
+                "uz": "Kasal bo'lganim uchun",
+                "ru": "Потому что заболел",
+                "tj": "Барои бемор шудан"
+              }
+            }
+          ]
+        },
+        {
+          "no": 3,
+          "type": "audio_choice",
+          "audio_text": "This shirt is too expensive.",
+          "stem": {
+            "uz": "Kiyim haqida nima deyildi?",
+            "ru": "Что сказано об одежде?",
+            "tj": "Дар бораи либос чӣ гуфта шуд?"
+          },
           "options": [
-            { "zh": "太贵了", "py": "tài guì le", "label": { "uz": "Juda qimmat", "ru": "Слишком дорого", "tj": "Хеле қимат" }, "ok": 1 },
-            { "zh": "很便宜", "py": "hěn piányi", "label": { "uz": "Juda arzon", "ru": "Очень дёшево", "tj": "Хеле арзон" } },
-            { "zh": "很漂亮", "py": "hěn piàoliang", "label": { "uz": "Juda chiroyli", "ru": "Очень красиво", "tj": "Хеле зебо" } }
-          ] },
-        { "no": 4, "type": "audio_truefalse", "audio_text": "他每天早上跑步。", "prompt_zh": "他每天早上跑步。",
-          "stem": { "uz": "Eshiting va belgilang.", "ru": "Послушайте и определите.", "tj": "Гӯш кунед ва муайян кунед." },
-          "answer": true },
-        { "no": 5, "type": "audio_choice", "audio_text": "我想喝一杯咖啡。",
-          "stem": { "uz": "Nima ichmoqchiman?", "ru": "Что я хочу выпить?", "tj": "Чӣ нӯшидан мехоҳам?" },
+            {
+              "zh": "too expensive",
+              "py": "too-ik-SPEN-siv",
+              "label": {
+                "uz": "Juda qimmat",
+                "ru": "Слишком дорого",
+                "tj": "Хеле қимат"
+              },
+              "ok": 1
+            },
+            {
+              "zh": "very cheap",
+              "py": "VER-ee-CHEEP",
+              "label": {
+                "uz": "Juda arzon",
+                "ru": "Очень дёшево",
+                "tj": "Хеле арзон"
+              }
+            },
+            {
+              "zh": "very beautiful",
+              "py": "VER-ee-BYOO-tuh-ful",
+              "label": {
+                "uz": "Juda chiroyli",
+                "ru": "Очень красиво",
+                "tj": "Хеле зебо"
+              }
+            }
+          ]
+        },
+        {
+          "no": 4,
+          "type": "audio_truefalse",
+          "audio_text": "He runs every morning.",
+          "prompt_zh": "He runs every morning.",
+          "stem": {
+            "uz": "Eshiting va belgilang.",
+            "ru": "Послушайте и определите.",
+            "tj": "Гӯш кунед ва муайян кунед."
+          },
+          "answer": true
+        },
+        {
+          "no": 5,
+          "type": "audio_choice",
+          "audio_text": "I would like a cup of coffee.",
+          "stem": {
+            "uz": "Nima ichmoqchiman?",
+            "ru": "Что я хочу выпить?",
+            "tj": "Чӣ нӯшидан мехоҳам?"
+          },
           "options": [
-            { "zh": "咖啡", "py": "kāfēi", "label": { "uz": "Qahva", "ru": "Кофе", "tj": "Қаҳва" }, "ok": 1 },
-            { "zh": "牛奶", "py": "niúnǎi", "label": { "uz": "Sut", "ru": "Молоко", "tj": "Шир" } },
-            { "zh": "果汁", "py": "guǒzhī", "label": { "uz": "Sharbat", "ru": "Сок", "tj": "Шарбат" } }
-          ] },
-        { "no": 6, "type": "audio_choice", "audio_text": "火车站离这儿很远。",
-          "stem": { "uz": "Vokzal qayerda?", "ru": "Где вокзал?", "tj": "Истгоҳ дар куҷост?" },
+            {
+              "zh": "coffee",
+              "py": "KOF-ee",
+              "label": {
+                "uz": "Qahva",
+                "ru": "Кофе",
+                "tj": "Қаҳва"
+              },
+              "ok": 1
+            },
+            {
+              "zh": "milk",
+              "py": "MILK",
+              "label": {
+                "uz": "Sut",
+                "ru": "Молоко",
+                "tj": "Шир"
+              }
+            },
+            {
+              "zh": "juice",
+              "py": "JOOS",
+              "label": {
+                "uz": "Sharbat",
+                "ru": "Сок",
+                "tj": "Шарбат"
+              }
+            }
+          ]
+        },
+        {
+          "no": 6,
+          "type": "audio_choice",
+          "audio_text": "The train station is far from here.",
+          "stem": {
+            "uz": "Vokzal qayerda?",
+            "ru": "Где вокзал?",
+            "tj": "Истгоҳ дар куҷост?"
+          },
           "options": [
-            { "zh": "很远", "py": "hěn yuǎn", "label": { "uz": "Juda uzoq", "ru": "Очень далеко", "tj": "Хеле дур" }, "ok": 1 },
-            { "zh": "很近", "py": "hěn jìn", "label": { "uz": "Juda yaqin", "ru": "Очень близко", "tj": "Хеле наздик" } },
-            { "zh": "在右边", "py": "zài yòubian", "label": { "uz": "O'ng tomonda", "ru": "Справа", "tj": "Дар тарафи рост" } }
-          ] }
+            {
+              "zh": "far from here",
+              "py": "FAR-frum-HEER",
+              "label": {
+                "uz": "Juda uzoq",
+                "ru": "Очень далеко",
+                "tj": "Хеле дур"
+              },
+              "ok": 1
+            },
+            {
+              "zh": "near here",
+              "py": "NEER-HEER",
+              "label": {
+                "uz": "Juda yaqin",
+                "ru": "Очень близко",
+                "tj": "Хеле наздик"
+              }
+            },
+            {
+              "zh": "on the right",
+              "py": "on-thuh-RYT",
+              "label": {
+                "uz": "O'ng tomonda",
+                "ru": "Справа",
+                "tj": "Дар тарафи рост"
+              }
+            }
+          ]
+        }
       ]
     },
     {
       "key": "reading",
-      "title": { "uz": "O'qish", "ru": "Чтение", "tj": "Хондан" },
-      "title_zh": "阅读",
+      "title": {
+        "uz": "O'qish",
+        "ru": "Чтение",
+        "tj": "Хондан"
+      },
+      "title_zh": "Reading",
       "questions": [
-        { "no": 7, "type": "text_choice", "stem_zh": "我___学过汉语。",
-          "stem": { "uz": "“Men xitoy tilini o'rganganman” — bo'sh joyga.", "ru": "«Я уже изучал китайский» — в пропуск.", "tj": "«Ман хитоиро омӯхтаам» — гузоред." },
+        {
+          "no": 7,
+          "type": "text_choice",
+          "stem_zh": "I have ___ studied English.",
+          "stem": {
+            "uz": "“Men ingliz tilini allaqachon o'rganganman” - bo'sh joyga.",
+            "ru": "«Я уже изучал английский» - в пропуск.",
+            "tj": "«Ман англисиро аллакай омӯхтаам» - гузоред."
+          },
           "options": [
-            { "zh": "已经", "py": "yǐjīng", "label": { "uz": "allaqachon", "ru": "уже", "tj": "аллакай" }, "ok": 1 },
-            { "zh": "还", "py": "hái", "label": { "uz": "hali", "ru": "ещё", "tj": "ҳанӯз" } },
-            { "zh": "正在", "py": "zhèngzài", "label": { "uz": "ayni paytda", "ru": "сейчас (в процессе)", "tj": "ҳозир" } }
-          ] },
-        { "no": 8, "type": "text_choice", "stem_zh": "这个比那个___。",
-          "stem": { "uz": "“Bu — undan kattaroq” (qiyoslash).", "ru": "«Этот больше того» (сравнение).", "tj": "«Ин аз он калонтар» (муқоиса)." },
+            {
+              "zh": "already",
+              "py": "awl-RED-ee",
+              "label": {
+                "uz": "allaqachon",
+                "ru": "уже",
+                "tj": "аллакай"
+              },
+              "ok": 1
+            },
+            {
+              "zh": "still",
+              "py": "STIL",
+              "label": {
+                "uz": "hali",
+                "ru": "ещё",
+                "tj": "ҳанӯз"
+              }
+            },
+            {
+              "zh": "now",
+              "py": "NOW",
+              "label": {
+                "uz": "hozir",
+                "ru": "сейчас",
+                "tj": "ҳозир"
+              }
+            }
+          ]
+        },
+        {
+          "no": 8,
+          "type": "text_choice",
+          "stem_zh": "This one is ___ than that one.",
+          "stem": {
+            "uz": "Qiyoslash uchun mos so'zni tanlang.",
+            "ru": "Выберите слово для сравнения.",
+            "tj": "Калимаро барои муқоиса интихоб кунед."
+          },
           "options": [
-            { "zh": "大", "py": "dà", "label": { "uz": "katta", "ru": "больше", "tj": "калон" }, "ok": 1 },
-            { "zh": "是", "py": "shì", "label": { "uz": "...dir", "ru": "есть", "tj": "аст" } },
-            { "zh": "有", "py": "yǒu", "label": { "uz": "bor", "ru": "иметь", "tj": "доштан" } }
-          ] },
-        { "no": 9, "type": "text_choice", "stem_zh": "你___想去北京旅游吗？",
-          "stem": { "uz": "“Pekinga sayohatga bormoqchimisan?” — to'g'ri so'z.", "ru": "«Хочешь поехать в Пекин?» — слово.", "tj": "«Ба Пекин сафар кардан мехоҳӣ?» — калима." },
+            {
+              "zh": "bigger",
+              "py": "BIG-er",
+              "label": {
+                "uz": "kattaroq",
+                "ru": "больше",
+                "tj": "калонтар"
+              },
+              "ok": 1
+            },
+            {
+              "zh": "is",
+              "py": "IZ",
+              "label": {
+                "uz": "...dir",
+                "ru": "есть",
+                "tj": "аст"
+              }
+            },
+            {
+              "zh": "has",
+              "py": "HAZ",
+              "label": {
+                "uz": "bor",
+                "ru": "имеет",
+                "tj": "дорад"
+              }
+            }
+          ]
+        },
+        {
+          "no": 9,
+          "type": "text_choice",
+          "stem_zh": "Do you ___ to travel to London?",
+          "stem": {
+            "uz": "“Londonga sayohatga bormoqchimisan?” - to'g'ri so'z.",
+            "ru": "«Хочешь поехать в Лондон?» - слово.",
+            "tj": "«Ба Лондон сафар кардан мехоҳӣ?» - калима."
+          },
           "options": [
-            { "zh": "想", "py": "xiǎng", "label": { "uz": "xohlamoq", "ru": "хотеть", "tj": "хостан" }, "ok": 1 },
-            { "zh": "在", "py": "zài", "label": { "uz": "...da", "ru": "в", "tj": "дар" } },
-            { "zh": "从", "py": "cóng", "label": { "uz": "...dan", "ru": "из", "tj": "аз" } }
-          ] },
-        { "no": 10, "type": "text_choice", "stem_zh": "“左边” 的意思是？",
-          "stem": { "uz": "“左边” ma'nosi?", "ru": "Что значит «左边»?", "tj": "“左边” чӣ маъно дорад?" },
+            {
+              "zh": "want",
+              "py": "WONT",
+              "label": {
+                "uz": "xohlamoq",
+                "ru": "хотеть",
+                "tj": "хостан"
+              },
+              "ok": 1
+            },
+            {
+              "zh": "live",
+              "py": "LIV",
+              "label": {
+                "uz": "yashamoq",
+                "ru": "жить",
+                "tj": "зиндагӣ кардан"
+              }
+            },
+            {
+              "zh": "from",
+              "py": "FRUM",
+              "label": {
+                "uz": "...dan",
+                "ru": "из",
+                "tj": "аз"
+              }
+            }
+          ]
+        },
+        {
+          "no": 10,
+          "type": "text_choice",
+          "stem_zh": "What does \"left\" mean?",
+          "stem": {
+            "uz": "So'z ma'nosini tanlang.",
+            "ru": "Выберите значение слова.",
+            "tj": "Маънои калимаро интихоб кунед."
+          },
           "options": [
-            { "zh": "左边", "py": "zuǒbian", "label": { "uz": "Chap tomon", "ru": "Слева", "tj": "Тарафи чап" }, "ok": 1 },
-            { "zh": "右边", "py": "yòubian", "label": { "uz": "O'ng tomon", "ru": "Справа", "tj": "Тарафи рост" } },
-            { "zh": "上边", "py": "shàngbian", "label": { "uz": "Yuqori tomon", "ru": "Сверху", "tj": "Тарафи боло" } }
-          ] },
-        { "no": 11, "type": "text_choice", "stem_zh": "他跑得很___。",
-          "stem": { "uz": "“U tez yuguradi” — holat so'zi.", "ru": "«Он бегает быстро» — наречие.", "tj": "«Ӯ тез медавад» — калима." },
+            {
+              "zh": "left",
+              "py": "LEFT",
+              "label": {
+                "uz": "Chap tomon",
+                "ru": "Слева",
+                "tj": "Тарафи чап"
+              },
+              "ok": 1
+            },
+            {
+              "zh": "right",
+              "py": "RYT",
+              "label": {
+                "uz": "O'ng tomon",
+                "ru": "Справа",
+                "tj": "Тарафи рост"
+              }
+            },
+            {
+              "zh": "up",
+              "py": "UP",
+              "label": {
+                "uz": "Yuqori tomon",
+                "ru": "Вверх",
+                "tj": "Тарафи боло"
+              }
+            }
+          ]
+        },
+        {
+          "no": 11,
+          "type": "text_choice",
+          "stem_zh": "He runs very ___.",
+          "stem": {
+            "uz": "“U tez yuguradi” - holat so'zi.",
+            "ru": "«Он бегает быстро» - наречие.",
+            "tj": "«Ӯ тез медавад» - калима."
+          },
           "options": [
-            { "zh": "快", "py": "kuài", "label": { "uz": "tez", "ru": "быстро", "tj": "тез" }, "ok": 1 },
-            { "zh": "高", "py": "gāo", "label": { "uz": "baland", "ru": "высоко", "tj": "баланд" } },
-            { "zh": "新", "py": "xīn", "label": { "uz": "yangi", "ru": "новый", "tj": "нав" } }
-          ] },
-        { "no": 12, "type": "text_choice", "stem_zh": "明天我要___飞机去上海。",
-          "stem": { "uz": "Transportdan foydalanish fe'li.", "ru": "Глагол «сесть на транспорт».", "tj": "Феъли «савор шудан»." },
+            {
+              "zh": "fast",
+              "py": "FAST",
+              "label": {
+                "uz": "tez",
+                "ru": "быстро",
+                "tj": "тез"
+              },
+              "ok": 1
+            },
+            {
+              "zh": "high",
+              "py": "HY",
+              "label": {
+                "uz": "baland",
+                "ru": "высоко",
+                "tj": "баланд"
+              }
+            },
+            {
+              "zh": "new",
+              "py": "NOO",
+              "label": {
+                "uz": "yangi",
+                "ru": "новый",
+                "tj": "нав"
+              }
+            }
+          ]
+        },
+        {
+          "no": 12,
+          "type": "text_choice",
+          "stem_zh": "Tomorrow I will ___ a plane to London.",
+          "stem": {
+            "uz": "Transportdan foydalanish fe'lini tanlang.",
+            "ru": "Выберите глагол для транспорта.",
+            "tj": "Феъли нақлиётро интихоб кунед."
+          },
           "options": [
-            { "zh": "坐", "py": "zuò", "label": { "uz": "minmoq/o'tirmoq", "ru": "сесть на", "tj": "савор шудан" }, "ok": 1 },
-            { "zh": "走", "py": "zǒu", "label": { "uz": "yurmoq", "ru": "идти", "tj": "рафтан" } },
-            { "zh": "买", "py": "mǎi", "label": { "uz": "sotib olmoq", "ru": "покупать", "tj": "харидан" } }
-          ] }
+            {
+              "zh": "take",
+              "py": "TAYK",
+              "label": {
+                "uz": "minmoq",
+                "ru": "сесть на",
+                "tj": "савор шудан"
+              },
+              "ok": 1
+            },
+            {
+              "zh": "walk",
+              "py": "WAWK",
+              "label": {
+                "uz": "yurmoq",
+                "ru": "идти пешком",
+                "tj": "пиёда рафтан"
+              }
+            },
+            {
+              "zh": "buy",
+              "py": "BY",
+              "label": {
+                "uz": "sotib olmoq",
+                "ru": "покупать",
+                "tj": "харидан"
+              }
+            }
+          ]
+        }
       ]
     }
   ]

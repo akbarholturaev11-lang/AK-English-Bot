@@ -489,7 +489,14 @@ class CourseChallengeService:
 
     @staticmethod
     def _level_label(level: str) -> str:
-        return str(level or "hsk1").upper().replace("English", "English ")
+        labels = {
+            "beginner": "Beginner",
+            "hsk1": "Beginner",
+            "hsk2": "Elementary",
+            "hsk3": "Intermediate",
+            "hsk4": "Advanced",
+        }
+        return labels.get(str(level or "hsk1").strip().lower(), "Beginner")
 
     @staticmethod
     def invite_text(challenge: CourseChallenge, challenger: User, lang: str) -> str:
@@ -501,21 +508,21 @@ class CourseChallengeService:
         }.get(lang)
         body = {
             "uz": (
-                "🔥 10 ta savol — so'z, pinyin, tarjima va grammatika aralash.\n"
+                "🔥 10 ta savol — so'z, talaffuz, tarjima va grammatika aralash.\n"
                 "🎯 Har biringiz O'Z darajangizdagi savollarga javob berasiz — adolatli jang!\n"
                 "🏆 G'olib eng baland foiz bilan aniqlanadi. Teng bo'lsa — tezroq tugatgani oladi.\n\n"
                 f"⚡ G'olibga +{CHALLENGE_WIN_XP} XP, har bir jangchiga +{CHALLENGE_COMPLETE_XP} XP.\n"
                 "Qani, kuchingni ko'rsat! 💪"
             ),
             "ru": (
-                "🔥 10 вопросов — слова, пиньинь, перевод и грамматика вперемешку.\n"
+                "🔥 10 вопросов — слова, произношение, перевод и грамматика вперемешку.\n"
                 "🎯 Каждый отвечает на вопросы СВОЕГО уровня — честный бой!\n"
                 "🏆 Победитель — у кого выше процент. При равенстве решает скорость.\n\n"
                 f"⚡ Победителю +{CHALLENGE_WIN_XP} XP, каждому бойцу +{CHALLENGE_COMPLETE_XP} XP.\n"
                 "Покажи, на что способен! 💪"
             ),
             "tj": (
-                "🔥 10 савол — калима, пинйин, тарҷума ва грамматика омехта.\n"
+                "🔥 10 савол — калима, талаффуз, тарҷума ва грамматика омехта.\n"
                 "🎯 Ҳар яки шумо ба саволҳои дараҷаи ХУДатон ҷавоб медиҳед — ҷанги одилона!\n"
                 "🏆 Ғолиб бо фоизи баландтар муайян мешавад. Агар баробар бошад — тезтараш мебарад.\n\n"
                 f"⚡ Ба ғолиб +{CHALLENGE_WIN_XP} XP, ба ҳар ҷанговар +{CHALLENGE_COMPLETE_XP} XP.\n"

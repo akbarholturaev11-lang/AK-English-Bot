@@ -139,13 +139,22 @@ var EXAMS=[
   {lvl:"3",q:12,min:35,tags:["listen","read","write"]},
   {lvl:"4",q:12,min:40,tags:["listen","read","write"]}
 ];
+function examLevelLabel(value){
+  var key=String(value||"").replace("hsk","").toLowerCase();
+  return ({1:"Beginner",2:"Elementary",3:"Intermediate",4:"Advanced"})[key]||"Beginner";
+}
+function examLevelShort(value){
+  var key=String(value||"").replace("hsk","").toLowerCase();
+  return ({1:"A1",2:"A2",3:"B1",4:"B2"})[key]||"A1";
+}
 function renderHub(){
   $("t-title").textContent=L.title;$("t-sub").textContent=L.sub;
   $("p-title").textContent=L.pTitle;$("p-sub").textContent=L.pSub;$("p-btn").textContent=L.pBtn;
   $("ex-head").textContent=L.exHead;
   $("ex-list").innerHTML=EXAMS.map(function(e){
     var tags=e.tags.map(function(t){return '<span>'+L[t]+'</span>'}).join("");
-    return '<div class="ex" onclick="openExam(\'hsk'+e.lvl+'\')"><div class="lvl"><b>English</b><span>'+e.lvl+'</span></div><div class="et"><b>English '+e.lvl+'</b><small>'+e.q+' '+L.q+' · '+e.min+' '+L.min+'</small><div class="tags">'+tags+'</div></div><span class="go">'+L.start+'</span></div>';
+    var label=examLevelLabel(e.lvl);
+    return '<div class="ex" onclick="openExam(\'hsk'+e.lvl+'\')"><div class="lvl"><b>English</b><span>'+examLevelShort(e.lvl)+'</span></div><div class="et"><b>'+label+'</b><small>'+e.q+' '+L.q+' · '+e.min+' '+L.min+'</small><div class="tags">'+tags+'</div></div><span class="go">'+L.start+'</span></div>';
   }).join("");
   $("e-title").textContent=L.eTitle;$("e-sub").textContent=L.eSub;$("e-back").textContent=L.eBack;
 }
@@ -210,7 +219,7 @@ function exRender(){
   /* Reklama bilan kirilgan sessiya: o'rtasida majburiy reklama pauzasi. */
   if(AD_SESSION&&!AD_MID_SHOWN&&EQ.length>=4&&ei===Math.floor(EQ.length/2)){AD_MID_SHOWN=true;if(window.CourseAds){CourseAds.play("middle").then(exRender).catch(exRender);return}}
   var item=EQ[ei],q=item.q;
-  var lv=String(EXD.level||"").replace("hsk","").toUpperCase();
+  var lv=examLevelLabel(EXD.level);
   var lead=EM.sec[item.key]||item.key;
   var card="",opts="";
   if(q.type==="audio_truefalse"||q.type==="audio_choice"){
@@ -254,7 +263,7 @@ function exResult(){
   var tot=0,cor=0;EQ.forEach(function(it,k){tot++;if(eans[k])cor++});
   var pct=tot?Math.round(cor/tot*100):0;
   var pass=pct>=(EXD.pass_score||60);
-  var lv=String(EXD.level||"").replace("hsk","").toUpperCase();
+  var lv=examLevelLabel(EXD.level);
   var meter=order.map(function(key){var p=per[key][1]?Math.round(per[key][0]/per[key][1]*100):0;return '<div class="mrow"><span class="ml">'+(EM.sec[key]||key)+'</span><span class="mb"><i style="width:'+p+'%"></i></span><span class="mv">'+p+'%</span></div>'}).join("");
   $("exam").innerHTML='<div class="res"><div class="lvl"><small>'+EM.result+'</small><b>'+pct+'%</b></div>'
     +'<h3>'+(pass?EM.passed:EM.failed)+'</h3><p>'+(pass?EM.passSub:EM.failSub)+lv+'.</p>'

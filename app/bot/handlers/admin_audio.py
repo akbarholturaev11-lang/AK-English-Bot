@@ -29,6 +29,12 @@ router = Router()
 LEVELS = ["hsk1", "hsk2", "hsk3", "hsk4"]
 _AUDIO_PANEL_CHAT_ID = "audio_panel_chat_id"
 _AUDIO_PANEL_MSG_ID = "audio_panel_msg_id"
+_LEVEL_LABELS = {
+    "hsk1": "Beginner",
+    "hsk2": "Elementary",
+    "hsk3": "Intermediate",
+    "hsk4": "Advanced",
+}
 
 
 # ─── helpers ────────────────────────────────────────────────────────────────
@@ -47,6 +53,10 @@ def _parse(value, default=None):
         return json.loads(value)
     except Exception:
         return default or []
+
+
+def _level_label(level: str | None) -> str:
+    return _LEVEL_LABELS.get(str(level or "").strip().lower(), str(level or "English"))
 
 
 def _audio_types_for_lesson(lesson) -> list[str]:
@@ -272,7 +282,7 @@ async def audio_stats(callback: CallbackQuery, session):
         total = len(lessons)
         bar = "▓" * complete + "▒" * partial + "░" * max(total - complete - partial, 0)
         lines.append(
-            f"<b>{level.upper()}</b>: {complete}/{total} to'liq  {bar}\n"
+            f"<b>{_level_label(level)}</b>: {complete}/{total} to'liq  {bar}\n"
             f"  Audio: {uploaded_required_total}/{required_total}"
         )
 
@@ -310,7 +320,7 @@ async def _show_lessons(callback: CallbackQuery, session, level: str, page: int 
     partial = sum(1 for status in status_by_order.values() if status["state"] == "partial")
 
     await callback.message.edit_text(
-        f"📚 <b>{level.upper()}</b> — {total} dars\n"
+        f"📚 <b>{_level_label(level)}</b> — {total} dars\n"
         f"✅ To'liq audio: <b>{complete}</b> / {total}\n"
         f"🟡 Boshlangan: <b>{partial}</b>\n\n"
         f"Darsni tanlang:",
@@ -375,7 +385,7 @@ async def show_audio_types(callback: CallbackQuery, session):
 
     await callback.answer()
     await callback.message.edit_text(
-        f"🎵 <b>{lesson.level.upper()} · Dars {lesson.lesson_order}</b>\n"
+        f"🎵 <b>{_level_label(lesson.level)} · Dars {lesson.lesson_order}</b>\n"
         f"📖 {lesson.title}\n\n"
         f"{status_text}\n\n"
         f"Qaysi audio turini yuklaysiz?",
@@ -418,7 +428,7 @@ async def ask_for_audio_file(callback: CallbackQuery, session, state: FSMContext
     await edit_callback_workflow_message(
         callback,
         state,
-        f"🎙 <b>{lesson.level.upper()} · Dars {lesson.lesson_order} · {audio_type}</b>\n"
+        f"🎙 <b>{_level_label(lesson.level)} · Dars {lesson.lesson_order} · {audio_type}</b>\n"
         f"📖 {lesson.title}\n\n"
         f"⬇️ <b>{type_label}</b> uchun audio faylni yuboring\n"
         f"(voice yoki mp3/ogg fayl)",
@@ -496,7 +506,7 @@ async def receive_audio_file(message: Message, session, state: FSMContext):
         message,
         state,
         f"✅ <b>Saqlandi!</b>\n"
-        f"📍 {level.upper()} · Dars {lesson_order} · <code>{audio_type}</code> ({_audio_type_label(audio_type)})"
+        f"📍 {_level_label(level)} · Dars {lesson_order} · <code>{audio_type}</code> ({_audio_type_label(audio_type)})"
         f"{remaining}",
         chat_id_key=_AUDIO_PANEL_CHAT_ID,
         message_id_key=_AUDIO_PANEL_MSG_ID,

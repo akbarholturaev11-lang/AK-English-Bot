@@ -111,7 +111,7 @@ class CourseMiniAppLessonService:
     def _title(self, raw: str, lang: str) -> str:
         data = self._parse(raw, None)
         if isinstance(data, dict):
-            return str(data.get("zh") or data.get(lang) or data.get("uz") or raw)
+            return str(data.get(lang) or data.get("uz") or data.get("ru") or data.get("tj") or data.get("zh") or raw)
         return raw or ""
 
     def _dialogue_blocks(self, lesson: CourseLesson) -> list[dict]:
@@ -651,10 +651,10 @@ class CourseMiniAppLessonService:
                     "id": f"{lesson_order}:{scope}:reinforce:4",
                     "type": "stroke_preview",
                     "prompt": {
-                        "uz": "Iyeroglif shaklini ko'ring",
-                        "ru": "Посмотрите форму иероглифа",
-                        "tj": "Шакли иероглифро бинед",
-                    }.get(lang, "Iyeroglif shaklini ko'ring"),
+                        "uz": "So'z shaklini ko'ring",
+                        "ru": "Посмотрите форму слова",
+                        "tj": "Шакли калимаро бинед",
+                    }.get(lang, "So'z shaklini ko'ring"),
                     "chars": [char for char in stroke_word["zh"] if "\u4e00" <= char <= "\u9fff"],
                     "word": stroke_word["zh"],
                     "pinyin": stroke_word.get("pinyin") or "",

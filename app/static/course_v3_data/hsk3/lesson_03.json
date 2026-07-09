@@ -2,200 +2,79 @@
   "schema_version": 2,
   "level": "hsk3",
   "lesson_id": 3,
-  "title": "桌子上放着很多饮料",
+  "title": "Choices and ordering",
   "subtitle": {
-    "uz": "'还是' va '或者' farqini, mavjudlik gapini va '会' ehtimol ma'nosini o'zlashtirish.",
-    "ru": "Освоить разницу 还是/或者, предложение существования и значение вероятности 会.",
-    "tj": "Азхудкунии фарқи 还是/或者, ҷумлаи мавҷудият ва маънои эҳтимолии 会."
+    "uz": "Choices and ordering: so'zlar, gaplar va dialoglar.",
+    "ru": "Choices and ordering: слова, фразы и диалоги.",
+    "tj": "Choices and ordering: калимаҳо, ҷумлаҳо ва муколамаҳо."
   },
   "intro_prebuilt": true,
   "grammar_prebuilt": true,
   "active_words": [
     {
       "no": 1,
-      "zh": "还是",
-      "pinyin": "háishi",
-      "pos": "conj.",
+      "zh": "choice",
+      "pinyin": "CHOICE",
+      "pos": "n.",
       "meaning": {
-        "uz": "yoki (savolda tanlov)",
-        "ru": "или (в вопросе выбора)",
-        "tj": "ё (дар саволи интихобӣ)"
+        "uz": "tanlov",
+        "ru": "выбор",
+        "tj": "интихоб"
       }
     },
     {
       "no": 2,
-      "zh": "爬山",
-      "pinyin": "pá shān",
+      "zh": "order",
+      "pinyin": "ORDER",
       "pos": "v.",
       "meaning": {
-        "uz": "toqqa chiqmoq",
-        "ru": "подниматься в гору",
-        "tj": "ба кӯҳ баромадан"
+        "uz": "buyurtma bermoq",
+        "ru": "заказывать",
+        "tj": "фармоиш додан"
       }
     },
     {
       "no": 3,
-      "zh": "小心",
-      "pinyin": "xiǎoxīn",
-      "pos": "adj.",
+      "zh": "drink",
+      "pinyin": "DRINK",
+      "pos": "n./v.",
       "meaning": {
-        "uz": "ehtiyotkor, ehtiyot bo'lmoq",
-        "ru": "осторожный, быть осторожным",
-        "tj": "эҳтиёткор, эҳтиёт шудан"
+        "uz": "ichimlik / ichmoq",
+        "ru": "напиток / пить",
+        "tj": "нӯшокӣ / нӯшидан"
       }
     },
     {
       "no": 4,
-      "zh": "条",
-      "pinyin": "tiáo",
-      "pos": "m.",
+      "zh": "instead",
+      "pinyin": "INSTEAD",
+      "pos": "adv.",
       "meaning": {
-        "uz": "shim/ko'ylak kabi narsalar uchun hisob so'zi",
-        "ru": "счётное слово для брюк, платьев и т.п.",
-        "tj": "ҳисобвожа барои шим, курта ва ғ."
+        "uz": "o‘rniga",
+        "ru": "вместо",
+        "tj": "ба ҷои"
       }
     },
     {
       "no": 5,
-      "zh": "裤子",
-      "pinyin": "kùzi",
-      "pos": "n.",
+      "zh": "prefer",
+      "pinyin": "PREFER",
+      "pos": "v.",
       "meaning": {
-        "uz": "shim",
-        "ru": "брюки, штаны",
-        "tj": "шим"
+        "uz": "afzal ko‘rmoq",
+        "ru": "предпочитать",
+        "tj": "афзал донистан"
       }
     },
     {
       "no": 6,
-      "zh": "记得",
-      "pinyin": "jìde",
+      "zh": "recommend",
+      "pinyin": "RECOMMEND",
       "pos": "v.",
       "meaning": {
-        "uz": "eslamoq, yodda tutmoq",
-        "ru": "помнить",
-        "tj": "дар ёд доштан"
-      }
-    },
-    {
-      "no": 7,
-      "zh": "衬衫",
-      "pinyin": "chènshān",
-      "pos": "n.",
-      "meaning": {
-        "uz": "ko'ylak, rubashka",
-        "ru": "рубашка",
-        "tj": "курта"
-      }
-    },
-    {
-      "no": 8,
-      "zh": "元",
-      "pinyin": "yuán",
-      "pos": "m.",
-      "meaning": {
-        "uz": "yuan, pul birligi",
-        "ru": "юань, денежная единица",
-        "tj": "юан, воҳиди пул"
-      }
-    },
-    {
-      "no": 9,
-      "zh": "新鲜",
-      "pinyin": "xīnxiān",
-      "pos": "adj.",
-      "meaning": {
-        "uz": "yangi, sarhil",
-        "ru": "свежий",
-        "tj": "тару тоза"
-      }
-    },
-    {
-      "no": 10,
-      "zh": "甜",
-      "pinyin": "tián",
-      "pos": "adj.",
-      "meaning": {
-        "uz": "shirin",
-        "ru": "сладкий",
-        "tj": "ширин"
-      }
-    },
-    {
-      "no": 11,
-      "zh": "只",
-      "pinyin": "zhǐ",
-      "pos": "adv.",
-      "meaning": {
-        "uz": "faqat",
-        "ru": "только",
-        "tj": "фақат"
-      }
-    },
-    {
-      "no": 12,
-      "zh": "放",
-      "pinyin": "fàng",
-      "pos": "v.",
-      "meaning": {
-        "uz": "qo'ymoq, joylashtirmoq",
-        "ru": "класть, ставить",
-        "tj": "гузоштан"
-      }
-    },
-    {
-      "no": 13,
-      "zh": "饮料",
-      "pinyin": "yǐnliào",
-      "pos": "n.",
-      "meaning": {
-        "uz": "ichimlik",
-        "ru": "напиток",
-        "tj": "нӯшокӣ"
-      }
-    },
-    {
-      "no": 14,
-      "zh": "或者",
-      "pinyin": "huòzhě",
-      "pos": "conj.",
-      "meaning": {
-        "uz": "yoki (darak gapda)",
-        "ru": "или (в повествовательном предложении)",
-        "tj": "ё (дар ҷумлаи хабарӣ)"
-      }
-    },
-    {
-      "no": 15,
-      "zh": "舒服",
-      "pinyin": "shūfu",
-      "pos": "adj.",
-      "meaning": {
-        "uz": "qulay, rohat, o'zini yaxshi his qilish",
-        "ru": "удобный, комфортный",
-        "tj": "роҳат, бароҳат"
-      }
-    },
-    {
-      "no": 16,
-      "zh": "花",
-      "pinyin": "huā",
-      "pos": "n.",
-      "meaning": {
-        "uz": "gul",
-        "ru": "цветок",
-        "tj": "гул"
-      }
-    },
-    {
-      "no": 17,
-      "zh": "绿",
-      "pinyin": "lǜ",
-      "pos": "adj.",
-      "meaning": {
-        "uz": "yashil",
-        "ru": "зелёный",
-        "tj": "сабз"
+        "uz": "tavsiya qilmoq",
+        "ru": "рекомендовать",
+        "tj": "тавсия кардан"
       }
     }
   ],
@@ -203,33 +82,24 @@
     {
       "no": 1,
       "title": {
-        "uz": "'还是' va '或者' farqi",
-        "ru": "Сравнение 还是 и 或者",
-        "tj": "Муқоисаи 还是 ва 或者"
+        "uz": "choice questions",
+        "ru": "choice questions",
+        "tj": "choice questions"
       },
-      "title_zh": "\"还是\"和\"或者\"的比较",
+      "title_zh": "choice questions",
       "rule": {
-        "uz": "Ikkalasi ham 'yoki' ma'nosini beradi, lekin qo'llanishi farqli:\n还是 — so'roq gaplarda: 你要A还是B？\n或者 — darak gaplarda: 你可以A或者B。\nMasalan:\n  你想喝茶还是果汁？(So'roq — choy yoki sharbat?)\n  你可以坐地铁或者打车。(Darak — metro yoki taksi.)",
-        "ru": "Оба означают 'или', но употребляются по-разному:\n还是 — в вопросах: 你要A还是B？\n或者 — в утверждениях: 你可以A或者B。\nНапример:\n  你想喝茶还是果汁？(Вопрос — чай или сок?)\n  你可以坐地铁或者打车。(Утверждение — на метро или такси.)",
-        "tj": "Ҳарду маънои 'ё'-ро доранд, аммо истифодаашон фарқ мекунад:\n还是 — дар саволҳо: 你要A还是B？\n或者 — дар изҳор: 你可以A或者B。\nМасалан:\n  你想喝茶还是果汁？(Савол — чой ё шарбат?)\n  你可以坐地铁或者打车。(Изҳор — бо метро ё такси.)"
+        "uz": "Qolip: choice questions. Misol: Would you prefer tea or coffee? Shu qolip bilan qisqa va tabiiy gap tuzing.",
+        "ru": "Шаблон: choice questions. Пример: Would you prefer tea or coffee? Используйте его в коротких естественных фразах.",
+        "tj": "Қолаб: choice questions. Мисол: Would you prefer tea or coffee? Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
       },
       "examples": [
         {
-          "zh": "你想喝茶还是果汁？",
-          "pinyin": "Nǐ xiǎng hē chá háishi guǒzhī?",
+          "zh": "Would you prefer tea or coffee?",
+          "pinyin": "",
           "translation": {
-            "uz": "Choy ichmoqchimisiz yoki mevali sharbat?",
-            "ru": "Ты хочешь чай или сок?",
-            "tj": "Шумо чой мехоҳед ё шарбати мева?"
-          }
-        },
-        {
-          "zh": "可以坐缆车或者走路上去。",
-          "pinyin": "Kěyǐ zuò lǎnchē huòzhě zǒulù shàngqù.",
-          "translation": {
-            "uz": "Kanatli aravacha bilan yoki piyoda chiqish mumkin.",
-            "ru": "Можно подняться на фуникулёре или пешком.",
-            "tj": "Метавонед бо канаткаш ё пиёда боло равед."
+            "uz": "Would you prefer tea or coffee?",
+            "ru": "Would you prefer tea or coffee?",
+            "tj": "Would you prefer tea or coffee?"
           }
         }
       ]
@@ -237,67 +107,24 @@
     {
       "no": 2,
       "title": {
-        "uz": "Mavjudlik gapi: joy+V着+son+ot",
-        "ru": "Предложение существования: место+V着+числ.+сущ.",
-        "tj": "Ҷумлаи мавҷудият: ҷой+V着+шумор+исм"
+        "uz": "expanded sentence",
+        "ru": "expanded sentence",
+        "tj": "expanded sentence"
       },
-      "title_zh": "存在句：处所+V着+数量+N",
+      "title_zh": "expanded sentence",
       "rule": {
-        "uz": "Bu qolip biror joyda nima borligini tasvirlaydi.\nQolip: Joy + V + 着 + son + ot\n着 — holatning davomiyligini bildiradi (qo'yilgan, turgan, osilib turgan).\nMasalan:\n  桌子上放着很多饮料。(Stol ustida ko'p ichimlik turadi.)\n  床上躺着一个人。(Ko'rpada bir kishi yotibdi.)\n  墙上挂着一幅画。(Devorga bir rasm osilgan.)",
-        "ru": "Конструкция описывает наличие чего-либо в каком-то месте.\nСтруктура: Место + V + 着 + числит. + сущ.\n着 — состояние, в котором находится объект (лежит, висит, стоит).\nНапример:\n  桌子上放着很多饮料。(На столе стоит много напитков.)\n  床上躺着一个人。(На кровати лежит человек.)\n  墙上挂着一幅画。(На стене висит картина.)",
-        "tj": "Ин сохтор мавҷудияти чизеро дар ҷое тасвир мекунад.\nСохтор: Ҷой + V + 着 + шумор + исм\n着 — ҳолати давомандаро нишон медиҳад (гузошта, хобида, овехта).\nМасалан:\n  桌子上放着很多饮料。(Рӯйи миз нӯшокиҳои зиёд гузошта шудааст.)\n  床上躺着一个人。(Рӯйи кат як одам хобида аст.)\n  墙上挂着一幅画。(Ба девор як расм овехта шудааст.)"
+        "uz": "Qolip: add time, place, or reason. Misol: Would you prefer tea or coffee? Shu qolip bilan qisqa va tabiiy gap tuzing.",
+        "ru": "Шаблон: add time, place, or reason. Пример: Would you prefer tea or coffee? Используйте его в коротких естественных фразах.",
+        "tj": "Қолаб: add time, place, or reason. Мисол: Would you prefer tea or coffee? Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
       },
       "examples": [
         {
-          "zh": "桌子上放着很多饮料，还有新鲜水果。",
-          "pinyin": "Zhuōzi shàng fàng zhe hěn duō yǐnliào, hái yǒu xīnxiān shuǐguǒ.",
+          "zh": "Would you prefer tea or coffee?",
+          "pinyin": "",
           "translation": {
-            "uz": "Stol ustida ko'p ichimlik va yangi mevalar turibdi.",
-            "ru": "На столе стоит много напитков и свежих фруктов.",
-            "tj": "Рӯйи миз нӯшокиҳои зиёд ва меваҳои тоза гузошта шудааст."
-          }
-        },
-        {
-          "zh": "房间里放着空调、电视和冰箱。",
-          "pinyin": "Fángjiān lǐ fàng zhe kōngtiáo, diànshì hé bīngxiāng.",
-          "translation": {
-            "uz": "Xonada konditsioner, televizor va muzlatgich o'rnatilgan.",
-            "ru": "В комнате есть кондиционер, телевизор и холодильник.",
-            "tj": "Дар хона кондитсионер, телевизор ва яхдон гузошта шудааст."
-          }
-        }
-      ]
-    },
-    {
-      "no": 3,
-      "title": {
-        "uz": "'会' ehtimol ma'nosida",
-        "ru": "«会» в значении вероятности",
-        "tj": "«会» дар маънои эҳтимол"
-      },
-      "title_zh": "\"会\"表示可能性",
-      "rule": {
-        "uz": "'会' so'zi ikki asosiy ma'noda ishlatiladi:\n1) Mahorat: V qila olaman (o'rganib olingan qobiliyat)\n   Masalan: 我会游泳。(Men suza olaman.)\n2) Ehtimol: ...bo'lsa kerak, ...bo'lishi mumkin\n   Masalan: 明天会下雨吧。(Ertaga yomg'ir yog'sa kerak.)\nKontekst orqali qaysi ma'noda ekanligini bilsa bo'ladi.",
-        "ru": "Слово '会' имеет два основных значения:\n1) Умение: умею V (приобретённый навык)\n   Например: 我会游泳。(Я умею плавать.)\n2) Вероятность: наверное..., скорее всего...\n   Например: 明天会下雨吧。(Завтра, наверное, будет дождь.)\nЗначение определяется по контексту.",
-        "tj": "Калимаи '会' ду маъноии асосӣ дорад:\n1) Тавонистан: V карда метавонам (малакаи омӯхтагӣ)\n   Масалан: 我会游泳。(Ман шино карда метавонам.)\n2) Эҳтимол: шояд..., эҳтимол...\n   Масалан: 明天会下雨吧。(Фардо шояд борон борад.)\nМаъно аз рӯи контекст муайян карда мешавад."
-      },
-      "examples": [
-        {
-          "zh": "你会爬山吗？今天我们打算去爬山。",
-          "pinyin": "Nǐ huì páshān ma? Jīntiān wǒmen dǎsuàn qù páshān.",
-          "translation": {
-            "uz": "Tog' tirmasha olasizmi? Bugun tog'ga chiqmoqchi edik.",
-            "ru": "Умеешь лазать в горы? Сегодня планируем сходить.",
-            "tj": "Оё ба кӯҳ баромада метавонӣ? Имрӯз нақша дорем ба кӯҳ равем."
-          }
-        },
-        {
-          "zh": "明天会下雨，记得带伞！",
-          "pinyin": "Míngtiān huì xiàyǔ, jìde dài sǎn!",
-          "translation": {
-            "uz": "Ertaga yomg'ir yog'sa kerak, soyabon olishni yodda tuting!",
-            "ru": "Завтра, наверное, будет дождь — возьмите зонт!",
-            "tj": "Фардо шояд борон борад, чатр гиред!"
+            "uz": "Would you prefer tea or coffee?",
+            "ru": "Would you prefer tea or coffee?",
+            "tj": "Would you prefer tea or coffee?"
           }
         }
       ]
@@ -306,266 +133,87 @@
   "dialogues": [
     {
       "scene": {
-        "uz": "Xiaolining uyida",
-        "ru": "У Сяоли дома",
-        "tj": "Дар хонаи Сяоли"
+        "uz": "Dars boshida",
+        "ru": "В начале урока",
+        "tj": "Дар оғози дарс"
       },
       "dialogue": [
         {
-          "speaker": "小刚",
-          "zh": "明天是晴天还是阴天？",
-          "pinyin": "Míngtiān shì qíngtiān háishi yīntiān?",
+          "speaker": "A",
+          "zh": "What are we learning today?",
+          "pinyin": "",
           "text": {
-            "uz": "Ertaga havo ochiq bo'ladimi yoki bulutlimi?",
-            "ru": "Завтра будет ясно или пасмурно?",
-            "tj": "Пагоҳ ҳаво офтобӣ мешавад ё абрнок?"
+            "uz": "Bugun nimani o‘rganamiz?",
+            "ru": "Что мы сегодня изучаем?",
+            "tj": "Имрӯз чиро меомӯзем?"
           }
         },
         {
-          "speaker": "小丽",
-          "zh": "阴天，电视上说多云。怎么了？有事？",
-          "pinyin": "Yīntiān, diànshì shang shuō duōyún. Zěnme le? Yǒu shì?",
+          "speaker": "B",
+          "zh": "We are learning Choices and ordering.",
+          "pinyin": "",
           "text": {
-            "uz": "Bulutli, televizorda ko'p bulut bo'ladi dedi. Nima bo'ldi? Ishing bormi?",
-            "ru": "Пасмурно, по телевизору сказали облачно. Что случилось? Есть дела?",
-            "tj": "Абрнок, телевизион гуфт абрнок мешавад. Чӣ шуд? Коре дорӣ?"
-          }
-        },
-        {
-          "speaker": "小刚",
-          "zh": "没事，我们明天要去爬山。",
-          "pinyin": "Méi shì, wǒmen míngtiān yào qù pá shān.",
-          "text": {
-            "uz": "Hech narsa, ertaga toqqa chiqmoqchimiz.",
-            "ru": "Ничего, завтра мы собираемся идти в горы.",
-            "tj": "Ҳеҷ чиз, пагоҳ мехоҳем ба кӯҳ бароем."
-          }
-        },
-        {
-          "speaker": "小丽",
-          "zh": "爬山的时候要小心点儿。",
-          "pinyin": "Pá shān de shíhou yào xiǎoxīn diǎnr.",
-          "text": {
-            "uz": "Toqqa chiqayotganda ehtiyot bo'linglar.",
-            "ru": "Когда будете подниматься в горы, будьте осторожны.",
-            "tj": "Вақти ба кӯҳ баромадан эҳтиёт бошед."
-          }
-        },
-        {
-          "speaker": "小刚",
-          "zh": "好，你也去吗？",
-          "pinyin": "Hǎo, nǐ yě qù ma?",
-          "text": {
-            "uz": "Xo'p, sen ham borasanmi?",
-            "ru": "Хорошо, ты тоже пойдёшь?",
-            "tj": "Хуб, ту ҳам меравӣ?"
-          }
-        },
-        {
-          "speaker": "小丽",
-          "zh": "我不去，我有事。",
-          "pinyin": "Wǒ bú qù, wǒ yǒu shì.",
-          "text": {
-            "uz": "Bormayman, ishim bor.",
-            "ru": "Я не пойду, у меня дела.",
-            "tj": "Ман намеравам, кор дорам."
+            "uz": "Bugun Choices and ordering mavzusini o‘rganamiz.",
+            "ru": "Мы изучаем тему Choices and ordering.",
+            "tj": "Мо мавзӯи Choices and ordering-ро меомӯзем."
           }
         }
       ]
     },
     {
       "scene": {
-        "uz": "Savdo markazida",
-        "ru": "В торговом центре",
-        "tj": "Дар маркази савдо"
+        "uz": "Misol gap",
+        "ru": "Пример фразы",
+        "tj": "Ҷумлаи намуна"
       },
       "dialogue": [
         {
-          "speaker": "周太太",
-          "zh": "你觉得这条裤子怎么样？",
-          "pinyin": "Nǐ juéde zhè tiáo kùzi zěnmeyàng?",
+          "speaker": "A",
+          "zh": "Can you give an example?",
+          "pinyin": "",
           "text": {
-            "uz": "Bu shim qalay deb o'ylaysiz?",
-            "ru": "Как тебе эти брюки?",
-            "tj": "Ин шим ба назарат чӣ хел?"
+            "uz": "Misol keltira olasizmi?",
+            "ru": "Можете привести пример?",
+            "tj": "Метавонед мисол диҳед?"
           }
         },
         {
-          "speaker": "周明",
-          "zh": "我记得你已经有两条这样的裤子了。",
-          "pinyin": "Wǒ jìde nǐ yǐjīng yǒu liǎng tiáo zhèyàng de kùzi le.",
+          "speaker": "B",
+          "zh": "Would you prefer tea or coffee?",
+          "pinyin": "",
           "text": {
-            "uz": "Esimda, senda bunday shimdan allaqachon ikkita bor.",
-            "ru": "Я помню, у тебя уже есть две пары таких брюк.",
-            "tj": "Дар ёдам ҳаст, ту аллакай ду чунин шим дорӣ."
-          }
-        },
-        {
-          "speaker": "周太太",
-          "zh": "那我们再看看别的。",
-          "pinyin": "Nà wǒmen zài kànkan bié de.",
-          "text": {
-            "uz": "Unda boshqa narsalarni ko'raylik.",
-            "ru": "Тогда посмотрим что-нибудь другое.",
-            "tj": "Пас чизҳои дигарро бинем."
-          }
-        },
-        {
-          "speaker": "周明",
-          "zh": "这件衬衫怎么样？",
-          "pinyin": "Zhè jiàn chènshān zěnmeyàng?",
-          "text": {
-            "uz": "Bu ko'ylak-chi?",
-            "ru": "Как эта рубашка?",
-            "tj": "Ин курта чӣ хел?"
-          }
-        },
-        {
-          "speaker": "周太太",
-          "zh": "还不错，多少钱？",
-          "pinyin": "Hái búcuò, duōshao qián?",
-          "text": {
-            "uz": "Yomon emas, qancha turadi?",
-            "ru": "Неплохо, сколько стоит?",
-            "tj": "Бад нест, чанд пул?"
-          }
-        },
-        {
-          "speaker": "周明",
-          "zh": "这上面写着320元。",
-          "pinyin": "Zhè shàngmian xiězhe sān bǎi èrshí yuán.",
-          "text": {
-            "uz": "Bu yerida 320 yuan deb yozilgan.",
-            "ru": "Здесь написано 320 юаней.",
-            "tj": "Дар ин ҷо 320 юан навишта шудааст."
-          }
-        },
-        {
-          "speaker": "周太太",
-          "zh": "买一件。",
-          "pinyin": "Mǎi yí jiàn.",
-          "text": {
-            "uz": "Bittasini olaylik.",
-            "ru": "Купим одну.",
-            "tj": "Якторо мехарем."
+            "uz": "Would you prefer tea or coffee?",
+            "ru": "Would you prefer tea or coffee?",
+            "tj": "Would you prefer tea or coffee?"
           }
         }
       ]
     },
     {
       "scene": {
-        "uz": "Meva do'konida",
-        "ru": "В фруктовом магазине",
-        "tj": "Дар мағозаи мева"
+        "uz": "Qisqa suhbat",
+        "ru": "Короткий разговор",
+        "tj": "Суҳбати кӯтоҳ"
       },
       "dialogue": [
         {
-          "speaker": "周太太",
-          "zh": "这些水果真新鲜，我们买西瓜还是苹果？",
-          "pinyin": "Zhèxiē shuǐguǒ zhēn xīnxiān, wǒmen mǎi xīguā háishi píngguǒ?",
+          "speaker": "A",
+          "zh": "Do you know the word \"choice\"?",
+          "pinyin": "",
           "text": {
-            "uz": "Bu mevalar juda sarhil, tarvuz olamizmi yoki olma?",
-            "ru": "Эти фрукты очень свежие, купим арбуз или яблоки?",
-            "tj": "Ин меваҳо хеле тару тозаанд, тарбуз мехарем ё себ?"
+            "uz": "“choice” so‘zini bilasizmi?",
+            "ru": "Вы знаете слово “choice”?",
+            "tj": "Оё калимаи “choice”-ро медонед?"
           }
         },
         {
-          "speaker": "周明",
-          "zh": "西瓜吧。你看，这上面写着“西瓜不甜不要钱”。",
-          "pinyin": "Xīguā ba. Nǐ kàn, zhè shàngmian xiězhe 'xīguā bù tián bú yào qián'.",
+          "speaker": "B",
+          "zh": "Yes. It means tanlov.",
+          "pinyin": "",
           "text": {
-            "uz": "Tarvuz olaylik. Qara, bu yerda 'tarvuz shirin bo'lmasa pul olmaymiz' deb yozilgan.",
-            "ru": "Давай арбуз. Смотри, здесь написано: «если арбуз не сладкий, денег не берём».",
-            "tj": "Тарбуз гирем. Бубин, ин ҷо навиштааст: «агар тарбуз ширин набошад, пул намегирем»."
-          }
-        },
-        {
-          "speaker": "周太太",
-          "zh": "那我们买一个大点儿的吧。",
-          "pinyin": "Nà wǒmen mǎi yí ge dà diǎnr de ba.",
-          "text": {
-            "uz": "Unda kattarog'ini olaylik.",
-            "ru": "Тогда купим побольше.",
-            "tj": "Пас яктои калонтарашро мехарем."
-          }
-        },
-        {
-          "speaker": "周明",
-          "zh": "再买几个苹果。",
-          "pinyin": "Zài mǎi jǐ ge píngguǒ.",
-          "text": {
-            "uz": "Yana bir nechta olma olaylik.",
-            "ru": "Ещё купим несколько яблок.",
-            "tj": "Боз чанд себ мехарем."
-          }
-        },
-        {
-          "speaker": "周太太",
-          "zh": "好啊，今天晚上只吃水果不吃饭！",
-          "pinyin": "Hǎo a, jīntiān wǎnshang zhǐ chī shuǐguǒ bù chī fàn!",
-          "text": {
-            "uz": "Yaxshi, bugun kechqurun faqat meva yeymiz, ovqat yemaymiz!",
-            "ru": "Хорошо, сегодня вечером будем есть только фрукты, без ужина!",
-            "tj": "Хуб, имрӯз бегоҳ фақат мева мехӯрем, хӯрок не!"
-          }
-        }
-      ]
-    },
-    {
-      "scene": {
-        "uz": "Dam olish xonasida",
-        "ru": "В комнате отдыха",
-        "tj": "Дар ҳуҷраи истироҳат"
-      },
-      "dialogue": [
-        {
-          "speaker": "小丽",
-          "zh": "桌子上放着很多饮料，你喝什么？",
-          "pinyin": "Zhuōzi shang fàngzhe hěn duō yǐnliào, nǐ hē shénme?",
-          "text": {
-            "uz": "Stol ustida ko'p ichimlik turibdi, nima ichasan?",
-            "ru": "На столе стоит много напитков, что будешь пить?",
-            "tj": "Дар рӯи миз нӯшокиҳои бисёр гузошта шудаанд, чӣ менӯшӣ?"
-          }
-        },
-        {
-          "speaker": "小刚",
-          "zh": "茶或者咖啡都可以。你呢？你喝什么？",
-          "pinyin": "Chá huòzhě kāfēi dōu kěyǐ. Nǐ ne? Nǐ hē shénme?",
-          "text": {
-            "uz": "Choy yoki qahva, ikkalasi ham bo'ladi. Sen-chi? Nima ichasan?",
-            "ru": "Чай или кофе, всё подойдёт. А ты? Что будешь пить?",
-            "tj": "Чой ё қаҳва, ҳарду мешавад. Ту чӣ? Чӣ менӯшӣ?"
-          }
-        },
-        {
-          "speaker": "小丽",
-          "zh": "我喝茶，茶是我的最爱。天冷了或者工作累了的时候，喝杯热茶会很舒服。",
-          "pinyin": "Wǒ hē chá, chá shì wǒ de zuì ài. Tiān lěng le huòzhě gōngzuò lèi le de shíhou, hē bēi rè chá huì hěn shūfu.",
-          "text": {
-            "uz": "Men choy ichaman, choy eng yoqtirganim. Havo sovuq bo'lganda yoki ishda charchaganda bir piyola issiq choy ichish juda rohat.",
-            "ru": "Я буду чай, чай — моё любимое. Когда холодно или устал на работе, чашка горячего чая очень приятна.",
-            "tj": "Ман чой менӯшам, чой дӯстдоштаи ман аст. Вақте ҳаво сард аст ё аз кор хаста мешавӣ, як пиёла чойи гарм хеле роҳат аст."
-          }
-        },
-        {
-          "speaker": "小刚",
-          "zh": "你喜欢喝什么茶？",
-          "pinyin": "Nǐ xǐhuan hē shénme chá?",
-          "text": {
-            "uz": "Qanday choy ichishni yoqtirasan?",
-            "ru": "Какой чай ты любишь пить?",
-            "tj": "Кадом чойро нӯшидан дӯст медорӣ?"
-          }
-        },
-        {
-          "speaker": "小丽",
-          "zh": "花茶、绿茶、红茶，我都喜欢。",
-          "pinyin": "Huāchá, lǜchá, hóngchá, wǒ dōu xǐhuan.",
-          "text": {
-            "uz": "Gul choyi, ko'k choy, qora choy — hammasini yaxshi ko'raman.",
-            "ru": "Цветочный, зелёный, красный чай — всё люблю.",
-            "tj": "Чойи гул, чойи сабз, чойи сурх — ҳамаро дӯст медорам."
+            "uz": "Ha. Ma’nosi: tanlov.",
+            "ru": "Да. Значение: выбор.",
+            "tj": "Бале. Маънояш: интихоб."
           }
         }
       ]
@@ -585,13 +233,13 @@
           "type": "active_word",
           "word": {
             "no": 1,
-            "zh": "还是",
-            "pinyin": "háishi",
-            "pos": "conj.",
+            "zh": "choice",
+            "pinyin": "CHOICE",
+            "pos": "n.",
             "meaning": {
-              "uz": "yoki (savolda tanlov)",
-              "ru": "или (в вопросе выбора)",
-              "tj": "ё (дар саволи интихобӣ)"
+              "uz": "tanlov",
+              "ru": "выбор",
+              "tj": "интихоб"
             }
           }
         },
@@ -599,52 +247,27 @@
           "type": "active_word",
           "word": {
             "no": 2,
-            "zh": "爬山",
-            "pinyin": "pá shān",
+            "zh": "order",
+            "pinyin": "ORDER",
             "pos": "v.",
             "meaning": {
-              "uz": "toqqa chiqmoq",
-              "ru": "подниматься в гору",
-              "tj": "ба кӯҳ баромадан"
+              "uz": "buyurtma bermoq",
+              "ru": "заказывать",
+              "tj": "фармоиш додан"
             }
-          }
-        },
-        {
-          "type": "pinyin_choice",
-          "prompt": {
-            "uz": "还是 talaffuzini tanlang:",
-            "ru": "Выберите произношение 还是:",
-            "tj": "Талаффузи 还是-ро интихоб кунед:"
-          },
-          "title": {
-            "uz": "Qanday o'qiladi?",
-            "ru": "Как читается?",
-            "tj": "Чӣ хел хонда мешавад?"
-          },
-          "options": [
-            "háishi",
-            "xiǎoxīn",
-            "tiáo",
-            "pá shān"
-          ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "还是 — háishi",
-            "ru": "还是 — háishi",
-            "tj": "还是 — háishi"
           }
         },
         {
           "type": "active_word",
           "word": {
             "no": 3,
-            "zh": "小心",
-            "pinyin": "xiǎoxīn",
-            "pos": "adj.",
+            "zh": "drink",
+            "pinyin": "DRINK",
+            "pos": "n./v.",
             "meaning": {
-              "uz": "ehtiyotkor, ehtiyot bo'lmoq",
-              "ru": "осторожный, быть осторожным",
-              "tj": "эҳтиёткор, эҳтиёт шудан"
+              "uz": "ichimlik / ichmoq",
+              "ru": "напиток / пить",
+              "tj": "нӯшокӣ / нӯшидан"
             }
           }
         },
@@ -652,22 +275,22 @@
           "type": "active_word",
           "word": {
             "no": 4,
-            "zh": "条",
-            "pinyin": "tiáo",
-            "pos": "m.",
+            "zh": "instead",
+            "pinyin": "INSTEAD",
+            "pos": "adv.",
             "meaning": {
-              "uz": "shim/ko'ylak kabi narsalar uchun hisob so'zi",
-              "ru": "счётное слово для брюк, платьев и т.п.",
-              "tj": "ҳисобвожа барои шим, курта ва ғ."
+              "uz": "o‘rniga",
+              "ru": "вместо",
+              "tj": "ба ҷои"
             }
           }
         },
         {
           "type": "meaning_guess",
           "prompt": {
-            "uz": "还是 so'zining ma'nosini tanlang:",
-            "ru": "Выберите значение слова 还是:",
-            "tj": "Маънои калимаи 还是-ро интихоб кунед:"
+            "uz": "«choice» ma'nosini tanlang:",
+            "ru": "Выберите значение «choice»:",
+            "tj": "Маънои «choice»-ро интихоб кунед:"
           },
           "title": {
             "uz": "Ma'nosi nima?",
@@ -676,120 +299,54 @@
           },
           "options": [
             {
-              "uz": "yoki (savolda tanlov)",
-              "ru": "или (в вопросе выбора)",
-              "tj": "ё (дар саволи интихобӣ)"
+              "uz": "tanlov",
+              "ru": "выбор",
+              "tj": "интихоб"
             },
             {
-              "uz": "ehtiyotkor, ehtiyot bo'lmoq",
-              "ru": "осторожный, быть осторожным",
-              "tj": "эҳтиёткор, эҳтиёт шудан"
+              "uz": "buyurtma bermoq",
+              "ru": "заказывать",
+              "tj": "фармоиш додан"
             },
             {
-              "uz": "toqqa chiqmoq",
-              "ru": "подниматься в гору",
-              "tj": "ба кӯҳ баромадан"
+              "uz": "ichimlik / ichmoq",
+              "ru": "напиток / пить",
+              "tj": "нӯшокӣ / нӯшидан"
             },
             {
-              "uz": "shim/ko'ylak kabi narsalar uchun hisob so'zi",
-              "ru": "счётное слово для брюк, платьев и т.п.",
-              "tj": "ҳисобвожа барои шим, курта ва ғ."
+              "uz": "o‘rniga",
+              "ru": "вместо",
+              "tj": "ба ҷои"
             }
           ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "还是 = yoki (savolda tanlov) (háishi)",
-            "ru": "还是 = или (в вопросе выбора) (háishi)",
-            "tj": "还是 = ё (дар саволи интихобӣ) (háishi)"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 5,
-            "zh": "裤子",
-            "pinyin": "kùzi",
-            "pos": "n.",
-            "meaning": {
-              "uz": "shim",
-              "ru": "брюки, штаны",
-              "tj": "шим"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 6,
-            "zh": "记得",
-            "pinyin": "jìde",
-            "pos": "v.",
-            "meaning": {
-              "uz": "eslamoq, yodda tutmoq",
-              "ru": "помнить",
-              "tj": "дар ёд доштан"
-            }
-          }
+          "correct_index": 0
         },
         {
           "type": "hanzi_choice",
           "prompt": {
-            "uz": "jìde qaysi ieroglif?",
-            "ru": "Какой иероглиф читается jìde?",
-            "tj": "jìde кадом иероглиф аст?"
+            "uz": "«ORDER» qaysi so'z?",
+            "ru": "Какое слово читается «ORDER»?",
+            "tj": "«ORDER» кадом калима аст?"
           },
           "title": {
-            "uz": "Ieroglifni tanlang",
-            "ru": "Выберите иероглиф",
-            "tj": "Иероглифро интихоб кунед"
+            "uz": "So'zni tanlang",
+            "ru": "Выберите слово",
+            "tj": "Калимаро интихоб кунед"
           },
           "options": [
-            "小心",
-            "记得",
-            "还是",
-            "爬山"
+            "order",
+            "choice",
+            "drink",
+            "instead"
           ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "记得 = eslamoq, yodda tutmoq (jìde)",
-            "ru": "记得 = помнить (jìde)",
-            "tj": "记得 = дар ёд доштан (jìde)"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 7,
-            "zh": "衬衫",
-            "pinyin": "chènshān",
-            "pos": "n.",
-            "meaning": {
-              "uz": "ko'ylak, rubashka",
-              "ru": "рубашка",
-              "tj": "курта"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 8,
-            "zh": "元",
-            "pinyin": "yuán",
-            "pos": "m.",
-            "meaning": {
-              "uz": "yuan, pul birligi",
-              "ru": "юань, денежная единица",
-              "tj": "юан, воҳиди пул"
-            }
-          }
+          "correct_index": 0
         },
         {
           "type": "pinyin_choice",
           "prompt": {
-            "uz": "元 talaffuzini tanlang:",
-            "ru": "Выберите произношение 元:",
-            "tj": "Талаффузи 元-ро интихоб кунед:"
+            "uz": "«choice» talaffuzini tanlang:",
+            "ru": "Выберите произношение «choice»:",
+            "tj": "Талаффузи «choice»-ро интихоб кунед:"
           },
           "title": {
             "uz": "Qanday o'qiladi?",
@@ -797,128 +354,49 @@
             "tj": "Чӣ хел хонда мешавад?"
           },
           "options": [
-            "háishi",
-            "yuán",
-            "pá shān",
-            "xiǎoxīn"
+            "CHOICE",
+            "ORDER",
+            "DRINK",
+            "INSTEAD"
           ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "元 — yuán",
-            "ru": "元 — yuán",
-            "tj": "元 — yuán"
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 9,
-            "zh": "新鲜",
-            "pinyin": "xīnxiān",
-            "pos": "adj.",
-            "meaning": {
-              "uz": "yangi, sarhil",
-              "ru": "свежий",
-              "tj": "тару тоза"
-            }
-          }
-        },
-        {
-          "type": "active_word",
-          "word": {
-            "no": 10,
-            "zh": "甜",
-            "pinyin": "tián",
-            "pos": "adj.",
-            "meaning": {
-              "uz": "shirin",
-              "ru": "сладкий",
-              "tj": "ширин"
-            }
-          }
-        },
-        {
-          "type": "meaning_guess",
-          "prompt": {
-            "uz": "还是 so'zining ma'nosini tanlang:",
-            "ru": "Выберите значение слова 还是:",
-            "tj": "Маънои калимаи 还是-ро интихоб кунед:"
-          },
-          "title": {
-            "uz": "Ma'nosi nima?",
-            "ru": "Что означает?",
-            "tj": "Маъно чист?"
-          },
-          "options": [
-            {
-              "uz": "yoki (savolda tanlov)",
-              "ru": "или (в вопросе выбора)",
-              "tj": "ё (дар саволи интихобӣ)"
-            },
-            {
-              "uz": "toqqa chiqmoq",
-              "ru": "подниматься в гору",
-              "tj": "ба кӯҳ баромадан"
-            },
-            {
-              "uz": "shim/ko'ylak kabi narsalar uchun hisob so'zi",
-              "ru": "счётное слово для брюк, платьев и т.п.",
-              "tj": "ҳисобвожа барои шим, курта ва ғ."
-            },
-            {
-              "uz": "ehtiyotkor, ehtiyot bo'lmoq",
-              "ru": "осторожный, быть осторожным",
-              "tj": "эҳтиёткор, эҳтиёт шудан"
-            }
-          ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "还是 = yoki (savolda tanlov) (háishi)",
-            "ru": "还是 = или (в вопросе выбора) (háishi)",
-            "tj": "还是 = ё (дар саволи интихобӣ) (háishi)"
-          }
+          "correct_index": 0
         },
         {
           "type": "match_pairs",
           "pairs": [
             [
-              "还是",
+              "choice",
               {
-                "uz": "yoki (savolda tanlov)",
-                "ru": "или (в вопросе выбора)",
-                "tj": "ё (дар саволи интихобӣ)"
+                "uz": "tanlov",
+                "ru": "выбор",
+                "tj": "интихоб"
               }
             ],
             [
-              "爬山",
+              "order",
               {
-                "uz": "toqqa chiqmoq",
-                "ru": "подниматься в гору",
-                "tj": "ба кӯҳ баромадан"
+                "uz": "buyurtma bermoq",
+                "ru": "заказывать",
+                "tj": "фармоиш додан"
               }
             ],
             [
-              "小心",
+              "drink",
               {
-                "uz": "ehtiyotkor, ehtiyot bo'lmoq",
-                "ru": "осторожный, быть осторожным",
-                "tj": "эҳтиёткор, эҳтиёт шудан"
+                "uz": "ichimlik / ichmoq",
+                "ru": "напиток / пить",
+                "tj": "нӯшокӣ / нӯшидан"
               }
             ],
             [
-              "条",
+              "instead",
               {
-                "uz": "shim/ko'ylak kabi narsalar uchun hisob so'zi",
-                "ru": "счётное слово для брюк, платьев и т.п.",
-                "tj": "ҳисобвожа барои шим, курта ва ғ."
+                "uz": "o‘rniga",
+                "ru": "вместо",
+                "tj": "ба ҷои"
               }
             ]
-          ],
-          "explanation": {
-            "uz": "Juftliklar darsdagi yangi so'zlardan olindi.",
-            "ru": "Пары взяты из новых слов урока.",
-            "tj": "Ҷуфтҳо аз калимаҳои нави дарс гирифта шудаанд."
-          }
+          ]
         }
       ]
     },
@@ -936,57 +414,27 @@
           "g": {
             "no": 1,
             "title": {
-              "uz": "'还是' va '或者' farqi",
-              "ru": "Сравнение 还是 и 或者",
-              "tj": "Муқоисаи 还是 ва 或者"
+              "uz": "choice questions",
+              "ru": "choice questions",
+              "tj": "choice questions"
             },
-            "title_zh": "\"还是\"和\"或者\"的比较",
+            "title_zh": "choice questions",
             "rule": {
-              "uz": "Ikkalasi ham 'yoki' ma'nosini beradi, lekin qo'llanishi farqli:\n还是 — so'roq gaplarda: 你要A还是B？\n或者 — darak gaplarda: 你可以A或者B。\nMasalan:\n  你想喝茶还是果汁？(So'roq — choy yoki sharbat?)\n  你可以坐地铁或者打车。(Darak — metro yoki taksi.)",
-              "ru": "Оба означают 'или', но употребляются по-разному:\n还是 — в вопросах: 你要A还是B？\n或者 — в утверждениях: 你可以A或者B。\nНапример:\n  你想喝茶还是果汁？(Вопрос — чай или сок?)\n  你可以坐地铁或者打车。(Утверждение — на метро или такси.)",
-              "tj": "Ҳарду маънои 'ё'-ро доранд, аммо истифодаашон фарқ мекунад:\n还是 — дар саволҳо: 你要A还是B？\n或者 — дар изҳор: 你可以A或者B。\nМасалан:\n  你想喝茶还是果汁？(Савол — чой ё шарбат?)\n  你可以坐地铁或者打车。(Изҳор — бо метро ё такси.)"
+              "uz": "Qolip: choice questions. Misol: Would you prefer tea or coffee? Shu qolip bilan qisqa va tabiiy gap tuzing.",
+              "ru": "Шаблон: choice questions. Пример: Would you prefer tea or coffee? Используйте его в коротких естественных фразах.",
+              "tj": "Қолаб: choice questions. Мисол: Would you prefer tea or coffee? Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
             },
             "examples": [
               {
-                "zh": "你想喝茶还是果汁？",
-                "pinyin": "Nǐ xiǎng hē chá háishi guǒzhī?",
+                "zh": "Would you prefer tea or coffee?",
+                "pinyin": "",
                 "translation": {
-                  "uz": "Choy ichmoqchimisiz yoki mevali sharbat?",
-                  "ru": "Ты хочешь чай или сок?",
-                  "tj": "Шумо чой мехоҳед ё шарбати мева?"
-                }
-              },
-              {
-                "zh": "可以坐缆车或者走路上去。",
-                "pinyin": "Kěyǐ zuò lǎnchē huòzhě zǒulù shàngqù.",
-                "translation": {
-                  "uz": "Kanatli aravacha bilan yoki piyoda chiqish mumkin.",
-                  "ru": "Можно подняться на фуникулёре или пешком.",
-                  "tj": "Метавонед бо канаткаш ё пиёда боло равед."
+                  "uz": "Would you prefer tea or coffee?",
+                  "ru": "Would you prefer tea or coffee?",
+                  "tj": "Would you prefer tea or coffee?"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "gap_fill",
-          "sentence": "你想喝茶____果汁？",
-          "prompt": {
-            "uz": "Bo'sh joyga mos so'zni tanlang:",
-            "ru": "Выберите слово для пропуска:",
-            "tj": "Калимаи мувофиқро барои ҷойи холӣ интихоб кунед:"
-          },
-          "options": [
-            "还是",
-            "爬山",
-            "小心",
-            "条"
-          ],
-          "correct_index": 0,
-          "explanation": {
-            "uz": "To'g'ri: 还是 (háishi) — yoki (savolda tanlov)",
-            "ru": "Верно: 还是 (háishi) — или (в вопросе выбора)",
-            "tj": "Дуруст: 还是 (háishi) — ё (дар саволи интихобӣ)"
           }
         },
         {
@@ -994,91 +442,24 @@
           "g": {
             "no": 2,
             "title": {
-              "uz": "Mavjudlik gapi: joy+V着+son+ot",
-              "ru": "Предложение существования: место+V着+числ.+сущ.",
-              "tj": "Ҷумлаи мавҷудият: ҷой+V着+шумор+исм"
+              "uz": "expanded sentence",
+              "ru": "expanded sentence",
+              "tj": "expanded sentence"
             },
-            "title_zh": "存在句：处所+V着+数量+N",
+            "title_zh": "expanded sentence",
             "rule": {
-              "uz": "Bu qolip biror joyda nima borligini tasvirlaydi.\nQolip: Joy + V + 着 + son + ot\n着 — holatning davomiyligini bildiradi (qo'yilgan, turgan, osilib turgan).\nMasalan:\n  桌子上放着很多饮料。(Stol ustida ko'p ichimlik turadi.)\n  床上躺着一个人。(Ko'rpada bir kishi yotibdi.)\n  墙上挂着一幅画。(Devorga bir rasm osilgan.)",
-              "ru": "Конструкция описывает наличие чего-либо в каком-то месте.\nСтруктура: Место + V + 着 + числит. + сущ.\n着 — состояние, в котором находится объект (лежит, висит, стоит).\nНапример:\n  桌子上放着很多饮料。(На столе стоит много напитков.)\n  床上躺着一个人。(На кровати лежит человек.)\n  墙上挂着一幅画。(На стене висит картина.)",
-              "tj": "Ин сохтор мавҷудияти чизеро дар ҷое тасвир мекунад.\nСохтор: Ҷой + V + 着 + шумор + исм\n着 — ҳолати давомандаро нишон медиҳад (гузошта, хобида, овехта).\nМасалан:\n  桌子上放着很多饮料。(Рӯйи миз нӯшокиҳои зиёд гузошта шудааст.)\n  床上躺着一个人。(Рӯйи кат як одам хобида аст.)\n  墙上挂着一幅画。(Ба девор як расм овехта шудааст.)"
+              "uz": "Qolip: add time, place, or reason. Misol: Would you prefer tea or coffee? Shu qolip bilan qisqa va tabiiy gap tuzing.",
+              "ru": "Шаблон: add time, place, or reason. Пример: Would you prefer tea or coffee? Используйте его в коротких естественных фразах.",
+              "tj": "Қолаб: add time, place, or reason. Мисол: Would you prefer tea or coffee? Бо ин қолаб ҷумлаҳои кӯтоҳи табиӣ созед."
             },
             "examples": [
               {
-                "zh": "桌子上放着很多饮料，还有新鲜水果。",
-                "pinyin": "Zhuōzi shàng fàng zhe hěn duō yǐnliào, hái yǒu xīnxiān shuǐguǒ.",
+                "zh": "Would you prefer tea or coffee?",
+                "pinyin": "",
                 "translation": {
-                  "uz": "Stol ustida ko'p ichimlik va yangi mevalar turibdi.",
-                  "ru": "На столе стоит много напитков и свежих фруктов.",
-                  "tj": "Рӯйи миз нӯшокиҳои зиёд ва меваҳои тоза гузошта шудааст."
-                }
-              },
-              {
-                "zh": "房间里放着空调、电视和冰箱。",
-                "pinyin": "Fángjiān lǐ fàng zhe kōngtiáo, diànshì hé bīngxiāng.",
-                "translation": {
-                  "uz": "Xonada konditsioner, televizor va muzlatgich o'rnatilgan.",
-                  "ru": "В комнате есть кондиционер, телевизор и холодильник.",
-                  "tj": "Дар хона кондитсионер, телевизор ва яхдон гузошта шудааст."
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "gap_fill",
-          "sentence": "桌子上放着很多饮料，还有____水果。",
-          "prompt": {
-            "uz": "Bo'sh joyga mos so'zni tanlang:",
-            "ru": "Выберите слово для пропуска:",
-            "tj": "Калимаи мувофиқро барои ҷойи холӣ интихоб кунед:"
-          },
-          "options": [
-            "还是",
-            "爬山",
-            "新鲜",
-            "小心"
-          ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "To'g'ri: 新鲜 (xīnxiān) — yangi, sarhil",
-            "ru": "Верно: 新鲜 (xīnxiān) — свежий",
-            "tj": "Дуруст: 新鲜 (xīnxiān) — тару тоза"
-          }
-        },
-        {
-          "type": "_grammar",
-          "g": {
-            "no": 3,
-            "title": {
-              "uz": "'会' ehtimol ma'nosida",
-              "ru": "«会» в значении вероятности",
-              "tj": "«会» дар маънои эҳтимол"
-            },
-            "title_zh": "\"会\"表示可能性",
-            "rule": {
-              "uz": "'会' so'zi ikki asosiy ma'noda ishlatiladi:\n1) Mahorat: V qila olaman (o'rganib olingan qobiliyat)\n   Masalan: 我会游泳。(Men suza olaman.)\n2) Ehtimol: ...bo'lsa kerak, ...bo'lishi mumkin\n   Masalan: 明天会下雨吧。(Ertaga yomg'ir yog'sa kerak.)\nKontekst orqali qaysi ma'noda ekanligini bilsa bo'ladi.",
-              "ru": "Слово '会' имеет два основных значения:\n1) Умение: умею V (приобретённый навык)\n   Например: 我会游泳。(Я умею плавать.)\n2) Вероятность: наверное..., скорее всего...\n   Например: 明天会下雨吧。(Завтра, наверное, будет дождь.)\nЗначение определяется по контексту.",
-              "tj": "Калимаи '会' ду маъноии асосӣ дорад:\n1) Тавонистан: V карда метавонам (малакаи омӯхтагӣ)\n   Масалан: 我会游泳。(Ман шино карда метавонам.)\n2) Эҳтимол: шояд..., эҳтимол...\n   Масалан: 明天会下雨吧。(Фардо шояд борон борад.)\nМаъно аз рӯи контекст муайян карда мешавад."
-            },
-            "examples": [
-              {
-                "zh": "你会爬山吗？今天我们打算去爬山。",
-                "pinyin": "Nǐ huì páshān ma? Jīntiān wǒmen dǎsuàn qù páshān.",
-                "translation": {
-                  "uz": "Tog' tirmasha olasizmi? Bugun tog'ga chiqmoqchi edik.",
-                  "ru": "Умеешь лазать в горы? Сегодня планируем сходить.",
-                  "tj": "Оё ба кӯҳ баромада метавонӣ? Имрӯз нақша дорем ба кӯҳ равем."
-                }
-              },
-              {
-                "zh": "明天会下雨，记得带伞！",
-                "pinyin": "Míngtiān huì xiàyǔ, jìde dài sǎn!",
-                "translation": {
-                  "uz": "Ertaga yomg'ir yog'sa kerak, soyabon olishni yodda tuting!",
-                  "ru": "Завтра, наверное, будет дождь — возьмите зонт!",
-                  "tj": "Фардо шояд борон борад, чатр гиред!"
+                  "uz": "Would you prefer tea or coffee?",
+                  "ru": "Would you prefer tea or coffee?",
+                  "tj": "Would you prefer tea or coffee?"
                 }
               }
             ]
@@ -1087,58 +468,52 @@
         {
           "type": "sentence_builder",
           "sentence": {
-            "uz": "Ertaga yomg'ir yog'sa kerak, soyabon olishni yodda tuting!",
-            "ru": "Завтра, наверное, будет дождь — возьмите зонт!",
-            "tj": "Фардо шояд борон борад, чатр гиред!"
+            "uz": "Would you prefer tea or coffee?",
+            "ru": "Would you prefer tea or coffee?",
+            "tj": "Would you prefer tea or coffee?"
           },
           "tokens": [
-            "伞",
-            "带",
-            "明天",
-            "爬山",
-            "还是",
-            "会",
-            "记得",
-            "下雨"
+            "coffee",
+            "or",
+            "tea",
+            "prefer",
+            "you",
+            "Would",
+            "not"
           ],
           "answer_tokens": [
-            "明天",
-            "会",
-            "下雨",
-            "记得",
-            "带",
-            "伞"
+            "Would",
+            "you",
+            "prefer",
+            "tea",
+            "or",
+            "coffee"
           ],
           "explanation": {
-            "uz": "明天会下雨，记得带伞！ — Míngtiān huì xiàyǔ, jìde dài sǎn!",
-            "ru": "明天会下雨，记得带伞！ — Míngtiān huì xiàyǔ, jìde dài sǎn!",
-            "tj": "明天会下雨，记得带伞！ — Míngtiān huì xiàyǔ, jìde dài sǎn!"
+            "uz": "So‘z tartibiga e’tibor bering.",
+            "ru": "Обратите внимание на порядок слов.",
+            "tj": "Ба тартиби калимаҳо диққат диҳед."
           }
         },
         {
           "type": "quick_quiz",
           "prompt": {
-            "uz": "«Choy ichmoqchimisiz yoki mevali sharbat?» — xitoychada qaysi biri?",
-            "ru": "«Ты хочешь чай или сок?» — какое предложение по-китайски?",
-            "tj": "«Шумо чой мехоҳед ё шарбати мева?» — кадом ҷумла ба хитоӣ аст?"
+            "uz": "“tanlov” inglizchada qaysi?",
+            "ru": "“выбор” — как по-английски?",
+            "tj": "“интихоб” ба англисӣ кадом аст?"
           },
           "title": {
-            "uz": "To'g'ri gapni tanlang",
-            "ru": "Выберите верное предложение",
-            "tj": "Ҷумлаи дурустро интихоб кунед"
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
           },
           "options": [
-            "房间里放着空调、电视和冰箱。",
-            "明天会下雨，记得带伞！",
-            "桌子上放着很多饮料，还有新鲜水果。",
-            "你想喝茶还是果汁？"
+            "choice",
+            "order",
+            "drink",
+            "instead"
           ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "你想喝茶还是果汁？ — Nǐ xiǎng hē chá háishi guǒzhī?",
-            "ru": "你想喝茶还是果汁？ — Nǐ xiǎng hē chá háishi guǒzhī?",
-            "tj": "你想喝茶还是果汁？ — Nǐ xiǎng hē chá háishi guǒzhī?"
-          }
+          "correct_index": 0
         }
       ]
     },
@@ -1146,11 +521,67 @@
       "section_no": 3,
       "section_title": {
         "uz": "Mashq",
-        "ru": "Упражнение",
+        "ru": "Практика",
         "tj": "Машқ"
       },
       "section_purpose": "practice",
       "cards": [
+        {
+          "type": "pinyin_choice",
+          "prompt": {
+            "uz": "«drink» talaffuzini tanlang:",
+            "ru": "Выберите произношение «drink»:",
+            "tj": "Талаффузи «drink»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Qanday o'qiladi?",
+            "ru": "Как читается?",
+            "tj": "Чӣ хел хонда мешавад?"
+          },
+          "options": [
+            "DRINK",
+            "CHOICE",
+            "ORDER",
+            "INSTEAD"
+          ],
+          "correct_index": 0
+        },
+        {
+          "type": "meaning_guess",
+          "prompt": {
+            "uz": "«instead» ma'nosini tanlang:",
+            "ru": "Выберите значение «instead»:",
+            "tj": "Маънои «instead»-ро интихоб кунед:"
+          },
+          "title": {
+            "uz": "Ma'nosi nima?",
+            "ru": "Что означает?",
+            "tj": "Маъно чист?"
+          },
+          "options": [
+            {
+              "uz": "o‘rniga",
+              "ru": "вместо",
+              "tj": "ба ҷои"
+            },
+            {
+              "uz": "tanlov",
+              "ru": "выбор",
+              "tj": "интихоб"
+            },
+            {
+              "uz": "buyurtma bermoq",
+              "ru": "заказывать",
+              "tj": "фармоиш додан"
+            },
+            {
+              "uz": "ichimlik / ichmoq",
+              "ru": "напиток / пить",
+              "tj": "нӯшокӣ / нӯшидан"
+            }
+          ],
+          "correct_index": 0
+        },
         {
           "type": "listening_choice",
           "title": {
@@ -1158,150 +589,66 @@
             "ru": "Выберите, что вы услышали",
             "tj": "Он чи шунидед, интихоб кунед"
           },
-          "audio_text": "明天是晴天还是阴天？",
-          "pinyin": "Míngtiān shì qíngtiān háishi yīntiān?",
+          "audio_text": "Would you prefer tea or coffee?",
+          "pinyin": "",
           "options": [
-            "阴天，电视上说多云。怎么了？有事？",
-            "没事，我们明天要去爬山。",
-            "爬山的时候要小心点儿。",
-            "明天是晴天还是阴天？"
+            "Would you prefer tea or coffee?",
+            "I need order.",
+            "This is choice.",
+            "Please wait."
           ],
-          "correct_index": 3,
+          "correct_index": 0,
           "explanation": {
-            "uz": "明天是晴天还是阴天？ — Ertaga havo ochiq bo'ladimi yoki bulutlimi?",
-            "ru": "明天是晴天还是阴天？ — Завтра будет ясно или пасмурно?",
-            "tj": "明天是晴天还是阴天？ — Пагоҳ ҳаво офтобӣ мешавад ё абрнок?"
+            "uz": "Would you prefer tea or coffee?",
+            "ru": "Would you prefer tea or coffee?",
+            "tj": "Would you prefer tea or coffee?"
           }
         },
         {
           "type": "match_pairs",
           "pairs": [
             [
-              "还是",
+              "drink",
               {
-                "uz": "yoki (savolda tanlov)",
-                "ru": "или (в вопросе выбора)",
-                "tj": "ё (дар саволи интихобӣ)"
+                "uz": "ichimlik / ichmoq",
+                "ru": "напиток / пить",
+                "tj": "нӯшокӣ / нӯшидан"
               }
             ],
             [
-              "爬山",
+              "instead",
               {
-                "uz": "toqqa chiqmoq",
-                "ru": "подниматься в гору",
-                "tj": "ба кӯҳ баромадан"
+                "uz": "o‘rniga",
+                "ru": "вместо",
+                "tj": "ба ҷои"
               }
             ],
             [
-              "小心",
+              "prefer",
               {
-                "uz": "ehtiyotkor, ehtiyot bo'lmoq",
-                "ru": "осторожный, быть осторожным",
-                "tj": "эҳтиёткор, эҳтиёт шудан"
+                "uz": "afzal ko‘rmoq",
+                "ru": "предпочитать",
+                "tj": "афзал донистан"
               }
             ],
             [
-              "条",
+              "recommend",
               {
-                "uz": "shim/ko'ylak kabi narsalar uchun hisob so'zi",
-                "ru": "счётное слово для брюк, платьев и т.п.",
-                "tj": "ҳисобвожа барои шим, курта ва ғ."
+                "uz": "tavsiya qilmoq",
+                "ru": "рекомендовать",
+                "tj": "тавсия кардан"
               }
             ]
-          ],
-          "explanation": {
-            "uz": "Juftliklar darsdagi yangi so'zlardan olindi.",
-            "ru": "Пары взяты из новых слов урока.",
-            "tj": "Ҷуфтҳо аз калимаҳои нави дарс гирифта шудаанд."
-          }
-        },
-        {
-          "type": "sentence_builder",
-          "sentence": {
-            "uz": "Xo'p, sen ham borasanmi?",
-            "ru": "Хорошо, ты тоже пойдёшь?",
-            "tj": "Хуб, ту ҳам меравӣ?"
-          },
-          "tokens": [
-            "好",
-            "去",
-            "爬山",
-            "吗",
-            "你",
-            "也",
-            "还是"
-          ],
-          "answer_tokens": [
-            "好",
-            "你",
-            "也",
-            "去",
-            "吗"
-          ],
-          "explanation": {
-            "uz": "好，你也去吗？ — Hǎo, nǐ yě qù ma?",
-            "ru": "好，你也去吗？ — Hǎo, nǐ yě qù ma?",
-            "tj": "好，你也去吗？ — Hǎo, nǐ yě qù ma?"
-          }
-        },
-        {
-          "type": "hanzi_choice",
-          "prompt": {
-            "uz": "huòzhě qaysi ieroglif?",
-            "ru": "Какой иероглиф читается huòzhě?",
-            "tj": "huòzhě кадом иероглиф аст?"
-          },
-          "title": {
-            "uz": "Ieroglifni tanlang",
-            "ru": "Выберите иероглиф",
-            "tj": "Иероглифро интихоб кунед"
-          },
-          "options": [
-            "小心",
-            "或者",
-            "爬山",
-            "还是"
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "或者 = yoki (darak gapda) (huòzhě)",
-            "ru": "或者 = или (в повествовательном предложении) (huòzhě)",
-            "tj": "或者 = ё (дар ҷумлаи хабарӣ) (huòzhě)"
-          }
-        },
-        {
-          "type": "translation_choice",
-          "prompt": {
-            "uz": "'ichimlik' xitoycha qaysi?",
-            "ru": "'напиток' по-китайски?",
-            "tj": "'нӯшокӣ' ба хитоӣ кадом аст?"
-          },
-          "title": {
-            "uz": "Xitoycha qanday?",
-            "ru": "Как по-китайски?",
-            "tj": "Ба хитоӣ чӣ тавр?"
-          },
-          "options": [
-            "小心",
-            "爬山",
-            "还是",
-            "饮料"
-          ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "ichimlik = 饮料 (yǐnliào)",
-            "ru": "напиток = 饮料 (yǐnliào)",
-            "tj": "нӯшокӣ = 饮料 (yǐnliào)"
-          }
+          ]
         },
         {
           "type": "pronunciation",
-          "phrase": "还是",
-          "pinyin": "háishi",
+          "phrase": "Would you prefer tea or coffee?",
+          "pinyin": "",
           "translation": {
-            "uz": "yoki (savolda tanlov)",
-            "ru": "или (в вопросе выбора)",
-            "tj": "ё (дар саволи интихобӣ)"
+            "uz": "Would you prefer tea or coffee?",
+            "ru": "Would you prefer tea or coffee?",
+            "tj": "Would you prefer tea or coffee?"
           }
         }
       ]
@@ -1318,23 +665,44 @@
         {
           "type": "listening_choice",
           "title": {
-            "uz": "Tinglang — nima dedi?",
-            "ru": "Послушайте — что сказали?",
-            "tj": "Гӯш кунед — чӣ гуфт?"
+            "uz": "Eshitganingizni tanlang",
+            "ru": "Выберите, что вы услышали",
+            "tj": "Он чи шунидед, интихоб кунед"
           },
-          "audio_text": "明天是晴天还是阴天？",
-          "pinyin": "Míngtiān shì qíngtiān háishi yīntiān?",
+          "audio_text": "Would you prefer tea or coffee?",
+          "pinyin": "",
           "options": [
-            "明天是晴天还是阴天？",
-            "爬山的时候要小心点儿。",
-            "阴天，电视上说多云。怎么了？有事？",
-            "没事，我们明天要去爬山。"
+            "Would you prefer tea or coffee?",
+            "I have choice.",
+            "Where is order?",
+            "No problem."
           ],
           "correct_index": 0,
           "explanation": {
-            "uz": "明天是晴天还是阴天？ — Ertaga havo ochiq bo'ladimi yoki bulutlimi?",
-            "ru": "明天是晴天还是阴天？ — Завтра будет ясно или пасмурно?",
-            "tj": "明天是晴天还是阴天？ — Пагоҳ ҳаво офтобӣ мешавад ё абрнок?"
+            "uz": "Would you prefer tea or coffee?",
+            "ru": "Would you prefer tea or coffee?",
+            "tj": "Would you prefer tea or coffee?"
+          }
+        },
+        {
+          "type": "gap_fill",
+          "sentence": "____ you prefer tea or coffee?",
+          "prompt": {
+            "uz": "Bo'sh joyga mos so'zni tanlang:",
+            "ru": "Выберите подходящее слово:",
+            "tj": "Калимаи мувофиқро интихоб кунед:"
+          },
+          "options": [
+            "choice",
+            "order",
+            "drink",
+            "not"
+          ],
+          "correct_index": 0,
+          "explanation": {
+            "uz": "To‘g‘ri javob: choice.",
+            "ru": "Правильный ответ: choice.",
+            "tj": "Ҷавоби дуруст: choice."
           }
         },
         {
@@ -1346,119 +714,48 @@
           },
           "lines": [
             {
-              "speaker": "小刚",
-              "zh": "明天是晴天还是阴天？",
+              "speaker": "A",
+              "zh": "Can you give an example?",
               "blank": false
             },
             {
-              "speaker": "小丽",
-              "zh": "阴天，电视上说多云。怎么了？有事？",
-              "blank": false
-            },
-            {
-              "speaker": "小刚",
-              "zh": "没事，我们明天要去爬山。",
-              "blank": false
-            },
-            {
-              "speaker": "小丽",
-              "zh": "爬山的时候要小心点儿。",
-              "blank": false
-            },
-            {
-              "speaker": "小刚",
-              "zh": "好，你也去吗？",
-              "blank": false
-            },
-            {
-              "speaker": "小丽",
+              "speaker": "B",
               "zh": "",
               "blank": true
             }
           ],
           "options": [
-            "明天是晴天还是阴天？",
-            "我不去，我有事。",
-            "没事，我们明天要去爬山。",
-            "阴天，电视上说多云。怎么了？有事？"
+            "Would you prefer tea or coffee?",
+            "I like choice.",
+            "Good morning!",
+            "Thank you!"
           ],
-          "correct_index": 1,
+          "correct_index": 0,
           "explanation": {
-            "uz": "To'g'ri javob: 我不去，我有事。",
-            "ru": "Правильный ответ: 我不去，我有事。",
-            "tj": "Ҷавоби дуруст: 我不去，我有事。"
+            "uz": "Would you prefer tea or coffee?",
+            "ru": "Would you prefer tea or coffee?",
+            "tj": "Would you prefer tea or coffee?"
           }
         },
         {
           "type": "quick_quiz",
           "prompt": {
-            "uz": "Dialogda 小刚 avval nima deydi?",
-            "ru": "Что 小刚 говорит в начале диалога?",
-            "tj": "Дар муколама 小刚 аввал чӣ мегӯяд?"
+            "uz": "“tanlov” inglizchada qaysi?",
+            "ru": "“выбор” — как по-английски?",
+            "tj": "“интихоб” ба англисӣ кадом аст?"
           },
           "title": {
-            "uz": "Dialogdan savol:",
-            "ru": "Вопрос по диалогу:",
-            "tj": "Савол аз муколама:"
+            "uz": "To'g'ri javobni tanlang",
+            "ru": "Выберите правильный ответ",
+            "tj": "Ҷавоби дурустро интихоб кунед"
           },
           "options": [
-            "没事，我们明天要去爬山。",
-            "爬山的时候要小心点儿。",
-            "明天是晴天还是阴天？",
-            "阴天，电视上说多云。怎么了？有事？"
+            "choice",
+            "order",
+            "drink",
+            "instead"
           ],
-          "correct_index": 2,
-          "explanation": {
-            "uz": "To'g'ri javob: 明天是晴天还是阴天？",
-            "ru": "Правильный ответ: 明天是晴天还是阴天？",
-            "tj": "Ҷавоби дуруст: 明天是晴天还是阴天？"
-          }
-        },
-        {
-          "type": "quick_quiz",
-          "prompt": {
-            "uz": "Dialog oxirida 小丽 nima deydi?",
-            "ru": "Что 小丽 говорит в конце диалога?",
-            "tj": "Дар охири муколама 小丽 чӣ мегӯяд?"
-          },
-          "title": {
-            "uz": "Dialogdan savol:",
-            "ru": "Вопрос по диалогу:",
-            "tj": "Савол аз муколама:"
-          },
-          "options": [
-            "没事，我们明天要去爬山。",
-            "明天是晴天还是阴天？",
-            "阴天，电视上说多云。怎么了？有事？",
-            "我不去，我有事。"
-          ],
-          "correct_index": 3,
-          "explanation": {
-            "uz": "To'g'ri javob: 我不去，我有事。",
-            "ru": "Правильный ответ: 我不去，我有事。",
-            "tj": "Ҷавоби дуруст: 我不去，我有事。"
-          }
-        },
-        {
-          "type": "gap_fill",
-          "sentence": "____天是晴天还是阴天？",
-          "prompt": {
-            "uz": "Bo'sh joyga mos ieroglifni tanlang:",
-            "ru": "Выберите подходящий иероглиф:",
-            "tj": "Иероглифи мувофиқро интихоб кунед:"
-          },
-          "options": [
-            "电",
-            "明",
-            "下",
-            "夫"
-          ],
-          "correct_index": 1,
-          "explanation": {
-            "uz": "To'g'ri: 明 — 明天是晴天还是阴天？ (Ertaga havo ochiq bo'ladimi yoki bulutlimi?)",
-            "ru": "Верно: 明 — 明天是晴天还是阴天？ (Завтра будет ясно или пасмурно?)",
-            "tj": "Дуруст: 明 — 明天是晴天还是阴天？ (Пагоҳ ҳаво офтобӣ мешавад ё абрнок?)"
-          }
+          "correct_index": 0
         }
       ]
     }
