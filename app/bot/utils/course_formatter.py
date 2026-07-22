@@ -1,4 +1,5 @@
 import json
+import re
 from typing import Any
 
 
@@ -97,7 +98,7 @@ def _block_label(lang: str, n: int, total: int) -> str:
     return f"{labels.get(lang, labels['ru'])} {n}/{max(total, n)}"
 
 
-_NARRATION_SPEAKERS = {"", "旁白", "narrator", "narration", "matn", "text", "文本"}
+_NARRATION_SPEAKERS = {"", "narrator", "narration", "matn", "text"}
 
 
 def _is_narration_line(line: dict) -> bool:
@@ -192,7 +193,8 @@ def _grammar_examples(item: dict) -> list[dict]:
 
 
 def _hsk4_grammar_analysis(title_zh: str, lang: str) -> str:
-    title = (title_zh or "").replace(" ", "")
+    # Titles are English phrases here, so keep the spaces the markers rely on.
+    title = title_zh or ""
     texts = {
         "emphasis": {
             "uz": "Gapda kutilganidan kuchliroq holat ta'kidlanadi; odatda kuchaytiruvchi so'z natijani kuchaytiradi.",
@@ -231,17 +233,29 @@ def _hsk4_grammar_analysis(title_zh: str, lang: str) -> str:
         },
     }
 
-    if any(marker in title for marker in ("连", "甚至", "都/也")):
+    # Markers are matched against the English grammar titles the lessons use
+    # ("not only ... but also", "although + clause", "keep + object + adjective").
+    # Whole-word matching only, so "than" does not fire on "Thank you".
+    # Order matters: the first matching group wins.
+    folded = title.casefold()
+
+    def has(*markers: str) -> bool:
+        return any(re.search(rf"\b{re.escape(m)}\b", folded) for m in markers)
+
+    if has("not only", "not just", "so ... that", "even", "much"):
         key = "emphasis"
-    elif any(marker in title for marker in ("即使", "尽管", "虽然", "无论", "不管", "再", "只有", "只要", "一……就", "否则", "如果")):
+    elif has("although", "even if", "if", "unless", "when", "before", "after",
+             "wherever", "whoever", "should", "as ... as"):
         key = "condition"
-    elif any(marker in title for marker in ("然而", "却", "相反", "不过", "而不是", "而")):
+    elif has("but", "however", "than", "comparative", "instead", "contrast"):
         key = "contrast"
-    elif any(marker in title for marker in ("同时", "另外", "并且", "接着", "首先", "其次", "除此以外", "总的来说")):
+    elif has("first", "then", "next", "besides", "in addition",
+             "narration", "duration", "since"):
         key = "sequence"
-    elif any(marker in title for marker in ("对于", "在于", "说起", "V+起", "方面", "上")):
+    elif has("according to", "this is how", "about", "audience", "abstract nouns"):
         key = "topic"
-    elif any(marker in title for marker in ("起来", "出来", "下去", "上", "受不了", "V+着+V+着")):
+    elif has("keep", "make", "leave", "past participle", "gerund",
+             "remember to", "look for"):
         key = "complement"
     else:
         key = "generic"
@@ -250,61 +264,63 @@ def _hsk4_grammar_analysis(title_zh: str, lang: str) -> str:
 
 
 def _hsk4_grammar_tip(title_zh: str, lang: str) -> str:
-    title = (title_zh or "").replace(" ", "")
+    # Advanced grammar titles are English phrases ("not only ... but also"), so
+    # keep the spaces and match whole words.
+    title = (title_zh or "").casefold()
     tips = [
-        (("不仅", "不但"), {
+        (("not only", "not just"), {
             "uz": "Ikkinchi qismda odatda qo'shimcha bog'lovchi keladi; ikki tomonni ham ijobiy kuchaytiradi.",
             "ru": "Во второй части обычно стоит дополнительная связка; конструкция усиливает оба положительных признака.",
             "tj": "Дар қисми дуюм одатан пайвандаки иловагӣ меояд; ду хусусияти мусбатро қавитар мекунад.",
         }),
-        (("从来",), {
+        (("never", "ever"), {
             "uz": "Inkor ma'nosida ko'pincha yordamchi inkor bilan ishlaydi: ma'nosi 'hech qachon ...magan'.",
             "ru": "В отрицании обычно используется отрицательный маркер: смысл — 'никогда не...'.",
             "tj": "Дар маънои инкор одатан нишондиҳандаи инкор меояд: маънояш 'ҳеч вақт ... накардааст'.",
         }),
-        (("刚",), {
+        (("just", "present perfect"), {
             "uz": "Bu qolip fe'ldan oldin keladi va 'hozirgina/yangi' ma'nosini beradi; uzoq o'tmish uchun ishlatmang.",
             "ru": "Этот шаблон ставится перед глаголом и значит 'только что/недавно'; не используйте для далекого прошлого.",
             "tj": "Ин қолаб пеш аз феъл меояд ва маънои 'нав/ҳозир' медиҳад; барои гузаштаи дур истифода накунед.",
         }),
-        (("即使", "尽管", "无论", "不管", "再"), {
+        (("even if", "although", "wherever", "whoever"), {
             "uz": "Natija qismida ko'pincha kuchaytiruvchi so'z keladi; shu so'z natija o'zgarmasligini ko'rsatadi.",
             "ru": "В части результата часто стоит усилительное слово; оно показывает, что результат не меняется.",
             "tj": "Дар қисми натиҷа одатан калимаи таъкидӣ меояд; он тағйир наёфтани натиҷаро нишон медиҳад.",
         }),
-        (("否则",), {
+        (("otherwise", "unless"), {
             "uz": "Avval maslahat yoki shart keladi, keyin yomon yoki kutilmagan natija aytiladi.",
             "ru": "Сначала идет совет или условие, затем называется нежелательный результат.",
             "tj": "Аввал маслиҳат ё шарт меояд, баъд натиҷаи номатлуб гуфта мешавад.",
         }),
-        (("然而", "却", "相反", "不过"), {
+        (("however", "but", "contrast", "instead"), {
             "uz": "Bular oddiy 'va' emas; oldingi fikrga burilish yoki qarama-qarshi natija qo'shadi.",
             "ru": "Это не простое 'и'; слова дают поворот мысли или противоположный результат.",
             "tj": "Инҳо 'ва'-и одӣ нестанд; гардиши фикр ё натиҷаи муқобил меоранд.",
         }),
-        (("并且", "同时", "另外", "除此以外"), {
+        (("besides", "in addition", "also", "and then"), {
             "uz": "Ikkinchi fikr birinchisini davom ettiradi yoki qo'shimcha qiladi; qarama-qarshilik ma'nosi yo'q.",
             "ru": "Вторая мысль продолжает или дополняет первую; противопоставления здесь нет.",
             "tj": "Фикри дуюм аввалиро идома ё пурра мекунад; маънои муқобил нест.",
         }),
-        (("对于", "在于", "说起"), {
+        (("according to", "as for", "about", "this is how"), {
             "uz": "Bu qolipdan keyin mavzu keladi; asosiy hukm yoki baho keyingi qismda aytiladi.",
             "ru": "После шаблона идет тема; главное суждение или оценка дается дальше.",
             "tj": "Баъди қолаб мавзу меояд; ҳукм ё баҳои асосӣ дар қисми баъдӣ гуфта мешавад.",
         }),
-        (("是否",), {
+        (("whether", "choice questions"), {
             "uz": "Bu yozma va rasmiyroq uslub; og'zaki nutqda ko'pincha oddiyroq savol shakli ishlatiladi.",
             "ru": "Это более письменный и официальный стиль; в разговоре чаще используют более простую форму вопроса.",
             "tj": "Ин услуб бештар хаттӣ ва расмӣ аст; дар гуфтор шакли содатари савол бештар истифода мешавад.",
         }),
-        (("把",), {
+        (("make", "keep", "leave", "past participle"), {
             "uz": "Obyektga nima bo'lganini fe'l va natija qismi bilan aniq ko'rsating.",
             "ru": "Нужно ясно показать, что произошло с объектом, через глагол и результат.",
             "tj": "Бо феъл ва натиҷа равшан нишон диҳед, ки бо объект чӣ шуд.",
         }),
     ]
     for markers, localized in tips:
-        if any(marker in title for marker in markers):
+        if any(re.search(rf"\b{re.escape(m)}\b", title) for m in markers):
             return localized.get(lang, localized["ru"])
     return ""
 

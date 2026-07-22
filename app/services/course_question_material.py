@@ -88,10 +88,10 @@ def _bounded_int(value: Any, field: str, low: int, high: int) -> int:
 
 
 def _is_meaning_question(question: dict, localized_prompt: str) -> bool:
-    sentence = str(question.get("stem_zh") or "")
+    sentence = str(question.get("stem_zh") or "").casefold()
     folded = localized_prompt.casefold()
     return (
-        "意思" in sentence
+        "meaning" in sentence
         or "ma'nosi" in folded
         or "значит" in folded
         or "маъно" in folded
