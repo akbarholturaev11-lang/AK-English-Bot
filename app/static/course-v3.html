@@ -3,12 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FDF9F0">
 <title>English AI</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 :root{
-  --ink:#211D17;--ink2:#6E665B;--ink3:#A89E8E;--paper:#FBF7EF;--card:#FFFFFF;--line:#EAE2D4;
-  --cin:#C2403A;--cin2:#9A2F2B;--cinbg:#FBEDEA;--gold:#C2962F;--goldbg:#F8F0DA;--jade:#2F7D5E;--jadebg:#E7F1EA;
+  --ink:#211D17;--ink2:#665D50;--ink3:#A89E8E;--paper:#FDF9F0;--card:#FFFFFF;--line:#EAE0CC;
+  --cin:#E04A40;--cin2:#B23530;--cinbg:#FDEBE7;--gold:#E9A916;--goldbg:#FAF0D3;--jade:#2FA06A;--jadebg:#E3F4EA;
+  --flame:#FF9600;--flamebg:#FFEFD6;--blue:#2E86C1;--bluebg:#E8F2FA;--overlay:#171310;--shadow:#E4D9C4;
   --safe-b:env(safe-area-inset-bottom,0px);--safe-t:env(safe-area-inset-top,0px);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -35,6 +37,7 @@ button{cursor:pointer}
 .uban .un{font-size:11px;letter-spacing:1.5px;opacity:.7;text-transform:uppercase}
 .uban .utt{font-size:14px;font-weight:500}.uban .ic{margin-left:auto;font-size:18px;opacity:.85}
 .path{position:relative;padding:8px 0 2px}
+.path svg.trail{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .prow{position:relative;height:84px;display:flex;justify-content:center}
 .nodewrap{position:absolute;display:flex;flex-direction:column;align-items:center;gap:4px}
 .node{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:23px;border:none;position:relative;font-family:inherit;color:#fff}
@@ -50,7 +53,7 @@ button{cursor:pointer}
 .nnum{display:block;font-size:10px;font-weight:600;color:var(--ink3);letter-spacing:.02em;margin-top:1px}
 .bubble{position:absolute;top:-42px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid var(--cin);color:var(--cin2);font-size:12px;font-weight:600;padding:7px 14px;border-radius:20px;white-space:nowrap}
 .bubble:after{content:"";position:absolute;bottom:-6px;left:50%;transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:#fff;border-right:1px solid var(--cin);border-bottom:1px solid var(--cin)}
-.pmasc{position:absolute;top:50%;width:50px;height:50px;margin-top:-25px;pointer-events:none;animation:pmascBob 3.4s ease-in-out infinite;z-index:1;opacity:.9}
+.pmasc{position:absolute;top:50%;width:72px;height:72px;margin-top:-36px;pointer-events:none;animation:pmascBob 3.4s ease-in-out infinite;z-index:1;opacity:.95}
 .pmasc svg{width:100%;height:100%;display:block;opacity:.8;animation:pmascNod 4.6s ease-in-out infinite;transform-origin:50% 90%}
 .pmasc:after{content:"";position:absolute;left:50%;bottom:-7px;width:34px;height:8px;margin-left:-17px;background:radial-gradient(closest-side,rgba(33,29,23,.16),rgba(33,29,23,0));border-radius:50%;animation:pmascShadow 3.4s ease-in-out infinite}
 @keyframes pmascBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
@@ -144,6 +147,9 @@ button{cursor:pointer}
 .adpromo-dots{position:absolute;left:0;right:0;bottom:14px;display:flex;justify-content:center;gap:6px}
 .adpromo-dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.22);transition:width .3s,background .3s}
 .adpromo-dots i.on{width:18px;border-radius:6px;background:#D6493C}
+/* "nega bu oyna chiqdi" sabab qatori (paywall ichida, promodan yuqorida) */
+.paywhy{display:flex;align-items:flex-start;gap:9px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px 13px;margin-bottom:10px;font-size:12.5px;line-height:1.5;color:var(--ink2);text-align:left}
+.paywhy i{color:var(--gold);font-size:17px;flex-shrink:0;margin-top:1px}
 /* sheet/paywall ichidagi promo (och fon) */
 .spromo{position:relative;text-align:center;background:var(--cinbg);border:1px solid var(--line);border-radius:16px;padding:20px 16px 30px;margin-bottom:10px;overflow:hidden}
 .spromo-slide{display:flex;flex-direction:column;align-items:center;animation:promoIn .5s ease}
@@ -169,6 +175,15 @@ button{cursor:pointer}
 .qcard .qh.qask{font-size:29px;line-height:1.32}
 .qcard .qpy{font-size:17px;color:var(--cin2);font-weight:500;margin-top:8px}
 .qcard .gap{font-size:30px;line-height:1.4}.qcard .gap u{text-decoration:none;color:var(--cin);border-bottom:3px solid var(--cin);padding:0 16px}
+.mix-review{position:relative;isolation:isolate;margin-top:18px;padding-top:20px;border:2px solid var(--gold);background:linear-gradient(155deg,#FFFDF8,var(--card));box-shadow:0 7px 0 rgba(185,132,13,.16);animation:reviewDeal .42s cubic-bezier(.2,.85,.25,1)}
+.mix-review:before,.mix-review:after{content:"";position:absolute;inset:0;border:1px solid var(--line);border-radius:18px;background:var(--card);z-index:-1;pointer-events:none}
+.mix-review:before{transform:translateY(-8px) scale(.96)}
+.mix-review:after{transform:translateY(-15px) scale(.91);z-index:-2;opacity:.75}
+.mix-review.current{border-color:var(--cin);box-shadow:0 7px 0 rgba(194,64,58,.13)}
+.mix-badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 10px;margin-bottom:15px;background:var(--goldbg);color:#956B08;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.mix-review.current .mix-badge{background:var(--cinbg);color:var(--cin2)}
+.mix-review .mix-meaning{font-size:25px;line-height:1.3;font-weight:700;color:var(--ink);overflow-wrap:anywhere}
+@keyframes reviewDeal{from{opacity:0;transform:translateY(18px) rotate(.8deg)}to{opacity:1;transform:none}}
 .cloze-gap{color:var(--cin);font-weight:700;border-bottom:3px solid var(--cin);display:inline-block;min-width:48px;text-align:center}
 .audio{margin:14px auto 0;width:48px;height:48px;border-radius:50%;background:var(--cinbg);color:var(--cin);border:none;font-size:22px;display:flex;align-items:center;justify-content:center}
 .opt{display:flex;align-items:center;gap:11px;width:100%;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:13px;padding:14px 15px;margin-bottom:10px;font-family:inherit;font-size:15px;color:var(--ink);box-shadow:0 4px 0 #E6DDCF;transition:transform .12s,box-shadow .12s}
@@ -201,6 +216,37 @@ button{cursor:pointer}
 .teach-bub{position:relative;background:#E7F0F8;border:1px solid #D2E2F0;border-radius:4px 16px 16px 16px;padding:11px 14px;flex:1}
 .teach-bub b{font-size:12px;color:#2F6F9E;display:block;margin-bottom:3px}
 .teach-bub .teach-say{font-size:15px;line-height:1.5;color:var(--ink)}
+/* Duolingo uslubi: YANGI SO'Z bayram-kartasi */
+.nw{position:relative;text-align:center;padding:22px 0 4px}
+.nw-card{display:inline-block;background:var(--card);border:3px solid var(--cin);border-radius:22px;padding:30px 42px;box-shadow:0 6px 0 var(--cin2);animation:nwPop .5s cubic-bezier(.34,1.56,.64,1) both}
+.nw-card .big{font-size:60px;line-height:1.15}
+.nw-label{margin-top:14px;font-weight:800;font-size:21px;letter-spacing:2px;color:var(--cin);animation:nwUp .45s .25s both}
+.nw-spark{position:absolute;color:var(--gold);font-size:18px;opacity:0;animation:nwSpark 1.1s .3s ease-out}
+.nw-spark.s1{left:16%;top:4%}.nw-spark.s2{right:13%;top:22%;font-size:24px;animation-delay:.45s}.nw-spark.s3{left:24%;bottom:10%;font-size:13px;animation-delay:.6s}
+.nw-info{opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s;text-align:center;margin:16px auto 0;max-width:330px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px 18px 16px}
+.nw-info.on{opacity:1;transform:none}
+.nw-info .pyrow{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap}
+.nw-info .py{font-size:26px;color:var(--cin2);font-weight:500;line-height:1.2}
+.nw-info .mn{font-size:17px;line-height:1.45;color:var(--ink);margin-top:9px;padding-top:10px;border-top:1px solid var(--line)}
+.nw-info .pos{font-size:11.5px;color:var(--ink3);background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:3px 9px;line-height:1.3}
+.wl-au{margin-top:13px;display:inline-flex;align-items:center;gap:7px;background:var(--cinbg);color:var(--cin2);border:none;border-radius:20px;padding:9px 17px;font-family:inherit;font-size:14px;font-weight:500}
+@keyframes nwPop{0%{transform:scale(.3) rotate(-6deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes nwUp{0%{opacity:0;transform:translateY(14px)}100%{opacity:1;transform:none}}
+@keyframes nwSpark{0%{opacity:0;transform:scale(.4)}40%{opacity:1;transform:scale(1.25)}100%{opacity:0;transform:scale(.7) translateY(-16px)}}
+/* Ustoz nutq pufagi (talaffuz / teskari builder) */
+.say-bub .z4{font-size:24px;line-height:1.35}
+.say-bub .p4{font-size:13px;color:var(--cin2);font-weight:500;margin-top:3px}
+.say-bub .t4{font-size:13px;color:var(--ink2);margin-top:2px}
+.say-bub .au{display:inline-flex;width:34px;height:34px;border-radius:50%;background:var(--cinbg);color:var(--cin);border:none;font-size:17px;align-items:center;justify-content:center;margin-bottom:6px}
+.pron-skip{display:block;margin:14px auto 0;background:none;border:none;color:var(--ink3);font-family:inherit;font-size:13px;font-weight:700;letter-spacing:1px}
+/* Xatodan keyin dalda ekrani (panda) */
+.cheer{display:flex;flex-direction:column;align-items:center;text-align:center;padding:36px 10px 10px}
+.cheer .cpd{width:110px;height:110px;animation:nwPop .5s both}
+.cheer .cbub{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 18px;font-size:16px;line-height:1.5;max-width:320px;animation:nwUp .4s .2s both}
+/* Pinyin ko'rsatish sozlamasi (Duolingo uslubi) */
+.fgear{width:30px;height:30px;border-radius:50%;border:none;background:none;color:var(--ink3);font-size:17px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+#flow.pyoff .qcard .qpy,#flow.pyoff .wc .py,#flow.pyoff .nw-info .py,#flow.pyoff .gc .exrow .p2,#flow.pyoff .gsteps .exrow .p2,#flow.pyoff .dia .bub .p3,#flow.pyoff .say-bub .p4{display:none}
+#flow.pynew .qcard .qpy,#flow.pynew .gc .exrow .p2,#flow.pynew .gsteps .exrow .p2,#flow.pynew .dia .bub .p3,#flow.pynew .say-bub .p4{display:none}
 .gsteps{display:flex;flex-direction:column}
 .gsteps-item{animation:gfade .28s ease}
 @keyframes gfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -228,6 +274,8 @@ button{cursor:pointer}
 .bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 .tok{background:var(--card);border:1.5px solid var(--line);border-radius:11px;padding:9px 15px;font-family:inherit;font-size:18px;color:var(--ink)}
 .tok.han{font-family:Georgia,"Times New Roman",serif;font-weight:600}
+/* Plitka tepaga ko'chganda bankdagi joyi yo'qolmasin — xira iz qoladi */
+.tok.ghost{background:var(--paper);border-style:dashed;color:transparent;box-shadow:none;opacity:.55;pointer-events:none}
 .pairs{display:flex;gap:10px}
 .pairs .col{flex:1;display:flex;flex-direction:column;gap:8px}
 .pcell{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:13px;text-align:center;font-family:inherit;font-size:16px;color:var(--ink)}
@@ -277,6 +325,7 @@ button{cursor:pointer}
 .cal{display:flex;flex-direction:column;gap:5px}.cal .wk{display:flex;gap:5px;justify-content:space-between}
 .cell{width:34px;height:30px;border-radius:8px;background:var(--paper);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--ink3)}
 .cell.on{background:var(--cin);border-color:var(--cin);color:#fff}.cell.tod{border:2px solid var(--gold)}
+.cell.ice{background:#e9f4fa;border-color:#d2e6f0;color:#78aac6}
 .ach{margin:0 16px;display:flex;flex-direction:column;gap:10px}
 .arow{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;align-items:center;gap:12px}
 .aic{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
@@ -291,7 +340,8 @@ button{cursor:pointer}
 /* rating */
 .lr{display:flex;align-items:center;gap:11px;padding:10px 0;border-bottom:1px solid var(--line);margin:0 16px}
 	.lr .rk{width:26px;text-align:center;font-weight:600;font-size:14px;color:var(--ink2)}
-	.lr .av{width:34px;height:34px;border-radius:10px;background:var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:var(--ink2)}
+	.lr .av{width:34px;height:34px;border-radius:10px;background:var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:var(--ink2);position:relative}
+	.avp{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;border-radius:inherit}
 	.lr .nm{flex:1;font-size:14px}.lr .xp{font-size:13px;color:var(--ink2);font-weight:500}
 	.lr .nm small{display:block;font-size:11px;color:var(--ink3);margin-top:2px}
 	.lr.me{background:var(--cinbg);border-radius:11px;border-bottom:none;padding:10px 12px}
@@ -337,6 +387,7 @@ button{cursor:pointer}
 .upx{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink2);font-size:18px;display:flex;align-items:center;justify-content:center}
 .uphero{display:flex;flex-direction:column;align-items:center;text-align:center;padding:6px 18px 0}
 .uphero .av{width:80px;height:80px;border-radius:22px;background:var(--cin);border:2px solid var(--cin2);color:#fff;display:flex;align-items:center;justify-content:center;font-size:34px;position:relative}
+.uphero .av .avp{border-radius:20px}
 .uphero .av .cr{position:absolute;right:-5px;bottom:-5px;width:26px;height:26px;border-radius:50%;background:var(--gold);color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center;border:2px solid var(--paper)}
 .uphero .nm{font-size:21px;font-weight:500;margin:10px 0 2px}.uphero .un{font-size:13px;color:var(--ink3)}
 .uphero .badges{display:flex;gap:7px;justify-content:center;margin-top:9px;flex-wrap:wrap}
@@ -354,6 +405,8 @@ button{cursor:pointer}
 .tmpl{display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:13px;margin-bottom:9px;font-family:inherit;font-size:14px;color:var(--ink);line-height:1.4}
 .tmpl .tact{display:flex;gap:14px;margin-top:9px}
 .tmpl .tact span{font-size:12px;color:var(--cin);font-weight:500;display:inline-flex;align-items:center;gap:4px}
+.ch-review{margin:0 0 12px}.ch-review>b{display:block;font-size:13px;margin-bottom:6px}.ch-review .cr-item{padding:8px 0;border-top:1px solid var(--line)}
+.ch-review .cr-item span{display:block;color:var(--ink2);font-size:12px;white-space:pre-line}.ch-review .cr-item strong{display:block;color:var(--jade);font-size:13px;margin-top:3px}.ch-review .cr-item small{display:block;color:var(--cin2);font-size:12px;margin-top:2px}
 .linkbox{display:flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:10px 12px;margin:10px 0;font-size:13px;color:var(--ink2)}
 .linkbox .lk{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .linkbox button{background:var(--cin);color:#fff;border:none;border-radius:9px;padding:7px 12px;font-family:inherit;font-size:12px;font-weight:500;flex-shrink:0}
@@ -398,7 +451,7 @@ button{cursor:pointer}
 .levelup.on{display:flex}
 .lu-rays{position:absolute;top:130px;left:50%;width:520px;height:520px;transform:translate(-50%,-50%);opacity:.5;animation:luspin 28s linear infinite}
 @keyframes luspin{to{transform:translate(-50%,-50%) rotate(360deg)}}
-.lu-panda{width:64px;height:64px;position:absolute;top:70px;right:50px;z-index:2}
+.lu-panda{width:92px;height:92px;position:absolute;top:56px;right:40px;z-index:2}
 .lu-stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;position:relative;z-index:2}
 .lu-emb{width:138px;height:138px;border-radius:34px;background:var(--cin);border:3px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:6px;transform:scale(0);transition:transform .5s cubic-bezier(.2,1.5,.4,1)}
 .lu-emb.in{transform:scale(1)}
@@ -435,6 +488,68 @@ button{cursor:pointer}
 .tour-coach .row{display:flex;align-items:center;gap:10px}
 .tour-coach .dots{display:flex;gap:5px;flex:1}.tour-coach .dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}.tour-coach .dots i.on{background:var(--cin)}
 .tour-coach .nx{background:var(--cin);color:#fff;border:none;border-radius:12px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:500}
+/* ===== FRESH polish + dopamine features ===== */
+.uban{background:linear-gradient(135deg,var(--cin),var(--cin2));color:#fff}
+.uban.lock{background:var(--card);color:var(--ink2)}
+/* edge glow (combo) */
+#edgeglow{position:fixed;inset:0;pointer-events:none;z-index:46;opacity:0;transition:opacity .4s;max-width:480px;margin:0 auto}
+#edgeglow.g1{opacity:1;box-shadow:inset 0 0 40px 4px rgba(233,169,22,.22)}
+#edgeglow.g2{opacity:1;box-shadow:inset 0 0 60px 10px rgba(233,169,22,.32)}
+#edgeglow.g3{opacity:1;box-shadow:inset 0 0 90px 18px rgba(224,74,64,.42);animation:egPulse 1.1s ease-in-out infinite}
+@keyframes egPulse{0%,100%{opacity:.85}50%{opacity:1}}
+/* streak flame screen (dark levelup overlay ustida) */
+.sk-flame{position:relative;width:150px;height:150px;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
+.sk-flame svg{width:100%;height:100%;display:block}
+.sk-flame.lit svg{animation:skIgnite .7s cubic-bezier(.2,1.5,.4,1)}
+.sk-flame.lit:after{content:"";position:absolute;inset:-26px;border-radius:50%;background:radial-gradient(closest-side,rgba(233,169,22,.4),rgba(233,169,22,0));animation:skGlow 1.6s ease-in-out infinite}
+.sk-flame.dim svg{opacity:.9}
+@keyframes skIgnite{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+@keyframes skGlow{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+.sk-flick{animation:skFlick 1.3s ease-in-out infinite;transform-origin:50% 88%}
+@keyframes skFlick{0%,100%{transform:scaleY(1) scaleX(1)}30%{transform:scaleY(1.05) scaleX(.97)}60%{transform:scaleY(.96) scaleX(1.03)}}
+.sk-num{font-size:74px;font-weight:800;line-height:1;color:var(--gold);text-shadow:0 3px 0 rgba(0,0,0,.35)}
+.sk-days{display:flex;gap:9px;justify-content:center;margin:20px 0 4px}
+.sk-day{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;font-weight:600;color:rgba(255,255,255,.55)}
+.sk-day .c{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.10);display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(255,255,255,.35)}
+.sk-day.on{color:var(--gold)}
+.sk-day.on .c{background:var(--gold);color:#fff}
+.sk-day.tod .c{outline:3px solid rgba(233,169,22,.45);outline-offset:2px}
+.sk-day.just .c{animation:skStamp .65s cubic-bezier(.15,1.5,.35,1)}
+@keyframes skStamp{0%{transform:scale(2.1) rotate(-12deg);opacity:0}58%{transform:scale(.88) rotate(3deg)}100%{transform:scale(1);opacity:1}}
+.sk-weekgoal{width:min(310px,100%);margin:17px auto 0;padding:12px 14px;border-radius:15px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.13);text-align:left}
+.sk-weekhead{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:rgba(255,255,255,.72)}
+.sk-weekhead b{font-size:13px;color:#fff;font-weight:650}.sk-weekhead span{color:var(--gold);font-weight:700}
+.sk-weekbar{height:8px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:9px}
+.sk-weekbar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--gold),#FFD66B);transform-origin:left;animation:skWeekFill .8s .18s both cubic-bezier(.2,.8,.25,1)}
+.sk-weekgoal.done{border-color:rgba(233,169,22,.55);box-shadow:0 0 24px rgba(233,169,22,.18)}
+@keyframes skWeekFill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.sk-panda{position:absolute;right:-52px;bottom:-8px;width:86px;height:86px}
+/* daily goal ring (header) */
+.goalring{position:relative;width:40px;height:40px;flex-shrink:0;cursor:pointer}
+.goalring svg{width:100%;height:100%;display:block}
+.goalring .gr-ic{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--cin)}
+.goalring.full .gr-ic{animation:grBounce .6s cubic-bezier(.2,1.6,.4,1)}
+.goalring.full:after{content:"";position:absolute;inset:-5px;border-radius:50%;background:radial-gradient(closest-side,rgba(233,169,22,.4),rgba(233,169,22,0));animation:skGlow 1.4s ease-in-out infinite}
+@keyframes grBounce{0%{transform:scale(1)}45%{transform:scale(1.35)}100%{transform:scale(1)}}
+.xpfly{position:fixed;z-index:60;font-size:15px;font-weight:800;color:var(--gold);pointer-events:none;transition:transform .9s cubic-bezier(.3,.1,.3,1),opacity .9s;text-shadow:0 1px 6px rgba(233,169,22,.4)}
+/* chest opening */
+.chest-fig{position:relative;width:150px;height:130px;margin-bottom:10px}
+.chest-fig svg{width:100%;height:100%;display:block;overflow:visible}
+.chest-fig.shake{animation:chShake .8s ease-in-out}
+@keyframes chShake{0%,100%{transform:rotate(0)}15%{transform:rotate(-7deg)}30%{transform:rotate(6deg)}45%{transform:rotate(-5deg)}60%{transform:rotate(4deg)}75%{transform:rotate(-2deg)}}
+.chest-lid{transition:transform .5s cubic-bezier(.2,1.5,.4,1);transform-origin:14% 55%}
+.chest-fig.open .chest-lid{transform:rotate(-38deg) translateY(-6px)}
+.chest-burst{position:absolute;inset:-40px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,200,0,.5),rgba(255,200,0,0));opacity:0;transform:scale(.4)}
+.chest-fig.open .chest-burst{animation:chBurst .8s ease-out forwards}
+@keyframes chBurst{0%{opacity:0;transform:scale(.4)}30%{opacity:1}100%{opacity:0;transform:scale(1.5)}}
+.chest-xp{font-size:44px;font-weight:800;color:var(--gold);opacity:0;transform:scale(.4);transition:all .5s cubic-bezier(.2,1.6,.4,1)}
+.chest-xp.in{opacity:1;transform:scale(1)}
+.chestbar{height:10px;border-radius:6px;background:var(--line);overflow:hidden;margin:12px 0 8px}
+.chestbar>i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--gold),var(--cin));transition:width .5s}
+/* yo'lakcha bezaklari: daraxt, pagoda, buta, tosh, o't (dekorativ) */
+.decor{position:absolute;top:50%;margin-top:-26px;width:60px;height:60px;pointer-events:none;z-index:0;opacity:.95;filter:drop-shadow(0 3px 2px rgba(60,44,20,.14))}
+.decor.sm{width:44px;height:44px;margin-top:-16px}
+@media (prefers-reduced-motion:reduce){.mix-review,.sk-day.just .c,.sk-weekbar i{animation:none!important}.sk-flame.lit svg,.sk-flame.lit:after,.sk-flick{animation:none!important}}
 </style>
 </head>
 <body>
@@ -458,7 +573,7 @@ button{cursor:pointer}
   <div class="sheet" id="paywall"><div class="si" onclick="event.stopPropagation()"><button class="sx" onclick="App.closePaywall()"><i class="ti ti-x"></i></button><div class="grip"></div><div id="paywall-body"></div></div></div>
 
   <div class="flow" id="flow">
-    <div class="ftop"><button class="fx" onclick="App.exitFlow()"><i class="ti ti-x"></i></button><div class="fpbar"><i id="f-prog"></i></div><span class="fheart"><i class="ti ti-heart"></i><span id="f-hp">5</span></span></div>
+    <div class="ftop"><button class="fx" onclick="App.exitFlow()"><i class="ti ti-x"></i></button><div class="fpbar"><i id="f-prog"></i></div><button class="fgear" onclick="App.pinyinSheet()" aria-label="Pinyin"><i class="ti ti-settings"></i></button><span class="fheart"><i class="ti ti-heart"></i><span id="f-hp">5</span></span></div>
     <div class="fstage" id="f-stage"></div>
     <div class="fbody" id="f-body"></div>
     <button class="fcta" id="f-cta" onclick="Flow.next()"></button>
@@ -497,6 +612,7 @@ button{cursor:pointer}
 
   <div class="tour" id="tour"><div class="tour-spot" id="tour-spot"></div><button class="tour-skip" id="tour-skip" onclick="App.tourEnd()"></button><div class="tour-coach" id="tour-coach"></div></div>
   <div class="upov" id="upov"></div>
+  <div id="edgeglow"></div>
   <div class="combo" id="combo"></div>
   <div class="toast" id="toast"></div>
 </div>
@@ -520,13 +636,21 @@ function setSelectedLevel(lv){
   try{var u=new URL(location.href);u.searchParams.set("level",lv);history.replaceState(null,"",u.pathname+"?"+u.searchParams.toString())}catch(e){}
   return lv;
 }
-var tg=window.Telegram&&window.Telegram.WebApp;if(tg){try{tg.ready();tg.expand()}catch(e){}}
+var tg=window.Telegram&&window.Telegram.WebApp;if(tg){try{tg.ready();tg.expand()}catch(e){}try{tg.setHeaderColor("#FDF9F0");tg.setBackgroundColor("#FDF9F0")}catch(e){}}
 var INIT_DATA=(tg&&tg.initData)||"";
+/* Bot username yagona manba: serverdan (BOT_USERNAME) keladi. Map javobida
+   bot_username bo'lsa yangilanadi; bo'lmasa xavfsiz default ishlaydi. */
+var BOT_USERNAME="darsi_chini_bot";
+function botLinkUrl(suffix){return "https://t.me/"+BOT_USERNAME+(suffix||"")}
+function adoptBotUsername(d){if(d&&d.bot_username){BOT_USERNAME=String(d.bot_username).replace(/^@/,"")}}
 var PAY_SOURCE="v3_paywall";
+var CHECKOUT_NAVIGATING=false;
 function _apiHeaders(){return{"Content-Type":"application/json","X-Telegram-Init-Data":INIT_DATA}}
 function _apiGet(url){return fetch(url,{headers:{"X-Telegram-Init-Data":INIT_DATA}})}
 function _apiPost(url,body){return fetch(url,{method:"POST",headers:_apiHeaders(),body:JSON.stringify(body)})}
-var COURSE_SESSION_ID=(function(){try{var k="hsk_v3_session_id",v=sessionStorage.getItem(k);if(!v){v="v3-"+Date.now()+"-"+Math.random().toString(36).slice(2,9);sessionStorage.setItem(k,v)}return v}catch(e){return"v3-"+Date.now()}})();
+/* Har bir Course sahifa ochilishi alohida analytics session. sessionStorage'da
+   saqlash qayta ochilgan Mini Appni eski sessionga qo'shib yuborardi. */
+var COURSE_SESSION_ID="v3-"+Date.now()+"-"+Math.random().toString(36).slice(2,9);
 function trackCourseEvent(event,payload){
   if(!INIT_DATA)return Promise.resolve({ok:false,skipped:true});
   payload=payload||{};
@@ -538,8 +662,44 @@ function trackCourseEvent(event,payload){
   body.session_id=body.session_id||COURSE_SESSION_ID;
   return _apiPost("/api/miniapp/event",body).then(function(r){return r.json()}).catch(function(){return{ok:false}});
 }
+function checkoutSourceContext(source){
+  var s=String(source||"").toLowerCase();
+  if(s.indexOf("locked")>=0)return"locked_lesson";
+  if(s.indexOf("profile")>=0)return"profile";
+  if(s.indexOf("pronunciation")>=0||s.indexOf("pron")>=0)return"pronunciation_limit";
+  if(s.indexOf("recognition")>=0||s.indexOf("photo")>=0)return"recognition_limit";
+  if(s.indexOf("test")>=0)return"test_limit";
+  if(s.indexOf("price_preview")>=0)return"v3_price_preview";
+  if(s.indexOf("menu")>=0||s.indexOf("command")>=0||s==="/subscription")return"menu_subscription";
+  return s.replace(/^v3_/,"")||"paywall";
+}
+function trackCheckoutOpenedForRedirect(source,clickId){
+  if(!INIT_DATA)return;
+  var body={
+    event:"checkout_opened",
+    source:source,
+    source_context:checkoutSourceContext(source),
+    level:(MAP&&MAP.level)||getSelectedLevel(),
+    session_id:COURSE_SESSION_ID,
+    event_id:clickId,
+    dedupe_key:clickId,
+    language:LANG
+  };
+  try{
+    var p=new URLSearchParams(location.search||"");
+    ["plan_id","plan_days","price"].forEach(function(k){if(p.get(k))body[k]=p.get(k)});
+    fetch("/api/miniapp/event",{method:"POST",headers:_apiHeaders(),body:JSON.stringify(body),keepalive:true}).catch(function(){});
+  }catch(e){}
+}
 function lessonEventKey(event,lessonOrder,suffix){
-  return ["course-v3",event,(MAP&&MAP.level)||getSelectedLevel(),lessonOrder,suffix||""].join(":");
+  return ["course-v3",COURSE_SESSION_ID,event,(MAP&&MAP.level)||getSelectedLevel(),lessonOrder,suffix||""].join(":");
+}
+function activationVariant(){
+  try{
+    var p=new URLSearchParams(location.search||""),source=p.get("source")||"";
+    if(p.get("autostart")!=="1")return"standard";
+    return source.indexOf("d1_recovery_v1")===0?"d1_recovery_v1":"direct_start_v1";
+  }catch(e){return"standard"}
 }
 function T(){return I18N[LANG]}
 function tr(v){return !v?"":(typeof v==="string"?v:(v[LANG]||v.ru||v.uz||""))}
@@ -549,8 +709,39 @@ var _ttsAudio=null;
 function clog(ev,msg,ex){try{var tg=window.Telegram&&window.Telegram.WebApp,c={ua:navigator.userAgent,plat:(tg&&tg.platform)||"",tgver:(tg&&tg.version)||"",page:location.pathname};if(ex)for(var k in ex)c[k]=ex[k];var b=JSON.stringify({event:ev,msg:msg||"",ctx:c});if(navigator.sendBeacon){navigator.sendBeacon("/api/v3/clientlog",new Blob([b],{type:"application/json"}))}else{fetch("/api/v3/clientlog",{method:"POST",headers:{"Content-Type":"application/json"},body:b,keepalive:true})}}catch(e){}}
 function _ttsFallback(t){try{clog("tts_fallback","",{t:(""+t).slice(0,16)})}catch(e){}try{window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="en-GB";u.rate=.8;window.speechSynthesis.speak(u)}catch(e){}}
 function stopSpeak(){window._ttsTok=(window._ttsTok||0)+1;try{if(_ttsAudio){_ttsAudio.onplaying=null;_ttsAudio.onerror=null;_ttsAudio.pause();_ttsAudio=null}}catch(e){}try{window.speechSynthesis.cancel()}catch(e){}}
-function speak(t){if(!t)return;stopSpeak();var tok=window._ttsTok,st=0;try{var a=new Audio("/api/v3/tts?text="+encodeURIComponent(t));_ttsAudio=a;a.onplaying=function(){if(tok!==window._ttsTok){try{a.pause()}catch(e){}return}st=1};a.onerror=function(){if(tok!==window._ttsTok||st!==0)return;st=2;_ttsFallback(t)};var p=a.play();if(p&&p.catch)p.catch(function(){})}catch(e){if(tok===window._ttsTok&&st===0){st=2;_ttsFallback(t)}}}
-function haptic(t){try{tg&&tg.HapticFeedback&&(t==="ok"?tg.HapticFeedback.notificationOccurred("success"):t==="no"?tg.HapticFeedback.notificationOccurred("error"):tg.HapticFeedback.impactOccurred("light"))}catch(e){}}
+/* TTS blob-cache + prefetch: bir marta yuklangan ovoz shu sessiyada darhol
+   qayta o'ynaydi; keyingi kartalar audiosi oldindan yuklab qo'yiladi, shunda
+   ovoz tugmasi bosilganda kechikish bo'lmaydi. */
+var _ttsCache={},_ttsPending={};
+function ttsUrl(t){return "/api/v3/tts?text="+encodeURIComponent(t)}
+function prefetchTTS(t){
+  t=(t||"").trim();
+  if(!t||t.length>240||_ttsCache[t]||_ttsPending[t])return;
+  if(!/[A-Za-z]/.test(t))return;
+  _ttsPending[t]=fetch(ttsUrl(t)).then(function(r){if(!r.ok)throw 0;return r.blob()}).then(function(b){delete _ttsPending[t];if(b&&b.size)_ttsCache[t]=URL.createObjectURL(b)}).catch(function(){delete _ttsPending[t]});
+}
+function speak(t){if(!t)return;stopSpeak();var tok=window._ttsTok,st=0;try{var a=new Audio(_ttsCache[t]||ttsUrl(t));if(!_ttsCache[t])prefetchTTS(t);_ttsAudio=a;a.onplaying=function(){if(tok!==window._ttsTok){try{a.pause()}catch(e){}return}st=1};a.onerror=function(){if(tok!==window._ttsTok||st!==0)return;st=2;_ttsFallback(t)};var p=a.play();if(p&&p.catch)p.catch(function(){})}catch(e){if(tok===window._ttsTok&&st===0){st=2;_ttsFallback(t)}}}
+/* Kartadan o'ynash mumkin bo'lgan xitoycha matnlarni yig'ish (prefetch uchun) */
+function cardAudioTexts(c){
+  if(!c)return [];
+  var out=[];
+  var w=c.word||{};
+  if(w.zh)out.push(w.zh);
+  if(c.phrase)out.push(c.phrase);
+  if(c.audio_text)out.push(c.audio_text);
+  if(c.type==="reverse_builder"&&c.zh)out.push(c.zh);
+  if(c.type==="_grammar"&&c.g&&c.g.examples)c.g.examples.slice(0,2).forEach(function(e){if(e.zh)out.push(e.zh)});
+  if(c.type==="_dialogue"&&c.d&&c.d.dialogue)c.d.dialogue.slice(0,3).forEach(function(l){if(l.zh)out.push(l.zh)});
+  return out;
+}
+function prefetchUpcomingAudio(){
+  try{
+    for(var i=Flow.i;i<Math.min(Flow.i+4,Flow.queue.length);i++){
+      cardAudioTexts(Flow.queue[i]).forEach(prefetchTTS);
+    }
+  }catch(e){}
+}
+function haptic(t){try{tg&&tg.HapticFeedback&&(t==="ok"?tg.HapticFeedback.notificationOccurred("success"):t==="no"?tg.HapticFeedback.notificationOccurred("error"):t==="med"?tg.HapticFeedback.impactOccurred("medium"):t==="heavy"?tg.HapticFeedback.impactOccurred("heavy"):tg.HapticFeedback.impactOccurred("light"))}catch(e){}}
 var ac;function beep(seq){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();var t=ac.currentTime;seq.forEach(function(f,k){var o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;o.connect(g);g.connect(ac.destination);var s=t+k*0.09;g.gain.setValueAtTime(0.0001,s);g.gain.exponentialRampToValueAtTime(0.12,s+0.02);g.gain.exponentialRampToValueAtTime(0.0001,s+0.16);o.start(s);o.stop(s+0.18)})}catch(e){}}
 
 /* ---------- App ---------- */
@@ -560,25 +751,36 @@ function notifTimesHtml(){var c={uz:{head:"Bot quyidagi holatlarda xabar yuborad
 var App={
   setLang:function(l){if(!I18N[l])return;LANG=l;renderAll()},
   show:function(s){SCREEN=s;document.querySelectorAll(".scr").forEach(function(e){e.classList.toggle("on",e.id==="s-"+s)});
-    document.querySelectorAll("#nav button").forEach(function(b){b.classList.toggle("on",b.dataset.s===s)});window.scrollTo(0,0);
-    if(s==="voice")renderVoice();},
+    document.querySelectorAll("#nav button").forEach(function(b){b.classList.toggle("on",b.dataset.s===s)});
+    /* kurs ekrani: yo'lakcha boshidan emas, user turgan darsdan ochiladi */
+    if(s==="course"){drawTrails();scrollToCurrentNode()}else{window.scrollTo(0,0)}
+    if(s==="voice")renderVoice();
+    if(s==="course"&&window._pendingXpFly){var fx=window._pendingXpFly;window._pendingXpFly=0;setTimeout(function(){flyXp(fx)},350)}},
   openSheet:function(html){$("#sheet-body").innerHTML=html;$("#sheet").classList.add("on");startSheetPromo("#sheet")},
   closeSheet:function(){$("#sheet").classList.remove("on");stopSheetPromo()},
   openPaywall:function(ctx){
-    PAY_SOURCE=ctx==="lockedLesson"?"v3_locked_lesson":(ctx==="profile"?"v3_profile":(ctx==="pronLimit"?"v3_pronunciation_limit":"v3_paywall"));
+    if(typeof ctx==="object" && ctx.lesson){
+      PAY_SOURCE="v3_locked_lesson";
+    }else{
+      PAY_SOURCE=ctx==="lockedLesson"?"v3_locked_lesson":(ctx==="profile"?"v3_profile":(ctx==="pronLimit"?"v3_pronunciation_limit":"v3_paywall"));
+    }
     trackCourseEvent("paywall_seen",{source:PAY_SOURCE,dedupe_key:lessonEventKey("paywall_seen",PAY_SOURCE,Date.now())});
     $("#paywall-body").innerHTML=paywallHtml(ctx);
     $("#paywall").classList.add("on");startSheetPromo("#paywall");
   },
   closePaywall:function(){$("#paywall").classList.remove("on");stopSheetPromo()},
   goPay:function(src){
+    if(CHECKOUT_NAVIGATING)return;
+    CHECKOUT_NAVIGATING=true;
     var source=src||PAY_SOURCE||"v3_paywall";
-    var url="/subscription.html?lang="+LANG+"&source="+source+"&mode=subscription";
+    var url="/subscription.html?lang="+LANG+"&source="+encodeURIComponent(source)+"&mode=subscription";
+    var clickId=["checkout",COURSE_SESSION_ID,Date.now(),Math.random().toString(36).slice(2,8)].join(":");
+    trackCheckoutOpenedForRedirect(source,clickId);
     /* Same-origin subscription page: navigate inside the Telegram Mini App webview,
        NOT tg.openLink (which kicks the user out to the external browser). */
-    location.href=url;
+    setTimeout(function(){location.href=url},40);
   },
-  exitFlow:function(){$("#flow").classList.remove("on")},
+  exitFlow:function(){$("#flow").classList.remove("on");edgeGlow(0)},
   openWriter:function(ch){
     if(!ch)return;
     var url="/hsk-lugat.html?theme=light&fast=1&char="+encodeURIComponent(ch)+"&lang="+LANG;
@@ -591,10 +793,10 @@ var App={
     fr.src=url;
   },
   closeWriter:function(){var ov=$("#writeov"),fr=$("#writeframe");ov.classList.remove("on");ov.classList.remove("loading");try{fr.onload=null;fr.src="about:blank"}catch(e){}},
-  showLevelUp:function(type,data){
-    var lu={ru:{cont:"Продолжить",lessonH:"Урок завершён!",lessonP:"Отличная работа! Следующий этап ждёт.",acc:"точность",combo:"комбо",levelH:"Beginner пройден!",levelP:"Поздравляем! Открыт Elementary.",opened:"открыт",xpH:"Уровень 5!",xpP:"Так держать! Новый уровень — новые возможности.",lvl:"Уровень",bonusXp:"бонус XP",chest:"новый сундук"},
-      uz:{cont:"Davom etish",lessonH:"Dars tugadi!",lessonP:"Ajoyib! Keyingi bosqich kutyapti.",acc:"aniqlik",combo:"combo",levelH:"Beginner tugadi!",levelP:"Tabriklaymiz! Elementary ochildi.",opened:"ochildi",xpH:"5-daraja!",xpP:"Zo'r! Yangi daraja — yangi imkoniyatlar.",lvl:"Daraja",bonusXp:"bonus XP",chest:"yangi sandiq"},
-      tj:{cont:"Идома",lessonH:"Дарс анҷом ёфт!",lessonP:"Офарин! Зинаи навбатӣ интизор аст.",acc:"дақиқӣ",combo:"комбо",levelH:"Beginner тамом!",levelP:"Табрик! Elementary кушода шуд.",opened:"кушода шуд",xpH:"Сатҳи 5!",xpP:"Офарин! Сатҳи нав — имкониятҳои нав.",lvl:"Сатҳ",bonusXp:"бонус XP",chest:"сандуқи нав"}}[LANG];
+  showLevelUp:function(type,data,extra){
+    var lu={ru:{cont:"Продолжить",lessonH:"Урок завершён!",lessonP:"Отличная работа! Следующий этап ждёт.",cpH:"Урок {n} полностью пройден!",cpP:"Диалог и все слова закреплены. Большой шаг — вперёд!",acc:"точность",combo:"комбо",levelH:"Beginner пройден!",levelP:"Поздравляем! Открыт Elementary.",opened:"открыт",xpH:"Уровень 5!",xpP:"Так держать! Новый уровень — новые возможности.",lvl:"Уровень",bonusXp:"бонус XP",chest:"новый сундук"},
+      uz:{cont:"Davom etish",lessonH:"Dars tugadi!",lessonP:"Ajoyib! Keyingi bosqich kutyapti.",cpH:"{n}-dars to'liq yakunlandi!",cpP:"Dialog va barcha so'zlar mustahkamlandi. Katta qadam — oldinga!",acc:"aniqlik",combo:"combo",levelH:"Beginner tugadi!",levelP:"Tabriklaymiz! Elementary ochildi.",opened:"ochildi",xpH:"5-daraja!",xpP:"Zo'r! Yangi daraja — yangi imkoniyatlar.",lvl:"Daraja",bonusXp:"bonus XP",chest:"yangi sandiq"},
+      tj:{cont:"Идома",lessonH:"Дарс анҷом ёфт!",lessonP:"Офарин! Зинаи навбатӣ интизор аст.",cpH:"Дарси {n} пурра анҷом ёфт!",cpP:"Гуфтугӯ ва ҳамаи калимаҳо мустаҳкам шуданд. Қадами калон — ба пеш!",acc:"дақиқӣ",combo:"комбо",levelH:"Beginner тамом!",levelP:"Табрик! Elementary кушода шуд.",opened:"кушода шуд",xpH:"Сатҳи 5!",xpP:"Офарин! Сатҳи нав — имкониятҳои нав.",lvl:"Сатҳ",bonusXp:"бонус XP",chest:"сандуқи нав"}}[LANG];
     var curLv=(MAP&&MAP.level)||"hsk1",nextLv=(_NEXT_LEVEL&&_NEXT_LEVEL[curLv])||"",curLabel=courseLevelLabel(curLv),nextLabel=nextLv?courseLevelLabel(nextLv):"";
     var levelCopy={
       ru:{h:curLabel+" пройден!",p:nextLabel?"Поздравляем! Открыт "+nextLabel+".":"Поздравляем! Этот уровень завершён."},
@@ -605,17 +807,41 @@ var App={
     var awardedXp=Math.max(0,Number(g.awarded_xp||0));
     var xpRows=awardedXp>0?[["+"+awardedXp,"XP"]]:[];
     var levelRows=[[nextLabel||curLabel,lu.opened]].concat(xpRows);
+    var cpSrc=(extra&&extra.src)||"";
     var V={lesson:{emb:'<span class="h2 han">✓</span>',h:lu.lessonH,p:lu.lessonP,rw:xpRows},
+      /* checkpoint: darsning yakuniy mustahkamlash qismi tugadi — kattaroq bayram */
+      checkpoint:{emb:'<span class="h2 han">★</span>',h:lu.cpH.replace("{n}",cpSrc),p:lu.cpP,rw:xpRows},
       level:{emb:'<span class="h2 han">II</span>',h:levelCopy.h||lu.levelH,p:levelCopy.p||lu.levelP,rw:levelRows},
       xp:{emb:'<small>'+lu.lvl+'</small><b>5</b>',h:lu.xpH,p:lu.xpP,rw:xpRows}}[type||"lesson"];
-    if(!$("#lu-rays").innerHTML){var r="";for(var a=0;a<24;a++)r+='<rect x="99" y="0" width="2" height="100" fill="#C2962F" transform="rotate('+(a*15)+' 100 100)"/>';$("#lu-rays").innerHTML=r;}
+    if(!$("#lu-rays").innerHTML){var r="";for(var a=0;a<24;a++)r+='<rect x="99" y="0" width="2" height="100" fill="#FFC800" transform="rotate('+(a*15)+' 100 100)"/>';$("#lu-rays").innerHTML=r;}
     $("#lu-panda").innerHTML=pandaChar("celebrate");
     var rewards=V.rw&&V.rw.length?'<div class="lu-rewards">'+V.rw.map(function(x){return '<div class="lu-rw"><b>'+x[0]+'</b><small>'+x[1]+'</small></div>'}).join("")+'</div>':"";
     $("#lu-stage").innerHTML='<div class="lu-emb">'+V.emb+'</div><h2>'+V.h+'</h2><p>'+V.p+'</p>'+rewards;
-    $("#lu-cta").setAttribute("onclick",(type||"lesson")==="lesson"?"App.showRankUp()":"App.closeLevelUp()");
+    var t0=type||"lesson";
+    $("#lu-cta").setAttribute("onclick",(t0==="lesson"||t0==="checkpoint"||window._pendingStreak)?"App.showStreakScreen()":"App.closeLevelUp()");
     $("#lu-cta").innerHTML='<i class="ti ti-arrow-right"></i> '+lu.cont;
     $("#levelup").classList.add("on");setTimeout(function(){var e=document.querySelector("#lu-stage .lu-emb");if(e)e.classList.add("in")},60);
     luRain();beep([523,659,784,1046]);haptic("ok");
+  },
+  /* Duolingo uslubidagi streak alanga ekrani — dars tugagach */
+  showStreakScreen:function(){
+    var ps=window._pendingStreak;window._pendingStreak=null;
+    var n=ps?ps.now:0;
+    if(!ps||!n||!ps.extended){App.showRankUp();return}
+    var W={ru:{one:"день в ударе!",few:"дня в ударе!",many:"дней в ударе!",lit:"Пламя зажжено! Занимайся каждый день.",keep:"Серия продолжается — так держать!",reset:"Новая серия началась. Сегодня — первый уверенный шаг!",cont:"Продолжить"},
+      uz:{one:"kun ketma-ket!",few:"kun ketma-ket!",many:"kun ketma-ket!",lit:"Alanga yondi! Har kuni shug'ullan.",keep:"Seriya davom etmoqda — zo'r ketyapsan!",reset:"Yangi streak boshlandi. Bugun — birinchi kuchli qadam!",cont:"Davom etish"},
+      tj:{one:"рӯз пайдарпай!",few:"рӯз пайдарпай!",many:"рӯз пайдарпай!",lit:"Аланга даргирифт! Ҳар рӯз машқ кун.",keep:"Силсилаи нав оғоз шуд. Имрӯз — қадами аввали устувор!",reset:"Силсилаи нав оғоз шуд. Имрӯз — қадами аввали устувор!",cont:"Идома"}}[LANG];
+    var lbl=LANG==="ru"?(n%10===1&&n%100!==11?W.one:(n%10>=2&&n%10<=4&&(n%100<10||n%100>=20)?W.few:W.many)):W.one;
+    var desc=ps.reset?W.reset:(n===1?W.lit:W.keep);
+    $("#lu-panda").innerHTML="";
+    $("#lu-stage").innerHTML='<div class="sk-flame '+(ps.extended?"lit":"dim")+'">'+flameSvg()
+      +'<div class="sk-panda">'+pandaChar("celebrate")+'</div></div>'
+      +'<div class="sk-num">'+n+'</div><h2>'+lbl+'</h2><p>'+desc+'</p>'
+      +'<div class="sk-days">'+skDaysHtml(n,true,ps)+'</div>'+skWeekGoalHtml(ps);
+    $("#lu-cta").setAttribute("onclick","App.showRankUp()");
+    $("#lu-cta").innerHTML='<i class="ti ti-arrow-right"></i> '+W.cont;
+    $("#levelup").classList.add("on");
+    if(ps.extended){setTimeout(function(){beep([392,523,659,784]);haptic("heavy")},350)}
   },
   showRankUp:function(){
     var beforeRank=pendingRankUp&&pendingRankUp.before;pendingRankUp=null;
@@ -656,6 +882,47 @@ var App={
     $("#lu-cta").setAttribute("onclick","App.closeLevelUp()");$("#lu-cta").innerHTML='<i class="ti ti-arrow-right"></i> '+r.cont;
   },
   closeLevelUp:function(){$("#levelup").classList.remove("on");App.exitFlow();App.show("rating");renderRating()},
+  /* Sovg'a sandig'i: yo'ldagi chest bosilganda */
+  openChest:function(){
+    var ct=chestT();var rc=(MAP&&MAP.progress&&MAP.progress.reward_chest)||null;
+    if(!INIT_DATA){App.renderChestOverlay(15);return}
+    if(!rc||!rc.ready){
+      var prog=rc?Math.min(100,Math.round((rc.progress||0)/80*100)):0,leftXp=rc?(rc.next_xp||0):0;
+      App.openSheet('<div class="shead"><div class="chest-fig" style="margin:0 auto 6px">'+chestSvg()+'</div>'
+        +'<div class="tr" style="font-size:16px;color:var(--ink)">'+esc(ct.soon)+'</div><div class="tr">'+esc(ct.note)+'</div></div>'
+        +'<div class="chestbar"><i style="width:'+prog+'%"></i></div>'
+        +(leftXp?'<div class="tr" style="text-align:center;color:var(--ink2);font-size:13px">'+esc(ct.left.replace("{n}",leftXp))+'</div>':'')
+        +'<button class="scta" style="margin-top:12px" onclick="App.closeSheet()">OK</button>');
+      return;
+    }
+    _apiPost("/api/miniapp/reward-chest/open",{})
+      .then(function(r){return r.json()})
+      .then(function(d){
+        if(!d.ok){toast(serverSaveErrorText(d.error),2200);return}
+        if(MAP&&MAP.progress){
+          if(d.xp)MAP.progress.xp=d.xp;
+          if(typeof d.daily_xp!=="undefined")MAP.progress.daily_xp=d.daily_xp;
+          if(d.reward_chest)MAP.progress.reward_chest=d.reward_chest;
+        }
+        App.renderChestOverlay(Number(d.reward_value||0));
+      })
+      .catch(function(){toast(serverSaveErrorText(),2200)});
+  },
+  renderChestOverlay:function(val){
+    var ct=chestT();
+    $("#lu-panda").innerHTML=pandaChar("celebrate");
+    $("#lu-stage").innerHTML='<div class="chest-fig shake" id="chestfig"><div class="chest-burst"></div>'+chestSvg()+'</div>'
+      +'<div class="chest-xp" id="chestxp">+'+val+' XP</div><h2>'+esc(ct.got)+'</h2>';
+    $("#lu-cta").setAttribute("onclick","App.closeChest()");
+    $("#lu-cta").innerHTML='<i class="ti ti-arrow-right"></i> '+ct.cont;
+    $("#levelup").classList.add("on");
+    setTimeout(function(){
+      var f=$("#chestfig");if(f){f.classList.remove("shake");f.classList.add("open")}
+      var x=$("#chestxp");if(x)x.classList.add("in");
+      luRain();beep([659,784,1046,1318]);haptic("heavy");
+    },900);
+  },
+  closeChest:function(){$("#levelup").classList.remove("on");renderAll()},
   runTour:function(){var t={
     ru:{
       c:"Вот ваш курс! Каждый кружок — это урок. Нажми на узел и начни учиться.",
@@ -717,9 +984,9 @@ var App={
   tourEnd:function(){stopTourAudio();try{localStorage.setItem("hsk_v3_tour","1")}catch(e){}$("#tour").classList.remove("on")},
   toggleTourVoice:function(){TOURV=!TOURV;if(!TOURV){stopTourAudio()}tourRender(!TOURV)},
   openDict:function(){location.href="/hsk-lugat.html?theme=light&lang="+LANG},
-  openRecog:function(){location.href="/course_v3_recognition.html?lang="+LANG},
-  openPron:function(){location.href="/course_v3_pronunciation.html?lang="+LANG},
-  openTest:function(){location.href="/course_v3_test.html?lang="+LANG},
+  openRecog:function(){location.href="/course_v3_recognition.html?lang="+LANG+"&level="+((MAP&&MAP.level)||"hsk1")},
+  openPron:function(){location.href="/course_v3_pronunciation.html?lang="+LANG+"&level="+((MAP&&MAP.level)||"hsk1")},
+  openTest:function(){location.href="/course_v3_test.html?lang="+LANG+"&level="+((MAP&&MAP.level)||"hsk1")},
   openMistakes:function(){location.href="/course_v3_mistakes.html?lang="+LANG},
   openHelp:function(){var t=T();var c=(MAP&&MAP.admin_contact)||"";
     var btn=c?'<button class="scta" onclick="App.contactAdmin()"><i class="ti ti-brand-telegram"></i> '+esc(t.helpBtn)+'</button>'
@@ -734,7 +1001,17 @@ var App={
   notifToggle:function(){if(notifOn){App.confirmNotifOff()}else{App.applyNotif(true)}},
   applyNotif:function(on){notifOn=on;if(MAP)MAP.notify={enabled:on};renderProfile();if(INIT_DATA)_apiPost("/api/v3/notify",{enabled:on}).catch(function(){})},
   confirmNotifOff:function(){var w={uz:{title:"Bildirishnomalarni o'chirasizmi?",body:"Kunlik eslatma va haftalik hisobotlar kelmaydi. Bu eslatmalar o'qishni tashlab qo'ymaslikka yordam beradi.",keep:"Yoqilgan qoldirish",off:"O'chirish"},ru:{title:"Отключить уведомления?",body:"Вы перестанете получать ежедневные напоминания и еженедельный отчёт. Они помогают не бросать учёбу.",keep:"Оставить включёнными",off:"Отключить"},tj:{title:"Огоҳиҳоро хомӯш мекунед?",body:"Шумо ёдовариҳои ҳаррӯза ва ҳисоботи ҳафтаинаро намегиред. Онҳо барои тарк накардани омӯзиш кӯмак мекунанд.",keep:"Фаъол мондан",off:"Хомӯш кардан"}}[LANG]||{};App.openSheet('<div class="shead"><div style="width:52px;height:52px;border-radius:15px;background:var(--card);border:1px solid var(--line);color:var(--cin);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px"><i class="ti ti-bell-off"></i></div><div class="tr" style="font-size:16px;color:var(--ink)">'+esc(w.title)+'</div><div class="tr">'+esc(w.body)+'</div></div><button class="scta" onclick="App.closeSheet()">'+esc(w.keep)+'</button><button class="scta ghost" style="margin-top:8px" onclick="App.closeSheet();App.applyNotif(false)">'+esc(w.off)+'</button>')},
-  avatarEdit:function(){var t=T();var note=LANG==="ru"?"Аватар берётся из вашего профиля Telegram":LANG==="tj"?"Аватар аз профили Telegram шумо гирифта мешавад":"Avatar Telegram profilingizdan olinadi";App.openSheet('<div class="shead"><div class="zh han" style="font-size:30px">'+(PROF.avatar||"A")+'</div><div class="tr" style="margin-top:8px">'+esc(note)+'</div></div><button class="scta ghost" onclick="App.closeSheet()">OK</button>')},
+  avatarEdit:function(){var t=T();var note=LANG==="ru"?"Аватар берётся из вашего профиля Telegram":LANG==="tj"?"Аватар аз профили Telegram шумо гирифта мешавад":"Avatar Telegram profilingizdan olinadi";App.openSheet('<div class="shead"><div class="pav" style="margin:0 auto;cursor:default">'+(PROF.avatar||"A")+myAvatarImgHtml()+'</div><div class="tr" style="margin-top:10px">'+esc(note)+'</div></div><button class="scta ghost" onclick="App.closeSheet()">OK</button>')},
+  /* Duolingo uslubi: talaffuz yozuvini ko'rsatish sozlamasi (dars oqimida) */
+  pinyinSheet:function(){
+    var t={uz:{h:"Talaffuz yozuvi",all:"Hammasida ko'rsatish",nw:"Faqat yangi so'zlarda",off:"Yashirish"},
+      ru:{h:"Произношение",all:"Показывать везде",nw:"Только в новых словах",off:"Скрыть"},
+      tj:{h:"Талаффуз",all:"Дар ҳама ҷо нишон додан",nw:"Танҳо дар калимаҳои нав",off:"Пинҳон кардан"}}[LANG]||{};
+    var cur=pinyinMode();
+    var row=function(v,lb){return '<button class="opt-row'+(v===cur?" on":"")+'" onclick="App.setPinyin(\''+v+'\')"><i class="ti ti-abc"></i> '+esc(lb)+(v===cur?'<span class="chk"><i class="ti ti-check"></i></span>':'')+'</button>'};
+    App.openSheet('<div class="shead"><div class="tr" style="font-size:16px;color:var(--ink)">'+esc(t.h)+'</div></div>'+row("all",t.all)+row("new",t.nw)+row("off",t.off));
+  },
+  setPinyin:function(v){try{localStorage.setItem("hsk_v3_pinyin",v)}catch(e){}App.closeSheet();applyPinyinMode()},
   goalPicker:function(){var p=pl();var opts=[10,20,30,50];
     App.openSheet('<div class="shead"><div class="tr" style="font-size:16px;color:var(--ink)">'+p.goalSet+'</div></div>'
       +opts.map(function(v){return '<button class="opt-row'+(v===dailyGoal?" on":"")+'" onclick="App.pickGoal('+v+')"><i class="ti ti-target"></i> '+v+' XP'+(v===dailyGoal?'<span class="chk"><i class="ti ti-check"></i></span>':'')+'</button>'}).join(""))},
@@ -827,15 +1104,11 @@ function adPlacementTitle(placement){
   if(placement==="end")return t.adEnd;
   return t.adStart;
 }
-/* Qulflangan (premium) dars — endi reklama YO'Q: faqat obuna oynasi.
-   Bepul trial: 1-dars to'liq + 2-dars yarmi; keyin obuna majburiy. */
+/* Qulflangan (premium) qism — endi reklama YO'Q: faqat obuna oynasi.
+   Bepul trial: 2 mini-dars to'liq + 3-qism yarmi; keyin obuna majburiy. */
 function openLockedLessonSheet(idx){
   var l=allLessons()[idx];if(!l)return;
-  var t=T();
-  App.openSheet('<div class="shead"><div class="zh han">'+esc(l.zh)+'</div><div class="py">'+esc(l.py||"")+'</div><div class="tr">'+esc(tr(l.tr))+'</div></div>'
-    +promoBlockHtml()
-    +'<button class="scta" onclick="App.goPay(\'v3_locked_lesson\')"><i class="ti ti-lock-open"></i> '+esc(t.subscribe)+'</button>'
-    +payHintHtml());
+  App.openPaywall({lessonIdx:idx,lesson:l});
 }
 /* Admin bir nechta reklama joylagan bo'lsa — barchasini qaytaramiz (ketma-ket
    ko'rsatish uchun). Eski "ad" maydoni ham qoladi (zaxira). */
@@ -1123,6 +1396,33 @@ function showCourseAd(placement,idx){
   });
 }
 function lessonStatusNode(l){return l.status}
+/* kurs ochilganda user turgan (current) dars ekran o'rtasida ko'rinsin */
+function scrollToCurrentNode(){
+  var n=document.querySelector("#s-course .node.current");
+  if(!n){window.scrollTo(0,0);return}
+  var y=n.getBoundingClientRect().top+window.pageYOffset-Math.round(window.innerHeight*0.42);
+  window.scrollTo(0,Math.max(0,y));
+}
+/* yo'lakcha ortidagi so'qmoq: node markazlarini yumshoq egri chiziq bilan bog'laydi
+   (dekor — tosh, o't, panda — o'z joyida, ularga tegilmaydi) */
+function drawTrails(){
+  document.querySelectorAll("#s-course .path").forEach(function(p){
+    var old=p.querySelector("svg.trail");if(old)old.remove();
+    var nodes=p.querySelectorAll(".node");if(nodes.length<2)return;
+    var pr=p.getBoundingClientRect();if(pr.width<10||pr.height<10)return;
+    var pts=[];nodes.forEach(function(n){var r=n.getBoundingClientRect();pts.push([Math.round(r.left+r.width/2-pr.left),Math.round(r.top+r.height/2-pr.top)])});
+    var d="M"+pts[0][0]+" "+pts[0][1];
+    for(var i=1;i<pts.length;i++){var a=pts[i-1],b=pts[i],my=Math.round((a[1]+b[1])/2);d+=" C"+a[0]+" "+my+" "+b[0]+" "+my+" "+b[0]+" "+b[1]}
+    var svg=document.createElementNS("http://www.w3.org/2000/svg","svg");
+    svg.setAttribute("class","trail");
+    svg.setAttribute("viewBox","0 0 "+Math.round(pr.width)+" "+Math.round(pr.height));
+    svg.setAttribute("preserveAspectRatio","none");
+    svg.innerHTML='<path d="'+d+'" fill="none" stroke="#ebe2cc" stroke-width="34" stroke-linecap="round"/>'
+      +'<path d="'+d+'" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="4" stroke-dasharray="0.5 16" stroke-linecap="round"/>';
+    p.insertBefore(svg,p.firstChild);
+  });
+}
+window.addEventListener("resize",function(){clearTimeout(window._trailT);window._trailT=setTimeout(function(){if(SCREEN==="course")drawTrails()},200)});
 function renderCourse(){
   var done=allLessons().filter(function(l){return l.status==="done"}).length;
   var total=allLessons().length;
@@ -1131,7 +1431,8 @@ function renderCourse(){
      tanlash ko'rsatilmaydi, shuning uchun bu statik yorliq (tugma emas). */
   var h='<div class="htop"><span class="lvpill"><i class="ti ti-bolt"></i> '+esc(MAP.label)+'</span>'
     +'<span class="chip" style="margin-left:auto;color:var(--cin)"><i class="ti ti-flame"></i> '+(MAP.progress.streak||0)+'</span>'
-    +'<span class="chip" style="color:var(--gold)"><i class="ti ti-diamond"></i> '+(MAP.progress.xp||0).toLocaleString("ru")+'</span></div>'
+    +'<span class="chip" style="color:var(--gold)"><i class="ti ti-diamond"></i> '+(MAP.progress.xp||0).toLocaleString("ru")+'</span>'
+    +goalRingHtml()+'</div>'
     +'<div class="pwrap"><div class="pbar"><i style="width:'+pct+'%"></i></div><small>'+done+' / '+total+' '+T().lessons+'</small></div>';
   var mascP={ru:["Продолжаем!","Так держать!","Ещё урок!","У тебя получится!"],
     uz:["Davom etamiz!","Zo'r ketyapsan!","Yana bir dars!","Sen uddalaysan!"],
@@ -1139,36 +1440,71 @@ function renderCourse(){
   var mcnt=0;
   (MAP.units||[]).forEach(function(u,ui){
     var locked=u.status==="locked";
-    h+='<div class="uban'+(locked?' lock':'')+'"><div><div class="un">'+(u.no)+'-'+T().unit+'</div><div class="utt">'+esc(tr(u.title))+'</div></div><span class="ic"><i class="ti ti-'+(locked?'lock':'book-2')+'"></i></span></div>';
+    var uSub=(u.no)+'-'+T().unit,uTitle=tr(u.title)||"";
+    /* Qism xaritasida unit = HSK darsi, sarlavhada raqam allaqachon bor
+       ("7-dars · Greetings") — kichik "7-bo'lim" yorlig'i ortiqcha. */
+    var hasParts=!!(u.lessons&&u.lessons[0]&&u.lessons[0].src);
+    var norm=function(s){return String(s).toLowerCase().replace(/['’ʼ`\s]/g,"")};
+    /* sarlavha "2-bo'lim" kabi kichik yorliq bilan bir xil bo'lsa — dublikat ko'rsatmaymiz */
+    var uDup=hasParts||norm(uTitle)===norm(uSub)||!uTitle;
+    h+='<div class="uban'+(locked?' lock':'')+'"><div>'
+      +(uDup?'<div class="utt" style="font-size:15px;font-weight:600">'+esc(hasParts&&uTitle?uTitle:uSub)+'</div>'
+        :'<div class="un">'+esc(uSub)+'</div><div class="utt">'+esc(uTitle)+'</div>')
+      +'</div><span class="ic"><i class="ti ti-'+(locked?'lock':'book-2')+'"></i></span></div>';
     h+='<div class="path">';
     var nodes=[];
     (u.lessons||[]).forEach(function(l){nodes.push({kind:"lesson",l:l})});
     if(!locked && u.milestone){nodes.splice(Math.min(3,nodes.length),0,{kind:"chest"});nodes.push({kind:"boss",m:u.milestone})}
     nodes.forEach(function(n,k){
       var off=Math.round(Math.sin((ui*3+k)*0.9)*76);
-      var inner,cls,lbl="",clk="",bub="",mascot="";
+      var inner,cls,lbl="",clk="",bub="",mascot="",decor="";
       /* kamroq panda + har biri qisqa rag'bat matni ko'rsatsin (dofamin) */
       if(n.kind==="lesson"&&n.l.status!=="current"&&k%5===2){var ph=mascP[mcnt++%mascP.length];mascot='<div class="pmasc '+(off>=0?"l":"r")+'" style="'+(off>=0?"left:8px":"right:8px")+';animation-delay:'+((k%4)*0.4)+'s" aria-hidden="true"><div class="pmasc-bub">'+esc(ph)+'</div>'+pandaChar("happy",{anim:false})+'</div>'}
-      if(n.kind==="chest"){cls="chest";inner='<i class="ti ti-gift"></i>'}
+      /* yo'lakcha bezagi: pandasiz qatorlarda, node'ning qarshi tomonida */
+      if(!mascot&&k%2===1){decor='<div class="decor'+((ui*3+k)%3===0?" sm":"")+'" style="'+(off>=0?"left:16px":"right:16px")+'" aria-hidden="true">'+scenerySvg(ui*5+k)+'</div>'}
+      if(n.kind==="chest"){cls="chest";inner='<i class="ti ti-gift"></i>';clk='onclick="App.openChest()"'}
       else if(n.kind==="boss"){cls="boss";inner='<i class="ti ti-star"></i>';lbl=tr(n.m.title).split(" ")[0]||"Sinov"}
       else{
         var st=isPremiumLocked(n.l)?"locked":n.l.status;cls=st;
+        var isCp=!!n.l.checkpoint;
         if(st==="done")inner='<i class="ti ti-check"></i>';
-        else if(st==="current"){inner='<span class="han" style="font-size:19px">A</span>';bub='<div class="bubble">'+T().cont.toUpperCase()+'</div>'}
-        else inner='<i class="ti ti-lock"></i>';
-        lbl=n.l.zh;clk='onclick="openLessonSheet('+JSON.stringify(allLessons().indexOf(n.l))+')"';
+        else if(st==="current"){inner=isCp?'<i class="ti ti-flag-2"></i>':'<span class="han" style="font-size:19px">A</span>';bub='<div class="bubble">'+T().cont.toUpperCase()+'</div>'}
+        else inner=isCp?'<i class="ti ti-flag-2"></i>':'<i class="ti ti-lock"></i>';
+        /* Qism tugunida yorliq — shu qismning yangi so'zlari (uzun bo'lsa qisqartiriladi) */
+        lbl=String(n.l.zh||"");if(lbl.length>10)lbl=lbl.slice(0,9)+"…";
+        clk='onclick="openLessonSheet('+JSON.stringify(allLessons().indexOf(n.l))+')"';
       }
-      h+='<div class="prow">'+mascot+'<div class="nodewrap" style="transform:translateX('+off+'px)">'+bub
+      h+='<div class="prow">'+mascot+decor+'<div class="nodewrap" style="transform:translateX('+off+'px)">'+bub
         +'<button class="node '+cls+'" '+clk+'><span class="ring"></span>'+inner+'</button>'
         +(lbl?'<span class="nlabel '+(cls==="locked"||cls==="boss"||cls==="chest"?"mut":"")+'">'+esc(lbl)
-          +(n.kind==="lesson"?'<span class="nnum">'+n.l.n+'-'+esc(T().lessons)+'</span>':'')+'</span>':'')+'</div></div>';
+          +(n.kind==="lesson"?'<span class="nnum">'+esc(nodeSub(n.l))+'</span>':'')+'</span>':'')+'</div></div>';
     });
     h+='</div>';
   });
   h+='<div style="height:14px"></div>';
   $("#s-course").innerHTML=h;
+  if(SCREEN==="course")requestAnimationFrame(drawTrails);
 }
-function secNames(){var m={ru:["Новые слова","Закрепление","Аудирование","В речи","Диалог","Повторение"],uz:["Yangi so'zlar","Mustahkamlash","Tinglash","Gapda ishlatish","Qisqa dialog","Review"],tj:["Калимаҳои нав","Мустаҳкамкунӣ","Шунидан","Дар ҷумла","Муколама","Такрор"]};return m[LANG]||m.ru}
+function secNames(){var m={ru:["Новые слова","Закрепление","Аудирование","В речи","Диалог","Повторение"],uz:["Yangi so'zlar","Mustahkamlash","Tinglash","Gapda ishlatish","Qisqa dialog","Review"],tj:["Калимаҳои нав","Мустаҳкамкунӣ","Шунидан","Дар ҷумла","Гуфтугӯ","Такрор"]};return m[LANG]||m.ru}
+/* Tugun ostidagi kichik yorliq: qism raqami yoki checkpoint belgisi. */
+function nodeSub(l){
+  if(l.checkpoint)return LANG==="ru"?"Повторение":LANG==="tj"?"Такрор":"Takrorlash";
+  if(l.part&&l.src)return LANG==="ru"?("Часть "+l.part):LANG==="tj"?("Қисми "+l.part):(l.part+"-qism");
+  return (l.n||"")+"-"+T().lessons;
+}
+/* Dars varag'i sarlavhasi ostidagi "X-dars · Y-qism" belgisi. */
+function partChip(l){
+  if(!l.src)return"";
+  var lesson=LANG==="ru"?("Урок "+l.src):LANG==="tj"?("Дарси "+l.src):(l.src+"-dars");
+  return lesson+" · "+nodeSub(l);
+}
+/* Qismning real bosqichlari (mini-dars 2-3 bo'limdan iborat). */
+function partSecs(l){
+  var m={ru:{w:"Новые слова",p:"Практика",s:"Произношение",r:"Повторение",d:"Диалог"},
+    uz:{w:"Yangi so'zlar",p:"Mashq",s:"Talaffuz",r:"Takrorlash",d:"Dialog"},
+    tj:{w:"Калимаҳои нав",p:"Машқ",s:"Талаффуз",r:"Такрор",d:"Гуфтугӯ"}}[LANG]||{};
+  return l.checkpoint?[m.r,m.d,m.s]:[m.w,m.p,m.s];
+}
 function authGateCopy(){
   return {
     ru:{title:"Откройте курс из бота",body:"Mini App не смог подтвердить подключение к Telegram. Вернитесь в бот, нажмите /start и откройте курс заново.",btn:"Вернуться в бот"},
@@ -1177,9 +1513,10 @@ function authGateCopy(){
   }[LANG]||{};
 }
 function openBotStart(){
-  var url="https://t.me/"+BOT_USERNAME+"?start=start";
+  var url=botLinkUrl("?start=start");
   // Mini App botning o'zi tomonidan ochilgani uchun tg.close() foydalanuvchini
   // aynan shu bot chatiga qaytaradi — username'ga bog'liq emas, eng ishonchli yo'l.
+  try{if(tg&&tg.openTelegramLink){tg.openTelegramLink(url);return}}catch(e){}
   try{if(tg&&tg.close){tg.close();return}}catch(e){}
   try{if(tg&&tg.openTelegramLink){tg.openTelegramLink(url);return}}catch(e){}
   try{location.href=url}catch(e){}
@@ -1197,13 +1534,16 @@ function openLessonSheet(idx){
   var l=allLessons()[idx];if(!l)return;
   if(isPremiumLocked(l)){openLockedLessonSheet(idx);return}
   if(l.status==="locked"){return offerSkipTest(idx)}
-  var prog=l.status==="done"?6:0;
-  var secs=secNames().map(function(s,k){var cls=k<prog?"done":(k===prog&&l.status==="current"?"cur":"lock");var ic=cls==="done"?'<i class="ti ti-check"></i>':(cls==="cur"?'<i class="ti ti-player-play"></i>':'<i class="ti ti-lock"></i>');return '<div class="sec '+cls+'"><span class="si2">'+ic+'</span><b>'+(k+1)+'. '+s+'</b></div>'}).join("");
+  var names=partSecs(l),n=names.length;
+  var prog=l.status==="done"?n:0;
+  var secs=names.map(function(s,k){var cls=k<prog?"done":(k===prog&&l.status==="current"?"cur":"lock");var ic=cls==="done"?'<i class="ti ti-check"></i>':(cls==="cur"?'<i class="ti ti-player-play"></i>':'<i class="ti ti-lock"></i>');return '<div class="sec '+cls+'"><span class="si2">'+ic+'</span><b>'+(k+1)+'. '+s+'</b></div>'}).join("");
   var stars=l.status==="done"?'<div class="stars">'+"★★★☆☆☆".slice(3-(l.stars||0),6-(l.stars||0))+'</div>':'';
+  var chip=partChip(l);
   var cta=l.status==="current"?'<button class="scta" onclick="startLesson('+idx+')"><i class="ti ti-player-play"></i> '+T().cont+'</button>'
     :'<button class="scta ghost" onclick="startLesson('+idx+')"><i class="ti ti-refresh"></i> '+T().repeat+'</button>';
-  App.openSheet('<div class="shead"><div class="zh han">'+esc(l.zh)+'</div><div class="py">'+esc(l.py||"")+'</div><div class="tr">'+esc(tr(l.tr))+'</div>'+stars+'</div>'
-    +'<div class="pmeta"><span>6 '+T().stage+'</span><span>'+prog+' / 6 '+T().completeOf+'</span></div><div class="secs">'+secs+'</div>'+cta);
+  App.openSheet('<div class="shead">'+(chip?'<div class="py" style="margin-bottom:2px">'+esc(chip)+'</div>':'')
+    +'<div class="zh han">'+esc(l.zh)+'</div><div class="py">'+esc(l.py||"")+'</div><div class="tr">'+esc(tr(l.tr))+'</div>'+stars+'</div>'
+    +'<div class="pmeta"><span>'+n+' '+T().stage+'</span><span>'+prog+' / '+n+' '+T().completeOf+'</span></div><div class="secs">'+secs+'</div>'+cta);
 }
 
 /* ---------- Skip-ahead test (unlock a locked lesson by passing a quick test) ---------- */
@@ -1230,8 +1570,9 @@ function skipI18n(){
 }
 function offerSkipTest(idx){
   var l=allLessons()[idx];if(!l)return;
-  var s=skipI18n();
-  App.openSheet('<div class="shead"><div class="zh han">'+esc(l.zh)+'</div><div class="py">'+esc(l.py||"")+'</div><div class="tr">'+esc(tr(l.tr))+'</div></div>'
+  var s=skipI18n();var chip=partChip(l);
+  App.openSheet('<div class="shead">'+(chip?'<div class="py" style="margin-bottom:2px">'+esc(chip)+'</div>':'')
+    +'<div class="zh han">'+esc(l.zh)+'</div><div class="py">'+esc(l.py||"")+'</div><div class="tr">'+esc(tr(l.tr))+'</div></div>'
     +'<div class="pmeta" style="justify-content:center"><span><i class="ti ti-bolt"></i> '+esc(s.offerTag)+'</span></div>'
     +'<div class="tr" style="margin:2px 6px 16px;text-align:center;color:var(--ink2);line-height:1.5">'+esc(s.offerP)+'</div>'
     +'<button class="scta" onclick="startSkipTest('+idx+')"><i class="ti ti-bolt"></i> '+esc(s.offerBtn)+'</button>');
@@ -1253,7 +1594,7 @@ function startSkipTest(idx){
   loadLessonData(MAP.level||"hsk1",l.n).then(function(d){
     var q=buildTestQueue(d);
     if(!q.length){completeSkipUnlock(100,idx);return}
-    Flow.queue=q;Flow.i=0;Flow.correct=0;Flow.graded=0;Flow.streak=0;Flow.test={idx:idx};Flow.challenge=null;Flow.lessonIdx=null;Flow.ad=null;HP=5;$("#f-hp").textContent=HP;
+    Flow.queue=q;Flow.i=0;Flow.correct=0;Flow.graded=0;Flow.streak=0;Flow.mistakes=[];Flow.test={idx:idx};Flow.challenge=null;Flow.lessonIdx=null;Flow.ad=null;HP=5;$("#f-hp").textContent=HP;
     trackCourseEvent("test_started",{source:"course_v3_skip_test",lesson_order:l.n,dedupe_key:lessonEventKey("skip_test_started",l.n)});
     $("#flow").classList.add("on");renderFlowCard();
   }).catch(function(){toast(skipI18n().notReady,2500)});
@@ -1324,7 +1665,24 @@ function showSkipResult(pct,idx){
 }
 
 /* ---------- Lesson flow engine ---------- */
-var Flow={queue:[],i:0,answered:false,correct:0,graded:0,test:null,challenge:null,lessonIdx:null,ad:null};
+var Flow={queue:[],i:0,answered:false,correct:0,graded:0,mistakes:[],test:null,challenge:null,lessonIdx:null,ad:null};
+var LESSON_RESUME_TTL_MS=7*24*60*60*1000;
+/* "v2" — darslar mini-qismlarga bo'linib raqamlash o'zgardi; eski kalitlardagi
+   pozitsiya yangi qismga adashib ulanmasligi uchun prefiks yangilandi. */
+function lessonResumeKey(level,lessonOrder){return"hsk_v3_lesson_resume:v2:"+normalizeLevel(level||"hsk1")+":"+Number(lessonOrder||0)}
+function loadLessonResume(level,lessonOrder,queueLength){
+  try{
+    var saved=JSON.parse(localStorage.getItem(lessonResumeKey(level,lessonOrder))||"null");
+    if(!saved||Date.now()-Number(saved.at||0)>LESSON_RESUME_TTL_MS)return 0;
+    return Math.max(0,Math.min(Number(saved.i||0),Math.max(0,Number(queueLength||0)-1)));
+  }catch(e){return 0}
+}
+function saveLessonResume(){
+  if(Flow.test||Flow.challenge||Flow.lessonIdx===null)return;
+  var lesson=flowLesson();if(!lesson)return;
+  try{localStorage.setItem(lessonResumeKey((MAP&&MAP.level)||"hsk1",lesson.n),JSON.stringify({i:Flow.i,at:Date.now()}))}catch(e){}
+}
+function clearLessonResume(level,lessonOrder){try{localStorage.removeItem(lessonResumeKey(level,lessonOrder))}catch(e){}}
 function flowLesson(){
   if(Flow.lessonIdx===null||typeof Flow.lessonIdx==="undefined")return null;
   return allLessons()[Flow.lessonIdx]||null;
@@ -1388,14 +1746,16 @@ function startLesson(idx,opts){
   if(l.status==="locked")return;
   var lv=MAP.level||"hsk1";
   loadLessonData(lv,l.n).then(function(d){
-    Flow.queue=buildQueue(d);Flow.i=0;Flow.correct=0;Flow.graded=0;Flow.streak=0;Flow.test=null;Flow.challenge=null;Flow.lessonIdx=idx;Flow.ad=null;
-    /* Yangi bepul user 2-darsni yarmigacha ko'radi (preview_half): o'rtaga
-       yetganda obuna oynasi chiqadi. Backend ham 2-darsni yakunlatmaydi. */
+    Flow.queue=buildQueue(d);Flow.i=loadLessonResume(lv,l.n,Flow.queue.length);Flow.correct=0;Flow.graded=0;Flow.streak=0;Flow.mistakes=[];Flow.test=null;Flow.challenge=null;Flow.lessonIdx=idx;Flow.ad=null;Flow._cheered=false;Flow._wrongPending=false;
+    /* Yangi bepul user 3-qismni yarmigacha ko'radi (preview_half): o'rtaga
+       yetganda obuna oynasi chiqadi. Backend ham 3-qismni yakunlatmaydi. */
     Flow.previewHalf=!!l.preview_half;
     Flow.previewHalfAt=Flow.previewHalf?Math.max(1,Math.floor(Flow.queue.length/2)):0;
+    if(Flow.previewHalf)Flow.i=Math.min(Flow.i,Math.max(0,Flow.previewHalfAt-1));
     trackCourseEvent("lesson_started",{
       source:"course_v3",
       lesson_order:l.n,
+      activation_variant:activationVariant(),
       dedupe_key:lessonEventKey("lesson_started",l.n)
     });
     HP=5;$("#f-hp").textContent=HP;$("#flow").classList.add("on");renderFlowCard();
@@ -1404,10 +1764,19 @@ function startLesson(idx,opts){
     toast(msg,2500);
   });
 }
+function lessonMaterialRef(d,sectionNo,cardNo){
+  var level=normalizeLevel((d&&d.level)||(MAP&&MAP.level)||"hsk1");
+  var lesson=Number((d&&d.lesson_id)||flowLessonOrder()||0);
+  return "lesson:"+level+":"+lesson+":section:"+Number(sectionNo||0)+":card:"+Number(cardNo||0);
+}
 function buildQueue(d){
   var q=[];
   (d.sections||[]).forEach(function(sec){
+    var sNo=sec.section_no||0;
     var cards=(sec.cards||[]).slice();
+    cards.forEach(function(c,cardIndex){
+      if(c&&typeof c==="object")c._materialRef=lessonMaterialRef(d,sNo,cardIndex+1);
+    });
     /* New lessons ship an already-interleaved intro (teach + immediate check)
        and set intro_prebuilt — use their cards as-is. Older lessons lack the
        flag and keep the legacy client-side drill (teach 4 words, 4 formats). */
@@ -1431,7 +1800,7 @@ function buildQueue(d){
       cards=gc.concat(cards);
     }
     /* Dialog is now fully interactive (audio/cloze/char-gap) — no passive dump. */
-    var sNo=sec.section_no||0, sTitle=tr(sec.section_title)||(secNames()[(sec.section_no||1)-1]||"");
+    var sTitle=tr(sec.section_title)||(secNames()[(sec.section_no||1)-1]||"");
     cards.forEach(function(c){c._sNo=sNo;c._sTitle=sTitle;q.push(c)});
   });
   return q;
@@ -1440,9 +1809,14 @@ function flowProg(){$("#f-prog").style.width=Math.round(Flow.i/Flow.queue.length
 function hideBar(){$("#f-bar").className="fbar"}
 function showBar(ok,msg,sub){var b=$("#f-bar");b.className="fbar show "+(ok?"ok":"no");$("#f-msg").innerHTML='<i class="ti ti-'+(ok?"check":"x")+'"></i><span>'+msg+(sub?'<small>'+sub+'</small>':'')+'</span>';$("#f-barbtn").textContent=T().next;
   Flow.streak=ok?(Flow.streak||0)+1:0;
+  edgeGlow(ok?Flow.streak:0);
+  if(ok){if(Flow.streak>=5)haptic("heavy");else if(Flow.streak>=3)haptic("med")}
+  if(!ok)Flow._wrongPending=true; /* keyingi qadamda panda dalda ekrani (darsda 1 marta) */
   trackInteraction(ok);
   if(ok&&Flow.streak>=5&&Flow.streak%5===0)comboPop(Flow.streak);
 }
+/* Ketma-ket to'g'ri javoblarda ekran cheti porlashi (dofamin) */
+function edgeGlow(n){var e=$("#edgeglow");if(!e)return;e.className=n>=10?"g3":n>=5?"g2":n>=3?"g1":""}
 /* Duolingo uslubi: 5 ta ketma-ket to'g'ri javobda panda + maqtov + effekt (dofamin) */
 function comboPop(n){
   var P={ru:["Так держать!","Отлично!","Ты в ударе!","Невероятно!","Огонь!"],
@@ -1450,17 +1824,120 @@ function comboPop(n){
     tj:["Идома деҳ!","Олӣ!","Оташин!","Аҷоиб!","Нашав!"]}[LANG]||["Zo'r!"];
   var msg=P[Math.min(Math.floor(n/5)-1,P.length-1)]||P[0];
   var el=$("#combo");if(!el)return;
-  el.innerHTML='<div class="combo-card"><div class="combo-pd">'+pandaChar("celebrate")+'</div><div class="combo-n">'+n+'×</div><div class="combo-tx">'+esc(msg)+'</div></div>';
-  var cols=['#C2403A','#C2962F','#2F7D5E','#E8D08A','#fff'];
-  for(var i=0;i<16;i++){(function(){var s=document.createElement('span');s.className='combo-spark';s.style.left='50%';s.style.top='42%';s.style.background=cols[i%5];el.appendChild(s);var a=Math.random()*6.28,d=70+Math.random()*90;requestAnimationFrame(function(){s.classList.add('go');s.style.opacity='1';s.style.transform='translate('+Math.cos(a)*d+'px,'+Math.sin(a)*d+'px) rotate('+(Math.random()*360)+'deg)';s.style.opacity='0'});setTimeout(function(){s.remove()},720)})()}
+  el.innerHTML='<div class="combo-card"><div class="combo-pd">'+pandaChar("celebrate")+'</div><div class="combo-n"'+(n>=10?' style="color:var(--cin);font-size:'+Math.min(46+n,72)+'px"':'')+'>'+n+'×</div><div class="combo-tx">'+esc(msg)+'</div></div>';
+  var cols=['#E04A40','#E9A916','#2FA06A','#2E86C1','#F2A9B5'];
+  var sparkN=16+Math.min(n||0,24);
+  for(var i=0;i<sparkN;i++){(function(){var s=document.createElement('span');s.className='combo-spark';s.style.left='50%';s.style.top='42%';s.style.background=cols[i%5];el.appendChild(s);var a=Math.random()*6.28,d=70+Math.random()*90;requestAnimationFrame(function(){s.classList.add('go');s.style.opacity='1';s.style.transform='translate('+Math.cos(a)*d+'px,'+Math.sin(a)*d+'px) rotate('+(Math.random()*360)+'deg)';s.style.opacity='0'});setTimeout(function(){s.remove()},720)})()}
   el.classList.add("on");beep([784,988,1318,1568]);haptic("ok");
   clearTimeout(comboPop._t);comboPop._t=setTimeout(function(){el.classList.remove("on")},1350);
 }
+/* ---------- Yo'lakcha bezaklari: daraxt, bambuk, tosh, buta, pagoda, o't ---------- */
+var _DECOR=[
+ '<svg viewBox="0 0 64 64"><path d="M32 6 L46 28 H38 L50 46 H14 L26 28 H18 Z" fill="#3E8E5A"/><path d="M32 6 L46 28 H38 L50 46 H32 Z" fill="#337A4C"/><rect x="29" y="46" width="6" height="10" rx="2" fill="#8A5A2B"/></svg>',
+ '<svg viewBox="0 0 64 64"><rect x="18" y="10" width="6" height="46" rx="3" fill="#57A773"/><rect x="30" y="4" width="6" height="52" rx="3" fill="#6BBF8A"/><rect x="42" y="14" width="6" height="42" rx="3" fill="#57A773"/><path d="M36 14 q10 -8 14 -4" stroke="#6BBF8A" stroke-width="3" fill="none" stroke-linecap="round"/></svg>',
+ '<svg viewBox="0 0 64 64"><ellipse cx="24" cy="48" rx="14" ry="9" fill="#BFB4A2"/><ellipse cx="43" cy="51" rx="10" ry="6" fill="#D2C8B7"/><ellipse cx="23" cy="45" rx="10" ry="6" fill="#D2C8B7"/></svg>',
+ '<svg viewBox="0 0 64 64"><ellipse cx="32" cy="48" rx="18" ry="10" fill="#5FA97C"/><ellipse cx="20" cy="43" rx="9" ry="7" fill="#6FBF8D"/><ellipse cx="43" cy="43" rx="9" ry="7" fill="#6FBF8D"/><circle cx="26" cy="44" r="2.5" fill="#F2A9B5"/><circle cx="38" cy="47" r="2.5" fill="#F2A9B5"/><circle cx="32" cy="40" r="2.5" fill="#FFD66B"/></svg>',
+ '<svg viewBox="0 0 64 64"><path d="M10 24 Q32 4 54 24 Z" fill="#D95A50"/><path d="M16 24 Q32 12 48 24 Z" fill="#C0453C"/><rect x="24" y="24" width="16" height="9" fill="#F6E7CC"/><path d="M12 40 Q32 26 52 40 Z" fill="#D95A50"/><rect x="21" y="40" width="22" height="12" fill="#F6E7CC"/><rect x="29" y="44" width="6" height="8" fill="#8A5A2B"/></svg>',
+ '<svg viewBox="0 0 64 64"><path d="M20 54 q-2 -12 4 -18 q2 10 2 18 Z" fill="#69B586"/><path d="M30 54 q0 -16 6 -22 q2 12 0 22 Z" fill="#57A773"/><path d="M42 54 q4 -10 0 -16 q-4 8 -4 16 Z" fill="#69B586"/><ellipse cx="32" cy="55" rx="16" ry="4" fill="#7CC79A" opacity=".5"/></svg>'
+];
+function scenerySvg(i){return _DECOR[((i%_DECOR.length)+_DECOR.length)%_DECOR.length]}
+/* ---------- Dopamine helpers: flame / chest / goal ring ---------- */
+function flameSvg(){
+  return '<svg viewBox="0 0 100 100"><g class="sk-flick">'
+    +'<path d="M50 6 C57 22 76 32 76 56 A26 28 0 0 1 24 56 C24 42 34 33 39 20 C43 29 48 30 50 6 Z" fill="#E04A40"/>'
+    +'<path d="M50 36 C55 47 66 51 66 64 A16 17 0 0 1 34 64 C34 54 43 50 46 41 C48 46 49 44 50 36 Z" fill="#E9A916"/>'
+    +'<ellipse cx="50" cy="67" rx="9" ry="10" fill="#FFF3D6"/></g></svg>';
+}
+function validIsoDay(v){return /^\d{4}-\d{2}-\d{2}$/.test(String(v||""))}
+function shiftIsoDay(iso,delta){
+  var p=String(iso||"").split("-").map(Number);
+  if(p.length!==3||!p[0]||!p[1]||!p[2])return "";
+  var d=new Date(Date.UTC(p[0],p[1]-1,p[2]+Number(delta||0)));
+  return d.getUTCFullYear()+"-"+String(d.getUTCMonth()+1).padStart(2,"0")+"-"+String(d.getUTCDate()).padStart(2,"0");
+}
+function browserLocalIso(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function mondayIso(localIso){
+  var p=String(localIso||"").split("-").map(Number),d=new Date(Date.UTC(p[0],p[1]-1,p[2]));
+  return shiftIsoDay(localIso,-((d.getUTCDay()+6)%7));
+}
+function weekCalendarMeta(source){
+  var p=source||((MAP&&MAP.progress)||{}),local=validIsoDay(p.local_date)?p.local_date:browserLocalIso();
+  var start=validIsoDay(p.week_start)?p.week_start:mondayIso(local),dates=[];
+  for(var i=0;i<7;i++)dates.push(shiftIsoDay(start,i));
+  var raw=Array.isArray(p.week_activity_dates)?p.week_activity_dates:[],active={};
+  raw.forEach(function(x){if(validIsoDay(x))active[x]=true});
+  return {dates:dates,active:active,today:Math.max(0,dates.indexOf(local)),real:Array.isArray(p.week_activity_dates)&&validIsoDay(p.week_start)};
+}
+function weekActiveCount(source,streak){
+  var m=weekCalendarMeta(source),count=0;
+  m.dates.forEach(function(day,i){if(m.real?m.active[day]:(i<=m.today&&(m.today-i)<Number(streak||0)))count++});
+  return count;
+}
+function skDaysHtml(streak,animateToday,source){
+  var p=pl(),m=weekCalendarMeta(source);
+  return p.calDays.map(function(d,i){
+    var on=m.real?!!m.active[m.dates[i]]:(i<=m.today&&(m.today-i)<Number(streak||0));
+    return '<div class="sk-day'+(on?" on":"")+(i===m.today?" tod":"")+(animateToday&&on&&i===m.today?" just":"")+'"><span>'+d+'</span><span class="c">'+(on?'<i class="ti ti-check"></i>':"")+'</span></div>';
+  }).join("");
+}
+function skWeekGoalHtml(source){
+  var streak=Number(source&&source.now||MAP&&MAP.progress&&MAP.progress.streak||0),count=weekActiveCount(source,streak),left=Math.max(0,7-count);
+  var W={ru:{title:"Активность за неделю",left:"До цели: {n} дн.",done:"Недельная цель выполнена!"},uz:{title:"Haftalik faollik",left:"Marragacha {n} kun",done:"Haftalik marra bajarildi!"},tj:{title:"Фаъолияти ҳафта",left:"То ҳадаф {n} рӯз",done:"Ҳадафи ҳафта иҷро шуд!"}}[LANG];
+  return '<div class="sk-weekgoal'+(count===7?" done":"")+'"><div class="sk-weekhead"><b>'+W.title+'</b><span>'+count+' / 7</span></div><div class="sk-weekbar"><i style="width:'+Math.round(count/7*100)+'%"></i></div><div style="font-size:11px;color:rgba(255,255,255,.58);margin-top:7px">'+(count===7?W.done:W.left.replace("{n}",left))+'</div></div>';
+}
+function chestT(){return {
+  ru:{soon:"Сундук ещё закрыт",left:"Осталось {n} XP",got:"Награда из сундука!",cont:"Продолжить",note:"Зарабатывай XP на уроках — и сундук откроется!"},
+  uz:{soon:"Sandiq hali yopiq",left:"Yana {n} XP kerak",got:"Sandiqdan sovg'a!",cont:"Davom etish",note:"Darslarda XP yig'ing — sandiq ochiladi!"},
+  tj:{soon:"Сандуқ ҳоло пӯшида аст",left:"Боз {n} XP лозим",got:"Тӯҳфа аз сандуқ!",cont:"Идома",note:"Дар дарсҳо XP ҷамъ кунед — сандуқ кушода мешавад!"}}[LANG]}
+function chestSvg(){
+  return '<svg viewBox="0 0 120 100"><g>'
+    +'<rect x="14" y="44" width="92" height="46" rx="8" fill="#8A5A2B" stroke="#5C3A18" stroke-width="3"/>'
+    +'<rect x="52" y="44" width="16" height="46" fill="#FFC800" stroke="#B8860B" stroke-width="2"/>'
+    +'<g class="chest-lid"><path d="M14 48 a46 27 0 0 1 92 0 z" fill="#A66B33" stroke="#5C3A18" stroke-width="3"/>'
+    +'<rect x="52" y="26" width="16" height="22" fill="#FFC800" stroke="#B8860B" stroke-width="2"/></g>'
+    +'<circle cx="60" cy="60" r="7" fill="#FFC800" stroke="#B8860B" stroke-width="2"/></g></svg>';
+}
+function dailyXpVal(){var p=(MAP&&MAP.progress)||{};return Number(typeof p.daily_xp!=="undefined"?p.daily_xp:(p.xp||0)%50)||0}
+function goalRingHtml(){
+  var dx=dailyXpVal(),r=Math.min(dx/dailyGoal,1),off=(100.5-100.5*r).toFixed(1);
+  return '<span class="goalring'+(r>=1?" full":"")+'" id="goalring" onclick="App.show(\'profile\');renderProfile()">'
+    +'<svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="var(--line)" stroke-width="5"/>'
+    +'<circle cx="20" cy="20" r="16" fill="none" stroke="'+(r>=1?"var(--gold)":"var(--cin)")+'" stroke-width="5" stroke-linecap="round" stroke-dasharray="100.5" stroke-dashoffset="'+off+'" transform="rotate(-90 20 20)"/></svg>'
+    +'<span class="gr-ic"><i class="ti ti-'+(r>=1?"check":"target-arrow")+'"></i></span></span>';
+}
+/* Dars tugagach kurs ekraniga qaytganda XP raqamlari halqaga "uchib" boradi */
+function flyXp(xp){
+  if(!xp)return;
+  var tgt=$("#goalring");if(!tgt)return;
+  var wasFull=dailyXpVal()-xp>=dailyGoal;
+  var cnt=Math.min(5,3+Math.floor(xp/20)),per=Math.max(1,Math.round(xp/cnt));
+  for(var i=0;i<cnt;i++){(function(i){
+    var s=document.createElement("span");s.className="xpfly";s.textContent="+"+per;
+    var x0=innerWidth/2-20+(Math.random()*70-35),y0=innerHeight/2+(Math.random()*50-25);
+    s.style.left=x0+"px";s.style.top=y0+"px";document.body.appendChild(s);
+    setTimeout(function(){
+      var r2=tgt.getBoundingClientRect();
+      s.style.transform="translate("+(r2.left+r2.width/2-x0)+"px,"+(r2.top+r2.height/2-y0)+"px) scale(.45)";
+      s.style.opacity="0";
+    },80+i*150);
+    setTimeout(function(){s.remove()},1250+i*150);
+  })(i)}
+  setTimeout(function(){
+    var g=$("#goalring");
+    if(g&&dailyXpVal()>=dailyGoal){if(!wasFull)haptic("heavy");if(!g.classList.contains("full")){renderCourse()}}
+  },1300);
+}
 var writeChar="",writeMeta={};
 function setWriteBtn(ch,meta){writeChar=ch||"";writeMeta=meta||{};var b=$("#writebtn");if(b)b.style.display=writeChar?"flex":"none";}
+/* Pinyin ko'rsatish rejimi: all (default) / new (faqat yangi so'z kartasi) / off */
+function pinyinMode(){try{var v=localStorage.getItem("hsk_v3_pinyin");return v==="new"||v==="off"?v:"all"}catch(e){return "all"}}
+function applyPinyinMode(){var f=$("#flow");if(!f)return;var m=pinyinMode();f.classList.toggle("pyoff",m==="off");f.classList.toggle("pynew",m==="new")}
 function renderFlowCard(){
   Flow.answered=false;hideBar();flowProg();
   if(Flow.i>=Flow.queue.length){return flowDone()}
+  saveLessonResume();
+  prefetchUpcomingAudio();
+  applyPinyinMode();
   var c=Flow.queue[Flow.i],b=$("#f-body"),cta=$("#f-cta");cta.style.display="flex";cta.innerHTML='<i class="ti ti-arrow-right"></i> '+(Flow.i<Flow.queue.length-1?T().cont:T().check);
   var t=c.type;
   trackFlowCard(c);
@@ -1485,11 +1962,22 @@ function renderFlowCard(){
   if(t==="_grammar")return cardGrammar(c.g);
   if(t==="_dialogue")return cardDialogue(c.d);
   if(t==="sentence_builder")return cardBuilder(c);
+  if(t==="reverse_builder")return cardReverse(c);
   if(t==="match_pairs")return cardMatch(c);
   if(t==="pronunciation")return cardPron(c);
   return cardChoice(c); /* meaning_guess, pinyin_choice, hanzi_choice, translation_choice, quick_quiz, gap_fill, listening_choice, dialog_context */
 }
 function teachContinue(){var cta=$("#f-cta");cta.style.display="flex"}
+function renderCheer(){
+  var M={uz:["Xato — o'rganishning bir qismi! Aynan shu payt miya o'sadi 💪","Hechqisi yo'q! Har bir xato sizni kuchliroq qiladi 🐼"],
+    ru:["Не расстраивайтесь из-за ошибок: на них мы учимся! 💪","Ничего страшного! Каждая ошибка делает вас сильнее 🐼"],
+    tj:["Аз хатоҳо хафа нашавед: мо аз онҳо меомӯзем! 💪","Ҳеҷ гап не! Ҳар хато шуморо қавитар мекунад 🐼"]}[LANG]||[];
+  var msg=M[Math.floor(Math.random()*M.length)]||"";
+  setWriteBtn("");hideBar();
+  $("#f-body").innerHTML='<div class="cheer"><div class="cpd">'+pandaChar("happy")+'</div><div class="cbub">'+esc(msg)+'</div></div>';
+  var cta=$("#f-cta");cta.style.display="flex";cta.innerHTML='<i class="ti ti-arrow-right"></i> '+T().cont;
+  haptic("light");
+}
 function _wrongWordOptions(words,field,correct){
   var vals=(words||[]).map(function(c){var w=c.word||{};return field==="meaning"?tr(w.meaning):w.zh}).filter(Boolean);
   vals=vals.filter(function(v,i,a){return v!==correct&&a.indexOf(v)===i}).slice(0,3);
@@ -1501,13 +1989,7 @@ function _choiceFromWord(c,opts,correctIndex,title,question,headHtml){
   $("#f-body").innerHTML='<div class="qq">'+esc(title)+'</div>'+headHtml+opts.map(function(o,k){return '<button class="opt" data-k="'+k+'" onclick="Flow.pick(this,'+k+')"><span class="k">'+"ABCD"[k]+'</span>'+esc(o)+'</button>'}).join("");
   c.options=opts;c.correct_index=correctIndex;c.title=title;c.prompt=question;c.explanation={uz:"To'g'ri javob: "+opts[correctIndex],ru:"Правильный ответ: "+opts[correctIndex],tj:"Ҷавоби дуруст: "+opts[correctIndex]};
 }
-function cardWordFlash(c){
-  var w=c.word||{};$("#f-cta").style.display="flex";
-  $("#f-body").innerHTML='<span class="kicker k-word"><i class="ti ti-sparkles"></i> '+T().newWord+'</span>'
-    +'<div class="wc"><div class="big han">'+esc(w.zh||"")+'</div><div class="py">'+esc(w.pinyin||"")+'<button class="audio" onclick="speak(\''+esc(w.zh||"")+'\')"><i class="ti ti-volume"></i></button></div>'
-    +'<div><span class="pos">'+esc(w.pos||"")+'</span></div><div class="mn">'+esc(tr(w.meaning))+'</div></div>';
-  setTimeout(function(){speak(w.zh||"")},250);
-}
+function cardWordFlash(c){cardWord(c)}
 function cardWordListen(c){
   var w=c.word||{};var opts=[w.zh].concat(_wrongWordOptions(c.words,"hanzi",w.zh)).slice(0,4);
   opts=opts.map(function(v,i){return {v:v,sort:Math.random()+i/100}}).sort(function(a,b){return a.sort-b.sort}).map(function(x){return x.v});
@@ -1528,11 +2010,21 @@ function cardWordHanzi(c){
   _choiceFromWord(c,opts,opts.indexOf(w.zh),LANG==="ru"?"Выберите слово":LANG==="tj"?"Калимаро интихоб кунед":"So'zni tanlang",{},head);
 }
 function cardWord(c){
-  var w=c.word;$("#f-cta").style.display="flex";
-  $("#f-body").innerHTML='<span class="kicker k-word"><i class="ti ti-sparkles"></i> '+T().newWord+'</span>'
-    +'<div class="wc"><div class="big han">'+esc(w.zh)+'</div><div class="py">'+esc(w.pinyin)+'<button class="audio" onclick="speak(\''+esc(w.zh)+'\')"><i class="ti ti-volume"></i></button></div>'
-    +'<div><span class="pos">'+esc(w.pos||"")+'</span></div><div class="mn">'+esc(tr(w.meaning))+'</div></div>';
-  setTimeout(function(){speak(w.zh)},250);
+  /* Duolingo uslubi: avval "YANGI SO'Z" bayram-kartasi (sparkle + katta hanzi),
+     keyin pinyin/ma'no o'zi ochilib chiqadi — quruq flash-karta emas. */
+  var w=c.word||{};$("#f-cta").style.display="none";
+  var NW={uz:"YANGI SO'Z",ru:"НОВОЕ СЛОВО",tj:"КАЛИМАИ НАВ"}[LANG]||"YANGI SO'Z";
+  $("#f-body").innerHTML='<div class="nw">'
+    +'<span class="nw-spark s1"><i class="ti ti-sparkles"></i></span><span class="nw-spark s2"><i class="ti ti-north-star"></i></span><span class="nw-spark s3"><i class="ti ti-sparkles"></i></span>'
+    +'<div class="nw-card"><div class="big han">'+esc(w.zh||"")+'</div></div>'
+    +'<div class="nw-label">'+esc(NW)+'</div></div>'
+    +'<div class="nw-info" id="nwinfo">'
+    +'<div class="pyrow"><span class="py">'+esc(w.pinyin||"")+'</span>'+(w.pos?'<span class="pos">'+esc(w.pos)+'</span>':'')+'</div>'
+    +'<div class="mn">'+esc(tr(w.meaning))+'</div>'
+    +'<button class="wl-au" onclick="speak(\''+esc(w.zh||"")+'\')"><i class="ti ti-volume"></i>'+esc(T().listen)+'</button></div>';
+  beep([784,1046]);haptic("light");
+  setTimeout(function(){speak(w.zh||"")},400);
+  setTimeout(function(){var el=$("#nwinfo");if(el)el.classList.add("on");$("#f-cta").style.display="flex"},900);
 }
 function GRT(){return ({
   uz:{teacher:"Teacher Alex",structure:"Tuzilma",negation:"Inkor",next:"Davom etish",done:"Tushundim",intro:"Keling, birga o'rganamiz:"},
@@ -1541,7 +2033,7 @@ function GRT(){return ({
 })[LANG]||({teacher:"Teacher Alex",structure:"Tuzilma",negation:"Inkor",next:"Davom etish",done:"Tushundim",intro:"Keling, birga o'rganamiz:"})}
 function parseRule(t){
   var lines=String(t||"").split("\n").map(function(s){return s.trim()}).filter(Boolean);
-  var KW={struct:["Tuzilma:","Структура:","Сохтор:"],neg:["Inkor:","Отрицание:","Инкор:"],ex:["Misol:","Misollar:","Пример:","Примеры:","Мисол:","Мисолҳо:"]};
+  var KW={struct:["Tuzilma:","Структура:","Сохт:"],neg:["Inkor:","Отрицание:","Инкор:"],ex:["Misol:","Misollar:","Пример:","Примеры:","Мисол:","Мисолҳо:"]};
   var R={lead:"",structure:"",negation:"",notes:[]},hitEx=false;
   lines.forEach(function(ln){
     if(KW.ex.some(function(k){return ln.indexOf(k)===0})){hitEx=true;return}
@@ -1592,20 +2084,42 @@ function cardDialogue(d){
   $("#f-body").innerHTML='<span class="kicker k-dia"><i class="ti ti-messages"></i> '+T().dialog+'</span><div class="dia"><div class="scene"><i class="ti ti-map-pin"></i> '+esc(tr(d.scene))+'</div>'+lines+'</div>';
 }
 function optText(o){return typeof o==="string"?o:tr(o)}
+function rememberLessonMistake(c,answer){
+  if(Flow.lessonIdx===null||Flow.challenge||Flow.test)return;
+  if(!c||!c._materialRef||!answer||typeof answer!=="object")return;
+  var item={material_ref:String(c._materialRef)};
+  if(typeof answer.selected_index==="number")item.selected_index=answer.selected_index;
+  if(typeof answer.selected_answer==="string")item.selected_answer=answer.selected_answer;
+  if(Array.isArray(answer.selected_tokens))item.selected_tokens=answer.selected_tokens.slice(0,30).map(String);
+  Flow.mistakes=Flow.mistakes||[];
+  Flow.mistakes.push(item);
+}
 function cardChoice(c){
   $("#f-cta").style.display="none";
   var t=c.type,head="",audio="";
-  if(t==="listening_choice"){audio='<div class="qcard"><button class="audio" onclick="speak(\''+esc(c.audio_text||"")+'\')"><i class="ti ti-volume"></i></button></div>';head='';setTimeout(function(){speak(c.audio_text)},250)}
+  /* Server (challenge/mashq) savollarida gap alohida `sentence` maydonida
+     keladi — uni ko'rsatmasak "Gapdagi so'zni tanlang" gapisiz chiqadi. */
+  var sent=c.sentence?'<div class="gap han" style="margin-top:10px">'+esc(c.sentence).replace("____","<u>?</u>")+'</div>':"";
+  if(t==="listening_choice"){audio='<div class="qcard"><button class="audio" onclick="speak(\''+esc(c.audio_text||"")+'\')"><i class="ti ti-volume"></i></button>'+sent+'</div>';head='';setTimeout(function(){speak(c.audio_text)},250)}
   else if(t==="gap_fill"){head='<div class="qcard"><div class="gap han">'+esc(c.sentence||"").replace("____","<u>?</u>")+'</div></div>'}
   else if(t==="dialog_context"){var dl=(c.dialog||[]).map(function(l){return '<div class="line '+l.speaker+'"><div class="ava">'+l.speaker+'</div><div class="bub"><div class="z3 han">'+esc(l.text)+'</div></div></div>'}).join("");head='<div class="dia">'+dl+'</div>'}
   else if(t==="dialog_cloze"){var dl2=(c.lines||[]).map(function(l){var body=l.blank?'<div class="z3 han cloze-gap">？</div>':'<div class="z3 han">'+esc(l.zh)+'</div>';return '<div class="line '+esc(l.speaker)+'"><div class="ava">'+esc(l.speaker)+'</div><div class="bub">'+body+'</div></div>'}).join("");head='<div class="dia">'+dl2+'</div>'}
-  else{var p=tr(c.prompt);head='<div class="qcard"><div class="qh qask han">'+esc(p)+'</div></div>'}
+  else{var p=tr(c.prompt);head='<div class="qcard"><div class="qh qask han">'+esc(p)+'</div>'+sent+'</div>'}
   var opts=(c.options||[]).map(function(o,k){return '<button class="opt" data-k="'+k+'" onclick="Flow.pick(this,'+k+')"><span class="k">'+"ABCD"[k]+'</span>'+esc(optText(o))+'</button>'}).join("");
   $("#f-body").innerHTML='<div class="qq">'+esc(tr(c.title)||"")+'</div>'+audio+head+opts;
 }
 Flow.pick=function(el,k){
   if(Flow.answered)return;Flow.answered=true;
   var c=Flow.queue[Flow.i];document.querySelectorAll("#f-body .opt").forEach(function(o){o.style.pointerEvents="none"});
+  /* Bellashuvda answer key klientga berilmaydi. Javob faqat belgilanadi,
+     server raund oxirida baholaydi — brauzerdan to'g'ri javobni ko'rib bo'lmaydi. */
+  if(Flow.challenge&&(c.correct_index===null||typeof c.correct_index==="undefined")){
+    Flow.graded=(Flow.graded||0)+1;
+    Flow.challenge.answers=Flow.challenge.answers||[];
+    Flow.challenge.answers.push({question_id:c.id,selected_index:k});
+    el.classList.add("sel");beep([523,659]);haptic("light");
+    showBar(true,chL().answerSaved,chL().answerSavedSub);return;
+  }
   var ok=k===c.correct_index;Flow.graded=(Flow.graded||0)+1;if(ok)Flow.correct=(Flow.correct||0)+1;
   if(Flow.challenge&&c.id){
     Flow.challenge.answers=Flow.challenge.answers||[];
@@ -1613,6 +2127,7 @@ Flow.pick=function(el,k){
   }
   document.querySelectorAll("#f-body .opt").forEach(function(o){if(+o.dataset.k===c.correct_index)o.classList.add("sel")});
   if(!ok)el.classList.add("bad");
+  if(!ok)rememberLessonMistake(c,{selected_index:k,selected_answer:optText(c.options&&c.options[k])});
   beep(ok?[660,880]:[200,150]);haptic(ok?"ok":"no");
   if(!ok){HP=Math.max(0,HP-1);$("#f-hp").textContent=HP}
   showBar(ok,ok?T().correct:T().wrong,ok?tr(c.explanation):T().rightAns+" "+(c.options&&typeof c.options[c.correct_index]!=="undefined"?optText(c.options[c.correct_index]):""));
@@ -1624,11 +2139,32 @@ function cardBuilder(c){
   var line=[]; /* chosen bank indices, in order — index-based so duplicate tiles work */
   function draw(){
     $("#bld-line").innerHTML=line.map(function(bi,pos){return '<button class="tok han" onclick="window._bldUn('+pos+')">'+esc(bank[bi])+'</button>'}).join("");
-    $("#bld-bank").innerHTML=bank.map(function(x,i){return line.indexOf(i)>=0?'':'<button class="tok han" onclick="window._bldAdd('+i+')">'+esc(x)+'</button>'}).join("");
+    $("#bld-bank").innerHTML=bank.map(function(x,i){return line.indexOf(i)>=0?'<span class="tok han ghost" aria-hidden="true">'+esc(x)+'</span>':'<button class="tok han" onclick="window._bldAdd('+i+')">'+esc(x)+'</button>'}).join("");
   }
   window._bldAdd=function(i){if(Flow.answered)return;if(line.indexOf(i)>=0)return;line.push(i);draw();if(line.length===(c.answer_tokens||[]).length){check()}};
   window._bldUn=function(pos){if(Flow.answered)return;line.splice(pos,1);draw()};
-  function check(){Flow.answered=true;var built=line.map(function(bi){return bank[bi]});var ok=JSON.stringify(built)===JSON.stringify(c.answer_tokens);Flow.graded=(Flow.graded||0)+1;if(ok)Flow.correct=(Flow.correct||0)+1;beep(ok?[660,880]:[200,150]);haptic(ok?"ok":"no");if(!ok){HP=Math.max(0,HP-1);$("#f-hp").textContent=HP}showBar(ok,ok?T().correct:T().wrong,(c.answer_tokens||[]).join(" ")+" — "+tr(c.explanation))}
+  function check(){Flow.answered=true;var built=line.map(function(bi){return bank[bi]});var ok=JSON.stringify(built)===JSON.stringify(c.answer_tokens);Flow.graded=(Flow.graded||0)+1;if(ok)Flow.correct=(Flow.correct||0)+1;beep(ok?[660,880]:[200,150]);haptic(ok?"ok":"no");if(!ok){HP=Math.max(0,HP-1);$("#f-hp").textContent=HP;rememberLessonMistake(c,{selected_tokens:built})}showBar(ok,ok?T().correct:T().wrong,(c.answer_tokens||[]).join(" ")+" — "+tr(c.explanation))}
+  draw();
+}
+function cardReverse(c){
+  /* Duolingo yadro mashqi: ustoz xitoy gapni aytadi — TARJIMASINI ona tili
+     plitkalaridan yig'asiz (teskari builder). */
+  $("#f-cta").style.display="none";
+  var RT={uz:"Gapni tarjima qiling",ru:"Переведите предложение",tj:"Ҷумларо тарҷума кунед"}[LANG]||"Gapni tarjima qiling";
+  var bank=(((c.tokens||{})[LANG])||[]).slice(),ans=(((c.answer_tokens||{})[LANG])||[]);
+  if(!bank.length||!ans.length)return cardChoice(c);
+  $("#f-body").innerHTML='<div class="qq">'+esc(RT)+'</div>'
+    +'<div class="teach"><div class="teach-pd">'+pandaChar("talk")+'</div><div class="teach-bub say-bub"><button class="au" onclick="speak(\''+esc(c.zh||"")+'\')"><i class="ti ti-volume"></i></button><div class="z4 han">'+esc(c.zh||"")+'</div><div class="p4">'+esc(c.pinyin||"")+'</div></div></div>'
+    +'<div class="tokens" id="bld-line"></div><div class="bank" id="bld-bank"></div>';
+  setTimeout(function(){speak(c.zh)},350);
+  var line=[]; /* tanlangan bank indekslari — takroriy plitkalar to'g'ri ishlashi uchun */
+  function draw(){
+    $("#bld-line").innerHTML=line.map(function(bi,pos){return '<button class="tok" onclick="window._bldUn('+pos+')">'+esc(bank[bi])+'</button>'}).join("");
+    $("#bld-bank").innerHTML=bank.map(function(x,i){return line.indexOf(i)>=0?'<span class="tok ghost" aria-hidden="true">'+esc(x)+'</span>':'<button class="tok" onclick="window._bldAdd('+i+')">'+esc(x)+'</button>'}).join("");
+  }
+  window._bldAdd=function(i){if(Flow.answered)return;if(line.indexOf(i)>=0)return;line.push(i);draw();if(line.length===ans.length){check()}};
+  window._bldUn=function(pos){if(Flow.answered)return;line.splice(pos,1);draw()};
+  function check(){Flow.answered=true;var built=line.map(function(bi){return bank[bi]});var ok=built.join(" ")===ans.join(" ");Flow.graded=(Flow.graded||0)+1;if(ok)Flow.correct=(Flow.correct||0)+1;beep(ok?[660,880]:[200,150]);haptic(ok?"ok":"no");if(!ok){HP=Math.max(0,HP-1);$("#f-hp").textContent=HP;rememberLessonMistake(c,{selected_tokens:built})}showBar(ok,ok?T().correct:T().wrong,ans.join(" ")+" — "+(c.zh||""))}
   draw();
 }
 function cardMatch(c){
@@ -1654,10 +2190,24 @@ var PRON_L={
 };
 function _prL(){return PRON_L[LANG]||PRON_L.ru}
 function cardPron(c){
+  /* Duolingo uslubi: ustoz (panda) nutq pufagida gapiradi — "ustozdan keyin
+     takrorlang" + gapira olmaganlar uchun jarimasiz o'tkazish. */
   $("#f-cta").style.display="none";
-  $("#f-body").innerHTML='<span class="kicker k-check"><i class="ti ti-microphone"></i> '+T().say+'</span><div class="qcard"><div class="qh han">'+esc(c.phrase)+'</div><div class="qpy">'+esc(c.pinyin)+'</div><button class="audio" onclick="speak(\''+esc(c.phrase)+'\')"><i class="ti ti-volume"></i></button></div>'
-    +'<button class="scta" id="pron-btn" onclick="window._pron()"><i class="ti ti-microphone"></i> '+T().say+'</button><div id="pron-hint" style="text-align:center;color:var(--ink3);font-size:13px;margin-top:8px;min-height:18px"></div>';
+  var RT={uz:{t:"Li ustozdan keyin takrorlang",skip:"HOZIR GAPIRA OLMAYMAN"},
+    ru:{t:"Повторите за учителем Ли",skip:"Я СЕЙЧАС НЕ МОГУ ГОВОРИТЬ"},
+    tj:{t:"Аз паси устод Ли такрор кунед",skip:"ҲОЗИР ГАП ЗАДА НАМЕТАВОНАМ"}}[LANG]||{t:"Takrorlang",skip:"KEYINROQ"};
+  $("#f-body").innerHTML='<div class="qq">'+esc(RT.t)+'</div>'
+    +'<div class="teach"><div class="teach-pd">'+pandaChar("talk")+'</div><div class="teach-bub say-bub"><button class="au" onclick="speak(\''+esc(c.phrase)+'\')"><i class="ti ti-volume"></i></button><div class="z4 han">'+esc(c.phrase)+'</div><div class="p4">'+esc(c.pinyin||"")+'</div>'+(c.translation?'<div class="t4">'+esc(tr(c.translation))+'</div>':'')+'</div></div>'
+    +'<button class="scta" id="pron-btn" onclick="window._pron()"><i class="ti ti-microphone"></i> '+T().say+'</button><div id="pron-hint" style="text-align:center;color:var(--ink3);font-size:13px;margin-top:8px;min-height:18px"></div>'
+    +'<button class="pron-skip" onclick="window._pronSkip()">'+esc(RT.skip)+'</button>';
+  setTimeout(function(){speak(c.phrase)},350);
   var st={stream:null,rec:null,chunks:[],auto:null};
+  window._pronSkip=function(){
+    if(Flow.answered)return;
+    try{clearTimeout(st.auto);if(st.rec&&st.rec.state!=="inactive"){st.rec.onstop=null;st.rec.stop()}}catch(e){}
+    try{if(st.stream)st.stream.getTracks().forEach(function(t){t.stop()})}catch(e){}
+    Flow.answered=true;Flow.next();
+  };
   function setBtn(label){var b=$("#pron-btn");if(b)b.innerHTML='<i class="ti ti-microphone"></i> '+label}
   function hint(t){var h=$("#pron-hint");if(h)h.textContent=t||""}
   function release(){try{if(st.stream)st.stream.getTracks().forEach(function(t){t.stop()})}catch(e){}st.stream=null}
@@ -1701,6 +2251,12 @@ function cardPron(c){
 }
 Flow.next=function(){
   hideBar();
+  /* Duolingo uslubi: darsdagi BIRINCHI xatodan keyin panda dalda ekrani —
+     user xatodan qo'rqmasligi kerak ("xatolardan o'rganamiz"). */
+  if(Flow._wrongPending&&!Flow._cheered&&Flow.lessonIdx!==null){
+    Flow._cheered=true;Flow._wrongPending=false;return renderCheer();
+  }
+  Flow._wrongPending=false;
   var nextI=Flow.i+1;
   trackSectionCompleted(Flow.queue&&Flow.queue[Flow.i],nextI);
   /* 2-dars (preview_half): yarmiga yetganda darsni to'xtatib, obuna oynasini
@@ -1710,7 +2266,7 @@ Flow.next=function(){
   }
   Flow.i=nextI;if(Flow.i>=Flow.queue.length){flowDone()}else{renderFlowCard()}
 };
-function luRain(){var cols=['#C2403A','#C2962F','#2F7D5E','#E8D08A','#fff'],el=$("#levelup");for(var n=0;n<24;n++){(function(){var c=document.createElement('span');c.className='lu-conf';c.style.left=(4+Math.random()*92)+'%';c.style.background=cols[n%5];el.appendChild(c);var dx=Math.random()*70-35,rot=Math.random()*720-360;requestAnimationFrame(function(){c.classList.add('fall');c.style.transform='translate('+dx+'px,760px) rotate('+rot+'deg)';c.style.opacity='0'});setTimeout(function(){c.remove()},1750)})()}}
+function luRain(){var cols=['#FF5A4E','#FFC800','#58CC02','#49C0F8','#fff'],el=$("#levelup");for(var n=0;n<24;n++){(function(){var c=document.createElement('span');c.className='lu-conf';c.style.left=(4+Math.random()*92)+'%';c.style.background=cols[n%5];el.appendChild(c);var dx=Math.random()*70-35,rot=Math.random()*720-360;requestAnimationFrame(function(){c.classList.add('fall');c.style.transform='translate('+dx+'px,760px) rotate('+rot+'deg)';c.style.opacity='0'});setTimeout(function(){c.remove()},1750)})()}}
 var TOUR={i:0,steps:[],t:{}},TOURV=true,_tourAudio=null,TOUR_AUDIO_VER="20260628b";
 /* Asosiy ovoz oldindan tayyorlangan MP3. Fallback faqat mos native voice topilsa ishlaydi;
    UZ/TJ uchun turk/rusga majburiy fallback qilish talaffuzni buzadi. */
@@ -1759,31 +2315,63 @@ function adoptServerLang(d){
   /* Til yagona manbadan (botdagi user.language) keladi — server tilini qabul qilamiz. */
   if(d&&d.user&&d.user.language&&I18N[d.user.language])LANG=d.user.language;
 }
+/* Map yuklash — cold-start / tranzient server xatolarida ("birinchi ochkanda
+   API yiqildi") darrov "ulanmagan" gate ko'rsatilmaydi, bir necha marta qayta
+   uriniladi. Faqat haqiqiy 401 (auth) yoki initData yo'qligida gate chiqadi. */
+function _fetchCourseMap(lv){
+  var entrySource="";try{entrySource=new URLSearchParams(location.search||"").get("source")||""}catch(e){}
+  var url="/api/v3/map?lang="+LANG+"&level="+lv+"&tz="+encodeURIComponent(-new Date().getTimezoneOffset())
+    +"&sid="+encodeURIComponent(COURSE_SESSION_ID)+"&source="+encodeURIComponent(entrySource);
+  return fetch(url,{headers:{"X-Telegram-Init-Data":INIT_DATA}}).then(function(r){
+    return r.json().then(function(d){d._status=r.status;return d}).catch(function(){return {_status:r.status,_parseFail:true}});
+  });
+}
+function loadCourseMap(lv,tries){
+  tries=tries||0;
+  return _fetchCourseMap(lv).then(function(d){
+    if(d&&(d.authenticated===false||d._status===401))return {auth:false};
+    if(!d||d._parseFail||(d._status&&d._status>=500)){
+      if(tries<3)return _retryCourseMap(lv,tries);
+      return {error:true};
+    }
+    return {data:d};
+  }).catch(function(){
+    if(tries<3)return _retryCourseMap(lv,tries);
+    return {error:true};
+  });
+}
+function _retryCourseMap(lv,tries){return new Promise(function(res){setTimeout(res,500*(tries+1))}).then(function(){return loadCourseMap(lv,tries+1)})}
 function loadLevel(lv){
   lv=setSelectedLevel(lv);
   if(!INIT_DATA){showAuthGate();return;}
-  fetch("/api/v3/map?lang="+LANG+"&level="+lv+"&tz="+encodeURIComponent(-new Date().getTimezoneOffset()),{headers:{"X-Telegram-Init-Data":INIT_DATA}})
-    .then(function(r){return r.json().then(function(d){d._status=r.status;return d})})
-    .then(function(d){
-      if(!d||d.authenticated===false||d._status===401){showAuthGate();return;}
-      hideAuthGate();MAP=d;adoptServerLang(d);setSelectedLevel(MAP.level||lv);if(d.user)PROF=d.user;if(d.bot_username)BOT_USERNAME=d.bot_username;syncNotify();ratingLoaded=false;renderAll();App.show("course");prefetchNearbyLessons();
-    }).catch(function(){showAuthGate()});
+  loadCourseMap(lv).then(function(res){
+    if(!res.data){showAuthGate();return;}
+    var d=res.data;
+    hideAuthGate();MAP=d;adoptServerLang(d);adoptBotUsername(d);setSelectedLevel(MAP.level||lv);if(d.user)PROF=d.user;syncNotify();ratingLoaded=false;renderAll();App.show("course");prefetchNearbyLessons();
+  });
 }
 function applyLessonDone(cur,d){
   var rankBefore=currentRatingRank();
+  clearLessonResume((MAP&&MAP.level)||"hsk1",cur&&cur.n);
   var al=allLessons();
   cur.status="done";cur.stars=3;cur.locked_premium=false;
+  window._pendingStreak=null;window._pendingXpFly=0;
   if(d&&d.gamification&&MAP.progress){
+    var prevStreak=Number(MAP.progress.streak||0),newStreak=Number(d.gamification.streak||0);
+    if(newStreak>0)window._pendingStreak={prev:prevStreak,now:newStreak,extended:newStreak>prevStreak&&!d.gamification.duplicate};
+    window._pendingXpFly=Number(d.gamification.awarded_xp||0);
     MAP.progress.xp=d.gamification.xp||MAP.progress.xp;
     MAP.progress.streak=d.gamification.streak||MAP.progress.streak;
+    if(typeof d.gamification.daily_xp!=="undefined")MAP.progress.daily_xp=d.gamification.daily_xp;
+    if(d.gamification.reward_chest)MAP.progress.reward_chest=d.gamification.reward_chest;
     if(typeof d.completed_lessons_count!=="undefined")MAP.progress.completed=d.completed_lessons_count;
     ratingLoaded=false;
   }
   pendingRankUp=(d&&d.gamification&&!d.duplicate)?{before:rankBefore}:null;
   var ni=al.indexOf(cur)+1,next=ni<al.length?al[ni]:null;
-  /* Bepul user 1-darsni tugatgach, 2-dars yarim-preview bo'ladi (server ham
-     keyingi map'da shunday belgilaydi) — mahalliy holatni darhol moslaymiz. */
-  if(next&&!isPaidUser()&&next.n===2&&next.locked_premium){next.locked_premium=false;next.preview_half=true;next.status="current";}
+  /* Bepul user 2 mini-darsni tugatgach, 3-qism yarim-preview bo'ladi (server
+     ham keyingi map'da shunday belgilaydi) — mahalliy holatni darhol moslaymiz. */
+  if(next&&!isPaidUser()&&next.n===3&&next.locked_premium){next.locked_premium=false;next.preview_half=true;next.status="current";}
   if(next&&next.status==="locked"&&!isPremiumLocked(next))next.status="current";
   if(next&&isPremiumLocked(next))next.status="locked";
   renderAll();
@@ -1791,7 +2379,8 @@ function applyLessonDone(cur,d){
     var nxt=_NEXT_LEVEL[MAP.level||"hsk1"];
     if(nxt){App.showLevelUp("level",d);setTimeout(function(){loadLevel(nxt)},2200);return;}
   }
-  App.showLevelUp("lesson",d);
+  /* Checkpoint (HSK darsining yakuniy qismi) — kattaroq bayram varianti. */
+  App.showLevelUp(cur&&cur.checkpoint?"checkpoint":"lesson",d,{src:cur&&cur.src});
 }
 function flowDone(){
   if(Flow.challenge){return finishChallengeRound()}
@@ -1801,7 +2390,7 @@ function flowDone(){
   if(!cur){App.showLevelUp("lesson");return}
   if(!INIT_DATA){applyLessonDone(cur,null);return}
   var doneIdx=Flow.lessonIdx;
-  _apiPost("/api/v3/lesson/complete",{lesson_id:cur.n,level:MAP.level||"hsk1",lang:LANG})
+  _apiPost("/api/v3/lesson/complete",{lesson_id:cur.n,level:MAP.level||"hsk1",lang:LANG,session_id:COURSE_SESSION_ID,mistakes:(Flow.mistakes||[]).slice(0,50)})
     .then(function(r){return r.json().then(function(d){d._status=r.status;return d})})
     .then(function(d){
       if(!d.ok){
@@ -1896,6 +2485,15 @@ function ratingCountdownText(){
 	function courseLevelLabel(lv){
 	  lv=normalizeLevel(lv||((MAP&&MAP.level)||"hsk1"));
 	  return {hsk1:"Beginner",hsk2:"Elementary",hsk3:"Intermediate",hsk4:"Advanced"}[lv]||"Beginner";
+	}
+	/* Haqiqiy Telegram avatarlari: harf zaxira bo'lib qoladi, rasm ustidan yopadi.
+	   Rasm topilmasa (404) img o'chadi va harf ko'rinaveradi. */
+	function avatarImgHtml(tgId){return tgId?'<img class="avp" alt="" loading="lazy" src="/api/v3/avatar/'+Number(tgId)+'" onerror="this.remove()">':""}
+	function myTgUser(){try{return (tg&&tg.initDataUnsafe&&tg.initDataUnsafe.user)||{}}catch(e){return{}}}
+	function myAvatarImgHtml(){
+	  var u=myTgUser();
+	  var src=u.photo_url?String(u.photo_url):(u.id?"/api/v3/avatar/"+Number(u.id):"");
+	  return src?'<img class="avp" alt="" src="'+esc(src)+'" onerror="this.remove()">':"";
 	}
 	function normalizeSocialUser(u){
 	  u=u||{};
@@ -2001,7 +2599,7 @@ function _renderRatingContent(){
 	      var st=u.refStatus==="active"?r.active:r.pending;
 	      var badge='<span class="ref-badge '+(u.refStatus==="active"?"":"wait")+'">'+esc(st)+'</span>';
 	      var pm=u.p?'<span class="pm"><i class="ti ti-crown"></i></span>':'';
-	      h+='<div class="lr" onclick="openRatingUser('+i+',\'referrals\')"><span class="rk">'+(i+1)+'</span><span class="av">'+u.a+'</span><span class="nm">'+esc(u.n)+pm+'<small>'+badge+' · '+esc(courseLevelLabel(u.level||((MAP&&MAP.level)||"hsk1")))+' · '+esc(r.totalXp)+': '+u.totalXp.toLocaleString("ru")+'</small></span><span class="xp">'+ratingScore(u).toLocaleString("ru")+'</span></div>';
+	      h+='<div class="lr" onclick="openRatingUser('+i+',\'referrals\')"><span class="rk">'+(i+1)+'</span><span class="av">'+u.a+avatarImgHtml(u.tgId)+'</span><span class="nm">'+esc(u.n)+pm+'<small>'+badge+' · '+esc(courseLevelLabel(u.level||((MAP&&MAP.level)||"hsk1")))+' · '+esc(r.totalXp)+': '+u.totalXp.toLocaleString("ru")+'</small></span><span class="xp">'+ratingScore(u).toLocaleString("ru")+'</span></div>';
 	    });
 	    $("#s-rating").innerHTML=h;return;
 	  }
@@ -2021,7 +2619,7 @@ function _renderRatingContent(){
     if(ratingUsers.length>=8&&i===ratingUsers.length-2)h+='<div class="rt-zone dn"><span class="ln"></span><i class="ti ti-arrow-down"></i> '+r.demote+' <span class="ln"></span></div>';
     var rk=i<3?'<span class="med '+med[i]+'">'+(i+1)+'</span>':'<span class="rk">'+(i+1)+'</span>';
     var pm=u.p?'<span class="pm"><i class="ti ti-crown"></i></span>':'';
-	    h+='<div class="lr'+(u.me?' me':'')+'" onclick="openRatingUser('+i+',\'rating\')">'+rk+'<span class="av'+(u.me?' han':'')+'">'+u.a+'</span><span class="nm">'+esc(u.n)+pm+'</span><span class="xp">'+ratingScore(u).toLocaleString("ru")+'</span></div>';
+	    h+='<div class="lr'+(u.me?' me':'')+'" onclick="openRatingUser('+i+',\'rating\')">'+rk+'<span class="av'+(u.me?' han':'')+'">'+u.a+(u.me?myAvatarImgHtml():avatarImgHtml(u.tgId))+'</span><span class="nm">'+esc(u.n)+pm+'</span><span class="xp">'+ratingScore(u).toLocaleString("ru")+'</span></div>';
 	  });
   $("#s-rating").innerHTML=h;
 }
@@ -2079,9 +2677,9 @@ function toast(msg,dur){
     }).catch(function(){toast(LANG==="ru"?"Не удалось отправить вызов":LANG==="tj"?"Даъват фиристода нашуд":"Chaqiruv yuborilmadi",2400)});
 }
 function chL(){return {
-  ru:{title:"English-дуэль",load:"Загружаем дуэль…",same:"10 одинаковых вопросов для обоих игроков",mix:"Слова, произношение, перевод и грамматика вперемешку",accept:"Принять",reject:"Отклонить",start:"Начать раунд",wait:"Ожидаем соперника",waitSub:"Ваш результат сохранён. Когда соперник завершит раунд, бот пришлёт итог.",pending:"Соперник ещё не принял дуэль.",done:"Раунд завершён",youWon:"Вы победили",youLost:"Победил соперник",tie:"Ничья",score:"Счёт",xp:"XP получено",rating:"Открыть рейтинг",needTg:"Откройте в Telegram",err:"Дуэль не загрузилась",sent:"Результат сохранён"},
-  uz:{title:"English belashuv",load:"Belashuv yuklanyapti…",same:"Ikkala o'yinchiga 10 ta bir xil savol",mix:"So'z, talaffuz, tarjima va grammatika aralash",accept:"Qabul qilish",reject:"Rad qilish",start:"Raundni boshlash",wait:"Raqibni kutyapmiz",waitSub:"Natijangiz saqlandi. Raqib yakunlasa, bot yakuniy hisobni yuboradi.",pending:"Raqib hali belashuvni qabul qilmadi.",done:"Raund tugadi",youWon:"Siz yutdingiz",youLost:"Raqib yutdi",tie:"Durrang",score:"Hisob",xp:"XP olindi",rating:"Reytingni ochish",needTg:"Telegram ichida oching",err:"Belashuv yuklanmadi",sent:"Natija saqlandi"},
-  tj:{title:"Рақобати English",load:"Рақобат бор мешавад…",same:"Барои ҳар ду бозингар 10 саволи якхела",mix:"Калима, талаффуз, тарҷума ва грамматика омехта",accept:"Қабул",reject:"Рад кардан",start:"Оғози раунд",wait:"Рақибро интизорем",waitSub:"Натиҷаи шумо сабт шуд. Вақте рақиб анҷом диҳад, бот ҳисоби ниҳоиро мефиристад.",pending:"Рақиб ҳанӯз рақобатро қабул накардааст.",done:"Раунд анҷом шуд",youWon:"Шумо ғолиб шудед",youLost:"Рақиб ғолиб шуд",tie:"Мусовӣ",score:"Ҳисоб",xp:"XP гирифта шуд",rating:"Кушодани рейтинг",needTg:"Дар Telegram кушоед",err:"Рақобат бор нашуд",sent:"Натиҷа сабт шуд"}
+  ru:{title:"English-дуэль",load:"Загружаем дуэль…",same:"10 одинаковых вопросов для обоих игроков",mix:"Слова, произношение, перевод и грамматика вперемешку",accept:"Принять",reject:"Отклонить",start:"Начать раунд",wait:"Ожидаем соперника",waitSub:"Ваш результат сохранён. Когда соперник завершит раунд, бот пришлёт итог.",pending:"Соперник ещё не принял дуэль.",done:"Раунд завершён",youWon:"Вы победили",youLost:"Победил соперник",tie:"Ничья",score:"Счёт",xp:"XP получено",rating:"Открыть рейтинг",needTg:"Откройте в Telegram",err:"Дуэль не загрузилась",sent:"Результат сохранён",answerSaved:"Ответ принят",answerSavedSub:"Результат проверит сервер в конце раунда",review:"Разберите ошибки",correct:"Правильный ответ"},
+  uz:{title:"English belashuv",load:"Belashuv yuklanyapti…",same:"Ikkala o'yinchiga 10 ta bir xil savol",mix:"So'z, talaffuz, tarjima va grammatika aralash",accept:"Qabul qilish",reject:"Rad qilish",start:"Raundni boshlash",wait:"Raqibni kutyapmiz",waitSub:"Natijangiz saqlandi. Raqib yakunlasa, bot yakuniy hisobni yuboradi.",pending:"Raqib hali belashuvni qabul qilmadi.",done:"Raund tugadi",youWon:"Siz yutdingiz",youLost:"Raqib yutdi",tie:"Durrang",score:"Hisob",xp:"XP olindi",rating:"Reytingni ochish",needTg:"Telegram ichida oching",err:"Belashuv yuklanmadi",sent:"Natija saqlandi",answerSaved:"Javob qabul qilindi",answerSavedSub:"Natija raund oxirida serverda tekshiriladi",review:"Xatolarni takrorlang",correct:"To'g'ri javob"},
+  tj:{title:"Рақобати English",load:"Рақобат бор мешавад…",same:"Барои ҳар ду бозингар 10 саволи якхела",mix:"Калима, талаффуз, тарҷума ва грамматика омехта",accept:"Қабул",reject:"Рад кардан",start:"Оғози раунд",wait:"Рақибро интизорем",waitSub:"Натиҷаи шумо сабт шуд. Вақте рақиб анҷом диҳад, бот ҳисоби ниҳоиро мефиристад.",pending:"Рақиб ҳанӯз рақобатро қабул накардааст.",done:"Раунд анҷом шуд",youWon:"Шумо ғолиб шудед",youLost:"Рақиб ғолиб шуд",tie:"Мусовӣ",score:"Ҳисоб",xp:"XP гирифта шуд",rating:"Кушодани рейтинг",needTg:"Дар Telegram кушоед",err:"Рақобат бор нашуд",sent:"Натиҷа сабт шуд",answerSaved:"Ҷавоб қабул шуд",answerSavedSub:"Натиҷаро сервер дар охири раунд месанҷад",review:"Хатоҳоро такрор кунед",correct:"Ҷавоби дуруст"}
 }[LANG]||{}}
 function challengeScore(ch,role){
   var s=role==="challenger"?ch.challenger_score:ch.opponent_score;
@@ -2094,8 +2692,9 @@ function challengeViewerId(ch){
 }
 function renderChallengeSheet(ch){
   var c=chL(),other=(ch.other_user&&ch.other_user.name)||"?";
-  var level=courseLevelLabel(ch.level||((MAP&&MAP.level)||"hsk1"));
-  var head='<div class="shead"><div class="zh han" style="font-size:34px">VS</div><div class="tr" style="font-size:16px;color:var(--ink);margin-top:8px">'+esc(c.title)+'</div><div class="tr">'+esc(other)+' · '+esc(level)+'</div></div>'
+  var myLevel=courseLevelLabel(ch.viewer_level||((MAP&&MAP.level)||"hsk1"));
+  var otherLevel=courseLevelLabel(ch.other_level||ch.level||"hsk1");
+  var head='<div class="shead"><div class="zh han" style="font-size:34px">VS</div><div class="tr" style="font-size:16px;color:var(--ink);margin-top:8px">'+esc(c.title)+'</div><div class="tr">'+esc(T().you)+' · '+esc(myLevel)+'<br>'+esc(other)+' · '+esc(otherLevel)+'</div></div>'
     +'<div class="tmpl">'+esc(c.same)+'<br>'+esc(c.mix)+'</div>';
   if(ch.status==="pending"){
     if(ch.viewer_role==="opponent"){
@@ -2150,8 +2749,7 @@ function respondChallenge(id,action){
 }
 function challengeCard(q){
   var opts=(q.options||[]).map(function(x){return String(x)});
-  var ans=Number(q.answer_index||0);
-  if(!q.id||opts.length<2||ans<0||ans>=opts.length)return null;
+  if(!q.id||opts.length<2)return null;
   return {
     id:String(q.id),
     type:q.audio_text?"listening_choice":(q.type||"multiple_choice"),
@@ -2160,8 +2758,8 @@ function challengeCard(q){
     sentence:q.sentence||"",
     audio_text:q.audio_text||"",
     options:opts,
-    correct_index:ans,
-    explanation:q.explanation||"",
+    correct_index:null,
+    explanation:"",
     _sNo:1,
     _sTitle:chL().title
   };
@@ -2174,7 +2772,7 @@ function startChallengeRound(id){
     if(!d||!d.ok){openChallengeById(id);return}
     var q=(d.session&&d.session.questions||[]).map(challengeCard).filter(Boolean);
     if(!q.length){toast(c.err,2400);return}
-    Flow.queue=q;Flow.i=0;Flow.correct=0;Flow.graded=0;Flow.streak=0;Flow.test=null;Flow.challenge={id:Number(id),startedAt:Date.now(),answers:[]};Flow.lessonIdx=null;Flow.ad=null;HP=5;$("#f-hp").textContent=HP;
+    Flow.queue=q;Flow.i=0;Flow.correct=0;Flow.graded=0;Flow.streak=0;Flow.mistakes=[];Flow.test=null;Flow.challenge={id:Number(id),answers:[]};Flow.lessonIdx=null;Flow.ad=null;HP=5;$("#f-hp").textContent=HP;
     $("#flow").classList.add("on");renderFlowCard();
   }).catch(function(){toast(c.err,2400)});
 }
@@ -2192,15 +2790,17 @@ function showChallengeResult(d){
   var title=ch.status==="completed"?(tie?c.tie:(won?c.youWon:c.youLost)):c.sent;
   var xp=Number(d&&d.reward&&d.reward.awarded_xp||0)+Number(d&&d.winner_reward&&d.winner_reward.awarded_xp||0);
   var sub=ch.status==="completed"?(c.score+": "+challengeScore(ch,"challenger")+" vs "+challengeScore(ch,"opponent")):c.waitSub;
+  var wrong=(d&&Array.isArray(d.wrong_items)?d.wrong_items:[]).slice(0,4);
+  var review=wrong.length?'<div class="tmpl ch-review"><b>'+esc(c.review)+'</b>'+wrong.map(function(item){var question=String(item&&item.question||"");var correct=String(item&&item.correct_answer||"");var pinyin=String(item&&item.pinyin||"");return '<div class="cr-item">'+(question?'<span>'+esc(question)+'</span>':'')+'<strong>✓ '+esc(c.correct)+': '+esc(correct)+'</strong>'+(pinyin?'<small>'+esc(pinyin)+'</small>':'')+'</div>'}).join('')+'</div>':"";
   App.openSheet('<div class="shead"><div class="zh han" style="font-size:38px">VS</div><div class="tr" style="font-size:18px;color:var(--ink);font-weight:700">'+esc(title)+'</div><div class="tr" style="line-height:1.5">'+esc(sub)+'</div></div>'
     +'<div class="sst"><div><b>'+esc((d.score||0)+" / "+(d.total||0))+'</b><small>'+esc(c.score)+'</small></div><div><b>+'+xp+'</b><small>'+esc(c.xp)+'</small></div></div>'
+    +review
     +'<button class="scta" onclick="App.closeSheet();App.show(\'rating\');ratingLoaded=false;renderRating()"><i class="ti ti-trophy"></i> '+esc(c.rating)+'</button>');
 }
 function finishChallengeRound(){
   var c=chL(),ch=Flow.challenge;if(!ch)return;
   $("#flow").classList.remove("on");$("#f-cta").style.display="none";hideBar();setWriteBtn("");
-  var duration=Math.max(0,Math.round((Date.now()-(ch.startedAt||Date.now()))/1000));
-  var payload={answers:ch.answers||[],duration_seconds:duration};
+  var payload={answers:ch.answers||[]};
   App.openSheet('<div class="shead"><div class="zh han" style="font-size:34px">VS</div><div class="tr">'+esc(c.load)+'</div></div>');
   _apiPost("/api/miniapp/challenges/"+Number(ch.id)+"/submit",payload).then(function(r){return r.json()}).then(function(d){
     if(!d||!d.ok)throw new Error("submit_failed");
@@ -2212,7 +2812,7 @@ function finishChallengeRound(){
 	function openWriteTemplates(uIdx,src){
 	  var u=socialUsers(src)[uIdx]||{n:"",xp:0};
 	  var myXp=Number((MAP&&MAP.progress&&MAP.progress.xp)||0);
-	  var botLink="https://t.me/"+BOT_USERNAME;
+	  var botLink=botLinkUrl();
 	  var rank=uIdx+1;
 	  var myRank=currentRatingRank()||rank||1;
   var t={
@@ -2258,7 +2858,7 @@ function openInviteSheet(){
 	    }).catch(function(){toast(LANG==="ru"?"Ссылка не загрузилась":LANG==="tj"?"Силка бор нашуд":"Link yuklanmadi",2200);App.closeSheet()});
     return;
   }
-  var link="https://t.me/"+BOT_USERNAME;
+  var link=botLinkUrl();
   var text={ru:"Привет! Учу английский в English AI. Заходи:",uz:"Salom! Men English AI bilan ingliz tilini o'rganyapman. Kirib ko'r:",tj:"Салом! Ман бо English AI англисӣ меомӯзам. Дароед:"}[LANG];
   renderInviteSheet({ok:true,link:link,share_text:text});
 }
@@ -2271,7 +2871,6 @@ function openInviteSheet(){
 	  var myXp=currentUserWeeklyXp();
 	  var userXp=ratingScore(u);
 	  var lvlLbl=LANG==="ru"?"уровень":LANG==="tj"?"сатҳ":"daraja";
-	  var isHan=/[一-鿿]/.test(u.a);
 	  var uLevel=courseLevelLabel(u.level||((MAP&&MAP.level)||"hsk1"));
 
   /* rivalry bar */
@@ -2301,7 +2900,7 @@ function openInviteSheet(){
   $("#upov").innerHTML=
     '<div class="uptop"><button class="upx" onclick="closeUserProfile()"><i class="ti ti-arrow-left"></i></button>'
     +'<span style="font-size:14px;font-weight:500">'+esc(u.n)+'</span><div style="width:34px"></div></div>'
-    +'<div class="uphero"><div class="av'+(isHan?" han":"")+'">'+u.a+(u.p?'<span class="cr"><i class="ti ti-crown" style="font-size:11px"></i></span>':'')+'</div>'
+    +'<div class="uphero"><div class="av">'+u.a+(u.me?myAvatarImgHtml():avatarImgHtml(u.tgId))+(u.p?'<span class="cr"><i class="ti ti-crown" style="font-size:11px"></i></span>':'')+'</div>'
     +'<div class="nm">'+esc(u.n)+'</div><div class="un">'+esc(t.league)+'</div>'
 	    +'<div class="badges"><span class="bg bg-lv"><i class="ti ti-bolt" style="font-size:10px"></i> '+esc(uLevel)+'</span>'
 	    +'<span class="bg bg-lg han" style="font-size:12px">Phoenix</span>'
@@ -2323,26 +2922,33 @@ function streakCalHtml(){var p=pl();
   var streak=Number(MAP&&MAP.progress&&MAP.progress.streak||0);
   /* calDays start on Monday; JS getDay() is Sun=0..Sat=6 -> Mon=0 */
   var today=(new Date().getDay()+6)%7;
-  var act=p.calDays.map(function(_,d){return (d<=today&&(today-d)<streak)?1:0;});
-  var head='<div class="wk">'+p.calDays.map(function(d){return '<div style="flex:1;text-align:center;font-size:11px;color:var(--ink3)">'+d+'</div>'}).join("")+'</div>';
-  var row='<div class="wk">'+act.map(function(on,d){return '<div class="cell '+(on?"on":"")+(d===today?" tod":"")+'" style="flex:1;height:42px">'+(on?'<i class="ti ti-flame" style="font-size:16px"></i>':'')+'</div>'}).join("")+'</div>';
+  /* bugun hali dars qilinmagan bo'lsa, streak oynasi kechagacha hisoblanadi */
+  var todayActive=dailyXpVal()>0;
+  var end=todayActive?today:today-1;
+  var head='<div class="wk">'+p.calDays.map(function(d){return '<div style="flex:1;text-align:center;font-size:10px;color:var(--ink3)">'+d+'</div>'}).join("")+'</div>';
+  var row='<div class="wk">'+p.calDays.map(function(_,d){
+    var on=d<=end&&(end-d)<streak;
+    var miss=!on&&d<today; /* o'tgan kun, faollik yo'q — muz */
+    var ic=on?'<i class="ti ti-flame" style="font-size:13px"></i>':(miss?'<i class="ti ti-snowflake" style="font-size:12px"></i>':'');
+    return '<div class="cell '+(on?"on":"")+(miss?" ice":"")+(d===today?" tod":"")+'" style="flex:1;height:28px">'+ic+'</div>';
+  }).join("")+'</div>';
   return head+row;}
 function renderProfile(){
   var t=T(),p=pl();
-  var streak=Number(MAP&&MAP.progress&&MAP.progress.streak||0),todayXp=Number(MAP&&MAP.progress&&MAP.progress.xp%50||0);
+  var streak=Number(MAP&&MAP.progress&&MAP.progress.streak||0),todayXp=dailyXpVal();
   var pct=Math.round(Math.min(todayXp/dailyGoal,1)*100),off=Math.round(157-157*Math.min(todayXp/dailyGoal,1));
   var completedLessons=Number(MAP&&MAP.progress&&MAP.progress.completed||0);
   var firstDone=completedLessons>=1;
   var lessonAchPct=Math.min(100,Math.round(completedLessons/100*100));
   var streakAchPct=Math.min(100,Math.round(streak/30*100));
   $("#s-profile").innerHTML='<div class="htop" style="padding-bottom:4px"><span class="lvpill"><i class="ti ti-user"></i> '+t.nav.profile+'</span></div>'
-    +'<div class="phero"><div class="pav'+(PROF.avatar&&/[一-鿿]/.test(PROF.avatar)?"":" han")+'" onclick="App.avatarEdit()">'+(PROF.avatar||"A")+'<span class="ed"><i class="ti ti-pencil"></i></span></div><div><div class="pname">'+(PROF.name||t.you)+'</div><div class="pun">'+(PROF.name?"@"+PROF.name.toLowerCase().replace(/\s+/g,"_"):"@english_ai")+'</div><span class="lvb"><i class="ti ti-bolt"></i> '+courseLevelLabel(MAP&&MAP.level||"hsk1")+' · '+t.league+'</span></div></div>'
-    +'<div class="pgoal" onclick="App.goCurrentLesson()" style="cursor:pointer"><svg class="ring" viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" fill="none" stroke="var(--line)" stroke-width="6"/><circle cx="30" cy="30" r="25" fill="none" stroke="var(--cin)" stroke-width="6" stroke-linecap="round" stroke-dasharray="157" stroke-dashoffset="'+off+'" transform="rotate(-90 30 30)"/><text x="30" y="35" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">'+pct+'%</text></svg><div class="gt"><b>'+p.todayGoal+'</b><small>'+todayXp+' / '+dailyGoal+' XP · '+(dailyGoal-todayXp)+' '+p.goalLeft+'</small></div><div class="fl"><b>'+streak+'</b><small>'+t.streak+'</small></div></div>'
+    +'<div class="phero"><div class="pav han" onclick="App.avatarEdit()">'+(PROF.avatar||"A")+myAvatarImgHtml()+'<span class="ed"><i class="ti ti-pencil"></i></span></div><div><div class="pname">'+(PROF.name||t.you)+'</div><div class="pun">'+(PROF.name?"@"+PROF.name.toLowerCase().replace(/\s+/g,"_"):"@hsk_ai")+'</div><span class="lvb"><i class="ti ti-bolt"></i> '+(MAP&&MAP.level?MAP.level.toUpperCase():"HSK 1")+' · '+t.league+'</span></div></div>'
+    +'<div class="pgoal" onclick="App.goCurrentLesson()" style="cursor:pointer"><svg class="ring" viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" fill="none" stroke="var(--line)" stroke-width="6"/><circle cx="30" cy="30" r="25" fill="none" stroke="'+(pct>=100?"var(--gold)":"var(--cin)")+'" stroke-width="6" stroke-linecap="round" stroke-dasharray="157" stroke-dashoffset="'+off+'" transform="rotate(-90 30 30)"/><text x="30" y="35" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">'+pct+'%</text></svg><div class="gt"><b>'+p.todayGoal+'</b><small>'+todayXp+' / '+dailyGoal+' XP · '+(dailyGoal-todayXp)+' '+p.goalLeft+'</small></div><div class="fl"><b>'+streak+'</b><small>'+t.streak+'</small></div></div>'
     +'<div class="sech" style="display:flex;justify-content:space-between"><span>'+p.calTitle+'</span><span style="color:var(--cin)"><i class="ti ti-flame" style="font-size:12px"></i> '+streak+' '+t.streak+'</span></div><div class="card2"><div class="cal">'+streakCalHtml()+'</div></div>'
     +'<div class="sech">'+p.ach+'</div><div class="ach"><div class="arow"><div class="aic c3"><i class="ti ti-check"></i></div><div class="at"><div class="ah"><span>'+p.a1+'</span><small>'+(firstDone?p.a1d:"0 / 1")+'</small></div><div class="abar"><i style="width:'+(firstDone?100:0)+'%;background:var(--jade)"></i></div></div></div>'
     +'<div class="arow"><div class="aic c1"><i class="ti ti-book"></i></div><div class="at"><div class="ah"><span>'+p.a2+'</span><small>'+completedLessons+' / 100</small></div><div class="abar"><i style="width:'+lessonAchPct+'%"></i></div></div></div>'
     +'<div class="arow"><div class="aic c2"><i class="ti ti-flame"></i></div><div class="at"><div class="ah"><span>'+p.a3+'</span><small>'+streak+' / 30</small></div><div class="abar"><i style="width:'+streakAchPct+'%"></i></div></div></div></div>'
-    +'<div class="pro" onclick="App.openPaywall(\'profile\')"><span class="gw han">★</span><h3>'+t.unlockTitle+'</h3><p>'+t.unlockSub+'</p><button>'+t.unlockBtn+' →</button></div>'
+    +(isPaidUser()?'':'<div class="pro" onclick="App.openPaywall(\'profile\')"><span class="gw han">★</span><h3>'+t.unlockTitle+'</h3><p>'+t.unlockSub+'</p><button>'+t.unlockBtn+' →</button></div>')
     +'<div class="sech">'+t.mistakes+' · '+t.friends+'</div>'
     +rowCard("t-cin",'<i class="ti ti-alert-triangle"></i>',t.mistakes,t.mistakesSub,"App.openMistakes()")
     +rowCard("t-jade",'<i class="ti ti-users"></i>',t.friends,"","App.openFriends()")
@@ -2362,9 +2968,49 @@ function payHintHtml(){
     tj:"«Обуна шудан» саҳифаи пардохтро мекушояд. Пас аз тасдиқ ҳамаи дарсҳо ҳамин ҷо кушода мешаванд."}[LANG];
   return '<div class="tr" style="margin:10px 6px 0;text-align:center;color:var(--ink2);line-height:1.5;font-size:12px">'+esc(s)+'</div>';
 }
+function getPaywallTitle(ctx){
+  var t=T();
+  if(typeof ctx==="object" && ctx.lesson){
+    var l=ctx.lesson;
+    var lessonNum=Number(l.n||0);
+    var m={
+      uz:["Ushbu darsni oching","Bu dars yangilangan","Keyingi bosqich bu yerda","Dars uchun tayyormi?","Yangi mavzu o'qish"],
+      ru:["Открыть этот урок","Этот урок пока закрыт","Следующий уровень здесь","Готовы к уроку?","Новая тема к изучению"],
+      tj:["Ин дарсро кушоед","Ин дарс ҳоло баста аст","Сатҳи оянда ин ҷоест","Барои дарс тайёр астед?","Мавзӯи нав барои омӯзиш"]
+    };
+    var msgs=m[LANG]||m.ru;
+    var idx=Math.min(lessonNum%5,msgs.length-1);
+    return msgs[Math.max(0,idx)];
+  }
+  return ctx==="lockedLesson"?t.lockedLesson:t.payTitle;
+}
+/* "Nega bu oyna chiqdi?" — user hayron bo'lmasligi uchun sababni ochiq aytamiz
+   va darhol obunaning foydasiga bog'laymiz. Profil (user o'zi ochgan) va
+   umumiy holatda sabab yo'q — u yerda oyna kutilgan. */
+function payWhyText(ctx){
+  var m={
+    uz:{lesson:"Bepul darslaring tugadi: bepul rejimda har darajadan dastlabki qismlar ochiladi. Obuna bilan HSK 1–4 ning barcha darslari shu zahoti ochiladi va to'xtamay davom etasan.",
+        pron:"Bugungi bepul talaffuz tekshiruvlaring tugadi. Ertaga yana bepul ochiladi — obuna bilan esa bugun ham cheksiz gapirib mashq qilasan."},
+    ru:{lesson:"Бесплатные уроки закончились: в бесплатном режиме открыты только первые части каждого уровня. С подпиской все уроки HSK 1–4 открываются сразу, и вы идёте дальше без пауз.",
+        pron:"Бесплатные проверки произношения на сегодня закончились. Завтра снова бесплатно — а с подпиской говорите без ограничений уже сегодня."},
+    tj:{lesson:"Дарсҳои ройгон тамом шуданд: дар ҳолати ройгон танҳо қисмҳои аввали ҳар сатҳ кушода мешаванд. Бо обуна ҳамаи дарсҳои HSK 1–4 фавран кушода мешаванд ва бе таваққуф идома медиҳӣ.",
+        pron:"Санҷишҳои ройгони талаффузи имрӯза тамом шуданд. Фардо боз ройгон — бо обуна бошад, ҳамин имрӯз бе маҳдудият гап мезанӣ."}
+  }[LANG]||{};
+  if(typeof ctx==="object" && ctx && ctx.lesson)return m.lesson||"";
+  if(ctx==="lockedLesson")return m.lesson||"";
+  if(ctx==="pronLimit")return m.pron||"";
+  return "";
+}
+function payWhyHtml(ctx){
+  var why=payWhyText(ctx);
+  if(!why)return "";
+  return '<div class="paywhy"><i class="ti ti-info-circle"></i><span>'+esc(why)+'</span></div>';
+}
 function paywallHtml(ctx){
-  var t=T();var ctxTitle=ctx==="lockedLesson"?t.lockedLesson:t.payTitle;
-  return '<div class="shead"><div style="width:54px;height:54px;border-radius:15px;background:var(--cin);border:2px solid var(--gold);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px" class="han">★</div><div class="tr" style="font-size:15px;color:var(--ink)">'+esc(ctxTitle)+'</div><div class="tr">'+t.paySub+'</div></div>'
+  var t=T();var ctxTitle=getPaywallTitle(ctx);
+  var showSubtitle=typeof ctx!=="object" || !ctx.lesson;
+  return '<div class="shead"><div style="width:54px;height:54px;border-radius:15px;background:var(--cin);border:2px solid var(--gold);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px" class="han">★</div><div class="tr" style="font-size:14px;color:var(--ink)">'+esc(ctxTitle)+'</div>'+(showSubtitle?'<div class="tr">'+t.paySub+'</div>':'')+'</div>'
+    +payWhyHtml(ctx)
     +promoBlockHtml()
     +'<button class="scta" onclick="App.goPay()"><i class="ti ti-lock-open"></i> '+t.subscribe+'</button>'
     +payHintHtml();
@@ -2387,23 +3033,38 @@ window.openLessonSheet=openLessonSheet;window.startLesson=startLesson;window.App
 (function(){
   var bootLevel=getSelectedLevel();
   if(!INIT_DATA){showAuthGate();return;}
-  var url="/api/v3/map?lang="+LANG+"&level="+bootLevel+"&tz="+encodeURIComponent(-new Date().getTimezoneOffset());
-  fetch(url,{headers:{"X-Telegram-Init-Data":INIT_DATA}}).then(function(r){return r.json().then(function(d){d._status=r.status;return d})}).then(function(d){
-    if(!d||d.authenticated===false||d._status===401){showAuthGate();return;}
-    hideAuthGate();MAP=d;adoptServerLang(d);setSelectedLevel(MAP.level||bootLevel);if(d.user)PROF=d.user;if(d.bot_username)BOT_USERNAME=d.bot_username;syncNotify();
+  loadCourseMap(bootLevel).then(function(res){
+    if(!res.data){showAuthGate();return;}
+    var d=res.data;
+    hideAuthGate();MAP=d;adoptServerLang(d);adoptBotUsername(d);setSelectedLevel(MAP.level||bootLevel);if(d.user)PROF=d.user;syncNotify();
     renderAll();
     prefetchNearbyLessons();
     var sp=new URLSearchParams(location.search);
     App.show(sp.get("tab")||"course");
     var initialLesson=Number(sp.get("lesson")||0);
+    // resume=1: aniq lesson berilmagan bo'lsa, server progresidan JORIY qismni
+    // (status==="current") topib darhol ochamiz — botdagi "Davom" / profil
+    // tugmasi bir bosishda foydalanuvchi turgan darsni ochadi.
+    if(initialLesson<=0&&sp.get("resume")==="1"){
+      var all=allLessons();
+      var ci=-1;all.forEach(function(l,i){if(ci<0&&l.status==="current")ci=i});
+      if(ci<0)all.forEach(function(l,i){if(ci<0&&l.status!=="done")ci=i});
+      if(ci>=0)initialLesson=Number(all[ci].n)||0;
+    }
     if(initialLesson>0){
       var idx=-1;allLessons().forEach(function(l,i){if(Number(l.n)===initialLesson)idx=i});
-      if(idx>=0)setTimeout(function(){App.show("course");openLessonSheet(idx)},80);
+      if(idx>=0)setTimeout(function(){
+        App.show("course");
+        if(sp.get("autostart")==="1"){
+          startLesson(idx);
+          try{sp.delete("autostart");history.replaceState(null,"",location.pathname+"?"+sp.toString()+location.hash)}catch(e){}
+        }else openLessonSheet(idx);
+      },80);
     }
     var challengeId=Number(sp.get("challenge_id")||0);
     if(challengeId>0)setTimeout(function(){openChallengeById(challengeId)},180);
     if(sp.get("tour")==="1"){var td=false;try{td=!!localStorage.getItem("hsk_v3_tour")}catch(e){}if(!td)setTimeout(function(){App.runTour()},500)}
-  }).catch(function(){showAuthGate()});
+  });
 })();
 </script>
 </body>

@@ -356,10 +356,21 @@ h1{font-size:27px;line-height:1.06;font-weight:900;letter-spacing:-.01em}
 const tg=window.Telegram?.WebApp;
 try{tg?.ready?.();tg?.expand?.();}catch(e){}
 
+const CHECKOUT_ATTEMPT_ID=(function(){
+  const key="ak_subscription_attempt_v1",now=Date.now();
+  try{
+    const saved=JSON.parse(sessionStorage.getItem(key)||"null");
+    if(saved&&saved.id&&now-Number(saved.at||0)<2*60*60*1000)return String(saved.id);
+    const id="sub-"+now+"-"+Math.random().toString(36).slice(2,10);
+    sessionStorage.setItem(key,JSON.stringify({id,at:now}));
+    return id;
+  }catch(e){return "sub-"+now+"-"+Math.random().toString(36).slice(2,10)}
+})();
 const API={
   overview:"/api/subscription-miniapp/overview",
   discountStart:"/api/subscription-miniapp/discount-start",
   quote:"/api/subscription-miniapp/quote",
+  event:"/api/subscription-miniapp/event",
   submit:"/api/subscription-miniapp/submit"
 };
 const PARAMS=new URLSearchParams(window.location.search);
@@ -672,6 +683,7 @@ const state={
   feedbackId:positiveParam(PARAMS.get("feedback_id")),
   preview:!INIT_DATA,
   overview:null,
+  attemptId:CHECKOUT_ATTEMPT_ID,
   plan:PLAN_ORDER.includes(PARAMS.get("plan"))?PARAMS.get("plan"):"10_days",
   method:METHOD_ORDER.includes(PARAMS.get("method"))?PARAMS.get("method"):"alipay",
   country:"uz",
@@ -755,8 +767,22 @@ function contextPayload(){
     source:state.source,
     mode:state.mode,
     campaign_id:state.campaignId,
-    feedback_id:state.feedbackId
+    feedback_id:state.feedbackId,
+    attempt_id:state.attemptId
   };
+}
+function trackSubscriptionStage(stage){
+  if(state.preview||!INIT_DATA)return Promise.resolve();
+  return fetch(API.event,{
+    method:"POST",
+    headers:{"Content-Type":"application/json","X-Telegram-Init-Data":INIT_DATA},
+    body:JSON.stringify({
+      ...contextPayload(),stage,
+      plan_type:state.plan,
+      payment_method:state.method
+    }),
+    keepalive:true
+  }).catch(()=>null);
 }
 function hasCurrentPrice(){return Boolean(priceInfo(state.method,state.plan))}
 function flow(){return state.done||state.pending?["done"]:(state.method==="visa"?["start","country","pay"]:["start","pay"])}
@@ -1103,6 +1129,7 @@ function renderCountry(text){
   }).join("");
 }
 function renderPay(text){
+  trackSubscriptionStage("payment_instructions_viewed");
   const quote=state.quote||(state.preview?mockQuote():null);
   $("#payTitle").textContent=text.payTitle;
   $("#payText").textContent=text.payText;
@@ -1447,6 +1474,7 @@ function compressDataUrl(dataUrl){
 $("#receiptInput").addEventListener("change",async event=>{
   const file=event.target.files?.[0];
   if(!file)return;
+  trackSubscriptionStage("payment_receipt_selected");
   if(!file.type.startsWith("image/")){
     toast(tr().needScreenshot);
     event.target.value="";

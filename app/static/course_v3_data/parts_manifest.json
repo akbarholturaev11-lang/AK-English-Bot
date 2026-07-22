@@ -1,0 +1,652 @@
+{
+  "hsk1": {
+    "total_parts": 15,
+    "lessons": [
+      {
+        "src": 1,
+        "zh": "Greetings",
+        "words": 8,
+        "parts": [
+          1
+        ],
+        "checkpoint": 1
+      },
+      {
+        "src": 2,
+        "zh": "Introducing yourself",
+        "words": 8,
+        "parts": [
+          2
+        ],
+        "checkpoint": 2
+      },
+      {
+        "src": 3,
+        "zh": "Numbers & age",
+        "words": 8,
+        "parts": [
+          3
+        ],
+        "checkpoint": 3
+      },
+      {
+        "src": 4,
+        "zh": "Family",
+        "words": 8,
+        "parts": [
+          4
+        ],
+        "checkpoint": 4
+      },
+      {
+        "src": 5,
+        "zh": "Food & drink",
+        "words": 8,
+        "parts": [
+          5
+        ],
+        "checkpoint": 5
+      },
+      {
+        "src": 6,
+        "zh": "Days & week",
+        "words": 8,
+        "parts": [
+          6
+        ],
+        "checkpoint": 6
+      },
+      {
+        "src": 7,
+        "zh": "Colors",
+        "words": 8,
+        "parts": [
+          7
+        ],
+        "checkpoint": 7
+      },
+      {
+        "src": 8,
+        "zh": "Common verbs",
+        "words": 8,
+        "parts": [
+          8
+        ],
+        "checkpoint": 8
+      },
+      {
+        "src": 9,
+        "zh": "Places",
+        "words": 8,
+        "parts": [
+          9
+        ],
+        "checkpoint": 9
+      },
+      {
+        "src": 10,
+        "zh": "Time",
+        "words": 8,
+        "parts": [
+          10
+        ],
+        "checkpoint": 10
+      },
+      {
+        "src": 11,
+        "zh": "Weather",
+        "words": 8,
+        "parts": [
+          11
+        ],
+        "checkpoint": 11
+      },
+      {
+        "src": 12,
+        "zh": "Body & health",
+        "words": 8,
+        "parts": [
+          12
+        ],
+        "checkpoint": 12
+      },
+      {
+        "src": 13,
+        "zh": "Clothes & shopping",
+        "words": 8,
+        "parts": [
+          13
+        ],
+        "checkpoint": 13
+      },
+      {
+        "src": 14,
+        "zh": "Hobbies & free time",
+        "words": 8,
+        "parts": [
+          14
+        ],
+        "checkpoint": 14
+      },
+      {
+        "src": 15,
+        "zh": "Daily routine",
+        "words": 8,
+        "parts": [
+          15
+        ],
+        "checkpoint": 15
+      }
+    ]
+  },
+  "hsk2": {
+    "total_parts": 15,
+    "lessons": [
+      {
+        "src": 1,
+        "zh": "Yesterday (past of be)",
+        "words": 8,
+        "parts": [
+          1
+        ],
+        "checkpoint": 1
+      },
+      {
+        "src": 2,
+        "zh": "Past simple (verbs)",
+        "words": 8,
+        "parts": [
+          2
+        ],
+        "checkpoint": 2
+      },
+      {
+        "src": 3,
+        "zh": "Future plans",
+        "words": 8,
+        "parts": [
+          3
+        ],
+        "checkpoint": 3
+      },
+      {
+        "src": 4,
+        "zh": "Directions & transport",
+        "words": 8,
+        "parts": [
+          4
+        ],
+        "checkpoint": 4
+      },
+      {
+        "src": 5,
+        "zh": "At the restaurant",
+        "words": 8,
+        "parts": [
+          5
+        ],
+        "checkpoint": 5
+      },
+      {
+        "src": 6,
+        "zh": "Because and reasons",
+        "words": 6,
+        "parts": [
+          6
+        ],
+        "checkpoint": 6
+      },
+      {
+        "src": 7,
+        "zh": "Distance and commuting",
+        "words": 6,
+        "parts": [
+          7
+        ],
+        "checkpoint": 7
+      },
+      {
+        "src": 8,
+        "zh": "Decisions and messages",
+        "words": 6,
+        "parts": [
+          8
+        ],
+        "checkpoint": 8
+      },
+      {
+        "src": 9,
+        "zh": "Too much and enough",
+        "words": 6,
+        "parts": [
+          9
+        ],
+        "checkpoint": 9
+      },
+      {
+        "src": 10,
+        "zh": "Finding things",
+        "words": 6,
+        "parts": [
+          10
+        ],
+        "checkpoint": 10
+      },
+      {
+        "src": 11,
+        "zh": "Comparisons",
+        "words": 6,
+        "parts": [
+          11
+        ],
+        "checkpoint": 11
+      },
+      {
+        "src": 12,
+        "zh": "Clothes and advice",
+        "words": 6,
+        "parts": [
+          12
+        ],
+        "checkpoint": 12
+      },
+      {
+        "src": 13,
+        "zh": "Open and closed",
+        "words": 6,
+        "parts": [
+          13
+        ],
+        "checkpoint": 13
+      },
+      {
+        "src": 14,
+        "zh": "Movies and experience",
+        "words": 6,
+        "parts": [
+          14
+        ],
+        "checkpoint": 14
+      },
+      {
+        "src": 15,
+        "zh": "Holidays and travel",
+        "words": 6,
+        "parts": [
+          15
+        ],
+        "checkpoint": 15
+      }
+    ]
+  },
+  "hsk3": {
+    "total_parts": 20,
+    "lessons": [
+      {
+        "src": 1,
+        "zh": "Weekend plans",
+        "words": 6,
+        "parts": [
+          1
+        ],
+        "checkpoint": 1
+      },
+      {
+        "src": 2,
+        "zh": "Returning and health",
+        "words": 6,
+        "parts": [
+          2
+        ],
+        "checkpoint": 2
+      },
+      {
+        "src": 3,
+        "zh": "Choices and ordering",
+        "words": 6,
+        "parts": [
+          3
+        ],
+        "checkpoint": 3
+      },
+      {
+        "src": 4,
+        "zh": "Service and customers",
+        "words": 6,
+        "parts": [
+          4
+        ],
+        "checkpoint": 4
+      },
+      {
+        "src": 5,
+        "zh": "Getting healthier",
+        "words": 6,
+        "parts": [
+          5
+        ],
+        "checkpoint": 5
+      },
+      {
+        "src": 6,
+        "zh": "Lost items",
+        "words": 6,
+        "parts": [
+          6
+        ],
+        "checkpoint": 6
+      },
+      {
+        "src": 7,
+        "zh": "Long friendships",
+        "words": 6,
+        "parts": [
+          7
+        ],
+        "checkpoint": 7
+      },
+      {
+        "src": 8,
+        "zh": "Conditions and rules",
+        "words": 6,
+        "parts": [
+          8
+        ],
+        "checkpoint": 8
+      },
+      {
+        "src": 9,
+        "zh": "Fluent speaking",
+        "words": 6,
+        "parts": [
+          9
+        ],
+        "checkpoint": 9
+      },
+      {
+        "src": 10,
+        "zh": "Comparing subjects",
+        "words": 6,
+        "parts": [
+          10
+        ],
+        "checkpoint": 10
+      },
+      {
+        "src": 11,
+        "zh": "Remember to switch off",
+        "words": 6,
+        "parts": [
+          11
+        ],
+        "checkpoint": 11
+      },
+      {
+        "src": 12,
+        "zh": "Leaving important things",
+        "words": 6,
+        "parts": [
+          12
+        ],
+        "checkpoint": 12
+      },
+      {
+        "src": 13,
+        "zh": "Explaining what happened",
+        "words": 6,
+        "parts": [
+          13
+        ],
+        "checkpoint": 13
+      },
+      {
+        "src": 14,
+        "zh": "Bringing things over",
+        "words": 6,
+        "parts": [
+          14
+        ],
+        "checkpoint": 14
+      },
+      {
+        "src": 15,
+        "zh": "Study abroad applications",
+        "words": 6,
+        "parts": [
+          15
+        ],
+        "checkpoint": 15
+      },
+      {
+        "src": 16,
+        "zh": "So tired that",
+        "words": 6,
+        "parts": [
+          16
+        ],
+        "checkpoint": 16
+      },
+      {
+        "src": 17,
+        "zh": "Advice and solutions",
+        "words": 6,
+        "parts": [
+          17
+        ],
+        "checkpoint": 17
+      },
+      {
+        "src": 18,
+        "zh": "Agreement and confidence",
+        "words": 6,
+        "parts": [
+          18
+        ],
+        "checkpoint": 18
+      },
+      {
+        "src": 19,
+        "zh": "Noticing changes",
+        "words": 6,
+        "parts": [
+          19
+        ],
+        "checkpoint": 19
+      },
+      {
+        "src": 20,
+        "zh": "Influence and passive voice",
+        "words": 6,
+        "parts": [
+          20
+        ],
+        "checkpoint": 20
+      }
+    ]
+  },
+  "hsk4": {
+    "total_parts": 20,
+    "lessons": [
+      {
+        "src": 1,
+        "zh": "Relationships and trust",
+        "words": 6,
+        "parts": [
+          1
+        ],
+        "checkpoint": 1
+      },
+      {
+        "src": 2,
+        "zh": "True friendship",
+        "words": 6,
+        "parts": [
+          2
+        ],
+        "checkpoint": 2
+      },
+      {
+        "src": 3,
+        "zh": "Job interviews",
+        "words": 6,
+        "parts": [
+          3
+        ],
+        "checkpoint": 3
+      },
+      {
+        "src": 4,
+        "zh": "Money and career",
+        "words": 6,
+        "parts": [
+          4
+        ],
+        "checkpoint": 4
+      },
+      {
+        "src": 5,
+        "zh": "Smart shopping",
+        "words": 6,
+        "parts": [
+          5
+        ],
+        "checkpoint": 5
+      },
+      {
+        "src": 6,
+        "zh": "Value and quality",
+        "words": 6,
+        "parts": [
+          6
+        ],
+        "checkpoint": 6
+      },
+      {
+        "src": 7,
+        "zh": "Health responsibility",
+        "words": 6,
+        "parts": [
+          7
+        ],
+        "checkpoint": 7
+      },
+      {
+        "src": 8,
+        "zh": "Beauty in daily life",
+        "words": 6,
+        "parts": [
+          8
+        ],
+        "checkpoint": 8
+      },
+      {
+        "src": 9,
+        "zh": "Resilience after storms",
+        "words": 6,
+        "parts": [
+          9
+        ],
+        "checkpoint": 9
+      },
+      {
+        "src": 10,
+        "zh": "Standards of happiness",
+        "words": 6,
+        "parts": [
+          10
+        ],
+        "checkpoint": 10
+      },
+      {
+        "src": 11,
+        "zh": "Reading and knowledge",
+        "words": 6,
+        "parts": [
+          11
+        ],
+        "checkpoint": 11
+      },
+      {
+        "src": 12,
+        "zh": "Curiosity and research",
+        "words": 6,
+        "parts": [
+          12
+        ],
+        "checkpoint": 12
+      },
+      {
+        "src": 13,
+        "zh": "Arts and culture",
+        "words": 6,
+        "parts": [
+          13
+        ],
+        "checkpoint": 13
+      },
+      {
+        "src": 14,
+        "zh": "Protecting the earth",
+        "words": 6,
+        "parts": [
+          14
+        ],
+        "checkpoint": 14
+      },
+      {
+        "src": 15,
+        "zh": "Education and children",
+        "words": 6,
+        "parts": [
+          15
+        ],
+        "checkpoint": 15
+      },
+      {
+        "src": 16,
+        "zh": "Improving life",
+        "words": 6,
+        "parts": [
+          16
+        ],
+        "checkpoint": 16
+      },
+      {
+        "src": 17,
+        "zh": "People and nature",
+        "words": 6,
+        "parts": [
+          17
+        ],
+        "checkpoint": 17
+      },
+      {
+        "src": 18,
+        "zh": "Technology and the future",
+        "words": 6,
+        "parts": [
+          18
+        ],
+        "checkpoint": 18
+      },
+      {
+        "src": 19,
+        "zh": "Taste and memory",
+        "words": 6,
+        "parts": [
+          19
+        ],
+        "checkpoint": 19
+      },
+      {
+        "src": 20,
+        "zh": "Travel delays",
+        "words": 6,
+        "parts": [
+          20
+        ],
+        "checkpoint": 20
+      }
+    ]
+  }
+}

@@ -7,7 +7,7 @@
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.30.0/tabler-icons.min.css" rel="stylesheet">
 <style>
-:root{--ink:#211D17;--ink2:#6E665B;--ink3:#A89E8E;--paper:#FBF7EF;--card:#FFFFFF;--line:#EAE2D4;--cin:#C2403A;--cin2:#9A2F2B;--cinbg:#FBEDEA;--gold:#C2962F;--goldbg:#F8F0DA;--jade:#2F7D5E;--safe-t:env(safe-area-inset-top,0px);--safe-b:env(safe-area-inset-bottom,0px)}
+:root{--ink:#211D17;--ink2:#665D50;--ink3:#A89E8E;--paper:#FDF9F0;--card:#FFFFFF;--line:#EAE0CC;--cin:#E04A40;--cin2:#B23530;--cinbg:#FDEBE7;--gold:#E9A916;--goldbg:#FAF0D3;--jade:#2FA06A;--safe-t:env(safe-area-inset-top,0px);--safe-b:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{background:var(--paper);color:var(--ink);font-family:-apple-system,"SF Pro Text","Segoe UI",Roboto,sans-serif}
 .han{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-weight:600}
@@ -53,9 +53,9 @@ html,body{background:var(--paper);color:var(--ink);font-family:-apple-system,"SF
 <script>
 var params=new URLSearchParams(location.search||"");
 var LANG=(params.get("lang")||"ru");if(["uz","ru","tj"].indexOf(LANG)<0)LANG="ru";
-var L={ru:{boot:"Beginner с нуля — учите английский каждый день по несколько минут с Alex.",ask:"С какого уровня начнём? Не знаешь — начни с Beginner.",placement:"Не знаете уровень? Короткий тест",start:"Начать",cont:"Продолжить",ready:"Готово!",readySub:"Начнём с первого урока.",first:"Начать первый урок",rec:"Рекомендуем"},
-  uz:{boot:"Beginner noldan — har kuni bir necha daqiqada Alex the owl bilan ingliz tilini o'rganing.",ask:"Qaysi darajadan boshlaymiz? Bilmasang — Beginner dan ket.",placement:"Darajangni bilmaysanmi? Qisqa test",start:"Boshlash",cont:"Davom etish",ready:"Tayyor!",readySub:"Birinchi darsdan boshlaymiz.",first:"Birinchi darsni boshlash",rec:"Tavsiya"},
-  tj:{boot:"Beginner аз сифр — ҳар рӯз чанд дақиқа бо сова Alex англисиро омӯзед.",ask:"Аз кадом сатҳ оғоз кунем? Намедонӣ — аз Beginner.",placement:"Сатҳро намедонед? Тести кӯтоҳ",start:"Оғоз",cont:"Идома",ready:"Тайёр!",readySub:"Аз дарси аввал оғоз мекунем.",first:"Оғози дарси аввал",rec:"Тавсия"}}[LANG];
+var L={ru:{boot:"Beginner с нуля — учите английский каждый день по несколько минут с Alex.",ask:"С какого уровня начнём? Не знаешь — начни с Beginner.",placement:"Не знаете уровень? Короткий тест",start:"Начать",cont:"Продолжить",ready:"Готово!",readySub:"Начнём с первого урока.",first:"Начать первый урок",retry:"Не удалось сохранить. Попробовать снова",rec:"Рекомендуем"},
+  uz:{boot:"Beginner noldan — har kuni bir necha daqiqada Alex the owl bilan ingliz tilini o'rganing.",ask:"Qaysi darajadan boshlaymiz? Bilmasang — Beginner dan ket.",placement:"Darajangni bilmaysanmi? Qisqa test",start:"Boshlash",cont:"Davom etish",ready:"Tayyor!",readySub:"Birinchi darsdan boshlaymiz.",first:"Birinchi darsni boshlash",retry:"Saqlanmadi. Qayta urinib ko'rish",rec:"Tavsiya"},
+  tj:{boot:"Beginner аз сифр — ҳар рӯз чанд дақиқа бо сова Alex англисиро омӯзед.",ask:"Аз кадом сатҳ оғоз кунем? Намедонӣ — аз Beginner.",placement:"Сатҳро намедонед? Тести кӯтоҳ",start:"Оғоз",cont:"Идома",ready:"Тайёр!",readySub:"Аз дарси аввал оғоз мекунем.",first:"Оғози дарси аввал",retry:"Сабт нашуд. Боз кӯшиш кунед",rec:"Тавсия"}}[LANG];
 var tg=window.Telegram&&window.Telegram.WebApp;if(tg){try{tg.ready();tg.expand()}catch(e){}}
 function panda(m){
   // Owl mascot "Alex" — English-learning persona.
@@ -94,7 +94,40 @@ var LV=[{k:"hsk1",ic:"antenna-bars-2",hd:"Beginner",s:{ru:"С нуля · сам
   {k:"hsk2",ic:"antenna-bars-3",hd:"Elementary",s:{ru:"Базовое общение",uz:"Asosiy suhbat",tj:"Муоширати асосӣ"}},
   {k:"hsk3",ic:"antenna-bars-4",hd:"Intermediate",s:{ru:"Повседневное общение",uz:"Kundalik muloqot",tj:"Муоширати ҳаррӯза"}},
   {k:"hsk4",ic:"antenna-bars-5",hd:"Advanced",s:{ru:"Свободное общение",uz:"Erkin muloqot",tj:"Муоширати озод"}}];
-var step=0,sel="hsk1";
+var step=0,sel="hsk1",submitting=false;
+var INIT_DATA=(tg&&tg.initData)||"";
+var ONB_SESSION_ID=(function(){try{var k="hsk_v3_onb_session_id",v=sessionStorage.getItem(k);if(!v){v="onb-"+Date.now()+"-"+Math.random().toString(36).slice(2,8);sessionStorage.setItem(k,v)}return v}catch(e){return"onb-"+Date.now()}})();
+function apiHeaders(){return{"Content-Type":"application/json","X-Telegram-Init-Data":INIT_DATA}}
+function postJson(url,body){return fetch(url,{method:"POST",headers:apiHeaders(),body:JSON.stringify(body),keepalive:true})}
+function trackOnboardingEvent(event,payload){
+  if(!INIT_DATA)return Promise.resolve({ok:false,skipped:true});
+  payload=payload||{};
+  payload.event=event;
+  payload.source=payload.source||"course_v3_onboarding";
+  payload.level=payload.level||sel;
+  payload.session_id=ONB_SESSION_ID;
+  payload.language=LANG;
+  return postJson("/api/miniapp/event",payload).then(function(r){return r.json()}).catch(function(){return{ok:false}});
+}
+function onboardingPayload(){
+  var dailyMinutes=10,startMode="lesson_1",goal="hsk_exam";
+  try{
+    dailyMinutes=Number(localStorage.getItem("hsk_v3_daily_minutes")||dailyMinutes)||dailyMinutes;
+    startMode=localStorage.getItem("hsk_v3_start_mode")||startMode;
+    goal=localStorage.getItem("hsk_v3_goal")||goal;
+  }catch(e){}
+  return {
+    level:sel,
+    goal:goal,
+    daily_minutes:dailyMinutes,
+    daily_time:dailyMinutes,
+    start_mode:startMode,
+    start_point:startMode,
+    activation_variant:"direct_start_v1",
+    language:LANG,
+    timezone_offset_minutes:-new Date().getTimezoneOffset()
+  };
+}
 function trv(o){return typeof o==="string"?o:(o[LANG]||o.ru)}
 function render(){
   var st=document.getElementById("stage"),cta=document.getElementById("cta");
@@ -112,9 +145,32 @@ function pick(k){sel=k;render()}
 function nextBtn(){if(step<2){step++;render()}else{finish()}}
 function back(){if(step>0){step--;render()}}
 function finish(){
-  try{localStorage.setItem("hsk_v3_onb","1");localStorage.setItem("hsk_v3_level",sel)}catch(e){}
-  location.href="/course-v3.html?lang="+LANG+"&level="+sel+"&onboarded=1&tour=1";
+  if(submitting)return;submitting=true;
+  var cta=document.getElementById("cta");cta.disabled=true;cta.textContent="…";
+  var moved=false;
+  function go(result){
+    if(moved)return;moved=true;
+    var launch=result&&result.ok?result:{};
+    try{localStorage.setItem("hsk_v3_onb","1");localStorage.setItem("hsk_v3_level",String(launch.level||sel))}catch(e){}
+    var query=new URLSearchParams({
+      lang:LANG,
+      level:String(launch.level||sel),
+      tab:String(launch.tab||"course"),
+      onboarded:"1"
+    });
+    if(params.get("source"))query.set("source",String(params.get("source")).slice(0,40));
+    var lesson=Number(launch.lesson||1);
+    if(lesson>0&&!launch.placement){query.set("lesson",String(lesson));query.set("autostart","1")}
+    location.href="/course-v3.html?"+query.toString();
+  }
+  function fail(){submitting=false;cta.disabled=false;cta.textContent=L.retry}
+  if(!INIT_DATA){go({ok:true,level:sel,lesson:1,tab:"course"});return}
+  postJson("/api/miniapp/onboarding",onboardingPayload())
+    .then(function(response){return response.json().then(function(data){if(!response.ok||!data.ok)throw new Error(data.error||"onboarding_failed");return data})})
+    .then(go)
+    .catch(fail);
 }
+trackOnboardingEvent("onboarding_started",{dedupe_key:"started:"+ONB_SESSION_ID,event_id:"started:"+ONB_SESSION_ID});
 render();
 </script>
 </body>

@@ -23,6 +23,7 @@ from app.db.models.user import User
 from app.db.models.course_lessons import CourseLesson
 from app.db.models.notification_template import NotificationTemplate  # noqa: F401 (register table)
 from app.db.models.course_ad import CourseAdCreative, CourseAdView  # noqa: F401 (register tables)
+from app.db.models.conversion_funnel_event import ConversionFunnelEvent
 from app.services.course_seed_service import CourseSeedService
 from app.services.notification_template_service import (
     MOTIVATION_KEYS,
@@ -34,6 +35,7 @@ from app.services.motivation_reminder_service import (
 )
 from app.services.access_service import AccessService
 from app.services.bot_block_status_service import BotBlockStatusService
+from app.services.gemini_switch_announcement_service import announce_if_needed
 from app.services.daily_reset_service import DailyResetService
 from app.services.expiry_reminder_service import ExpiryReminderService
 from app.services.course_reminder_service import CourseReminderService
@@ -50,14 +52,19 @@ from app.services.conversion_funnel_service import ConversionFunnelService
 from app.services.onboarding_tip_service import OnboardingTipService
 from app.services.study_miniapp_service import StudyMiniAppService
 from app.services.course_miniapp_analytics_service import CourseMiniAppAnalyticsService
-from app.services.course_miniapp_lesson_flow_service import CourseMiniAppLessonFlowService
 from app.services.course_miniapp_onboarding_service import CourseMiniAppOnboardingService
 from app.services.course_miniapp_practice_service import CourseMiniAppPracticeService
 from app.services.course_mistake_service import CourseMistakeService
+from app.services.course_lesson_mistake_material_service import (
+    CourseLessonMistakeMaterialError,
+    CourseLessonMistakeMaterialService,
+)
+from app.services.course_hsk_exam_service import CourseHskExamService
 from app.services.course_gamification_service import CourseGamificationService
 from app.services.course_challenge_service import CourseChallengeService
 from app.services.course_miniapp_access_service import (
     COURSE_AI_PRACTICE_FEATURES,
+    FREE_COURSE_LESSONS_PER_LEVEL,
     CourseMiniAppAccessService,
 )
 from app.services.course_ad_service import COURSE_AD_MEDIA_ROOT, CourseAdService
@@ -65,7 +72,11 @@ from app.services.referral_service import ReferralService, REFERRAL_TRIAL_REQUIR
 from app.services.payment_notify_service import PaymentNotifyService
 from app.services.portfolio_service import PortfolioService
 from app.services.required_channel_service import RequiredChannelService
-from app.services.subscription_service import SubscriptionService
+from app.services.subscription_service import (
+    PLAN_DURATIONS,
+    SubscriptionService,
+    normalize_manual_subscription_days,
+)
 from app.services.subscription_price_service import PAYMENT_METHODS, PLANS, SubscriptionPriceService
 from app.services.subscription_currency_service import format_subscription_price
 from app.services.subscription_miniapp_service import SubscriptionMiniAppService
@@ -98,6 +109,12 @@ from app.services.voice_practice_service import VoicePracticeError, VoicePractic
 from app.services.telegram_webapp_auth import extract_verified_webapp_user_id
 from app.repositories.ad_campaign_repo import AdCampaignRepository, decode_languages as decode_ad_languages
 from app.repositories.bot_setting_repo import BotSettingRepository
+from app.services.ai_provider import (
+    ACTIVE_GEMINI_MODEL_KEY,
+    GEMINI_MODEL_OPTIONS,
+    get_active_gemini_model,
+    set_active_gemini_model_cache,
+)
 from app.repositories.course_audio_repo import CourseAudioRepository
 from app.repositories.user_repo import UserRepository
 from app.repositories.payment_repo import PaymentRepository
@@ -140,6 +157,17 @@ def _positive_int(value) -> int | None:
     except (TypeError, ValueError):
         return None
     return parsed if parsed > 0 else None
+
+
+def _checkout_attempt_id(value) -> str | None:
+    attempt_id = str(value or "").strip()[:80]
+    if not attempt_id or any(ch not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-:." for ch in attempt_id):
+        return None
+    return attempt_id
+
+
+def _checkout_text(value, limit: int) -> str:
+    return str(value or "").strip()[:limit]
 
 
 def _prepare_course_ad_video_file(data: bytes, *, raw_ext: str, telegram_id: int) -> str:
@@ -314,11 +342,11 @@ async def _background_scheduler(bot: Bot) -> None:
             async with async_session_maker() as session:
                 await ExpiryReminderService(session).send_expiry_reminders(bot)
             async with async_session_maker() as session:
+                await MotivationReminderService(session).send_due_reminders(bot)
+            async with async_session_maker() as session:
                 await CourseReminderService(session).send_due_reminders(bot)
             async with async_session_maker() as session:
                 await CourseReminderService(session).send_weekly_progress_reports(bot)
-            async with async_session_maker() as session:
-                await MotivationReminderService(session).send_due_reminders(bot)
             async with async_session_maker() as session:
                 await BotFeedbackService(session).send_due_price_discount_offers(bot)
             async with async_session_maker() as session:
@@ -337,6 +365,8 @@ async def _background_scheduler(bot: Bot) -> None:
                 await SubscriptionChurnService(session).send_due_followups(bot)
             async with async_session_maker() as session:
                 await BotBlockStatusService(session).scan_due_users(bot, limit=100)
+            # Gemini yoqilgan bo'lsa "limit o'zgardi" e'lonini bir marta yuboradi.
+            await announce_if_needed(bot)
         except Exception as e:
             print("Scheduler error:", e)
 
@@ -382,13 +412,6 @@ MINIAPP_HTML_HEADERS = {
 STATIC_ASSET_HEADERS = {
     "Cache-Control": "public, max-age=31536000, immutable",
 }
-COURSE_DATA_FILES = {
-    "hsk1": "app/static/course_data/hsk1.json",
-    "hsk2": "app/static/course_data/hsk2.json",
-    "hsk3": "app/static/course_data/hsk3.json",
-    "hsk4a": "app/static/course_data/hsk4a.json",
-    "hsk4b": "app/static/course_data/hsk4b.json",
-}
 ADMIN_MINIAPP_SECTIONS = {
     "stats": ("📊 Statistika", "adm:stats"),
     "user_search": ("🔎 Foydalanuvchi qidirish", "adm:user_search_info"),
@@ -417,6 +440,12 @@ def static_asset_response(path: str, media_type: str | None = None) -> FileRespo
 
 def static_json_response(path: str) -> FileResponse:
     return FileResponse(path, media_type="application/json")
+
+
+def bot_username_value() -> str:
+    """Kanonik bot username — yagona manba BOT_USERNAME env. Sozlanmagan bo'lsa
+    joriy English botga (@AKEnglishTutor_bot) tushadi."""
+    return (settings.BOT_USERNAME or "AKEnglishTutor_bot").strip().lstrip("@") or "AKEnglishTutor_bot"
 
 
 def _admin_miniapp_user_id(request: Request) -> int | None:
@@ -626,6 +655,11 @@ async def _admin_miniapp_management_payload(session) -> dict:
         "payment_details": (await setting_repo.get(PAYMENT_DETAILS_KEY) or settings.PAYMENT_DETAILS or "").strip(),
         "payment_details_dushanbe": (await setting_repo.get(PAYMENT_DETAILS_KEYS["alipay"]) or "").strip(),
         "payment_details_alif": (await setting_repo.get(PAYMENT_DETAILS_KEYS["wechat"]) or "").strip(),
+        "gemini": {
+            "configured": bool(settings.GEMINI_API_KEY),
+            "active_model": await get_active_gemini_model(),
+            "options": GEMINI_MODEL_OPTIONS,
+        },
         "channels": {
             "enabled": await channels_service.is_enabled(),
             "items": [
@@ -891,6 +925,20 @@ async def hsk_lugat_miniapp():
     return miniapp_file_response("app/static/hsk-lugat.html")
 
 
+# hsk-data.js ikkiga bo'lindi: mashq sahifalari (recognition/pronunciation) faqat
+# WORDS'ga muhtoj, lekin ilgari 2.8 MB'lik to'liq faylni parse qilib turardi — bu
+# har ochilishda sezilarli kechikish berardi. STROKES/EXAMPLES/HSK4_GRAMMAR endi
+# alohida faylda va faqat hsk-lugat.html uni yuklaydi.
+@app.get("/hsk-words.js")
+async def hsk_words_script():
+    return static_asset_response("app/static/hsk-words.js", "application/javascript")
+
+
+@app.get("/hsk-extra.js")
+async def hsk_extra_script():
+    return static_asset_response("app/static/hsk-extra.js", "application/javascript")
+
+
 @app.get("/hsk-data.js")
 async def hsk_data_script():
     return static_asset_response("app/static/hsk-data.js", "application/javascript")
@@ -906,14 +954,6 @@ async def subscription_miniapp():
     return miniapp_file_response("app/static/subscription.html")
 
 
-@app.get("/course_data/{level}.json")
-async def course_data_file(level: str):
-    path = COURSE_DATA_FILES.get(str(level or "").strip().lower())
-    if not path:
-        return JSONResponse(status_code=404, content={"ok": False, "error": "course_data_not_found"})
-    return static_json_response(path)
-
-
 # ── Course v3 Mini App ──────────────────────────────────────────────────────
 
 _COURSE_V3_PAGES = {"onboarding", "recognition", "pronunciation", "test", "mistakes", "voice"}
@@ -927,6 +967,13 @@ def _course_v3_level(value: str | None) -> str:
 
 # Band tugaganda keyingi English bandiga avtomatik o'tish (user.level yangilanadi).
 _COURSE_V3_NEXT_BAND = {"hsk1": "hsk2", "hsk2": "hsk3", "hsk3": "hsk4"}
+
+# Darslar mini-qismlarga bo'lingandan keyin band chegarasi legacy
+# course_lessons jadvalidan emas, parts_manifest.json dan aniqlanadi.
+def _course_v3_total_parts(level: str) -> int:
+    from app.services.course_v3_parts import total_parts
+
+    return total_parts(_course_v3_level(level))
 
 
 def _course_v3_user_level(user) -> str:
@@ -954,9 +1001,10 @@ def _apply_course_v3_access_policy(data: dict, *, level: str, completed: int, is
 
             requires_premium = CourseMiniAppAccessService.lesson_requires_premium(level, n)
             if not is_paid and requires_premium and n > completed:
-                if n == completed + 1 and n == 2:
-                    # 2-dars: yangi bepul user uni ochib, ~yarmigacha ko'radi;
-                    # frontend kartalar o'rtasida obuna oynasini chiqaradi.
+                if n == completed + 1 and n == FREE_COURSE_LESSONS_PER_LEVEL + 1:
+                    # Birinchi pullik mini-dars: yangi bepul user uni ochib,
+                    # ~yarmigacha ko'radi; frontend kartalar o'rtasida obuna
+                    # oynasini chiqaradi.
                     lesson["status"] = "current"
                     lesson["preview_half"] = True
                     lesson.pop("locked_premium", None)
@@ -1005,10 +1053,9 @@ async def course_v3_data_file(filename: str):
 
 @app.get("/course_v3_data/exams/{filename}")
 async def course_v3_exam_file(filename: str):
-    import re
-    if not re.fullmatch(r"hsk[1-4]\.json", filename):
-        return JSONResponse(status_code=404, content={"error": "not_found"})
-    return static_json_response(f"app/static/course_v3_data/exams/{filename}")
+    # Answer keys are server-only. The Test Center receives a randomized public
+    # projection from `/api/v3/exams/start` and submits blind answers for grading.
+    return JSONResponse(status_code=404, content={"ok": False, "error": "exam_material_private"})
 
 
 @app.get("/course_v3_data/{level}/{filename}")
@@ -1106,6 +1153,77 @@ async def v3_clientlog(request: Request):
     return JSONResponse(content={"ok": True})
 
 
+# --- Telegram profil avatarlari (reyting va profil bo'limlari uchun) --------
+# <img> tegi header yubora olmaydi, shuning uchun endpoint ochiq; lekin faqat
+# botda ro'yxatdan o'tgan userlar uchun ishlaydi. Rasm diskка cache bo'ladi,
+# foto yo'q userlar uchun negativ-cache saqlanadi (Telegram API'ни urmaslik uchun).
+AVATAR_CACHE_DIR = "app/static/avatar_cache"
+AVATAR_TTL_SECONDS = 24 * 3600
+AVATAR_NEG_TTL_SECONDS = 6 * 3600
+_avatar_locks: dict[int, asyncio.Lock] = {}
+_AVATAR_IMG_HEADERS = {"Cache-Control": "public, max-age=21600"}
+
+
+@app.get("/api/v3/avatar/{telegram_id}")
+async def v3_avatar(telegram_id: int):
+    if telegram_id <= 0:
+        return JSONResponse(status_code=404, content={"ok": False})
+    os.makedirs(AVATAR_CACHE_DIR, exist_ok=True)
+    img_path = os.path.join(AVATAR_CACHE_DIR, f"{telegram_id}.jpg")
+    neg_path = os.path.join(AVATAR_CACHE_DIR, f"{telegram_id}.none")
+
+    def _fresh_img() -> bool:
+        return (
+            os.path.isfile(img_path)
+            and os.path.getsize(img_path) > 0
+            and time.time() - os.path.getmtime(img_path) < AVATAR_TTL_SECONDS
+        )
+
+    if _fresh_img():
+        return FileResponse(img_path, media_type="image/jpeg", headers=_AVATAR_IMG_HEADERS)
+    if os.path.isfile(neg_path) and time.time() - os.path.getmtime(neg_path) < AVATAR_NEG_TTL_SECONDS:
+        return JSONResponse(
+            status_code=404, content={"ok": False}, headers={"Cache-Control": "public, max-age=3600"}
+        )
+
+    lock = _avatar_locks.setdefault(int(telegram_id), asyncio.Lock())
+    async with lock:
+        if _fresh_img():
+            return FileResponse(img_path, media_type="image/jpeg", headers=_AVATAR_IMG_HEADERS)
+        try:
+            async with async_session_maker() as session:
+                known = await UserRepository(session).get_by_telegram_id(int(telegram_id))
+            if not known:
+                raise RuntimeError("unknown_user")
+            photos = await bot.get_user_profile_photos(int(telegram_id), limit=1)
+            if not photos.total_count or not photos.photos:
+                raise RuntimeError("no_photo")
+            # ~320px atrofidagi o'lcham yetarli (34-80px kvadratlarda ko'rsatiladi)
+            pick = min(photos.photos[0], key=lambda s: abs(int(s.width or 0) - 320))
+            file = await bot.get_file(pick.file_id)
+            bio = await bot.download_file(file.file_path)
+            data = bio.read() if hasattr(bio, "read") else bytes(bio or b"")
+            if not data:
+                raise RuntimeError("empty_avatar")
+            tmp = img_path + ".tmp"
+            with open(tmp, "wb") as fh:
+                fh.write(data)
+            os.replace(tmp, img_path)
+            with contextlib.suppress(Exception):
+                os.remove(neg_path)
+        except Exception as exc:  # noqa: BLE001
+            # Yangilash muvaffaqiyatsiz bo'lsa, eskirgan rasm bo'lsa ham beramiz
+            if os.path.isfile(img_path) and os.path.getsize(img_path) > 0:
+                return FileResponse(img_path, media_type="image/jpeg", headers=_AVATAR_IMG_HEADERS)
+            logging.info("v3_avatar unavailable for %s: %s", telegram_id, exc)
+            with contextlib.suppress(Exception):
+                open(neg_path, "w").close()
+            return JSONResponse(
+                status_code=404, content={"ok": False}, headers={"Cache-Control": "public, max-age=3600"}
+            )
+    return FileResponse(img_path, media_type="image/jpeg", headers=_AVATAR_IMG_HEADERS)
+
+
 @app.get("/api/v3/map")
 async def v3_course_map(request: Request, lang: str = "uz", level: str | None = None):
     import json as _json
@@ -1186,13 +1304,21 @@ async def v3_course_map(request: Request, lang: str = "uz", level: str | None = 
         initials = "".join(p[:1].upper() for p in display_name.split()[:2]) or "A"
 
         data["authenticated"] = True
+        data["bot_username"] = bot_username_value()
         data["level"] = resolved_level
         data["progress"] = {
             "xp": gamification["xp"],
             "streak": gamification["streak"],
+            "longest_streak": gamification.get("longest_streak", 0),
             "weekly_xp": gamification["weekly_xp"],
             "league": gamification["league"],
             "completed": completed,
+            "daily_xp": gamification.get("daily_xp", 0),
+            "last_activity_date": gamification.get("last_activity_date"),
+            "local_date": gamification.get("local_date"),
+            "week_start": gamification.get("week_start"),
+            "week_activity_dates": gamification.get("week_activity_dates", []),
+            "reward_chest": gamification.get("reward_chest"),
         }
         data["user"] = {
             "name": display_name,
@@ -1218,9 +1344,14 @@ async def v3_course_map(request: Request, lang: str = "uz", level: str | None = 
             event_name="miniapp_opened",
             telegram_id=telegram_id,
             user_id=getattr(user, "id", None),
-            source="course_v3",
+            source=_checkout_text(request.query_params.get("source") or "course_v3", 40),
             level=resolved_level,
-            dedupe_key=f"course-v3:miniapp-opened:{resolved_level}:{datetime.now(timezone.utc).date().isoformat()}",
+            session_id=_checkout_text(request.query_params.get("sid"), 80) or None,
+            dedupe_key=(
+                f"course-v3:miniapp-opened:{_checkout_text(request.query_params.get('sid'), 80)}"
+                if _checkout_text(request.query_params.get("sid"), 80)
+                else f"course-v3:miniapp-opened:{resolved_level}:{datetime.now(timezone.utc).date().isoformat()}"
+            ),
         )
         await session.commit()
         return JSONResponse(content=data)
@@ -1252,7 +1383,7 @@ async def v3_invite_payload(request: Request, lang: str = "uz"):
         active_count = await service.get_trial_activation_progress(user)
         joined_count = await service.referral_repo.count_by_referrer(user.telegram_id)
         referrals = await service.list_miniapp_referrals(user, timezone_offset_minutes=tz_offset)
-        bot_username = (settings.BOT_USERNAME or "AKEnglishTutor_bot").strip().lstrip("@") or "AKEnglishTutor_bot"
+        bot_username = bot_username_value()
         link = f"https://t.me/{bot_username}?start={user.referral_code}"
         full_lang, full_text = await service.build_trial_progress_text(user)
 
@@ -1337,7 +1468,7 @@ async def v3_course_ad(
     # Mashq bo'limlarida reklama darsga bog'lanmagan (lesson=0) — `feature`
     # (masalan "recognition") kontekst sifatida keladi. Faqat dars ham,
     # bo'lim ham bo'lmasa xato.
-    if lesson_order <= 0 and section not in _COURSE_DAILY_GATE_FEATURES:
+    if lesson_order <= 0 and section not in _COURSE_AD_GATE_FEATURES:
         return JSONResponse(status_code=400, content={"ok": False, "error": "invalid_lesson_payload"})
 
     # Foydalanuvchining tiliga mos reklamalarni (shu til + "all") qaytaramiz.
@@ -1374,6 +1505,62 @@ async def v3_course_ad(
         )
 
 
+@app.post("/api/v3/ad/attempt")
+async def v3_course_ad_attempt(request: Request):
+    init_data = request.headers.get("X-Telegram-Init-Data", "")
+    telegram_id = extract_verified_webapp_user_id(init_data, settings.BOT_TOKEN) if init_data else None
+    if not telegram_id:
+        return JSONResponse(status_code=401, content={"ok": False, "error": "invalid_telegram_init_data"})
+    try:
+        payload = await request.json()
+        if not isinstance(payload, dict):
+            raise ValueError("invalid_payload")
+        ad_id = int(payload.get("ad_id") or 0)
+        lesson_order = int(payload.get("lesson_order") or payload.get("lesson_id") or 0)
+    except (TypeError, ValueError):
+        return JSONResponse(status_code=400, content={"ok": False, "error": "invalid_ad_attempt_payload"})
+    section = str(payload.get("feature") or "").strip().lower()
+    access_ref = str(payload.get("access_ref") or "").strip()
+    placement = str(payload.get("placement") or "").strip().lower()
+    if (
+        ad_id <= 0
+        or lesson_order != 0
+        or section not in _COURSE_AD_GATE_FEATURES
+        or not access_ref
+        or placement != "start"
+    ):
+        return JSONResponse(status_code=400, content={"ok": False, "error": "invalid_ad_attempt_payload"})
+
+    async with async_session_maker() as session:
+        user = await UserRepository(session).get_by_telegram_id(telegram_id)
+        if not user:
+            return JSONResponse(status_code=404, content={"ok": False, "error": "user_not_found"})
+        ad_result = await session.execute(
+            select(CourseAdCreative).where(
+                CourseAdCreative.id == ad_id,
+                CourseAdCreative.is_active.is_(True),
+            )
+        )
+        ad = ad_result.scalar_one_or_none()
+        if not ad:
+            return JSONResponse(status_code=404, content={"ok": False, "error": "course_ad_not_found"})
+        try:
+            result = await CourseMiniAppAccessService(session).start_ad_attempt(
+                user,
+                feature_key=section,
+                access_ref=access_ref,
+                ad_id=ad_id,
+                placement=placement,
+                required_seconds=CourseAdService.normalize_duration(ad.duration_seconds),
+            )
+        except ValueError:
+            return JSONResponse(status_code=400, content={"ok": False, "error": "invalid_ad_attempt_payload"})
+        if not result.get("allowed"):
+            return JSONResponse(status_code=403, content={"ok": False, **result})
+        await session.commit()
+        return JSONResponse(content={"ok": True, **result})
+
+
 @app.post("/api/v3/ad/view")
 async def v3_course_ad_view(request: Request):
     init_data = request.headers.get("X-Telegram-Init-Data", "")
@@ -1383,15 +1570,19 @@ async def v3_course_ad_view(request: Request):
 
     try:
         payload = await request.json()
+        if not isinstance(payload, dict):
+            raise ValueError("invalid_payload")
         ad_id = int(payload.get("ad_id") or 0)
         lesson_order = int(payload.get("lesson_order") or payload.get("lesson_id") or 0)
         watched_seconds = int(payload.get("watched_seconds") or 0)
     except (TypeError, ValueError):
         return JSONResponse(status_code=400, content={"ok": False, "error": "invalid_ad_view_payload"})
     section = str(payload.get("feature") or "").strip().lower()
+    access_ref = str(payload.get("access_ref") or "").strip()
+    attempt_token = str(payload.get("attempt_token") or "").strip()
     # Mashq bo'limi reklamasi darsga bog'lanmagan (lesson_order=0) — bunda
     # `feature` bo'lishi shart.
-    if ad_id <= 0 or (lesson_order <= 0 and section not in _COURSE_DAILY_GATE_FEATURES):
+    if ad_id <= 0 or (lesson_order <= 0 and section not in _COURSE_AD_GATE_FEATURES):
         return JSONResponse(status_code=400, content={"ok": False, "error": "invalid_ad_view_payload"})
 
     placement = CourseAdService.normalize_placement(str(payload.get("placement") or "start"))
@@ -1410,6 +1601,26 @@ async def v3_course_ad_view(request: Request):
             placement=placement,
             watched_seconds=watched_seconds,
         )
+        if result.get("ok") and access_ref and lesson_order <= 0:
+            try:
+                authorization = await CourseMiniAppAccessService(session).record_ad_authorization(
+                    user,
+                    feature_key=section,
+                    access_ref=access_ref,
+                    ad_id=ad_id,
+                    placement=placement,
+                    attempt_token=attempt_token,
+                )
+            except ValueError:
+                authorization = {"allowed": False, "error": "invalid_access_ref"}
+            if not authorization.get("allowed"):
+                await session.rollback()
+                status = 403 if authorization.get("error") == "course_access_blocked" else 400
+                return JSONResponse(status_code=status, content={"ok": False, **authorization})
+            result["authorization"] = {
+                "recorded": bool(authorization.get("recorded")),
+                "idempotent": bool(authorization.get("idempotent")),
+            }
         if result.get("ok"):
             await CourseMiniAppAnalyticsService(session).record_server_event(
                 event_name="course_ad_viewed",
@@ -1422,6 +1633,8 @@ async def v3_course_ad_view(request: Request):
                     "ad_id": ad_id,
                     "placement": placement,
                     "watched_seconds": watched_seconds,
+                    "feature": section or None,
+                    "access_ref": access_ref or None,
                 },
             )
         await session.commit()
@@ -1436,6 +1649,7 @@ _COURSE_DAILY_GATE_FEATURES = {
     "placement",
     "training_test",
 }
+_COURSE_AD_GATE_FEATURES = _COURSE_DAILY_GATE_FEATURES | {"mistake_review"}
 
 
 @app.post("/api/v3/practice/daily-gate")
@@ -1558,6 +1772,65 @@ async def v3_practice_ad_gate(request: Request):
         )
 
 
+@app.post("/api/v3/exams/start")
+async def v3_hsk_exam_start(request: Request):
+    init_data = request.headers.get("X-Telegram-Init-Data", "")
+    try:
+        payload = await request.json()
+    except ValueError:
+        payload = {}
+    if not init_data:
+        init_data = str(payload.get("initData") or "")
+    telegram_id = extract_verified_webapp_user_id(init_data, settings.BOT_TOKEN) if init_data else None
+    if not telegram_id:
+        return JSONResponse(status_code=401, content={"ok": False, "error": "invalid_telegram_init_data"})
+    try:
+        async with async_session_maker() as session:
+            result = await CourseHskExamService(session).start(
+                telegram_id,
+                level=str(payload.get("level") or ""),
+                lang=str(payload.get("lang") or ""),
+                access_ref=str(payload.get("access_ref") or ""),
+                ad_supported=bool(payload.get("ad_supported")),
+            )
+    except ValueError as error:
+        return JSONResponse(
+            status_code=400,
+            content={"ok": False, "error": "invalid_hsk_exam_payload", "message": str(error)},
+        )
+    if result.get("ok"):
+        status_code = 200
+    elif result.get("error") in {
+        "free_feature_limit_reached",
+        "ad_authorization_required",
+        "course_access_blocked",
+    }:
+        status_code = 403
+    else:
+        status_code = 400
+    return JSONResponse(status_code=status_code, content=result)
+
+
+@app.post("/api/v3/exams/complete")
+async def v3_hsk_exam_complete(request: Request):
+    init_data = request.headers.get("X-Telegram-Init-Data", "")
+    telegram_id = extract_verified_webapp_user_id(init_data, settings.BOT_TOKEN) if init_data else None
+    if not telegram_id:
+        return JSONResponse(status_code=401, content={"ok": False, "error": "invalid_telegram_init_data"})
+    try:
+        payload = await request.json()
+    except ValueError:
+        return JSONResponse(status_code=400, content={"ok": False, "error": "invalid_hsk_exam_payload"})
+    async with async_session_maker() as session:
+        result = await CourseHskExamService(session).complete(
+            telegram_id,
+            session_id=str(payload.get("session_id") or ""),
+            answers=payload.get("answers") if isinstance(payload.get("answers"), list) else [],
+        )
+    status_code = 200 if result.get("ok") else 409 if result.get("error") == "hsk_exam_material_changed" else 400
+    return JSONResponse(status_code=status_code, content=result)
+
+
 @app.post("/api/v3/lesson/unlock")
 async def v3_course_lesson_unlock(request: Request):
     init_data = request.headers.get("X-Telegram-Init-Data", "")
@@ -1580,10 +1853,13 @@ async def v3_course_lesson_unlock(request: Request):
             return JSONResponse(status_code=403, content={"ok": False, "error": "access_start_first"})
 
         resolved_level = _course_v3_user_level(user)
+        total_parts = _course_v3_total_parts(resolved_level)
+        if total_parts and lesson_order > total_parts:
+            return JSONResponse(status_code=404, content={"ok": False, "error": "course_no_lesson_found"})
+        # Legacy course_lessons qatori endi shart emas (qismlar flat raqamlanadi
+        # va jadvaldagi eski tartibdan ko'p) — topilsa bookkeeping uchun olamiz.
         lesson_repo = CourseLessonRepository(session)
         lesson = await lesson_repo.get_by_level_and_order(resolved_level, lesson_order)
-        if not lesson:
-            return JSONResponse(status_code=404, content={"ok": False, "error": "course_no_lesson_found"})
 
         access = CourseMiniAppAccessService(session)
         is_paid = access.is_paid_user(user)
@@ -1596,7 +1872,7 @@ async def v3_course_lesson_unlock(request: Request):
             progress = await progress_repo.create(
                 user_id=user.id,
                 level=resolved_level,
-                current_lesson_id=lesson.id,
+                current_lesson_id=getattr(lesson, "id", None),
                 current_step="intro",
                 waiting_for="none",
             )
@@ -1607,7 +1883,7 @@ async def v3_course_lesson_unlock(request: Request):
         )
         await progress_repo.set_current_lesson_and_step(
             progress=progress,
-            lesson_id=lesson.id,
+            lesson_id=getattr(lesson, "id", None),
             step="intro",
             waiting_for="none",
         )
@@ -1620,7 +1896,7 @@ async def v3_course_lesson_unlock(request: Request):
             level=resolved_level,
             lesson_id=getattr(lesson, "id", None),
             lesson_order=lesson_order,
-            dedupe_key=f"course-v3:skip-test:{lesson.id}",
+            dedupe_key=f"course-v3:skip-test:{resolved_level}:{lesson_order}",
             payload={
                 "score": max(0, min(100, score)),
                 "unlock_completed_lessons_count": int(progress.completed_lessons_count or 0),
@@ -1646,6 +1922,9 @@ async def v3_course_lesson_complete(request: Request):
     try:
         payload = await request.json()
         lesson_order = int(payload.get("lesson_id") or payload.get("lesson_order") or 0)
+        lesson_session_id = _checkout_text(payload.get("session_id"), 80) or None
+        lesson_mistakes = payload.get("mistakes") if isinstance(payload.get("mistakes"), list) else []
+        lesson_mistakes = [item for item in lesson_mistakes[:50] if isinstance(item, dict)]
     except (TypeError, ValueError):
         return JSONResponse(status_code=400, content={"ok": False, "error": "invalid_lesson_payload"})
     if lesson_order <= 0:
@@ -1661,17 +1940,20 @@ async def v3_course_lesson_complete(request: Request):
         # foydalanuvchining haqiqiy bandiga ishonadi (QA rejim bilan bir xil).
         resolved_level = _course_v3_user_level(user)
 
+        total_parts = _course_v3_total_parts(resolved_level)
+        if total_parts and lesson_order > total_parts:
+            return JSONResponse(status_code=404, content={"ok": False, "error": "course_no_lesson_found"})
+        # Legacy course_lessons qatori endi shart emas (qismlar flat raqamlanadi
+        # va jadvaldagi eski tartibdan ko'p) — topilsa bookkeeping uchun olamiz.
         lesson_repo = CourseLessonRepository(session)
         lesson = await lesson_repo.get_by_level_and_order(resolved_level, lesson_order)
-        if not lesson:
-            return JSONResponse(status_code=404, content={"ok": False, "error": "course_no_lesson_found"})
 
         access = CourseMiniAppAccessService(session)
         is_paid = access.is_paid_user(user)
         # Darslarda reklama YO'Q. Bepul user faqat bepul trial doirasidagi
-        # darsni (1-dars) yakunlay oladi; premium dars (2+) — obuna majburiy.
+        # mini-darslarni (1-2) yakunlay oladi; premium qism (3+) — obuna majburiy.
         # Bu serverdagi asosiy chegara: klient buzilgan bo'lsa ham aylanib
-        # o'tib bo'lmaydi (frontend 2-darsni yarmida paywall bilan to'xtatadi).
+        # o'tib bo'lmaydi (frontend 3-qismni yarmida paywall bilan to'xtatadi).
         if not is_paid and CourseMiniAppAccessService.lesson_requires_premium(
             resolved_level, lesson_order
         ):
@@ -1683,7 +1965,7 @@ async def v3_course_lesson_complete(request: Request):
             progress = await progress_repo.create(
                 user_id=user.id,
                 level=resolved_level,
-                current_lesson_id=lesson.id,
+                current_lesson_id=getattr(lesson, "id", None),
                 current_step="intro",
                 waiting_for="none",
             )
@@ -1708,7 +1990,7 @@ async def v3_course_lesson_complete(request: Request):
 
         await progress_repo.set_current_lesson_and_step(
             progress=progress,
-            lesson_id=lesson.id,
+            lesson_id=getattr(lesson, "id", None),
             step="intro",
             waiting_for="none",
         )
@@ -1716,13 +1998,16 @@ async def v3_course_lesson_complete(request: Request):
         snapshot = await gamification.award(
             user,
             activity_type="lesson",
-            activity_ref=f"v3-lesson:{lesson.id}:complete",
+            activity_ref=f"v3-part:{resolved_level}:{lesson_order}:complete",
             base_xp=20,
             level=resolved_level,
         )
 
-        next_lesson = await lesson_repo.get_next_lesson(resolved_level, lesson_order)
-        if next_lesson is None:
+        # Keyingi qism bormi — manifest chegarasidan (legacy jadvaldan emas).
+        # Manifest o'qilmasa (total_parts=0) band avto-o'tishi o'chiq qoladi.
+        has_next = bool(total_parts) and lesson_order < total_parts
+        next_order = lesson_order + 1 if has_next else None
+        if total_parts and not has_next:
             # Joriy band to'liq tugadi: keyingi English bandiga o'tamiz va user.level ni
             # yangilaymiz, shunda QA rejim ham yangi bandda bo'ladi (sinxron qoladi).
             # Progress keyingi map ochilganda yangi banddan noldan boshlanadi.
@@ -1730,13 +2015,12 @@ async def v3_course_lesson_complete(request: Request):
             if next_band:
                 user.level = next_band
         next_requires_premium = CourseMiniAppAccessService.lesson_requires_premium(
-            resolved_level,
-            int(getattr(next_lesson, "lesson_order", 0) or 0) if next_lesson else None,
+            resolved_level, next_order
         )
-        if next_lesson and (is_paid or not next_requires_premium):
+        if has_next and (is_paid or not next_requires_premium):
             await progress_repo.set_current_lesson_and_step(
                 progress=progress,
-                lesson_id=next_lesson.id,
+                lesson_id=getattr(lesson, "id", None),
                 step="intro",
                 waiting_for="none",
             )
@@ -1744,7 +2028,7 @@ async def v3_course_lesson_complete(request: Request):
         else:
             await progress_repo.set_current_lesson_and_step(
                 progress=progress,
-                lesson_id=lesson.id,
+                lesson_id=getattr(lesson, "id", None),
                 step="completed",
                 waiting_for="none",
             )
@@ -1757,19 +2041,41 @@ async def v3_course_lesson_complete(request: Request):
             level=resolved_level,
             lesson_id=getattr(lesson, "id", None),
             lesson_order=lesson_order,
-            dedupe_key=f"v3-lesson:{lesson.id}:completed",
+            session_id=lesson_session_id,
+            dedupe_key=f"v3-part:{resolved_level}:{lesson_order}:completed",
             payload={
                 "lesson_order": lesson_order,
                 "is_paid": is_paid,
-                "next_lesson": getattr(next_lesson, "lesson_order", None),
+                "next_lesson": next_order,
             },
         )
+        if lesson_mistakes:
+            try:
+                lesson_mistakes = CourseLessonMistakeMaterialService.canonicalize_items(
+                    level=resolved_level,
+                    lesson_order=lesson_order,
+                    lang=_course_v3_user_lang(user),
+                    items=lesson_mistakes,
+                )
+            except CourseLessonMistakeMaterialError:
+                # Optional mistake telemetry must never block a valid lesson
+                # completion when checked-in material is unavailable/corrupt.
+                lesson_mistakes = []
+        if lesson_mistakes:
+            await CourseMistakeService(session).record_items(
+                user,
+                lesson_mistakes,
+                source="lesson",
+                level=resolved_level,
+                lesson_id=getattr(lesson, "id", None),
+                lesson_order=lesson_order,
+            )
         await session.commit()
         return JSONResponse(
             content={
                 "ok": True,
                 "completed_lesson": lesson_order,
-                "next_lesson": getattr(next_lesson, "lesson_order", None),
+                "next_lesson": next_order,
                 "completed_lessons_count": int(getattr(progress, "completed_lessons_count", 0) or 0),
                 "gamification": snapshot,
             }
@@ -2080,17 +2386,40 @@ async def admin_miniapp_user_give_access(request: Request):
         payload = await request.json()
         target_id = int(payload.get("telegram_id") or 0)
         plan = str(payload.get("plan") or "").strip()
-    except (TypeError, ValueError):
+    except (AttributeError, TypeError, ValueError):
         return JSONResponse(status_code=400, content={"ok": False, "error": "invalid_access_payload"})
-    if target_id <= 0 or plan not in PLANS:
+
+    if "duration_days" in payload:
+        duration_days = normalize_manual_subscription_days(payload.get("duration_days"))
+    else:
+        duration_days = PLAN_DURATIONS.get(plan)
+    if target_id <= 0 or duration_days is None:
         return JSONResponse(status_code=400, content={"ok": False, "error": "invalid_access_payload"})
+
     async with async_session_maker() as session:
-        activated = await SubscriptionService(session).activate_plan(target_id, plan)
-        if not activated:
+        grant = await SubscriptionService(session).grant_manual_paid_access(target_id, duration_days)
+        if not grant:
             await session.rollback()
-            return JSONResponse(status_code=404, content={"ok": False, "error": "user_or_plan_not_found"})
+            return JSONResponse(status_code=404, content={"ok": False, "error": "user_not_found"})
+        user, extended = grant
         await session.commit()
-    return JSONResponse(content={"ok": True})
+    logger.info(
+        "admin_manual_subscription_granted admin_id=%s target_id=%s duration_days=%s extended=%s end_date=%s",
+        telegram_id,
+        target_id,
+        duration_days,
+        extended,
+        user.end_date.isoformat() if user.end_date else None,
+    )
+    return JSONResponse(content={
+        "ok": True,
+        "duration_days": duration_days,
+        "extended": extended,
+        "status": user.status,
+        "payment_status": user.payment_status,
+        "start_date": _mini_dt(user.start_date),
+        "end_date": _mini_dt(user.end_date),
+    })
 
 
 @app.post("/api/admin-miniapp/users/delete")
@@ -2256,6 +2585,26 @@ async def admin_miniapp_payment_details_save(request: Request):
     async with async_session_maker() as session:
         await BotSettingRepository(session).set(setting_key, text_value)
         await session.commit()
+    return JSONResponse(content={"ok": True})
+
+
+@app.post("/api/admin-miniapp/ai-model/save")
+async def admin_miniapp_ai_model_save(request: Request):
+    telegram_id = _admin_miniapp_user_id(request)
+    auth_error = _admin_auth_error(telegram_id)
+    if auth_error:
+        return auth_error
+    try:
+        payload = await request.json()
+    except ValueError:
+        payload = {}
+    model = str(payload.get("gemini_model") or "").strip()
+    if model not in GEMINI_MODEL_OPTIONS:
+        return JSONResponse(status_code=400, content={"ok": False, "error": "invalid_model"})
+    async with async_session_maker() as session:
+        await BotSettingRepository(session).set(ACTIVE_GEMINI_MODEL_KEY, model)
+        await session.commit()
+    set_active_gemini_model_cache(model)
     return JSONResponse(content={"ok": True})
 
 
@@ -3001,7 +3350,9 @@ async def miniapp_onboarding(request: Request):
                 goal=str(payload.get("goal") or ""),
                 daily_minutes=int(payload.get("daily_minutes") or 0),
                 start_mode=str(payload.get("start_mode") or ""),
+                language=str(payload.get("language") or ""),
                 timezone_offset_minutes=timezone_offset,
+                activation_variant=_checkout_text(payload.get("activation_variant"), 32),
             )
     except (TypeError, ValueError) as error:
         return JSONResponse(
@@ -3048,132 +3399,6 @@ async def miniapp_lesson(
             )
             await session.commit()
         return {"ok": True, "lesson": payload}
-
-
-@app.get("/api/miniapp/course-lesson")
-async def miniapp_course_lesson(
-    request: Request,
-    lesson: int,
-    level: str,
-    lang: str = "ru",
-    section: str | None = None,
-    completed_sections: str | None = None,
-):
-    telegram_id = extract_verified_webapp_user_id(
-        request.headers.get("X-Telegram-Init-Data", ""),
-        settings.BOT_TOKEN,
-    )
-    if not telegram_id:
-        return JSONResponse(
-            status_code=401,
-            content={"ok": False, "error": "invalid_telegram_init_data"},
-        )
-    async with async_session_maker() as session:
-        result = await CourseMiniAppLessonFlowService(session).get_flow(
-            telegram_id,
-            level=level,
-            lesson_order=lesson,
-            lang=normalize_miniapp_lang(lang),
-            section_key=section,
-            client_completed_sections=completed_sections,
-        )
-    status_code = 200 if result.get("ok") else 403
-    return JSONResponse(status_code=status_code, content=result)
-
-
-@app.get("/api/miniapp/course-section-plan")
-async def miniapp_course_section_plan(
-    request: Request,
-    level: str,
-    lang: str = "ru",
-):
-    telegram_id = extract_verified_webapp_user_id(
-        request.headers.get("X-Telegram-Init-Data", ""),
-        settings.BOT_TOKEN,
-    )
-    if not telegram_id:
-        return JSONResponse(
-            status_code=401,
-            content={"ok": False, "error": "invalid_telegram_init_data"},
-        )
-    async with async_session_maker() as session:
-        result = await CourseMiniAppLessonFlowService(session).get_section_plan(
-            telegram_id,
-            level=level,
-            lang=normalize_miniapp_lang(lang),
-        )
-    status_code = 200 if result.get("ok") else 403
-    return JSONResponse(status_code=status_code, content=result)
-
-
-@app.post("/api/miniapp/course-lesson/complete")
-async def miniapp_course_lesson_complete(request: Request):
-    telegram_id = extract_verified_webapp_user_id(
-        request.headers.get("X-Telegram-Init-Data", ""),
-        settings.BOT_TOKEN,
-    )
-    if not telegram_id:
-        return JSONResponse(
-            status_code=401,
-            content={"ok": False, "error": "invalid_telegram_init_data"},
-        )
-    try:
-        payload = await request.json()
-        lesson_order = int(payload.get("lesson_id") or 0)
-    except (TypeError, ValueError):
-        return JSONResponse(
-            status_code=400,
-            content={"ok": False, "error": "invalid_lesson_payload"},
-        )
-    async with async_session_maker() as session:
-        result = await CourseMiniAppLessonFlowService(session).complete_flow(
-            telegram_id,
-            level=str(payload.get("level") or ""),
-            lesson_order=lesson_order,
-            lang=normalize_miniapp_lang(str(payload.get("lang") or "ru")),
-            responses=payload.get("responses") if isinstance(payload.get("responses"), list) else [],
-            section_key=payload.get("section_key") or payload.get("section"),
-            client_completed_sections=payload.get("client_completed_sections") or payload.get("completed_sections"),
-        )
-    status_code = 200 if result.get("ok") else 400
-    return JSONResponse(status_code=status_code, content=result)
-
-
-@app.post("/api/miniapp/course-lesson/jump")
-async def miniapp_course_lesson_jump(request: Request):
-    telegram_id = extract_verified_webapp_user_id(
-        request.headers.get("X-Telegram-Init-Data", ""),
-        settings.BOT_TOKEN,
-    )
-    if not telegram_id:
-        return JSONResponse(
-            status_code=401,
-            content={"ok": False, "error": "invalid_telegram_init_data"},
-        )
-    try:
-        payload = await request.json()
-        lesson_order = int(payload.get("lesson_id") or payload.get("lesson") or 0)
-        percent = int(payload.get("percent") or 0)
-        score = int(payload.get("score") or 0)
-        total = int(payload.get("total") or 0)
-    except (TypeError, ValueError):
-        return JSONResponse(
-            status_code=400,
-            content={"ok": False, "error": "invalid_lesson_jump_payload"},
-        )
-    async with async_session_maker() as session:
-        result = await CourseMiniAppLessonFlowService(session).jump_to_lesson(
-            telegram_id,
-            level=str(payload.get("level") or ""),
-            lesson_order=lesson_order,
-            section_key=payload.get("section_key") or payload.get("section"),
-            percent=percent,
-            score=score,
-            total=total,
-            passed=bool(payload.get("passed")),
-        )
-    status_code = 200 if result.get("ok") else 400
-    return JSONResponse(status_code=status_code, content=result)
 
 
 @app.post("/api/miniapp/practice/start")
@@ -3238,9 +3463,23 @@ async def miniapp_mistakes(request: Request):
     )
     if not telegram_id:
         return JSONResponse(status_code=401, content={"ok": False, "error": "invalid_telegram_init_data"})
+    category = str(request.query_params.get("category") or "").strip().lower() or None
+    if category == "all":
+        category = None
     async with async_session_maker() as session:
-        result = await CourseMistakeService(session).overview(telegram_id)
-    return JSONResponse(status_code=200 if result.get("ok") else 404, content=result)
+        result = await CourseMistakeService(session).overview(
+            telegram_id,
+            category=category,
+            limit=request.query_params.get("limit", "30"),
+            offset=request.query_params.get("offset", "0"),
+        )
+    if result.get("ok"):
+        status_code = 200
+    elif result.get("error") == "access_start_first":
+        status_code = 404
+    else:
+        status_code = 400
+    return JSONResponse(status_code=status_code, content=result)
 
 
 @app.get("/api/miniapp/gamification")
@@ -3414,10 +3653,49 @@ async def miniapp_mistake_review_start(request: Request):
     except Exception:
         payload = {}
     ad_supported = bool(payload.get("ad_supported")) if isinstance(payload, dict) else False
+    access_ref = str(payload.get("access_ref") or "") if isinstance(payload, dict) else ""
     async with async_session_maker() as session:
-        result = await CourseMistakeService(session).start_review(telegram_id, ad_supported=ad_supported)
-    status_code = 200 if result.get("ok") else 403 if result.get("error") == "free_feature_limit_reached" else 400
+        result = await CourseMistakeService(session).start_review(
+            telegram_id,
+            ad_supported=ad_supported,
+            access_ref=access_ref,
+        )
+    status_code = (
+        200
+        if result.get("ok")
+        else 403
+        if result.get("error") in {
+            "free_feature_limit_reached",
+            "ad_authorization_required",
+            "course_access_blocked",
+        }
+        else 400
+    )
     return JSONResponse(status_code=status_code, content=result)
+
+
+@app.post("/api/miniapp/mistakes/review/answer")
+async def miniapp_mistake_review_answer(request: Request):
+    telegram_id = extract_verified_webapp_user_id(
+        request.headers.get("X-Telegram-Init-Data", ""),
+        settings.BOT_TOKEN,
+    )
+    if not telegram_id:
+        return JSONResponse(status_code=401, content={"ok": False, "error": "invalid_telegram_init_data"})
+    try:
+        payload = await request.json()
+    except ValueError:
+        return JSONResponse(status_code=400, content={"ok": False, "error": "invalid_mistake_review_payload"})
+    if not isinstance(payload, dict):
+        return JSONResponse(status_code=400, content={"ok": False, "error": "invalid_mistake_review_payload"})
+    async with async_session_maker() as session:
+        result = await CourseMistakeService(session).answer_review_question(
+            telegram_id,
+            session_id=str(payload.get("session_id") or ""),
+            question_id=str(payload.get("question_id") or ""),
+            selected_index=payload.get("selected_index"),
+        )
+    return JSONResponse(status_code=200 if result.get("ok") else 400, content=result)
 
 
 @app.post("/api/miniapp/mistakes/review/complete")
@@ -3461,7 +3739,8 @@ async def subscription_miniapp_overview(request: Request):
         )
         if result.get("ok"):
             user = await UserRepository(session).get_by_telegram_id(telegram_id)
-            source = str(payload.get("source") or payload.get("mode") or "subscription_miniapp")
+            source = _checkout_text(payload.get("source") or payload.get("mode") or "subscription_miniapp", 80)
+            attempt_id = _checkout_attempt_id(payload.get("attempt_id"))
             await SubscriptionEntryAnalyticsService(session).record_entry(
                 telegram_id=telegram_id,
                 user=user,
@@ -3473,17 +3752,19 @@ async def subscription_miniapp_overview(request: Request):
                 feedback_id=_positive_int(payload.get("feedback_id")),
             )
             await SubscriptionChurnService(session).mark_subscription_miniapp_opened(telegram_id, source)
-            await ConversionFunnelService().record(
-                event_name="checkout_opened",
-                user=user,
-                telegram_id=telegram_id,
-                source=source,
-                payload={
-                    "mode": str(payload.get("mode") or ""),
-                    "campaign_id": _positive_int(payload.get("campaign_id")),
-                    "feedback_id": _positive_int(payload.get("feedback_id")),
-                },
-            )
+            if not result.get("pending_payment"):
+                await ConversionFunnelService().record(
+                    event_name="checkout_opened",
+                    user=user,
+                    telegram_id=telegram_id,
+                    source=source,
+                    payload={
+                        "attempt_id": attempt_id,
+                        "mode": str(payload.get("mode") or ""),
+                        "campaign_id": _positive_int(payload.get("campaign_id")),
+                        "feedback_id": _positive_int(payload.get("feedback_id")),
+                    },
+                )
         return result
 
 
@@ -3523,6 +3804,54 @@ async def subscription_miniapp_quote(request: Request):
         )
 
 
+@app.post("/api/subscription-miniapp/event")
+async def subscription_miniapp_event(request: Request):
+    telegram_id = extract_verified_webapp_user_id(
+        request.headers.get("X-Telegram-Init-Data", ""),
+        settings.BOT_TOKEN,
+    )
+    if not telegram_id:
+        return {"ok": False, "error": "invalid_telegram_init_data"}
+
+    payload = await request.json()
+    stage = str(payload.get("stage") or "").strip().lower()
+    if stage not in {"payment_instructions_viewed", "payment_receipt_selected"}:
+        return JSONResponse(status_code=400, content={"ok": False, "error": "invalid_subscription_stage"})
+
+    attempt_id = _checkout_attempt_id(payload.get("attempt_id"))
+    if not attempt_id:
+        return JSONResponse(status_code=400, content={"ok": False, "error": "invalid_checkout_attempt"})
+
+    async with async_session_maker() as session:
+        base_event = (
+            await session.execute(
+                select(ConversionFunnelEvent.id).where(
+                    ConversionFunnelEvent.telegram_id == int(telegram_id),
+                    ConversionFunnelEvent.event_name == "checkout_opened",
+                    ConversionFunnelEvent.payload_json.like(f'%"attempt_id": "{attempt_id}"%'),
+                    ConversionFunnelEvent.payload_json.not_like('%"stage":%'),
+                ).limit(1)
+            )
+        ).scalar_one_or_none()
+        if not base_event:
+            return JSONResponse(status_code=409, content={"ok": False, "error": "checkout_attempt_not_opened"})
+        user = await UserRepository(session).get_by_telegram_id(telegram_id)
+        recorded = await ConversionFunnelService().record(
+            event_name="checkout_opened",
+            user=user,
+            telegram_id=telegram_id,
+            source=_checkout_text(payload.get("source") or payload.get("mode") or "subscription_miniapp", 80),
+            payload={
+                "attempt_id": attempt_id,
+                "stage": stage,
+                "plan_type": _checkout_text(payload.get("plan_type"), 32),
+                "payment_method": _checkout_text(payload.get("payment_method"), 32),
+                "mode": _checkout_text(payload.get("mode"), 32),
+            },
+        )
+    return {"ok": bool(recorded)}
+
+
 @app.post("/api/subscription-miniapp/submit")
 async def subscription_miniapp_submit(request: Request):
     telegram_id = extract_verified_webapp_user_id(
@@ -3533,6 +3862,7 @@ async def subscription_miniapp_submit(request: Request):
         return {"ok": False, "error": "invalid_telegram_init_data"}
 
     payload = await request.json()
+    attempt_id = _checkout_attempt_id(payload.get("attempt_id"))
     async with async_session_maker() as session:
         result = await SubscriptionMiniAppService(session).submit(
             telegram_id=telegram_id,
@@ -3551,12 +3881,13 @@ async def subscription_miniapp_submit(request: Request):
                 event_name="payment_screenshot_submitted",
                 user=user,
                 telegram_id=telegram_id,
-                source=str(payload.get("source") or payload.get("mode") or "subscription_miniapp"),
+                source=_checkout_text(payload.get("source") or payload.get("mode") or "subscription_miniapp", 80),
                 payment_id=_positive_int(result.get("payment_id")),
                 payload={
-                    "plan_type": str(payload.get("plan_type") or ""),
-                    "payment_method": str(payload.get("payment_method") or ""),
-                    "mode": str(payload.get("mode") or ""),
+                    "attempt_id": attempt_id,
+                    "plan_type": _checkout_text(payload.get("plan_type"), 32),
+                    "payment_method": _checkout_text(payload.get("payment_method"), 32),
+                    "mode": _checkout_text(payload.get("mode"), 32),
                 },
             )
         return result

@@ -6,7 +6,6 @@ import random
 import re
 import unicodedata
 import uuid
-from collections import Counter
 from datetime import datetime, time, timezone
 
 from sqlalchemy import func, select
@@ -18,6 +17,7 @@ from app.repositories.user_repo import UserRepository
 from app.repositories.course_lesson_repo import CourseLessonRepository
 from app.repositories.course_progress_repo import CourseProgressRepository
 from app.services.ai_service import AIService, AIUsageResult
+from app.services.ai_provider import GEMINI_FAST_MODEL
 from app.services.ai_usage_budget_service import AIUsageBudgetService, BudgetRecordResult
 from app.services.study_miniapp_service import StudyMiniAppService
 from app.services.course_mistake_service import CourseMistakeService
@@ -323,12 +323,31 @@ class VoicePracticeService:
         paid = self._is_paid(user)
         used = await self._session_count(telegram_id, today_only=paid)
         limit = None if paid else FREE_TOTAL_SESSIONS
+
+        # Kurs progressi: user o'z HSK bandida nechta darsni tugatgan. Mashq
+        # sahifalari (ieroglif tanish / talaffuz / yodlash) kontentni o'rganilgan
+        # darslar bilan cheklashi uchun ishlatiladi. Band mos kelmasa 0.
+        def _band(value) -> str:
+            v = str(value or "").strip().lower()
+            if v.startswith("hsk4"):
+                return "hsk4"
+            return v if v in {"hsk1", "hsk2", "hsk3"} else "hsk1"
+
+        completed_lessons = 0
+        try:
+            progress = await CourseProgressRepository(self.session).get_by_user_id(user.id)
+            if progress and _band(progress.level) == _band(getattr(user, "level", None)):
+                completed_lessons = int(getattr(progress, "completed_lessons_count", 0) or 0)
+        except Exception:  # noqa: BLE001
+            completed_lessons = 0
+
         return {
             "is_paid": paid,
             "plan": "premium" if paid else "free",
             "remaining_voice_limit": -1 if paid else max(0, limit - used),
             "level": getattr(user, "level", None) or "hsk1",
             "language": getattr(user, "language", None) or "ru",
+            "completed_lessons": completed_lessons,
         }
 
     async def start_session(
@@ -342,6 +361,9 @@ class VoicePracticeService:
     ) -> dict:
         if role not in ROLE_PROMPTS:
             raise VoicePracticeError("INVALID_ROLE", "Unknown conversation role.")
+        level = (level or "").strip().lower()
+        if level.startswith("hsk4"):
+            level = "hsk4"  # users.level "hsk4a"/"hsk4b" bands map to HSK4 speech level
         if level not in {"beginner", "hsk1_2", "hsk3_4", "hsk1", "hsk2", "hsk3", "hsk4"}:
             raise VoicePracticeError("INVALID_LEVEL", "Unknown English level.")
         if language not in LANGUAGE_NAMES:
@@ -497,21 +519,19 @@ class VoicePracticeService:
                 messages.append({"role": "assistant", "content": assistant_text[:360]})
         messages.append({"role": "user", "content": transcription[:500]})
 
-        model = "gpt-4o-mini"
+        # AI Voice suhbatini tezlashtirish uchun Gemini eng tez modeli (flash-lite)
+        # bilan javob beradi; Gemini yo'q/xato bo'lsa OpenAI gpt-4o-mini zaxira.
+        # JSON sxema (chinese_reply/pinyin/translation/correction) o'zgarmaydi.
         ai = AIService()
-        response = await ai.client.chat.completions.create(
-            model=model,
+        usage_result = await ai.complete_messages_with_usage(
             messages=messages,
+            openai_model="gpt-4o-mini",
             response_format={"type": "json_object"},
             max_completion_tokens=VOICE_REPLY_MAX_TOKENS,
             temperature=0.85,
             frequency_penalty=0.5,
             presence_penalty=0.3,
-        )
-        usage_result = ai._result_from_response(
-            response=response,
-            model=model,
-            content=response.choices[0].message.content or "",
+            gemini_model=GEMINI_FAST_MODEL,
         )
         return self._clean_reply(usage_result.content), usage_result
 
@@ -523,7 +543,7 @@ class VoicePracticeService:
         audio_bytes: bytes,
         filename: str,
     ) -> dict:
-        if not settings.OPENAI_API_KEY:
+        if not settings.ai_enabled:
             raise VoicePracticeError("AI_UNAVAILABLE", "Voice AI sozlanmagan.", 503)
         if not audio_bytes:
             raise VoicePracticeError("EMPTY_AUDIO", "Audio bo'sh.")
@@ -547,6 +567,7 @@ class VoicePracticeService:
                     filename=filename,
                     user_language=item.language,
                     user_level=item.level,
+                    gemini_model=GEMINI_FAST_MODEL,
                 ),
                 timeout=35,
             )
@@ -603,10 +624,6 @@ class VoicePracticeService:
         }
 
     @staticmethod
-    def _cjk_chars(text: str) -> list[str]:
-        return [c for c in str(text or "") if "一" <= c <= "鿿"]
-
-    @staticmethod
     def _normalize_pinyin(text: str) -> str:
         raw = str(text or "").translate(PINYIN_UMLAUT_TRANSLATION).lower().replace("u:", "v")
         decomposed = unicodedata.normalize("NFKD", raw)
@@ -629,20 +646,12 @@ class VoicePracticeService:
 
     @classmethod
     def _pronunciation_score(cls, target: str, heard: str, target_pinyin: str = "") -> int:
-        target_chars = cls._cjk_chars(target)
-        hanzi_score = 0
-        if target_chars:
-            heard_counts = Counter(cls._cjk_chars(heard))
-            matched = 0
-            for ch in target_chars:
-                if heard_counts.get(ch, 0) > 0:
-                    heard_counts[ch] -= 1
-                    matched += 1
-            hanzi_score = int(round(matched / len(target_chars) * 100))
-        # Inglizcha so'zlar uchun target CJK emas — STT eshitgan matnni so'zning
-        # o'zi bilan (va bo'lsa talaffuz ko'rsatkichi bilan) solishtiramiz.
-        text_score = cls._pinyin_score(target, heard)
-        return max(hanzi_score, text_score, cls._pinyin_score(target_pinyin, heard))
+        # STT eshitgan matnni so'zning o'zi bilan va (bo'lsa) talaffuz
+        # ko'rsatkichi bilan solishtiramiz — qaysi biri yaqinroq bo'lsa.
+        return max(
+            cls._pinyin_score(target, heard),
+            cls._pinyin_score(target_pinyin, heard),
+        )
 
     async def score_pronunciation(
         self,
@@ -655,7 +664,7 @@ class VoicePracticeService:
         language: str,
         level: str,
     ) -> dict:
-        if not settings.OPENAI_API_KEY:
+        if not settings.ai_enabled:
             raise VoicePracticeError("AI_UNAVAILABLE", "Voice AI sozlanmagan.", 503)
         if not str(target or "").strip():
             raise VoicePracticeError("INVALID_TARGET", "Talaffuz uchun so'z topilmadi.")
@@ -688,6 +697,7 @@ class VoicePracticeService:
                     user_language=(language or "ru"),
                     user_level=(level or "hsk1"),
                     speech_hint=f"{target} ({target_pinyin})" if target_pinyin else target,
+                    gemini_model=GEMINI_FAST_MODEL,
                 ),
                 timeout=35,
             )
