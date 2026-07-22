@@ -276,7 +276,7 @@ def course_reminder_timezone_keyboard() -> InlineKeyboardMarkup:
     builder.button(text="UTC+3 🇷🇺 Москва",   callback_data="course:set_tz:3")
     builder.button(text="UTC+5 🇺🇿 Тошкент",  callback_data="course:set_tz:5")
     builder.button(text="UTC+5 🇹🇯 Душанбе",  callback_data="course:set_tz:5")
-    builder.button(text="UTC+8 🇨🇳 Пекин",    callback_data="course:set_tz:8")
+    builder.button(text="UTC+8 🌏 Азия",      callback_data="course:set_tz:8")
     builder.adjust(2)
     return builder.as_markup()
 

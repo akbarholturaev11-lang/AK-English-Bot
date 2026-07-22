@@ -29,21 +29,21 @@ ANNOUNCED_FLAG_KEY = "gemini_switch_announced"
 ANNOUNCEMENT_TEXT = {
     "uz": (
         "<b>🎉 Yaxshi yangilik!</b>\n\n"
-        "<blockquote>Endi chatda <b>matn</b> orqali AI bilan xitoy tilini "
+        "<blockquote>Endi chatda <b>matn</b> orqali AI bilan ingliz tilini "
         "<b>cheksiz va bepul</b> o'rganishingiz mumkin — kunlik limit yo'q!\n\n"
         "📸 Foto va 🎙 ovozli xabarlar uchun kuniga 5 tadan bepul.\n\n"
         "Hoziroq sinab ko'ring — savolingizni yozing!</blockquote>"
     ),
     "ru": (
         "<b>🎉 Хорошие новости!</b>\n\n"
-        "<blockquote>Теперь вы можете изучать китайский с AI в чате "
+        "<blockquote>Теперь вы можете изучать английский с AI в чате "
         "<b>текстом — без лимитов и бесплатно</b>!\n\n"
         "📸 Фото и 🎙 голосовые — по 5 в день бесплатно.\n\n"
         "Попробуйте прямо сейчас — напишите свой вопрос!</blockquote>"
     ),
     "tj": (
         "<b>🎉 Хабари хуш!</b>\n\n"
-        "<blockquote>Акнун шумо метавонед забони хитоиро бо AI дар чат "
+        "<blockquote>Акнун шумо метавонед забони англисиро бо AI дар чат "
         "<b>бо матн — бе лимит ва ройгон</b> омӯзед!\n\n"
         "📸 Акс ва 🎙 паёмҳои овозӣ — дар як рӯз 5-тоӣ ройгон.\n\n"
         "Ҳозир санҷед — саволатонро нависед!</blockquote>"

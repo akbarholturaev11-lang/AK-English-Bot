@@ -287,7 +287,7 @@ class CourseLessonMistakeMaterialService:
         selected_answer = " ".join(selected_tokens)
         if material["format"] == "sentence_builder":
             # The source's localized sentence is the translation; the built
-            # answer is the Chinese sentence users should review.
+            # answer is the English sentence users should review.
             translation = material["sentence"]
             material["sentence"] = "".join(answer_tokens)
             material["translation"] = translation

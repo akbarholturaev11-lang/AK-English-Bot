@@ -30,8 +30,8 @@ FREE_COURSE_LESSONS_PER_LEVEL = 2
 # Hisob server tomonda — user localStorage'ni tozalab aylanib o'tolmaydi.
 COURSE_DAILY_FREE_LIMITS = {
     # Bepul: har bo'lim umrda 1 marta (lifetime=True bilan ishlatiladi).
-    "recognition": 1,    # Ieroglif tanish
-    "memorize": 1,       # Yodlash (ieroglif yozish mashqi)
+    "recognition": 1,    # So'z tanish
+    "memorize": 1,       # Yodlash (so'z yozish mashqi)
     "pronunciation": 1,  # Talaffuz mashqi
     "placement": 1,      # Daraja aniqlash testi
     "training_test": 1,  # Test markazi mashqlari

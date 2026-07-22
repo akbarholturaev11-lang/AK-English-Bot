@@ -189,7 +189,7 @@ class AccessService:
 
     async def _can_use_daily_text_limit(self, user) -> Tuple[bool, str]:
         # Gemini asosiy provayder bo'lsa chat/matn cheksiz — bepul foydalanuvchi
-        # bemalol matn orqali AI bilan xitoy tilini o'rganadi (foto/ovoz alohida 5/kun).
+        # bemalol matn orqali AI bilan ingliz tilini o'rganadi (foto/ovoz alohida 5/kun).
         if gemini_active():
             return True, ""
 

@@ -519,7 +519,7 @@ async def _prices_text(session) -> str:
         "💳 <b>Karta rekviziti (mini app)</b>",
         f"<code>{escape(short)}</code>",
         "",
-        "<i>Visa/Card obuna narxi faqat TJSda yuradi. Alipay/WeChat narxlari ¥ bo'lib qoladi.</i>",
+        "<i>Barcha to'lov usullari TJSda yuradi (Visa/karta, Dushanbe City, Alif bank).</i>",
         "",
         "Narxni o'zgartirish uchun pastdagi tugmani tanlang.",
     ])
