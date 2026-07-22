@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
@@ -11,6 +12,8 @@ from app.db.models.ai_usage import AIUsageEvent
 from app.db.models.bot_feedback import BotFeedback
 from app.db.models.conversion_funnel_event import ConversionFunnelEvent
 from app.db.models.course_miniapp_event import CourseMiniAppEvent
+from app.db.models.course_miniapp_profile import CourseMiniAppProfile
+from app.db.models.course_xp_event import CourseXpEvent
 from app.db.models.message import Message
 from app.db.models.payment import Payment
 from app.db.models.portfolio import PortfolioTransaction
@@ -38,6 +41,351 @@ HOT_LEAD_PAYMENT_STATUSES = ("none", "draft", "rejected")
 
 def _pct(part: int, total: int) -> float:
     return round(part / total * 100, 1) if total > 0 else 0.0
+
+
+def _cohort_retention(
+    *,
+    created_by_user: dict[int, datetime],
+    opens_by_user: dict[int, list[datetime]],
+    days: int,
+    now: datetime,
+) -> dict:
+    eligible = 0
+    retained = 0
+    for telegram_id, created in created_by_user.items():
+        window_start = created + timedelta(days=days)
+        window_end = window_start + timedelta(days=1)
+        if window_end > now:
+            continue
+        eligible += 1
+        if any(window_start <= opened < window_end for opened in opens_by_user.get(telegram_id, ())):
+            retained += 1
+    return {"eligible": eligible, "retained": retained, "rate": _pct(retained, eligible)}
+
+
+def _payment_attempt_funnel(rows: list[tuple]) -> dict:
+    attempts: dict[tuple[int, str], dict] = {}
+    approvals: dict[int, datetime] = {}
+
+    def payload(raw) -> dict:
+        try:
+            value = json.loads(raw or "{}")
+        except (TypeError, json.JSONDecodeError):
+            return {}
+        return value if isinstance(value, dict) else {}
+
+    normalized_rows = sorted(rows, key=lambda row: _as_utc(row[4]) or datetime.min.replace(tzinfo=timezone.utc))
+    for event_name, telegram_id, payment_id, payload_json, created_at in normalized_rows:
+        created = _as_utc(created_at)
+        if not created:
+            continue
+        data = payload(payload_json)
+        if event_name == "payment_approved" and payment_id:
+            approvals.setdefault(int(payment_id), created)
+            continue
+
+        attempt_id = str(data.get("attempt_id") or "").strip()
+        if not attempt_id or not telegram_id:
+            continue
+        attempt_key = (int(telegram_id), attempt_id)
+        if event_name == "checkout_opened":
+            stage = str(data.get("stage") or "").strip()
+            if not stage:
+                attempts.setdefault(
+                    attempt_key,
+                    {
+                        "telegram_id": int(telegram_id),
+                        "opened_at": created,
+                        "stages": {},
+                        "payment_id": None,
+                    },
+                )
+                continue
+            attempt = attempts.get(attempt_key)
+            if attempt and int(telegram_id) == attempt["telegram_id"] and created >= attempt["opened_at"]:
+                attempt["stages"].setdefault(stage, created)
+            continue
+
+        if event_name == "payment_screenshot_submitted":
+            attempt = attempts.get(attempt_key)
+            if attempt and int(telegram_id) == attempt["telegram_id"] and created >= attempt["opened_at"]:
+                attempt["stages"].setdefault("payment_screenshot_submitted", created)
+                attempt["payment_id"] = int(payment_id) if payment_id else None
+
+    reached: dict[str, set[int]] = {
+        "checkout_opened": set(),
+        "payment_instructions_viewed": set(),
+        "payment_receipt_selected": set(),
+        "payment_screenshot_submitted": set(),
+        "payment_approved": set(),
+    }
+    for attempt in attempts.values():
+        telegram_id = attempt["telegram_id"]
+        reached["checkout_opened"].add(telegram_id)
+        stages = attempt["stages"]
+        screenshot_at = stages.get("payment_screenshot_submitted")
+        payment_id = attempt.get("payment_id")
+        approved_at = approvals.get(payment_id) if payment_id else None
+        approved = bool(screenshot_at and approved_at and approved_at >= screenshot_at)
+        screenshot = bool(screenshot_at)
+        receipt = bool(stages.get("payment_receipt_selected") or screenshot)
+        instructions = bool(stages.get("payment_instructions_viewed") or receipt)
+        if instructions:
+            reached["payment_instructions_viewed"].add(telegram_id)
+        if receipt:
+            reached["payment_receipt_selected"].add(telegram_id)
+        if screenshot:
+            reached["payment_screenshot_submitted"].add(telegram_id)
+        if approved:
+            reached["payment_approved"].add(telegram_id)
+
+    steps = [
+        {"key": "checkout_opened", "label": "Obuna sahifasi", "users": len(reached["checkout_opened"])},
+        {"key": "payment_instructions_viewed", "label": "Rekvizitni ko'rdi", "users": len(reached["payment_instructions_viewed"])},
+        {"key": "payment_receipt_selected", "label": "Skrinshot tanladi", "users": len(reached["payment_receipt_selected"])},
+        {"key": "payment_screenshot_submitted", "label": "Skrinshot yubordi", "users": len(reached["payment_screenshot_submitted"])},
+        {"key": "payment_approved", "label": "Tasdiqlandi", "users": len(reached["payment_approved"])},
+    ]
+    drops = [
+        {
+            "label": f"{current['label']} → {nxt['label']}",
+            "lost": max(int(current["users"]) - int(nxt["users"]), 0),
+            "rate": _pct(max(int(current["users"]) - int(nxt["users"]), 0), int(current["users"])),
+        }
+        for current, nxt in zip(steps, steps[1:])
+    ]
+    top_drop = max(
+        drops,
+        key=lambda item: item["lost"],
+        default={"label": "Ma'lumot yetarli emas", "lost": 0, "rate": 0.0},
+    )
+    return {
+        "steps": steps if attempts else [],
+        "drops": drops if attempts else [],
+        "abandon_step": top_drop["label"] if attempts else "Ma'lumot yig'ilmoqda",
+        "abandon_count": top_drop["lost"] if attempts else 0,
+        "abandon_rate": top_drop["rate"] if attempts else 0.0,
+        "attempts": len(attempts),
+        "collecting": not bool(attempts),
+    }
+
+
+def _activation_funnel(rows: list[tuple], *, now: datetime) -> dict:
+    events_by_user: dict[int, list[tuple[str, datetime, dict]]] = defaultdict(list)
+    for row in rows:
+        event_name, telegram_id, created_at = row[:3]
+        created = _as_utc(created_at)
+        if not telegram_id or not created:
+            continue
+        try:
+            payload = json.loads(row[3] or "{}") if len(row) > 3 else {}
+        except (TypeError, json.JSONDecodeError):
+            payload = {}
+        events_by_user[int(telegram_id)].append(
+            (str(event_name), created, payload if isinstance(payload, dict) else {})
+        )
+
+    def summarize(cohort: dict[int, list[tuple[str, datetime, dict]]]) -> dict:
+        result = {
+            "onboarded": 0,
+            "lesson_started_2m": 0,
+            "lesson_started_eligible": 0,
+            "section_completed_15m": 0,
+            "section_completed_eligible": 0,
+            "lesson_completed_24h": 0,
+            "lesson_completed_eligible": 0,
+        }
+        for events in cohort.values():
+            events.sort(key=lambda item: item[1])
+            onboarding_at = next(
+                (at for name, at, _payload in events if name == "onboarding_completed"),
+                None,
+            )
+            if not onboarding_at:
+                continue
+            result["onboarded"] += 1
+            if onboarding_at <= now - timedelta(minutes=2):
+                result["lesson_started_eligible"] += 1
+                if any(
+                    name == "lesson_started" and onboarding_at <= at <= onboarding_at + timedelta(minutes=2)
+                    for name, at, _payload in events
+                ):
+                    result["lesson_started_2m"] += 1
+            if onboarding_at <= now - timedelta(minutes=15):
+                result["section_completed_eligible"] += 1
+                if any(
+                    name == "section_completed" and onboarding_at <= at <= onboarding_at + timedelta(minutes=15)
+                    for name, at, _payload in events
+                ):
+                    result["section_completed_15m"] += 1
+            if onboarding_at <= now - timedelta(hours=24):
+                result["lesson_completed_eligible"] += 1
+                if any(
+                    name in {"lesson_completed", "book_lesson_completed"}
+                    and onboarding_at <= at <= onboarding_at + timedelta(hours=24)
+                    for name, at, _payload in events
+                ):
+                    result["lesson_completed_24h"] += 1
+        result["lesson_started_rate"] = _pct(
+            result["lesson_started_2m"], result["lesson_started_eligible"]
+        )
+        result["section_completed_rate"] = _pct(
+            result["section_completed_15m"], result["section_completed_eligible"]
+        )
+        result["lesson_completed_rate"] = _pct(
+            result["lesson_completed_24h"], result["lesson_completed_eligible"]
+        )
+        return result
+
+    variants: dict[str, dict[int, list[tuple[str, datetime, dict]]]] = defaultdict(dict)
+    for telegram_id, events in events_by_user.items():
+        events.sort(key=lambda item: item[1])
+        onboarding = next(
+            ((payload, at) for name, at, payload in events if name == "onboarding_completed"),
+            None,
+        )
+        if not onboarding:
+            continue
+        payload, _at = onboarding
+        variant = str(payload.get("activation_variant") or "legacy_or_standard").strip()[:32]
+        variants[variant or "legacy_or_standard"][telegram_id] = events
+
+    result = summarize(events_by_user)
+    result["variants"] = {name: summarize(cohort) for name, cohort in variants.items()}
+    result["explain"] = (
+        "Activation = oynasi to'liq tugagan onboarding_completed cohortidan 2 daqiqada dars "
+        "boshlagan, 15 daqiqada section va 24 soatda dars tugatgan userlar. Variantlar alohida saqlanadi."
+    )
+    return result
+
+
+def _d1_recovery_experiment(
+    rows: list[tuple],
+    block_rows: list[tuple],
+    *,
+    now: datetime,
+) -> dict:
+    experiment_id = "d1_recovery_v1"
+    outcome_window = timedelta(hours=48)
+
+    def payload(raw) -> dict:
+        try:
+            value = json.loads(raw or "{}")
+        except (TypeError, json.JSONDecodeError):
+            return {}
+        return value if isinstance(value, dict) else {}
+
+    events_by_user: dict[int, list[dict]] = defaultdict(list)
+    for event_name, telegram_id, source, level, lesson_id, lesson_order, payload_json, created_at in rows:
+        created = _as_utc(created_at)
+        if not telegram_id or not created:
+            continue
+        events_by_user[int(telegram_id)].append(
+            {
+                "name": str(event_name),
+                "source": str(source or ""),
+                "level": level,
+                "lesson_id": lesson_id,
+                "lesson_order": lesson_order,
+                "payload": payload(payload_json),
+                "at": created,
+            }
+        )
+    blocked_at_by_user = {
+        int(telegram_id): _as_utc(blocked_at)
+        for telegram_id, blocked_at in block_rows
+        if telegram_id and _as_utc(blocked_at)
+    }
+
+    def blank_arm() -> dict:
+        return {
+            "assigned": 0,
+            "matured": 0,
+            "sent": 0,
+            "send_failed": 0,
+            "opened_any_48h": 0,
+            "opened_attributed_48h": 0,
+            "lesson_completed_48h": 0,
+            "blocked_48h": 0,
+        }
+
+    arms = {"treatment": blank_arm(), "control": blank_arm()}
+    for telegram_id, events in events_by_user.items():
+        events.sort(key=lambda item: item["at"])
+        assignment = next(
+            (
+                event
+                for event in events
+                if event["name"] == "d1_recovery_assigned"
+                and event["source"] == experiment_id
+            ),
+            None,
+        )
+        if not assignment:
+            continue
+        arm = str(assignment["payload"].get("arm") or "")
+        if arm not in arms:
+            continue
+        stats = arms[arm]
+        stats["assigned"] += 1
+        assigned_at = assignment["at"]
+        deadline = assigned_at + outcome_window
+        in_window = [event for event in events if assigned_at <= event["at"] < deadline]
+        if any(event["name"] == "d1_recovery_sent" for event in in_window):
+            stats["sent"] += 1
+        if any(event["name"] == "d1_recovery_send_failed" for event in in_window):
+            stats["send_failed"] += 1
+        if deadline > now:
+            continue
+        stats["matured"] += 1
+        if any(event["name"] == "miniapp_opened" for event in in_window):
+            stats["opened_any_48h"] += 1
+        if any(
+            event["name"] == "miniapp_opened" and event["source"] == experiment_id
+            for event in in_window
+        ):
+            stats["opened_attributed_48h"] += 1
+
+        def same_lesson(event: dict) -> bool:
+            if event["name"] not in {"lesson_completed", "book_lesson_completed"}:
+                return False
+            if assignment["lesson_id"] is not None and event["lesson_id"] is not None:
+                return int(event["lesson_id"]) == int(assignment["lesson_id"])
+            return (
+                event["level"] == assignment["level"]
+                and event["lesson_order"] == assignment["lesson_order"]
+            )
+
+        if any(same_lesson(event) for event in in_window):
+            stats["lesson_completed_48h"] += 1
+        blocked_at = blocked_at_by_user.get(telegram_id)
+        if blocked_at and assigned_at <= blocked_at < deadline:
+            stats["blocked_48h"] += 1
+
+    for arm, stats in arms.items():
+        stats["send_rate"] = _pct(stats["sent"], stats["assigned"]) if arm == "treatment" else 0.0
+        stats["open_rate"] = _pct(stats["opened_any_48h"], stats["matured"])
+        stats["completion_rate"] = _pct(stats["lesson_completed_48h"], stats["matured"])
+        stats["block_rate"] = _pct(stats["blocked_48h"], stats["matured"])
+
+    treatment = arms["treatment"]
+    control = arms["control"]
+    collecting = treatment["matured"] == 0 or control["matured"] == 0
+    return {
+        "experiment_id": experiment_id,
+        "outcome_window_hours": 48,
+        "assigned": treatment["assigned"] + control["assigned"],
+        "matured": treatment["matured"] + control["matured"],
+        "arms": arms,
+        "uplift_pp": {
+            "open": round(treatment["open_rate"] - control["open_rate"], 1),
+            "completion": round(treatment["completion_rate"] - control["completion_rate"], 1),
+            "block": round(treatment["block_rate"] - control["block_rate"], 1),
+        },
+        "collecting": collecting,
+        "directional_only": min(treatment["matured"], control["matured"]) < 30,
+        "explain": "D1 recovery ITT = assignmentdan keyingi 48 soatda treatment/control Mini App return va ayni dars completion; faqat oynasi tugagan cohort denominatorga kiradi.",
+    }
 
 
 def _usd(value: float) -> str:
@@ -73,6 +421,83 @@ def _duration_seconds(start: datetime | None, end: datetime | None, *, cap_secon
     if seconds <= 0 or seconds > cap_seconds:
         return 0
     return seconds
+
+
+def _lesson_attempt_durations(
+    rows: list[tuple],
+    *,
+    completion_since: datetime | None = None,
+) -> list[int]:
+    grouped: dict[tuple[int, str], list[tuple[datetime, str, str | None]]] = defaultdict(list)
+    for telegram_id, level, lesson_id, lesson_order, session_id, event_name, created_at in rows:
+        created = _as_utc(created_at)
+        if not telegram_id or not created:
+            continue
+        lesson_ref = f"{level or 'unknown'}:{lesson_order or lesson_id or 0}"
+        grouped[(int(telegram_id), lesson_ref)].append(
+            (created, str(event_name), str(session_id) if session_id else None)
+        )
+
+    durations: list[int] = []
+    completed_names = {"book_lesson_completed", "lesson_completed"}
+    for events in grouped.values():
+        starts: dict[str | None, datetime] = {}
+        last_completion_at: datetime | None = None
+        events.sort(key=lambda item: (item[0], 0 if item[1] == "lesson_started" else 1))
+        for created, event_name, session_id in events:
+            if event_name == "lesson_started":
+                starts[session_id] = created
+                continue
+            if event_name not in completed_names:
+                continue
+            if completion_since is not None and created < completion_since:
+                continue
+            if last_completion_at and (created - last_completion_at).total_seconds() <= 5:
+                continue
+            if session_id is not None:
+                if session_id not in starts:
+                    continue
+                start_key = session_id
+            else:
+                candidates = [(at, key) for key, at in starts.items() if at <= created]
+                if not candidates:
+                    continue
+                _at, start_key = max(candidates, key=lambda item: item[0])
+            start = starts.pop(start_key)
+            seconds = _duration_seconds(start, created)
+            if seconds > 0:
+                durations.append(seconds)
+                last_completion_at = created
+    return durations
+
+
+def _miniapp_session_durations(rows: list[tuple], *, idle_minutes: int = 30) -> tuple[int, list[int]]:
+    events_by_session: dict[tuple[int, str], list[datetime]] = defaultdict(list)
+    for telegram_id, session_id, created_at in rows:
+        created = _as_utc(created_at)
+        if telegram_id and session_id and created:
+            events_by_session[(int(telegram_id), str(session_id))].append(created)
+
+    session_count = 0
+    durations: list[int] = []
+    idle_gap = timedelta(minutes=idle_minutes)
+    for events in events_by_session.values():
+        events.sort()
+        segment_start = events[0]
+        previous = events[0]
+        for created in events[1:]:
+            if created - previous > idle_gap:
+                session_count += 1
+                seconds = _duration_seconds(segment_start, previous)
+                if seconds > 0:
+                    durations.append(seconds)
+                segment_start = created
+            previous = created
+        session_count += 1
+        seconds = _duration_seconds(segment_start, previous)
+        if seconds > 0:
+            durations.append(seconds)
+    return session_count, durations
 
 
 def _duration_text(seconds: int | float | None) -> str:
@@ -208,6 +633,13 @@ def is_admin_hot_lead(user, hot_since: datetime) -> bool:
     )
 
 
+def is_admin_course_hot_user(user, profile, hot_start_date) -> bool:
+    if not profile or BotBlockStatusService.is_bot_blocked(user):
+        return False
+    last_day = getattr(profile, "last_activity_date", None)
+    return bool(last_day and last_day >= hot_start_date)
+
+
 def _hot_lead_filter(hot_since: datetime):
     return (
         User.status.in_(HOT_LEAD_STATUSES),
@@ -243,6 +675,8 @@ class AdminMiniAppService:
     async def overview(self) -> dict:
         now = datetime.now(timezone.utc)
         today_start = admin_miniapp_today_start(now)
+        today_date = now.astimezone(ADMIN_MINIAPP_TZ).date()
+        two_day_start_date = today_date - timedelta(days=1)
         last_24h = now - timedelta(hours=24)
         week_ago = now - timedelta(days=7)
         month_ago = now - timedelta(days=30)
@@ -284,7 +718,17 @@ class AdminMiniAppService:
         feedback_summary = await self._feedback_summary()
         source_rows = await self._subscription_sources(week_ago)
         price_rows = await self._price_rows()
-        latest_users = await self._latest_users(now, today_start=today_start, hot_since=hot_since)
+        course_hot = await self._course_activity_hot_leads(
+            today_start=today_start,
+            hot_since=hot_since,
+            today_date=today_date,
+            two_day_start_date=two_day_start_date,
+        )
+        latest_users = await self._latest_users(
+            now,
+            today_start=today_start,
+            two_day_start_date=two_day_start_date,
+        )
         latest_payments = await self._latest_payments()
 
         expired_hot = await self._count_users(
@@ -297,7 +741,7 @@ class AdminMiniAppService:
             User.end_date > now,
             User.end_date <= now + timedelta(days=3),
         )
-        hot_leads = await self._count_users(*_hot_lead_filter(hot_since))
+        hot_leads = int(course_hot.get("last_2_days_users", 0))
         qa_users = await self._count_users(User.questions_used > 0)
         conversion = _pct(paid_users, total)
         engagement = _pct(qa_users, total)
@@ -350,7 +794,12 @@ class AdminMiniAppService:
                 {"label": "Фойдаланувчилар", "value": total, "note": f"{active_today} бугун фаол", "tone": "info"},
                 {"label": "Фаол обуна", "value": paid_users, "note": "ҳозир тўловли", "tone": "good"},
                 {"label": "Тўлов текширувда", "value": pending_payments, "note": "админ кўриши керак", "tone": "warn"},
-                {"label": "Иссиқ мижозлар", "value": hot_leads, "note": "48 соат ичида фаол", "tone": "danger"},
+                {
+                    "label": "Course иссиқ user",
+                    "value": hot_leads,
+                    "note": f"бугун {course_hot.get('today_users', 0)} user · 3+ streak {course_hot.get('streak_3_users', 0)}",
+                    "tone": "danger",
+                },
             ],
             "counts": {
                 "users_total": total,
@@ -366,6 +815,10 @@ class AdminMiniAppService:
                 "active_week": active_week,
                 "expired_hot": expired_hot,
                 "hot_leads": hot_leads,
+                "course_active_today_users": course_hot.get("today_users", 0),
+                "course_active_2d_users": course_hot.get("last_2_days_users", 0),
+                "course_streak_3_users": course_hot.get("streak_3_users", 0),
+                "course_streak_7_users": course_hot.get("streak_7_users", 0),
                 "expiring_soon": expiring_soon,
                 "bot_blocked_users": bot_blocked_users,
                 "conversion": conversion,
@@ -407,6 +860,7 @@ class AdminMiniAppService:
             "ads": ad_summary,
             "feedback": feedback_summary,
             "subscription_sources": source_rows,
+            "course_hot_leads": course_hot,
             "prices": price_rows,
             "users": latest_users,
             "queue": self._queue(
@@ -607,6 +1061,14 @@ class AdminMiniAppService:
 
     async def _advanced_stats(self, *, since: datetime | None, now: datetime) -> dict:
         retention = await self._retention_stats(since=since, now=now)
+        activation = await self._activation_stats(since=since, now=now)
+        primary_activation = (activation.get("variants") or {}).get("direct_start_v1") or activation
+        d1_recovery = await self._d1_recovery_stats(since=since, now=now)
+        d1_open_lift = float((d1_recovery.get("uplift_pp") or {}).get("open", 0) or 0)
+        if d1_recovery["collecting"] or d1_recovery["directional_only"] or d1_open_lift == 0:
+            d1_tone = "info"
+        else:
+            d1_tone = "good" if d1_open_lift > 0 else "danger"
         session_time = await self._miniapp_session_time(since=since)
         lesson_time = await self._lesson_time(since=since)
         qa = await self._qa_message_stats(since=since)
@@ -623,21 +1085,42 @@ class AdminMiniAppService:
             ),
             "cards": [
                 {
-                    "label": "D1 retention",
+                    "label": "Signup → App D1",
                     "value": f"{retention['d1']['rate']}%",
                     "note": f"{retention['d1']['retained']}/{retention['d1']['eligible']} user",
                     "tone": "good",
                 },
                 {
-                    "label": "D7 retention",
+                    "label": "Signup → App D7",
                     "value": f"{retention['d7']['rate']}%",
                     "note": f"{retention['d7']['retained']}/{retention['d7']['eligible']} user",
                     "tone": "good",
                 },
                 {
+                    "label": "D1 recovery lift",
+                    "value": (
+                        "Yig'ilmoqda"
+                        if d1_recovery["collecting"]
+                        else "Erta signal"
+                        if d1_recovery["directional_only"]
+                        else f"{d1_recovery['uplift_pp']['open']:+.1f} pp"
+                    ),
+                    "note": (
+                        f"T {d1_recovery['arms']['treatment']['matured']} · "
+                        f"C {d1_recovery['arms']['control']['matured']} mature"
+                    ),
+                    "tone": d1_tone,
+                },
+                {
+                    "label": "Direct start → dars ≤2m" if primary_activation is not activation else "Onb → dars ≤2m",
+                    "value": f"{primary_activation['lesson_started_rate']}%",
+                    "note": f"{primary_activation['lesson_started_2m']}/{primary_activation['lesson_started_eligible']} user",
+                    "tone": "good",
+                },
+                {
                     "label": "Avg session",
                     "value": session_time["avg_text"],
-                    "note": f"{session_time['sessions']} Mini App session",
+                    "note": f"{session_time['measured_sessions']}/{session_time['sessions']} o'lchandi",
                     "tone": "info",
                 },
                 {
@@ -647,7 +1130,7 @@ class AdminMiniAppService:
                     "tone": "info",
                 },
                 {
-                    "label": "QA/user",
+                    "label": "AI chat xabar/user",
                     "value": qa["avg_per_user"],
                     "note": f"{qa['messages']} xabar · {qa['users']} user",
                     "tone": "info",
@@ -677,13 +1160,15 @@ class AdminMiniAppService:
                     "tone": "warn" if payment["marketing_expense_usd"] else "info",
                 },
                 {
-                    "label": "Notif open",
+                    "label": "Unfinished notif",
                     "value": f"{notifications['open_rate']}%",
                     "note": f"{notifications['opened_after']} / {notifications['sent']} proxy",
                     "tone": "info",
                 },
             ],
             "retention": retention,
+            "activation": activation,
+            "d1_recovery": d1_recovery,
             "session_time": session_time,
             "lesson_time": lesson_time,
             "qa": qa,
@@ -693,34 +1178,125 @@ class AdminMiniAppService:
             "notifications": notifications,
         }
 
+    async def _d1_recovery_stats(self, *, since: datetime | None, now: datetime) -> dict:
+        event_names = (
+            "d1_recovery_assigned",
+            "d1_recovery_sent",
+            "d1_recovery_send_failed",
+            "miniapp_opened",
+            "lesson_completed",
+            "book_lesson_completed",
+        )
+        conditions = [CourseMiniAppEvent.event_name.in_(event_names)]
+        if since is not None:
+            conditions.append(CourseMiniAppEvent.created_at >= since)
+        rows = (
+            await self.session.execute(
+                select(
+                    CourseMiniAppEvent.event_name,
+                    CourseMiniAppEvent.telegram_id,
+                    CourseMiniAppEvent.source,
+                    CourseMiniAppEvent.level,
+                    CourseMiniAppEvent.lesson_id,
+                    CourseMiniAppEvent.lesson_order,
+                    CourseMiniAppEvent.payload_json,
+                    CourseMiniAppEvent.created_at,
+                ).where(*conditions)
+            )
+        ).all()
+        assigned_ids = {
+            int(row.telegram_id)
+            for row in rows
+            if row.telegram_id
+            and row.event_name == "d1_recovery_assigned"
+            and row.source == "d1_recovery_v1"
+        }
+        block_rows = []
+        if assigned_ids:
+            block_rows = (
+                await self.session.execute(
+                    select(User.telegram_id, User.bot_blocked_at).where(
+                        User.telegram_id.in_(tuple(assigned_ids))
+                    )
+                )
+            ).all()
+        return _d1_recovery_experiment(
+            [tuple(row) for row in rows],
+            [tuple(row) for row in block_rows],
+            now=now,
+        )
+
+    async def _activation_stats(self, *, since: datetime | None, now: datetime) -> dict:
+        event_names = (
+            "onboarding_completed",
+            "lesson_started",
+            "section_completed",
+            "lesson_completed",
+            "book_lesson_completed",
+        )
+        conditions = [CourseMiniAppEvent.event_name.in_(event_names)]
+        if since is not None:
+            conditions.append(CourseMiniAppEvent.created_at >= since)
+        rows = (
+            await self.session.execute(
+                select(
+                    CourseMiniAppEvent.event_name,
+                    CourseMiniAppEvent.telegram_id,
+                    CourseMiniAppEvent.created_at,
+                    CourseMiniAppEvent.payload_json,
+                ).where(*conditions)
+            )
+        ).all()
+        return _activation_funnel([tuple(row) for row in rows], now=now)
+
     async def _retention_stats(self, *, since: datetime | None, now: datetime) -> dict:
-        stmt = select(User.created_at, User.last_active_at).select_from(User)
+        stmt = select(User.telegram_id, User.created_at).select_from(User)
         if since is not None:
             stmt = stmt.where(User.created_at >= since)
         rows = (await self.session.execute(stmt)).all()
 
-        def calc(days: int) -> dict:
-            eligible = 0
-            retained = 0
-            for created_at, last_active_at in rows:
-                created = _as_utc(created_at)
-                last_active = _as_utc(last_active_at)
-                if not created:
-                    continue
-                threshold = created + timedelta(days=days)
-                if threshold > now:
-                    continue
-                eligible += 1
-                if last_active and last_active >= threshold:
-                    retained += 1
-            return {"eligible": eligible, "retained": retained, "rate": _pct(retained, eligible)}
+        created_by_user = {
+            int(telegram_id): _as_utc(created_at)
+            for telegram_id, created_at in rows
+            if telegram_id and _as_utc(created_at)
+        }
+        opens_by_user: dict[int, list[datetime]] = defaultdict(list)
+        if created_by_user:
+            event_conditions = [
+                CourseMiniAppEvent.telegram_id.in_(tuple(created_by_user)),
+                CourseMiniAppEvent.event_name == "miniapp_opened",
+            ]
+            earliest_created = min(created_by_user.values())
+            event_conditions.append(CourseMiniAppEvent.created_at >= earliest_created)
+            open_rows = (
+                await self.session.execute(
+                    select(CourseMiniAppEvent.telegram_id, CourseMiniAppEvent.created_at).where(
+                        *event_conditions
+                    )
+                )
+            ).all()
+            for telegram_id, opened_at in open_rows:
+                opened = _as_utc(opened_at)
+                if opened:
+                    opens_by_user[int(telegram_id)].append(opened)
 
         return {
-            "d1": calc(1),
-            "d7": calc(7),
+            "d1": _cohort_retention(
+                created_by_user=created_by_user,
+                opens_by_user=opens_by_user,
+                days=1,
+                now=now,
+            ),
+            "d7": _cohort_retention(
+                created_by_user=created_by_user,
+                opens_by_user=opens_by_user,
+                days=7,
+                now=now,
+            ),
             "explain": (
-                "D1/D7 retention = shu davrda ro'yxatdan o'tgan va 1/7 kun o'tishga ulgurgan userlardan "
-                "keyin yana aktiv bo'lganlari. Aktivlik User.last_active_at orqali olinadi."
+                "D1/D7 retention = shu davrda ro'yxatdan o'tgan userlardan signupdan keyingi aynan "
+                "24–48 soat / 168–192 soat oynasida Mini Appni qayta ochganlar. To'liq oynasi tugamagan "
+                "userlar denominatorga kirmaydi."
             ),
         }
 
@@ -740,38 +1316,26 @@ class AdminMiniAppService:
                 ).where(*conditions)
             )
         ).all()
-        bounds: dict[tuple[int, str], list[datetime | None]] = {}
-        for telegram_id, session_id, created_at in rows:
-            key = (int(telegram_id), str(session_id))
-            if key not in bounds:
-                bounds[key] = [created_at, created_at]
-                continue
-            if created_at < bounds[key][0]:
-                bounds[key][0] = created_at
-            if created_at > bounds[key][1]:
-                bounds[key][1] = created_at
-        durations = [_duration_seconds(start, end) for start, end in bounds.values()]
-        durations = [seconds for seconds in durations if seconds > 0]
+        sessions, durations = _miniapp_session_durations([tuple(row) for row in rows])
         avg_seconds = round(sum(durations) / len(durations)) if durations else 0
         return {
-            "sessions": len(durations),
+            "sessions": sessions,
+            "measured_sessions": len(durations),
             "avg_seconds": avg_seconds,
             "avg_text": _duration_text(avg_seconds),
             "total_text": _duration_text(sum(durations)),
-            "explain": "Mini App session vaqti session_id bo'yicha birinchi va oxirgi event oralig'idan olinadi.",
+            "explain": "Mini App session vaqti session_id ichidagi eventlar oralig'idan olinadi; 30 daqiqadan uzun idle yangi segment, bitta eventli segment countda bor, lekin averagega kirmaydi.",
         }
 
     async def _lesson_time(self, *, since: datetime | None) -> dict:
         event_names = (
             "lesson_started",
-            "section_started",
-            "section_completed",
             "book_lesson_completed",
             "lesson_completed",
         )
         conditions = [CourseMiniAppEvent.event_name.in_(event_names)]
         if since is not None:
-            conditions.append(CourseMiniAppEvent.created_at >= since)
+            conditions.append(CourseMiniAppEvent.created_at >= since - timedelta(hours=8))
         rows = (
             await self.session.execute(
                 select(
@@ -779,31 +1343,23 @@ class AdminMiniAppService:
                     CourseMiniAppEvent.level,
                     CourseMiniAppEvent.lesson_id,
                     CourseMiniAppEvent.lesson_order,
+                    CourseMiniAppEvent.session_id,
                     CourseMiniAppEvent.event_name,
                     CourseMiniAppEvent.created_at,
                 ).where(*conditions)
             )
         ).all()
-        started_names = {"lesson_started", "section_started"}
-        completed_names = {"section_completed", "book_lesson_completed", "lesson_completed"}
-        grouped: dict[tuple, dict[str, datetime | None]] = defaultdict(lambda: {"start": None, "end": None})
-        for telegram_id, level, lesson_id, lesson_order, event_name, created_at in rows:
-            lesson_ref = lesson_id if lesson_id is not None else f"{level or 'unknown'}:{lesson_order or 0}"
-            key = (int(telegram_id), lesson_ref)
-            bucket = grouped[key]
-            if event_name in started_names and (bucket["start"] is None or created_at < bucket["start"]):
-                bucket["start"] = created_at
-            if event_name in completed_names and (bucket["end"] is None or created_at > bucket["end"]):
-                bucket["end"] = created_at
-        durations = [_duration_seconds(item["start"], item["end"]) for item in grouped.values()]
-        durations = [seconds for seconds in durations if seconds > 0]
+        durations = _lesson_attempt_durations(
+            [tuple(row) for row in rows],
+            completion_since=since,
+        )
         avg_seconds = round(sum(durations) / len(durations)) if durations else 0
         return {
             "completed_lessons": len(durations),
             "avg_seconds": avg_seconds,
             "avg_text": _duration_text(avg_seconds),
             "total_text": _duration_text(sum(durations)),
-            "explain": "Lesson time = dars/qism boshlanganidan shu dars bo'yicha oxirgi completion eventgacha bo'lgan vaqt.",
+            "explain": "Lesson time = bir sessiondagi eng yaqin lesson_started dan lesson_completed/book_lesson_completed gacha; abandon retry va qisman sectionlar yakunlangan dars deb sanalmaydi.",
         }
 
     async def _qa_message_stats(self, *, since: datetime | None) -> dict:
@@ -824,7 +1380,7 @@ class AdminMiniAppService:
             "messages": messages,
             "users": users,
             "avg_per_user": round(messages / users, 2) if users else 0,
-            "explain": "QA message/user = oddiy savol-javob rejimida user yuborgan text xabarlar / shu davrdagi QA userlar.",
+            "explain": "AI chat message/user = user yuborgan text xabarlar / shu davrdagi AI chat aktiv userlar.",
         }
 
     async def _voice_minutes(self, *, since: datetime | None) -> dict:
@@ -953,7 +1509,7 @@ class AdminMiniAppService:
         return float(value or 0.0)
 
     async def _payment_funnel(self, *, since: datetime | None) -> dict:
-        event_names = ("paywall_seen", "checkout_opened", "payment_screenshot_submitted", "payment_approved")
+        event_names = ("checkout_opened", "payment_screenshot_submitted", "payment_approved")
         conditions = [ConversionFunnelEvent.event_name.in_(event_names)]
         if since is not None:
             conditions.append(ConversionFunnelEvent.created_at >= since)
@@ -961,40 +1517,22 @@ class AdminMiniAppService:
             await self.session.execute(
                 select(
                     ConversionFunnelEvent.event_name,
-                    func.count(func.distinct(ConversionFunnelEvent.telegram_id)).label("users"),
+                    ConversionFunnelEvent.telegram_id,
+                    ConversionFunnelEvent.payment_id,
+                    ConversionFunnelEvent.payload_json,
+                    ConversionFunnelEvent.created_at,
                 )
                 .where(*conditions)
-                .group_by(ConversionFunnelEvent.event_name)
             )
         ).all()
-        counts = {str(row.event_name): int(row.users or 0) for row in rows}
-        steps = [
-            {"key": "paywall_seen", "label": "To'lov oynasi", "users": counts.get("paywall_seen", 0)},
-            {"key": "checkout_opened", "label": "Checkout ochdi", "users": counts.get("checkout_opened", 0)},
-            {"key": "payment_screenshot_submitted", "label": "Skrinshot yubordi", "users": counts.get("payment_screenshot_submitted", 0)},
-            {"key": "payment_approved", "label": "Tasdiqlandi", "users": counts.get("payment_approved", 0)},
-        ]
-        drops = []
-        for current, nxt in zip(steps, steps[1:]):
-            lost = max(int(current["users"]) - int(nxt["users"]), 0)
-            drops.append(
-                {
-                    "label": f"{current['label']} → {nxt['label']}",
-                    "lost": lost,
-                    "rate": _pct(lost, int(current["users"])),
-                }
-            )
-        top_drop = max(drops, key=lambda item: item["lost"], default={"label": "Ma'lumot yetarli emas", "lost": 0, "rate": 0.0})
+        funnel = _payment_attempt_funnel([tuple(row) for row in rows])
         status_counts = await self._payment_status_counts(since)
-        return {
-            "steps": steps,
-            "drops": drops,
-            "abandon_step": top_drop["label"],
-            "abandon_count": top_drop["lost"],
-            "abandon_rate": top_drop["rate"],
-            "payment_status": status_counts,
-            "explain": "Payment abandon step = funnel'dagi ketma-ket bosqichlar orasida eng katta yo'qotish.",
-        }
+        funnel["payment_status"] = status_counts
+        funnel["explain"] = (
+            "Har bosqich bir xil checkout attempt_id va payment_id orqali bog'langan. "
+            "Yangi attempt eventlari bo'lmasa 'ma'lumot yig'ilmoqda' ko'rsatiladi."
+        )
+        return funnel
 
     async def _feature_adoption(self, *, since: datetime | None, now: datetime) -> dict:
         paid_denominator = await self._feature_denominator(paid=True, since=since, now=now)
@@ -1004,7 +1542,7 @@ class AdminMiniAppService:
             await self._course_feature_row("Testlar", ("test_started", "test_completed"), since, now, paid_denominator, free_denominator),
             await self._course_feature_row("Mashqlar", ("training_started", "training_completed"), since, now, paid_denominator, free_denominator),
             await self._course_feature_row("Xatolar takrori", ("mistake_review_started", "mistake_review_completed"), since, now, paid_denominator, free_denominator),
-            await self._ai_feature_row("AI savol-javob", since, now, paid_denominator, free_denominator),
+            await self._ai_feature_row("AI chat aktiv user", since, now, paid_denominator, free_denominator),
             await self._voice_feature_row("Voice roleplay", since, now, paid_denominator, free_denominator),
         ]
         rows.sort(key=lambda item: (item["paid"] + item["free"], item["paid"]), reverse=True)
@@ -1118,7 +1656,10 @@ class AdminMiniAppService:
 
     async def _notification_open_proxy(self, *, since: datetime | None) -> dict:
         sent_conditions = [CourseMiniAppEvent.event_name == "motivation_lesson_unfinished_sent"]
-        open_conditions = [CourseMiniAppEvent.event_name == "miniapp_opened"]
+        open_conditions = [
+            CourseMiniAppEvent.event_name == "miniapp_opened",
+            CourseMiniAppEvent.source == "motivation_reminder",
+        ]
         if since is not None:
             sent_conditions.append(CourseMiniAppEvent.created_at >= since)
             open_conditions.append(CourseMiniAppEvent.created_at >= since)
@@ -1150,7 +1691,7 @@ class AdminMiniAppService:
             "sent": sent_count,
             "opened_after": opened_after,
             "open_rate": _pct(opened_after, sent_count),
-            "explain": "Telegram notification direct open event bermaydi; bu 48 soat ichida Mini App ochilganini proxy sifatida ko'rsatadi.",
+            "explain": "Faqat yakunlanmagan dars reminderi: CTA orqali kelgan source=motivation_reminder Mini App open 48 soat ichida sanaladi.",
         }
 
     async def _required_channels(self) -> list[dict]:
@@ -1215,6 +1756,70 @@ class AdminMiniAppService:
             "values": values,
         }
 
+    async def _course_xp_user_ids_since(self, since: datetime) -> set[int]:
+        rows = (
+            await self.session.execute(
+                select(CourseXpEvent.user_id)
+                .join(User, User.id == CourseXpEvent.user_id)
+                .where(CourseXpEvent.created_at >= since, _bot_not_blocked_filter())
+                .group_by(CourseXpEvent.user_id)
+            )
+        ).all()
+        return {int(row.user_id) for row in rows if row.user_id}
+
+    async def _course_profile_activity_user_ids_since(self, start_date) -> set[int]:
+        rows = (
+            await self.session.execute(
+                select(CourseMiniAppProfile.user_id)
+                .join(User, User.id == CourseMiniAppProfile.user_id)
+                .where(CourseMiniAppProfile.last_activity_date >= start_date, _bot_not_blocked_filter())
+                .group_by(CourseMiniAppProfile.user_id)
+            )
+        ).all()
+        return {int(row.user_id) for row in rows if row.user_id}
+
+    async def _course_streak_user_count(self, min_streak: int) -> int:
+        value = (
+            await self.session.execute(
+                select(func.count(func.distinct(CourseMiniAppProfile.user_id)))
+                .select_from(CourseMiniAppProfile)
+                .join(User, User.id == CourseMiniAppProfile.user_id)
+                .where(CourseMiniAppProfile.current_streak >= int(min_streak), _bot_not_blocked_filter())
+            )
+        ).scalar()
+        return int(value or 0)
+
+    async def _course_activity_hot_leads(
+        self,
+        *,
+        today_start: datetime,
+        hot_since: datetime,
+        today_date,
+        two_day_start_date,
+    ) -> dict:
+        today_ids = (
+            await self._course_xp_user_ids_since(today_start)
+        ) | (
+            await self._course_profile_activity_user_ids_since(today_date)
+        )
+        two_day_ids = (
+            await self._course_xp_user_ids_since(hot_since)
+        ) | (
+            await self._course_profile_activity_user_ids_since(two_day_start_date)
+        )
+        streak_3 = await self._course_streak_user_count(3)
+        streak_7 = await self._course_streak_user_count(7)
+        return {
+            "today_users": len(today_ids),
+            "last_2_days_users": len(two_day_ids),
+            "streak_3_users": streak_3,
+            "streak_7_users": streak_7,
+            "explain": (
+                "Course issiq userlar CourseXpEvent.created_at va CourseMiniAppProfile.last_activity_date "
+                "unionidan olinadi; streak CourseMiniAppProfile.current_streak bo'yicha sanaladi."
+            ),
+        }
+
     async def _subscription_sources(self, week_ago: datetime) -> list[dict]:
         rows = await SubscriptionEntryAnalyticsService(self.session).source_stats(
             week_ago=week_ago,
@@ -1262,10 +1867,19 @@ class AdminMiniAppService:
             for item in prices
         ]
 
-    async def _latest_users(self, now: datetime, *, today_start: datetime, hot_since: datetime) -> list[dict]:
+    async def _latest_users(
+        self,
+        now: datetime,
+        *,
+        today_start: datetime,
+        two_day_start_date,
+    ) -> list[dict]:
         rows = (await self.session.execute(
-            select(User).order_by(User.last_active_at.desc()).limit(120)
-        )).scalars().all()
+            select(User, CourseMiniAppProfile)
+            .outerjoin(CourseMiniAppProfile, CourseMiniAppProfile.user_id == User.id)
+            .order_by(User.last_active_at.desc())
+            .limit(120)
+        )).all()
         return [
             {
                 "id": item.telegram_id,
@@ -1287,12 +1901,13 @@ class AdminMiniAppService:
                 "end_date": _dt(item.end_date),
                 "last_active": _ago(item.last_active_at, now=now),
                 "active_today": is_admin_active_today(item, today_start),
-                "hot_lead": is_admin_hot_lead(item, hot_since),
+                "hot_lead": is_admin_course_hot_user(item, profile, two_day_start_date),
                 "questions": f"{item.questions_used}/{item.question_limit}",
                 "bonus_left": max((item.bonus_questions or 0) - (item.bonus_questions_used or 0), 0),
-                "streak": item.daily_practice_streak or 0,
+                "streak": int(getattr(profile, "current_streak", 0) or 0),
+                "course_last_activity_date": str(getattr(profile, "last_activity_date", "") or ""),
             }
-            for item in rows
+            for item, profile in rows
         ]
 
     async def _latest_payments(self) -> list[dict]:
@@ -1450,6 +2065,12 @@ class AdminMiniAppService:
         retention = advanced.get("retention") or {}
         d1 = retention.get("d1") or {}
         d7 = retention.get("d7") or {}
+        activation = advanced.get("activation") or {}
+        direct_activation = (activation.get("variants") or {}).get("direct_start_v1") or {}
+        d1_recovery = advanced.get("d1_recovery") or {}
+        d1_arms = d1_recovery.get("arms") or {}
+        d1_treatment = d1_arms.get("treatment") or {}
+        d1_control = d1_arms.get("control") or {}
         session_time = advanced.get("session_time") or {}
         lesson_time = advanced.get("lesson_time") or {}
         qa = advanced.get("qa") or {}
@@ -1457,20 +2078,44 @@ class AdminMiniAppService:
         payment = advanced.get("payment") or {}
         funnel = payment.get("funnel") or {}
         notifications = advanced.get("notifications") or {}
+        direct_line = (
+            f"Direct-start → dars ≤2m: {direct_activation.get('lesson_started_rate', 0)}% "
+            f"({direct_activation.get('lesson_started_2m', 0)}/{direct_activation.get('lesson_started_eligible', 0)})\n"
+            if direct_activation
+            else ""
+        )
+        if d1_recovery.get("collecting"):
+            d1_recovery_line = "D1 recovery: 48h natija yig'ilmoqda\n"
+        else:
+            d1_recovery_label = (
+                "D1 recovery (erta signal)"
+                if d1_recovery.get("directional_only")
+                else "D1 recovery return"
+            )
+            d1_recovery_line = (
+                f"{d1_recovery_label}: T {d1_treatment.get('open_rate', 0)}% "
+                f"({d1_treatment.get('opened_any_48h', 0)}/{d1_treatment.get('matured', 0)}) · "
+                f"C {d1_control.get('open_rate', 0)}% "
+                f"({d1_control.get('opened_any_48h', 0)}/{d1_control.get('matured', 0)}) · "
+                f"lift {((d1_recovery.get('uplift_pp') or {}).get('open', 0)):+.1f} pp\n"
+            )
         return (
             "\n\n"
             "📌 ҚЎШИМЧА PRODUCT МЕТРИКАЛАР\n"
             "Бу блок retention, вақт, QA/Voice, payment abandon, LTV/CAC ва feature adoption'ни кўрсатади.\n"
-            f"D1 retention: {d1.get('rate', 0)}% ({d1.get('retained', 0)}/{d1.get('eligible', 0)})\n"
-            f"D7 retention: {d7.get('rate', 0)}% ({d7.get('retained', 0)}/{d7.get('eligible', 0)})\n"
-            f"Avg Mini App session: {session_time.get('avg_text', '—')} · session: {session_time.get('sessions', 0)}\n"
+            f"Signup → Mini App D1: {d1.get('rate', 0)}% ({d1.get('retained', 0)}/{d1.get('eligible', 0)})\n"
+            f"Signup → Mini App D7: {d7.get('rate', 0)}% ({d7.get('retained', 0)}/{d7.get('eligible', 0)})\n"
+            f"{d1_recovery_line}"
+            f"Onboarding → dars ≤2m: {activation.get('lesson_started_rate', 0)}% ({activation.get('lesson_started_2m', 0)}/{activation.get('lesson_started_eligible', 0)})\n"
+            f"{direct_line}"
+            f"Avg Mini App session: {session_time.get('avg_text', '—')} · measured/session: {session_time.get('measured_sessions', 0)}/{session_time.get('sessions', 0)}\n"
             f"Lesson time: {lesson_time.get('avg_text', '—')} · tugagan dars: {lesson_time.get('completed_lessons', 0)}\n"
-            f"QA message/user: {qa.get('avg_per_user', 0)} · xabar: {qa.get('messages', 0)} · user: {qa.get('users', 0)}\n"
+            f"AI chat message/user: {qa.get('avg_per_user', 0)} · xabar: {qa.get('messages', 0)} · user: {qa.get('users', 0)}\n"
             f"Voice minutes: {voice.get('minutes_text', '0 min')} · avg: {voice.get('avg_text', '—')}\n"
             f"Payment abandon: {funnel.get('abandon_step', '—')} · yo'qotish: {funnel.get('abandon_count', 0)} ({funnel.get('abandon_rate', 0)}%)\n"
             f"First payment time: {payment.get('first_payment_time_text', '—')} · first pay user: {payment.get('first_payment_users', 0)}\n"
             f"LTV: {payment.get('ltv_text', '—')} · CAC: {payment.get('cac_text', '—')}\n"
-            f"Notification open proxy: {notifications.get('open_rate', 0)}% ({notifications.get('opened_after', 0)}/{notifications.get('sent', 0)})"
+            f"Unfinished lesson notification open: {notifications.get('open_rate', 0)}% ({notifications.get('opened_after', 0)}/{notifications.get('sent', 0)})"
         )
 
     @staticmethod
@@ -1550,5 +2195,5 @@ class AdminMiniAppService:
             f"Мажбурий канал: {channel_status} · Фаол канал: {active_channels}\n\n"
             "📈 КОНВЕРСИЯ\n"
             f"Фойдаланувчи → тўловли: {conversion}%\n"
-            f"Савол берганлар: {qa_users} ({engagement}%)"
+            f"Лимит ҳисобида савол ишлатган user: {qa_users} ({engagement}%)"
         )
