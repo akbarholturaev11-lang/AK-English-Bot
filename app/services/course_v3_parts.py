@@ -1,8 +1,8 @@
 """parts_manifest.json o'quvchisi — Course v3 darslari mini-qismlarga bo'lingan.
 
-Har HSK darsligi darsi bir nechta qisqa mini-darsga (qismga) bo'lingan; qismlar
+Har kurs darsi bir nechta qisqa mini-darsga (qismga) bo'lingan; qismlar
 darajada TEKIS raqamlanadi (completed_lessons_count endi qismlarni sanaydi).
-Manba: scripts/gen_course_v3_from_seed.py yozadigan
+Manba: scripts/gen_course_v3_derived.py yozadigan
 app/static/course_v3_data/parts_manifest.json. Fayl faqat deploy bilan
 o'zgaradi, shuning uchun bir marta o'qib keshda saqlaymiz.
 """
@@ -36,7 +36,7 @@ def total_parts(level: str) -> int:
 
 
 def source_lesson_for_part(level: str, part_n: int) -> int:
-    """Flat qism raqami -> asl HSK darsligi darsi raqami (1-based).
+    """Flat qism raqami -> asl kurs darsi raqami (1-based).
 
     Legacy tizimlar (challenge/practice savol banki) hali darslik darsi
     tartibida ishlaydi — qism raqamini shunga aylantirish uchun.
@@ -48,7 +48,7 @@ def source_lesson_for_part(level: str, part_n: int) -> int:
 def part_meta(level: str, part_n: int) -> dict:
     """Flat qism raqami -> {src, part, part_count, checkpoint}.
 
-    src — asl HSK darsligi darsi (1-based); part — shu dars ichidagi qism
+    src — asl kurs darsi (1-based); part — shu dars ichidagi qism
     tartibi (1-based); part_count — shu darsning jami qismlari; checkpoint —
     oxirgi (mustahkamlash) qismimi. Manifest topilmasa bo'sh dict."""
     part_n = int(part_n or 0)

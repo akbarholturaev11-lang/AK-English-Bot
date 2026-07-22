@@ -6,7 +6,6 @@ import random
 import re
 import unicodedata
 import uuid
-from collections import Counter
 from datetime import datetime, time, timezone
 
 from sqlalchemy import func, select
@@ -625,10 +624,6 @@ class VoicePracticeService:
         }
 
     @staticmethod
-    def _cjk_chars(text: str) -> list[str]:
-        return [c for c in str(text or "") if "一" <= c <= "鿿"]
-
-    @staticmethod
     def _normalize_pinyin(text: str) -> str:
         raw = str(text or "").translate(PINYIN_UMLAUT_TRANSLATION).lower().replace("u:", "v")
         decomposed = unicodedata.normalize("NFKD", raw)
@@ -651,20 +646,12 @@ class VoicePracticeService:
 
     @classmethod
     def _pronunciation_score(cls, target: str, heard: str, target_pinyin: str = "") -> int:
-        target_chars = cls._cjk_chars(target)
-        hanzi_score = 0
-        if target_chars:
-            heard_counts = Counter(cls._cjk_chars(heard))
-            matched = 0
-            for ch in target_chars:
-                if heard_counts.get(ch, 0) > 0:
-                    heard_counts[ch] -= 1
-                    matched += 1
-            hanzi_score = int(round(matched / len(target_chars) * 100))
-        # Inglizcha so'zlar uchun target CJK emas — STT eshitgan matnni so'zning
-        # o'zi bilan (va bo'lsa talaffuz ko'rsatkichi bilan) solishtiramiz.
-        text_score = cls._pinyin_score(target, heard)
-        return max(hanzi_score, text_score, cls._pinyin_score(target_pinyin, heard))
+        # STT eshitgan matnni so'zning o'zi bilan va (bo'lsa) talaffuz
+        # ko'rsatkichi bilan solishtiramiz — qaysi biri yaqinroq bo'lsa.
+        return max(
+            cls._pinyin_score(target, heard),
+            cls._pinyin_score(target_pinyin, heard),
+        )
 
     async def score_pronunciation(
         self,
