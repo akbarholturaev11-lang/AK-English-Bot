@@ -1226,7 +1226,7 @@ async def discount_confirm(callback: CallbackQuery, state: FSMContext, session):
     required_qr_items = await _build_discount_qr_items(session, data)
     stored_qr_items = data.get(_PAYMENT_QR_ITEMS) or []
     if not _payment_qr_items_complete(required_qr_items, stored_qr_items):
-        await callback.answer("Alipay/WeChat QR kodlari yetishmayapti", show_alert=True)
+        await callback.answer("Dushanbe City / Alif bank QR kodlari yetishmayapti", show_alert=True)
         await _maybe_request_payment_qr_callback(callback, state, session)
         return
 

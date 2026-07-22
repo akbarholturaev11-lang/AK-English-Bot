@@ -1973,7 +1973,7 @@ class AdminMiniAppService:
             {"key": "stats", "icon": "📊", "title": "Статистика", "note": "Умумий ҳисобот ва конверсия", "section": "statistics", "callback": "adm:stats"},
             {"key": "user_search", "icon": "🔎", "title": "Фойдаланувчи қидириш", "note": "ID ёки username бўйича Mini App ичида қидириш", "section": "users", "callback": "adm:user_search_info"},
             {"key": "portfolio", "icon": "💼", "title": "Портфель", "note": "Тушум, харажат ва соф фойдани бошқариш", "section": "settings", "callback": "adm:portfolio"},
-            {"key": "prices", "icon": "💳", "title": "Обуна нархлари", "note": "Visa/карта, Alipay, WeChat нархларини таҳрирлаш", "section": "settings", "callback": "adm:prices"},
+            {"key": "prices", "icon": "💳", "title": "Обуна нархлари", "note": "Visa/карта, Dushanbe City, Alif bank нархларини таҳрирлаш", "section": "settings", "callback": "adm:prices"},
             {"key": "channels", "icon": "📣", "title": "Мажбурий канал обунаси", "note": "Канал линки, ёқиш/ўчириш ва рўйхат", "section": "settings", "callback": "adm:channels"},
             {"key": "delete_user", "icon": "🗑", "title": "Фойдалануванглиси ўчириш", "note": "Хавфли амал, ID билан тасдиқланади", "section": "users", "callback": "adm:deleteuser_info"},
             {"key": "broadcast", "icon": "📢", "title": "Оммавий хабар", "note": "Сегмент танлаб матн юбориш", "section": "settings", "callback": "adm:broadcast_info"},

@@ -29,7 +29,7 @@ class SubscriptionEntryAnalyticsService:
         "subscription_page": "Obuna sahifasi",
         "course_locked_lesson": "Qulflangan dars",
         "pronunciation_limit": "Talaffuz limiti",
-        "recognition_limit": "Rasm/ieroglif limiti",
+        "recognition_limit": "Rasm/so'z limiti",
         "test_limit": "Test limiti",
         "profile": "Profil",
         "broadcast": "Broadcast",

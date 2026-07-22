@@ -414,9 +414,9 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
     var isFastLight = fastParams.get('theme') !== 'dark';
     document.documentElement.classList.toggle('theme-light', isFastLight);
     var labels = {
-      uz:{close:'Yopish',play:'Ko\'rsatish',replay:'Qayta',dict:'Lug\'atda ochish',strokes:function(n){return n + ' chiziq';},fallback:'Yozilish animatsiyasi yuklanmadi',back:'Darsga qaytish',swipe:'Keyingi ieroglif uchun yon tomonga suring'},
-      ru:{close:'Закрыть',play:'Показать',replay:'Повторить',dict:'Открыть в словаре',strokes:function(n){return n + ' черт';},fallback:'Анимация написания не загрузилась',back:'Вернуться к уроку',swipe:'Проведите в сторону — следующий иероглиф'},
-      tj:{close:'Пӯшидан',play:'Нишон додан',replay:'Такрор',dict:'Дар луғат кушодан',strokes:function(n){return n + ' хат';},fallback:'Аниматсияи навишт бор нашуд',back:'Бозгашт ба дарс',swipe:'Барои иероглифи навбатӣ ба паҳлӯ кашед'}
+      uz:{close:'Yopish',play:'Ko\'rsatish',replay:'Qayta',dict:'Lug\'atda ochish',strokes:function(n){return n + ' chiziq';},fallback:'Yozilish animatsiyasi yuklanmadi',back:'Darsga qaytish',swipe:'Keyingi harf uchun yon tomonga suring'},
+      ru:{close:'Закрыть',play:'Показать',replay:'Повторить',dict:'Открыть в словаре',strokes:function(n){return n + ' черт';},fallback:'Анимация написания не загрузилась',back:'Вернуться к уроку',swipe:'Проведите в сторону для следующей буквы'},
+      tj:{close:'Пӯшидан',play:'Нишон додан',replay:'Такрор',dict:'Дар луғат кушодан',strokes:function(n){return n + ' хат';},fallback:'Аниматсияи навишт бор нашуд',back:'Бозгашт ба дарс',swipe:'Барои ҳарфи навбатӣ ба паҳлӯ кашед'}
     }[lang] || {};
     var raw = fastParams.get('char') || 'word';
     var chars = Array.from(raw).filter(function(c){return c.trim();});
@@ -536,7 +536,7 @@ var HanziWriter=function(){"use strict";var t,e,r;const i="undefined"==typeof wi
       setPlayIcon();
     };
     replay.onclick = function(){render()};
-    /* Keyingi/oldingi ieroglifga qo'l bilan yon tomonga surib ham o'tish */
+    /* Keyingi/oldingi harfga qo'l bilan yon tomonga surib ham o'tish */
     (function(){
       var x0 = null, y0 = null;
       box.addEventListener('touchstart', function(ev){

@@ -325,7 +325,7 @@ class VoicePracticeService:
         limit = None if paid else FREE_TOTAL_SESSIONS
 
         # Kurs progressi: user o'z HSK bandida nechta darsni tugatgan. Mashq
-        # sahifalari (ieroglif tanish / talaffuz / yodlash) kontentni o'rganilgan
+        # sahifalari (so'z tanish / talaffuz / yodlash) kontentni o'rganilgan
         # darslar bilan cheklashi uchun ishlatiladi. Band mos kelmasa 0.
         def _band(value) -> str:
             v = str(value or "").strip().lower()

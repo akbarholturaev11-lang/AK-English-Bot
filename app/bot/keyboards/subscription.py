@@ -165,10 +165,10 @@ def payment_method_keyboard(lang: str):
             ),
         ],
         [
-            subscription_miniapp_button(lang, source="legacy_payment_method", text="🇨🇳 Alipay", method="alipay"),
+            subscription_miniapp_button(lang, source="legacy_payment_method", text="🇹🇯 Dushanbe City", method="alipay"),
         ],
         [
-            subscription_miniapp_button(lang, source="legacy_payment_method", text="🇨🇳 WeChat Pay", method="wechat"),
+            subscription_miniapp_button(lang, source="legacy_payment_method", text="🇹🇯 Alif bank", method="wechat"),
         ],
         [
             InlineKeyboardButton(text=t("payment_back", lang), callback_data="payment:back"),
@@ -183,8 +183,8 @@ def discount_payment_method_keyboard(
 ):
     labels = {
         "visa": t("payment_method_visa_button", lang),
-        "alipay": "🇨🇳 Alipay",
-        "wechat": "🇨🇳 WeChat Pay",
+        "alipay": "🇹🇯 Dushanbe City",
+        "wechat": "🇹🇯 Alif bank",
     }
     methods = list(methods or ("visa", "alipay", "wechat"))
     rows = []
@@ -279,8 +279,8 @@ def admin_discount_plan_keyboard(
 def feedback_discount_payment_method_keyboard(feedback_id: int, lang: str):
     labels = {
         "visa": t("payment_method_visa_button", lang),
-        "alipay": "🇨🇳 Alipay",
-        "wechat": "🇨🇳 WeChat Pay",
+        "alipay": "🇹🇯 Dushanbe City",
+        "wechat": "🇹🇯 Alif bank",
     }
     return InlineKeyboardMarkup(inline_keyboard=[
         [

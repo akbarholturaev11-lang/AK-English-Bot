@@ -8,7 +8,7 @@ TEXTS = {
         "level_saved_explained": "✅ Сатҳи шумо сабт шуд. Ин ба мо кӯмак мекунад, ки дарсҳоро ба шумо мувофиқ кунем.",
         "trial_started_info": "🎁 Ба шумо дастрасии ройгон кушода шуд.",
         "free_mode_info": "💬 <b>Реҷаи ройгон фаъол шуд</b>\n\n<blockquote>Бо лимити рӯзона савол нависед ё аз китоб/дафтар сурат фиристед — AI мефаҳмонад.</blockquote>",
-        "free_mode_info_gemini": "💬 <b>Реҷаи ройгон фаъол шуд</b>\n\n<blockquote>Бо матн <b>бе лимит</b> савол нависед — AI забони хитоиро ройгон меомӯзонад.\n\nСурат ва паёми овозӣ рӯзе 5-тогӣ.</blockquote>",
+        "free_mode_info_gemini": "💬 <b>Реҷаи ройгон фаъол шуд</b>\n\n<blockquote>Бо матн <b>бе лимит</b> савол нависед — AI забони англисиро ройгон меомӯзонад.\n\nСурат ва паёми овозӣ рӯзе 5-тогӣ.</blockquote>",
         "ai_response_failed": "⚠️ AI ҷавобро тайёр карда натавонист. Лутфан дубора фиристед.",
         "ai_empty_response": "⚠️ AI ҷавоби холӣ баргардонд. Лутфан саволро каме равшантар фиристед.",
         "user_not_found": "Лутфан, аввал /start ро пахш кунед.",
@@ -180,7 +180,7 @@ TEXTS = {
         "level_saved_explained": "✅ Ваш уровень сохранён. Это поможет нам подстроить уроки под вас.",
         "trial_started_info": "🎁 Вам открыт бесплатный доступ.",
         "free_mode_info": "💬 <b>Бесплатный режим включён</b>\n\n<blockquote>Задавайте вопросы или отправляйте фото из книги/тетради с дневным лимитом — AI объяснит.</blockquote>",
-        "free_mode_info_gemini": "💬 <b>Бесплатный режим включён</b>\n\n<blockquote>Пишите вопросы текстом <b>без лимита</b> — AI бесплатно научит китайскому.\n\nФото и голосовые — по 5 в день.</blockquote>",
+        "free_mode_info_gemini": "💬 <b>Бесплатный режим включён</b>\n\n<blockquote>Пишите вопросы текстом <b>без лимита</b> — AI бесплатно научит английскому.\n\nФото и голосовые — по 5 в день.</blockquote>",
         "ai_response_failed": "⚠️ AI не смог подготовить ответ. Пожалуйста, отправьте вопрос ещё раз.",
         "ai_empty_response": "⚠️ AI вернул пустой ответ. Пожалуйста, задайте вопрос чуть точнее.",
         "user_not_found": "Пожалуйста, сначала нажмите /start.",
@@ -348,7 +348,7 @@ TEXTS = {
         "level_saved_explained": "✅ Darajangiz saqlandi. Bu darslarni sizga moslashtirishga yordam beradi.",
         "trial_started_info": "🎁 Sizga bepul kirish ochildi.",
         "free_mode_info": "💬 <b>Bepul rejim yoqildi</b>\n\n<blockquote>Kunlik limit bilan savol yozing yoki kitob/daftardan rasm yuboring — AI tushuntiradi.</blockquote>",
-        "free_mode_info_gemini": "💬 <b>Bepul rejim yoqildi</b>\n\n<blockquote>Matn orqali <b>cheksiz</b> savol yozing — AI xitoy tilini bepul o'rgatadi.\n\nRasm va ovozli xabar kuniga 5 tadan.</blockquote>",
+        "free_mode_info_gemini": "💬 <b>Bepul rejim yoqildi</b>\n\n<blockquote>Matn orqali <b>cheksiz</b> savol yozing — AI ingliz tilini bepul o'rgatadi.\n\nRasm va ovozli xabar kuniga 5 tadan.</blockquote>",
         "ai_response_failed": "⚠️ AI javob tayyorlay olmadi. Iltimos, savolni qayta yuboring.",
         "ai_empty_response": "⚠️ AI bo‘sh javob qaytardi. Iltimos, savolni aniqroq yozing.",
         "user_not_found": "Iltimos, avval /start ni bosing.",
@@ -1170,7 +1170,7 @@ SUBSCRIPTION_CHURN_I18N = {
             "<blockquote>Тамоми progress, дарсҳои гузашта ва омори шумо ҳеҷ куҷо намеравад. "
             "Баргардед — аз ҳамон дарс давом медиҳед.\n\n"
             "Душвортаринаш — оғоз кардан буд, ва шумо инро аллакай кардед. "
-            "Забони чинӣ на ба онҳое ки меистанд, балки ба онҳое ки давом медиҳанд, кушода мешавад.</blockquote>"
+            "Забони англисӣ на ба онҳое ки меистанд, балки ба онҳое ки давом медиҳанд, кушода мешавад.</blockquote>"
         ),
         "subscription_expired_continue_button": "💎 Давом додани обуна",
         "subscription_expired_later_button": "Баъдтар",
@@ -1217,7 +1217,7 @@ SUBSCRIPTION_CHURN_I18N = {
             "<blockquote>Весь ваш прогресс, пройденные уроки и статистика никуда не денутся. "
             "Вернётесь — продолжите с того же урока.\n\n"
             "Самое трудное — начать, и это вы уже сделали. "
-            "Китайский открывается не тем, кто останавливается, а тем, кто продолжает.</blockquote>"
+            "Английский открывается не тем, кто останавливается, а тем, кто продолжает.</blockquote>"
         ),
         "subscription_expired_continue_button": "💎 Продлить подписку",
         "subscription_expired_later_button": "Позже",
@@ -1264,7 +1264,7 @@ SUBSCRIPTION_CHURN_I18N = {
             "<blockquote>Yiqqan progressingiz, o'tilgan darslaringiz va statistikangiz hech qayerga ketmaydi. "
             "Qaytganingizda xuddi shu darsdan davom etasiz.\n\n"
             "Eng og'iri — boshlash edi, uni allaqachon qilib bo'ldingiz. "
-            "Xitoy tili to'xtaganlarga emas, davom etganlarga ochiladi.</blockquote>"
+            "Ingliz tili to'xtaganlarga emas, davom etganlarga ochiladi.</blockquote>"
         ),
         "subscription_expired_continue_button": "💎 Obunani davom ettirish",
         "subscription_expired_later_button": "Keyinroq",
@@ -1359,7 +1359,7 @@ PARTNER_I18N = {
         "partner_payout_account_prompt": "<b>💸 Гирифтани пул</b>\n\nРақами корт ё реквизитро нависед.",
         "partner_payout_holder_prompt": "<b>💸 Гирифтани пул</b>\n\nНому насаби қабулкунандаро нависед.",
         "partner_payout_note_prompt": "<b>💸 Гирифтани пул</b>\n\nШарҳи иловагӣ нависед. Агар набошад, «-» фиристед.",
-        "partner_payout_qr_prompt": "<b>💸 Гирифтани пул</b>\n\nQR коди Alipay ё WeChat-ро ҳамчун сурат фиристед.",
+        "partner_payout_qr_prompt": "<b>💸 Гирифтани пул</b>\n\nQR коди бонки худро ҳамчун сурат фиристед.",
         "partner_payout_qr_photo_only": "QR кодро ҳамчун сурат фиристед.",
         "partner_payout_invalid": "Маълумотро дурусттар нависед.",
         "partner_payout_created_text": "<b>✅ Дархости гирифтани пул фиристода шуд</b>\n\nМаблағ: <b>{amount}</b>\n\nИн маблағ то баррасӣ захира шуд.",
@@ -1424,7 +1424,7 @@ PARTNER_I18N = {
         "partner_payout_account_prompt": "<b>💸 Вывод средств</b>\n\nУкажите номер карты или реквизиты.",
         "partner_payout_holder_prompt": "<b>💸 Вывод средств</b>\n\nУкажите имя и фамилию получателя.",
         "partner_payout_note_prompt": "<b>💸 Вывод средств</b>\n\nДобавьте комментарий. Если его нет, отправьте «-».",
-        "partner_payout_qr_prompt": "<b>💸 Вывод средств</b>\n\nОтправьте QR-код Alipay или WeChat как фотографию.",
+        "partner_payout_qr_prompt": "<b>💸 Вывод средств</b>\n\nОтправьте QR-код своего банка как фотографию.",
         "partner_payout_qr_photo_only": "Отправьте QR-код как фотографию.",
         "partner_payout_invalid": "Укажите данные точнее.",
         "partner_payout_created_text": "<b>✅ Заявка на вывод отправлена</b>\n\nСумма: <b>{amount}</b>\n\nЭта сумма зарезервирована до рассмотрения.",
@@ -1489,7 +1489,7 @@ PARTNER_I18N = {
         "partner_payout_account_prompt": "<b>💸 Pul yechish</b>\n\nKarta raqami yoki rekvizitlarni yozing.",
         "partner_payout_holder_prompt": "<b>💸 Pul yechish</b>\n\nIsm familiyangizni yozing.",
         "partner_payout_note_prompt": "<b>💸 Pul yechish</b>\n\nIzoh yozing. Izoh bo'lmasa, «-» yuboring.",
-        "partner_payout_qr_prompt": "<b>💸 Pul yechish</b>\n\nAlipay yoki WeChat QR kodingizni rasm ko'rinishida yuboring.",
+        "partner_payout_qr_prompt": "<b>💸 Pul yechish</b>\n\nBankingiz QR kodini rasm ko'rinishida yuboring.",
         "partner_payout_qr_photo_only": "QR kodni rasm ko'rinishida yuboring.",
         "partner_payout_invalid": "Ma'lumotni aniqroq yozing.",
         "partner_payout_created_text": "<b>✅ Payout request yuborildi</b>\n\nSumma: <b>{amount}</b>\n\nBu summa tekshiruv tugaguncha reserved qilindi.",
